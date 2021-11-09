@@ -1,6 +1,6 @@
 package model;
 
-import javafx.beans.property.IntergerProperty;
+import javafx.beans.property.IntegerProperty;
 
 public class Entity extends GameObject {
     private IntegerProperty health;
