@@ -1,5 +1,5 @@
 package model;
 
 public enum EntityType {
-    PLAYER, CREATURE, NPC
+    PLAYER, CREATURE, NPC, ITEM
 }

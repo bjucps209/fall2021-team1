@@ -2,7 +2,7 @@ package model;
 
 import javafx.beans.property.IntegerProperty;
 
-public class Entity extends GameObject {
+public class Entity {
     private IntegerProperty health;
     private IntegerProperty x, y;
     private IntegerProperty damage;
@@ -10,6 +10,7 @@ public class Entity extends GameObject {
     private IntegerProperty direction;
     private EntityType entityType;
     private boolean hasCollision;
+    private boolean isInteractable;
 
 
     public Entity(EntityType entityType) {
@@ -18,6 +19,10 @@ public class Entity extends GameObject {
 
     public void move() {
         throw new RuntimeException("Method not implemented");
+    }
+
+    public void handleDeath() {
+        
     }
 
 }

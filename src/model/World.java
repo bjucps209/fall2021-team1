@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 class World {
     
-    ArrayList<Entity> entityList;
+    private ArrayList<Entity> entityList;
+    private String currentlocation;
 
     public World() {
         entityList = new ArrayList<Entity>();
