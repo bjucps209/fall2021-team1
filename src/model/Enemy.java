@@ -1,5 +1,5 @@
 package model;
 
-class Enemy {
-    int blah = 0;
+class Enemy extends Entity{
+    
 }
