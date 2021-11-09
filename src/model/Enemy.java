@@ -2,8 +2,9 @@ package model;
 
 class Enemy extends Entity {
     
+    EntityType entityType;
   
-    Enemy() {
-        su
+    Enemy(EntityType entityType) {
+        super(entityType);
     }
 }
