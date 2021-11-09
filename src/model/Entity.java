@@ -1,23 +1,20 @@
 package model;
 
-public class Entity extends Object {
-    private int health;
-    private int x, y;
-    private int damage;
-    private int speed;
-    private int direction;
-    private int range;
+import javafx.beans.property.IntergerProperty;
+
+public class Entity extends GameObject {
+    private IntegerProperty health;
+    private IntegerProperty x, y;
+    private IntegerProperty damage;
+    private IntegerProperty speed;
+    private IntegerProperty direction;
+    private EntityType entityType;
 
 
-
-
-    public int getRange() {
-        return range;
+    public Entity(EntityType entityType) {
+        throw new RuntimeException("Method not implemented");
     }
 
-    public void setRange(int range) {
-        this.range = range;
-    }
 
     public int getHealth() {
         return health;

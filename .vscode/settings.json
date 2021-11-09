@@ -6,6 +6,5 @@
         "**/.settings": true,
         "**/.factorypath": true
     },
-    "java.server.launchMode": "Standard",
-    "cmake.configureOnOpen": false
+    "java.server.launchMode": "Standard"
 }
