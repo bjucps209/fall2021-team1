@@ -19,7 +19,7 @@ class Player extends Entity {
      * Decrements the player's health upon an enemy hit.
      * @param damage - the amount the player's health is decremented by
      */
-    public void handleDamage(double damage) {
+    public void handleDamage(int damage) {
 
     }
 
@@ -27,6 +27,14 @@ class Player extends Entity {
      * Moves the player based on their direction and speed.
      */
     public void move() {
+        throw new RuntimeException("Method not implemented");
+    }
+
+    /**
+     * Calls an enemies handle damage method if the enemy is in range of the players attack.
+     * @param damage - the damage the player inflicts
+     */
+    public void handleAttack(int damage) {
         throw new RuntimeException("Method not implemented");
     }
 

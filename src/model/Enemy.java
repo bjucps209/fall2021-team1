@@ -24,4 +24,20 @@ class Enemy extends Entity {
     public void move() {
         throw new RuntimeException("Method not implemented");
     }
+
+    /**
+     * Decrements the enemies health based on the damage it recieves from the player.
+     * @param damage - the damage the player inflicts on the enemy
+     */
+    public void handleDamage(int damage) {
+
+    }
+
+    /**
+     * Calls the players handle damage method if the enemy is in range of the players attack.
+     * @param damage - the damage the enemy inflicts
+     */
+    public void handleAttack(int damage) {
+        throw new RuntimeException("Method not implemented");
+    }
 }
