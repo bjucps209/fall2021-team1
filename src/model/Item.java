@@ -7,11 +7,11 @@ public class Item extends NPC {
     }
 
     public String getMessage() {
-        return message;
+        return super.getMessage();
     }
 
     public void setMessage(String message) {
-        this.message = message;
+        super.setMessage(message);
     }
 
     
