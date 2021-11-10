@@ -9,15 +9,21 @@ public class Entity {
     private IntegerProperty speed;
     private IntegerProperty direction;
 
-    private EntityType entityType;
     private DifficultyLevel difficulty;
 
     private boolean hasCollision;
     private boolean isInteractable;
 
 
-    public Entity(EntityType entityType) {
+    public Entity() {
         throw new RuntimeException("Method not implemented");
+    }
+
+    /**
+     * Moves the entity based on its state, speed, and direction. 
+     */
+    public void move() {
+
     }
 
     public String serialize() {

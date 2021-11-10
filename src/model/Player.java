@@ -2,10 +2,9 @@ package model;
 
 class Player extends Entity {
 
-    EntityType entityType;
 
-    public Player(EntityType entityType) {
-        super(entityType);
+    public Player() {
+        super();
     }
 
     /**
@@ -36,6 +35,13 @@ class Player extends Entity {
      */
     public void handleAttack(int damage) {
         throw new RuntimeException("Method not implemented");
+    }
+
+    /**
+     * Changes the location if the player reaches the edges of the map.
+     */
+    public void changeLocation() {
+
     }
 
 

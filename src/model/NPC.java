@@ -5,8 +5,8 @@ public class NPC extends Entity {
     private String message;
 
 
-    public NPC(EntityType entityType) {
-        super(entityType);
+    public NPC() {
+        super();
         //TODO Auto-generated constructor stub
     }
  

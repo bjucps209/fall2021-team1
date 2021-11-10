@@ -41,13 +41,6 @@ class World {
     }
 
     /**
-     * Changes the location if the player reaches the edges of the map.
-     */
-    public void changeLocation() {
-
-    }
-
-    /**
      * Saves the game to a text file.
      */
     public void save() {

@@ -4,11 +4,11 @@ import java.lang.Thread.State;
 
 public class Grunt extends Enemy {
 
-    private EntityType entityType;
+
     private GruntState state;
 
     public Grunt(EntityType entityType) {
-        super(entityType);
+        super();
         //TODO Auto-generated constructor stub
     }
 
@@ -20,13 +20,6 @@ public class Grunt extends Enemy {
      */
     public void changeState(int x, int y) {
         super.scanArea(x, y);
-    }
-
-    /**
-     * Moves the grunt based on its state, speed, and direction. 
-     */
-    public void move() {
-
     }
 
     

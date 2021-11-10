@@ -2,8 +2,8 @@ package model;
 
 public class Item extends NPC {
 
-    public Item(EntityType entityType) {
-        super(entityType);
+    public Item() {
+        super();
     }
 
     public String getMessage() {
