@@ -18,6 +18,9 @@ class Enemy extends Entity {
         throw new RuntimeException("Method not implemented");
     }
 
+    /**
+     * Moves the enemy based on its speed and direction
+     */
     public void move() {
         throw new RuntimeException("Method not implemented");
     }
