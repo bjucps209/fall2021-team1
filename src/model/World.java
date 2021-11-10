@@ -47,5 +47,30 @@ class World {
 
     }
 
+    /**
+     * Saves the game to a text file.
+     */
+    private void save() {
+
+
+    }
+
+    /**
+     * Loads the game from a text file.
+     */
+    private void load() {
+
+
+    }
+
+    /**
+     * Translates a line of save data.
+     * @param data the line of data
+     * @return a new entity with the saved properties
+     */
+    private Entity deserialize(String data) {
+
+
+    }
 
 }

@@ -20,6 +20,10 @@ public class Entity {
         throw new RuntimeException("Method not implemented");
     }
 
+    public String serialize() {
 
+        return "";
+
+    }
 
 }
