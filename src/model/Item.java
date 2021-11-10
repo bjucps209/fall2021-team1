@@ -1,6 +1,6 @@
 package model;
 
-public class Item extends Entity {
+public class Item extends NPC {
 
     private String message;
 
