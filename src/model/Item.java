@@ -2,8 +2,6 @@ package model;
 
 public class Item extends NPC {
 
-    private String message;
-
     public Item(EntityType entityType) {
         super(entityType);
     }
