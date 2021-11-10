@@ -50,7 +50,7 @@ class World {
     /**
      * Saves the game to a text file.
      */
-    private void save() {
+    public void save() {
 
 
     }
@@ -58,7 +58,7 @@ class World {
     /**
      * Loads the game from a text file.
      */
-    private void load() {
+    public void load() {
 
 
     }
@@ -68,8 +68,8 @@ class World {
      * @param data the line of data
      * @return a new entity with the saved properties
      */
-    private Entity deserialize(String data) {
-
+    public Entity deserialize(String data) {
+        throw new RuntimeException("Method not implemented");
 
     }
 
