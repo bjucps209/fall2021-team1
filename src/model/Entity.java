@@ -8,7 +8,10 @@ public class Entity {
     private IntegerProperty damage;
     private IntegerProperty speed;
     private IntegerProperty direction;
+
     private EntityType entityType;
+    private DifficultyLevel difficulty;
+
     private boolean hasCollision;
     private boolean isInteractable;
 
@@ -17,12 +20,6 @@ public class Entity {
         throw new RuntimeException("Method not implemented");
     }
 
-    public void move() {
-        throw new RuntimeException("Method not implemented");
-    }
 
-    public void handleDeath() {
-        
-    }
 
 }
