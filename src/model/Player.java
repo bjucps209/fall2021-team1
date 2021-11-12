@@ -1,6 +1,6 @@
 package model;
 
-class Player extends Entity {
+public class Player extends Entity {
 
 
     public Player() {

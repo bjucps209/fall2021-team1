@@ -1,6 +1,6 @@
 package model;
 
-class Enemy extends Entity {
+public class Enemy extends Entity {
     
     Enemy() {
         super();

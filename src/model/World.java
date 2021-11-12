@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import javafx.beans.property.IntegerProperty;
 
-class World {
+public class World {
     
     private ArrayList<Entity> entityList;
     private int currentlocation;
