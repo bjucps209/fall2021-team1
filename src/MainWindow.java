@@ -29,7 +29,7 @@ public class MainWindow {
         imgPlayer = new Image("Final Assets/Player/PNG/Player-Back-Stationary-128x128.png");
         imgviewPlayer = new ImageView(imgPlayer);
 
-        imgviewPlayer.setX(720);
+        imgviewPlayer.setX(650);
         imgviewPlayer.setY(750);
         paneGameScreen.getChildren().add(imgviewPlayer);
         hboxMainBox.getChildren().add(paneGameScreen);
