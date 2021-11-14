@@ -1,53 +1,20 @@
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
-import model.World;
+import java.io.IOException;
 
-public class MainWindow {
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-    @FXML
-    HBox hboxMainBox;
-    @FXML
-    Pane paneGameScreen;
-    @FXML
-    ImageView imgviewPlayer;
-    @FXML
-    Image imgPlayer;
+public class MainWindow  {
 
-    World world;
+    public void onStartClicked() throws IOException {
+        var loader = new FXMLLoader(getClass().getResource("GameWindow.fxml"));
+        var scene = new Scene(loader.load());
+        var stage = new Stage();
+        GameWindow controller = loader.getController();
 
-    @FXML
-    void initialize() {
-        paneGameScreen = new Pane();
-        paneGameScreen.setPrefHeight(900);
-        paneGameScreen.setPrefWidth(1440);
-
-        Image imgAboutScreen = new Image("Final Assets/World/PNG/World-AboutArea-1440x900.png");
-        imgPlayer = new Image("Final Assets/Player/PNG/Player-Back-Stationary-128x128.png");
-        imgviewPlayer = new ImageView(imgPlayer);
-
-        imgviewPlayer.setX(650);
-        imgviewPlayer.setY(750);
-        paneGameScreen.getChildren().add(imgviewPlayer);
-        hboxMainBox.getChildren().add(paneGameScreen);
-
-        BackgroundImage bImg = new BackgroundImage(imgAboutScreen, 
-            BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
-            BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-        Background bGround = new Background(bImg);
-        hboxMainBox.setBackground(bGround);
-
-
-    }
-
-    /**
-     * Generates the Game Screen that the user sees and interacts with.
-     */
-    @FXML
-    void generateGamescreen() {
+        stage.setScene(scene);
+        stage.show();
+        controller.initialize(stage);
 
     }
 
