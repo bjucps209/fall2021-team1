@@ -4,7 +4,6 @@ import java.lang.Thread.State;
 
 public class Grunt extends Enemy {
 
-
     private GruntState state;
 
     public Grunt(EntityType entityType) {

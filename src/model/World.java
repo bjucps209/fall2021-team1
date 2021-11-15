@@ -56,14 +56,4 @@ public class World {
 
     }
 
-    /**
-     * Translates a line of save data.
-     * @param data the line of data
-     * @return a new entity with the saved properties
-     */
-    public Entity deserialize(String data) {
-        throw new RuntimeException("Method not implemented");
-
-    }
-
 }
