@@ -6,6 +6,6 @@
 
 
 <AnchorPane fx:id="apaneMain" fx:controller="MainWindow" xmlns:fx="http://javafx.com/fxml"  stylesheets="@MainWindow.css"
-     prefHeight="450" prefWidth="720">
+     prefHeight="900" prefWidth="1440">
 
 </AnchorPane>

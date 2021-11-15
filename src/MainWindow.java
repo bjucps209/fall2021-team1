@@ -36,7 +36,6 @@ public class MainWindow  {
     }
 
 
-//TODO: FIX SIZE OF SCREEN
     public void startScreen() {
         clearVBox();
 
@@ -108,19 +107,21 @@ public class MainWindow  {
 
         Aboutbtn.setOnMouseClicked(aboutEvent -> aboutScreen(aboutEvent));
 
-        Startbtn.setFitHeight(40); //TODO: FIX SIZE 
-        Startbtn.setFitWidth(156);
-        Aboutbtn.setFitHeight(40);
-        Aboutbtn.setFitWidth(156);
-        HSbtn.setFitHeight(40);
-        HSbtn.setFitWidth(156);
+        Logo.setFitHeight(512);
+        Logo.setFitWidth(1024);
+        Startbtn.setFitHeight(80);
+        Startbtn.setFitWidth(312);
+        Aboutbtn.setFitHeight(80);
+        Aboutbtn.setFitWidth(312);
+        HSbtn.setFitHeight(80);
+        HSbtn.setFitWidth(312);
 
         vbox.getChildren().add(Logo);
         vbox.getChildren().add(Startbtn);
         vbox.getChildren().add(Aboutbtn);
         vbox.getChildren().add(HSbtn);
         
-        vbox.setLayoutX(100);
+        vbox.setLayoutX(200);
 
         apaneMain.getChildren().add(vbox);
     }
@@ -144,15 +145,15 @@ public class MainWindow  {
         });
         //-------------------------------------------------------------------------------------------------
 
-        backBtn.setFitHeight(40);
-        backBtn.setFitWidth(156);
+        backBtn.setFitHeight(80);
+        backBtn.setFitWidth(312);
         backBtn.setOnMouseClicked(backEvent -> callStartScreen(backEvent));
 
         VBox vbox = new VBox();
         vbox.setAlignment(Pos.CENTER);
         vbox.setSpacing(10.0);
         vbox.getChildren().add(backBtn);
-        vbox.setLayoutX(270);
+        vbox.setLayoutX(540);
 
         apaneMain.getChildren().add(vbox);
     }
