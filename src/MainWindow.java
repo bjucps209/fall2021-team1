@@ -30,8 +30,8 @@ public class MainWindow  {
 
     void initialize(Stage stage) {
         AudioClip music = new AudioClip(getClass().getResource("Audio/Retro_Forest_-_David_Fesliyan.mp3").toExternalForm());
+        music.setVolume(0.5);
         music.play();
-
         startScreen();
     }
 
