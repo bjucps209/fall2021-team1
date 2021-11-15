@@ -20,10 +20,12 @@ public class GUIApplication extends Application{
         
         var loader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
         var scene = new Scene(loader.load());
+        MainWindow controller = loader.getController();
 
         stage.setScene(scene);
         stage.setTitle("Terrene"); // Title of main window
         stage.show();
+        controller.initialize(stage);
         
 
     }

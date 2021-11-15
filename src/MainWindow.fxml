@@ -3,9 +3,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="apaneMain" fx:controller="MainWindow" xmlns:fx="http://javafx.com/fxml"  stylesheets="@MainWindow.css"
-     prefHeight="900" prefWidth="1440">
 
-     <Button text="Start" onAction="#onStartClicked"/>
+
+<AnchorPane fx:id="apaneMain" fx:controller="MainWindow" xmlns:fx="http://javafx.com/fxml"  stylesheets="@MainWindow.css"
+     prefHeight="450" prefWidth="720">
 
 </AnchorPane>
