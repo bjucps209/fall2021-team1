@@ -28,6 +28,10 @@ import javafx.stage.PopupWindow.AnchorLocation;
 public class MainWindow  {
     @FXML AnchorPane apaneMain;
 
+    /**
+     * Intializes the start screen with music in the background and the font style used for the application.
+     * @param stage
+     */
     void initialize(Stage stage) {
         AudioClip music = new AudioClip(getClass().getResource("Audio/Retro_Forest_-_David_Fesliyan.mp3").toExternalForm());
         music.setVolume(0.5);
@@ -37,6 +41,9 @@ public class MainWindow  {
     }
 
 
+    /**
+     * The build of the start screen.
+     */
     public void startScreen() {
         clearVBox();
 
@@ -149,6 +156,9 @@ public class MainWindow  {
     }
 
 
+    /**
+     * The build of the "About" screen.
+     */
     public void aboutScreen(MouseEvent e) {
         clearVBox();
 
@@ -195,6 +205,9 @@ public class MainWindow  {
         apaneMain.getChildren().add(vbox);
     }
 
+    /**
+     * The build of the "Highscore" screen.
+     */
     public void hsScreen(MouseEvent e) {
         clearVBox();
         VBox vbox = new VBox();
@@ -239,7 +252,10 @@ public class MainWindow  {
         apaneMain.getChildren().add(vbox);
     }
 
-    public void helpScreen(MouseEvent helpEvent) {
+    /**
+     * The build of the "Help" screen.
+     */
+    public void helpScreen(MouseEvent e) {
         clearVBox();
         VBox vbox = new VBox();
         vbox.setAlignment(Pos.BOTTOM_CENTER);
@@ -271,10 +287,17 @@ public class MainWindow  {
         apaneMain.getChildren().add(vbox);
     }
 
+    /**
+     * Calls the start screen with a MouseEvent.
+     * @param e <- MouseEvent
+     */
     public void callStartScreen(MouseEvent e) {
         startScreen();
     }
 
+    /**
+     * Clears the vboxes that populates the screen.
+     */
     public void clearVBox() {
         int size = apaneMain.getChildren().size();
         for (int i = 0; i < size; ++i) {
@@ -282,6 +305,11 @@ public class MainWindow  {
         }
     }
 
+    /**
+     * Starts the game.
+     * @param e <- Mouse Event
+     * @throws IOException
+     */
     public void onStartClicked(MouseEvent e) throws IOException {
         var loader = new FXMLLoader(getClass().getResource("GameWindow.fxml"));
         var scene = new Scene(loader.load());
