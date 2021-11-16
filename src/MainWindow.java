@@ -177,6 +177,18 @@ public class MainWindow  {
         vbox.setLayoutX(553);
         vbox.setLayoutY(800);
 
+        VBox v = new VBox();
+        v.setAlignment(Pos.BOTTOM_CENTER);
+        v.setSpacing(10.0);
+        v.setLayoutX(570);
+        v.setLayoutY(100);
+
+        // TODO: Label will get a string of text from High Score or Leaderboard class
+        Label lbl = new Label("    Developers:\n\nJoshua Douglass\n    Andrew Fox\n    David Goff");
+        lbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
+        v.getChildren().add(lbl);
+
+        apaneMain.getChildren().add(v);
         apaneMain.getChildren().add(vbox);
     }
 
