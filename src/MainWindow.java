@@ -122,6 +122,9 @@ public class MainWindow  {
         Aboutbtn.setOnMouseClicked(aboutEvent -> aboutScreen(aboutEvent));
 
         HSbtn.setOnMouseClicked(hsEvent -> hsScreen(hsEvent));
+        
+        Helpbtn.setOnMouseClicked(helpEvent -> helpScreen(helpEvent));
+
 
         Logo.setFitHeight(512);
         Logo.setFitWidth(1024);
@@ -233,6 +236,38 @@ public class MainWindow  {
         vbox.getChildren().add(backBtn);
 
         apaneMain.getChildren().add(v);
+        apaneMain.getChildren().add(vbox);
+    }
+
+    public void helpScreen(MouseEvent helpEvent) {
+        clearVBox();
+        VBox vbox = new VBox();
+        vbox.setAlignment(Pos.BOTTOM_CENTER);
+        vbox.setSpacing(10.0);
+        vbox.setLayoutX(553);
+        vbox.setLayoutY(800);
+
+        Image back = new Image("Final Assets/UI/PNG/UI-BackBtn1-312x80.png");
+        ImageView backBtn = new ImageView(back);
+
+        //Mouse Pressed/Released------------------------------------------------------------------------------
+        backBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                backBtn.setImage(new Image("Final Assets/UI/PNG/UI-BackBtn2-312x80.png"));
+            }
+        });
+        backBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                backBtn.setImage(new Image("Final Assets/UI/PNG/UI-BackBtn1-312x80.png"));
+            }
+        });
+        //-------------------------------------------------------------------------------------------------
+
+        backBtn.setFitHeight(80);
+        backBtn.setFitWidth(312);
+        backBtn.setOnMouseClicked(backEvent -> callStartScreen(backEvent));
+
+        vbox.getChildren().add(backBtn);
         apaneMain.getChildren().add(vbox);
     }
 
