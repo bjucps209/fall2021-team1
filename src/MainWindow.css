@@ -3,6 +3,14 @@
     -fx-font-family: 'Helvetica', Arial, sans-serif;
 }
 
+@font-face {
+    src: url("Final Assets/Ui/Minecraft.ttf");
+}
+
+.text {
+    -fx-font-family: "Minecraft";
+}
+
 /* for Macs */
 .dialog-pane  {
     -fx-font-family: 'Helvetica', Arial, sans-serif;

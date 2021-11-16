@@ -31,8 +31,9 @@ public class MainWindow  {
     void initialize(Stage stage) {
         AudioClip music = new AudioClip(getClass().getResource("Audio/Retro_Forest_-_David_Fesliyan.mp3").toExternalForm());
         music.setVolume(0.5);
-        music.play();
+        //music.play();
         startScreen();
+        Font.loadFont(getClass().getResourceAsStream("/Final Assets/UI/Minecraft.ttf"), 64);
     }
 
 
@@ -54,11 +55,13 @@ public class MainWindow  {
         Image start = new Image("Final Assets/UI/PNG/UI-StartBtn1-312x80.png");
         Image about = new Image("Final Assets/UI/PNG/UI-AboutBtn1-312x80.png");
         Image highscore = new Image("Final Assets/UI/PNG/UI-HighscoreBtn1-312x80.png");
+        Image help = new Image("Final Assets/UI/PNG/UI-HelpBtn1-312x80.png");
 
         ImageView Logo = new ImageView(logo);
         ImageView Startbtn = new ImageView(start);
         ImageView Aboutbtn = new ImageView(about);
         ImageView HSbtn = new ImageView(highscore);
+        ImageView Helpbtn = new ImageView(help);
 
     
         //onMousePressed/Released-----------------------------------------------------------------------------
@@ -94,6 +97,17 @@ public class MainWindow  {
                 HSbtn.setImage(new Image("Final Assets/UI/PNG/UI-HighscoreBtn1-312x80.png"));
             }
         });
+
+        Helpbtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                Helpbtn.setImage(new Image("Final Assets/UI/PNG/UI-HelpBtn2-312x80.png"));
+            }
+        });
+        Helpbtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                Helpbtn.setImage(new Image("Final Assets/UI/PNG/UI-HelpBtn1-312x80.png"));
+            }
+        });
         //-----------------------------------------------------------------------------------------------
 
 
@@ -107,6 +121,8 @@ public class MainWindow  {
 
         Aboutbtn.setOnMouseClicked(aboutEvent -> aboutScreen(aboutEvent));
 
+        HSbtn.setOnMouseClicked(hsEvent -> hsScreen(hsEvent));
+
         Logo.setFitHeight(512);
         Logo.setFitWidth(1024);
         Startbtn.setFitHeight(80);
@@ -116,23 +132,28 @@ public class MainWindow  {
         HSbtn.setFitHeight(80);
         HSbtn.setFitWidth(312);
 
+
         vbox.getChildren().add(Logo);
         vbox.getChildren().add(Startbtn);
         vbox.getChildren().add(Aboutbtn);
         vbox.getChildren().add(HSbtn);
-        
+        vbox.getChildren().add(Helpbtn);
+
         vbox.setLayoutX(200);
+        vbox.setLayoutY(0);
 
         apaneMain.getChildren().add(vbox);
     }
 
-    //Mouse Pressed/Released------------------------------------------------------------------------------
+
     public void aboutScreen(MouseEvent e) {
         clearVBox();
 
         Image back = new Image("Final Assets/UI/PNG/UI-BackBtn1-312x80.png");
         ImageView backBtn = new ImageView(back);
 
+
+        //Mouse Pressed/Released------------------------------------------------------------------------------
         backBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
                 backBtn.setImage(new Image("Final Assets/UI/PNG/UI-BackBtn2-312x80.png"));
@@ -153,8 +174,53 @@ public class MainWindow  {
         vbox.setAlignment(Pos.CENTER);
         vbox.setSpacing(10.0);
         vbox.getChildren().add(backBtn);
-        vbox.setLayoutX(540);
+        vbox.setLayoutX(553);
+        vbox.setLayoutY(800);
 
+        apaneMain.getChildren().add(vbox);
+    }
+
+    public void hsScreen(MouseEvent e) {
+        clearVBox();
+        VBox vbox = new VBox();
+        vbox.setAlignment(Pos.BOTTOM_CENTER);
+        vbox.setSpacing(10.0);
+        vbox.setLayoutX(553);
+        vbox.setLayoutY(800);
+
+        Image back = new Image("Final Assets/UI/PNG/UI-BackBtn1-312x80.png");
+        ImageView backBtn = new ImageView(back);
+
+        //Mouse Pressed/Released------------------------------------------------------------------------------
+        backBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                backBtn.setImage(new Image("Final Assets/UI/PNG/UI-BackBtn2-312x80.png"));
+            }
+        });
+        backBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                backBtn.setImage(new Image("Final Assets/UI/PNG/UI-BackBtn1-312x80.png"));
+            }
+        });
+        //-------------------------------------------------------------------------------------------------
+
+        backBtn.setFitHeight(80);
+        backBtn.setFitWidth(312);
+        backBtn.setOnMouseClicked(backEvent -> callStartScreen(backEvent));
+
+        VBox v = new VBox();
+        v.setAlignment(Pos.BOTTOM_CENTER);
+        v.setSpacing(10.0);
+        v.setLayoutX(553);
+
+        // TODO: Label will get a string of text from High Score or Leaderboard class
+        Label lbl = new Label("TestName   TestScore \nTestName   TestScore \nTestName   TestScore \nTestName   TestScore \nTestName   TestScore \n");
+        lbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
+
+        v.getChildren().add(lbl);
+        vbox.getChildren().add(backBtn);
+
+        apaneMain.getChildren().add(v);
         apaneMain.getChildren().add(vbox);
     }
 
@@ -163,12 +229,10 @@ public class MainWindow  {
     }
 
     public void clearVBox() {
-        try {
+        int size = apaneMain.getChildren().size();
+        for (int i = 0; i < size; ++i) {
             apaneMain.getChildren().remove(0);
-        } catch (IndexOutOfBoundsException e) {
-
         }
-
     }
 
     public void onStartClicked(MouseEvent e) throws IOException {
@@ -184,16 +248,3 @@ public class MainWindow  {
     }
 
 }
-
-
-
-
-
-
-//Custom font code?-----------------------------------------------------
-// Font font = Font.loadFont("Final Assets/UI/Pixel Font.ttf", 45.0);
-// Label lbl = new Label();
-// lbl.setText("Hello");
-// lbl.setFont(font);
-// vbox.getChildren().add(lbl);
-//----------------------------------------------------------------------
