@@ -140,7 +140,7 @@ public class MainWindow  {
         vbox.getChildren().add(Helpbtn);
 
         vbox.setLayoutX(200);
-        vbox.setLayoutY(0);
+        vbox.setLayoutY(-75);
 
         apaneMain.getChildren().add(vbox);
     }
