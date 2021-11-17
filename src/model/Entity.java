@@ -55,6 +55,13 @@ public abstract class Entity {
     public abstract EntityType getType();
 
     /// Getters and Setters ///
+
+    public void setPosition(int x, int y) {
+
+        this.x.set(x);
+        this.y.set(y);
+
+    }
     
     public DoubleProperty xProperty() {
 
