@@ -1,5 +1,3 @@
-import java.net.InetAddress;
-
 import javafx.animation.AnimationTimer;
 import javafx.animation.PauseTransition;
 import javafx.beans.binding.BooleanBinding;
@@ -115,8 +113,8 @@ public class GameWindow {
 
         // Bind the player imageview's x and y to the player object
         world = World.instance();
-        world.getPlayer().x().bindBidirectional(imgviewPlayer.xProperty());
-        world.getPlayer().y().bindBidirectional(imgviewPlayer.yProperty());
+        world.getPlayer().xProperty().bindBidirectional(imgviewPlayer.xProperty());
+        world.getPlayer().yProperty().bindBidirectional(imgviewPlayer.yProperty());
 
         // Set background for the world
         BackgroundImage bImg = new BackgroundImage(imgAboutScreen, BackgroundRepeat.NO_REPEAT,
@@ -156,13 +154,18 @@ public class GameWindow {
 
         // Adding an NPC to the starter area
         world.getEntityList().add(new NPC("Welcome to Terrene!\nPress 'x' to spawn an enemy."));
+
         for (Entity entity : world.getEntityList()) {
+
             if (entity instanceof NPC) {
+
                 ImageView imgviewNPC = new ImageView(imgNPC);
-                imgviewNPC.xProperty().bindBidirectional(entity.x());
-                imgviewNPC.yProperty().bindBidirectional(entity.y());
+                imgviewNPC.xProperty().bindBidirectional(entity.xProperty());
+                imgviewNPC.yProperty().bindBidirectional(entity.yProperty());
                 apaneMain.getChildren().add(imgviewNPC);
+
             }
+
         }
 
     }
@@ -172,49 +175,75 @@ public class GameWindow {
      */
     @FXML
     public void handleInteract() {
-        NPC interactedEntity = world.getPlayer().interact();
-        if (interactedEntity != null) {
-           Label lblMessage = new Label();
-           lblMessage.setText(interactedEntity.getMessage());
-           lblMessage.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
-           lblMessage.setLayoutX(interactedEntity.getX() - 53);
-           lblMessage.setLayoutY(interactedEntity.getY() - 30);
 
-           apaneMain.getChildren().add(lblMessage);
+        Entity interactedEntity = world.getPlayer().interact();
 
-           PauseTransition labelPause = new PauseTransition(Duration.seconds(3));
-           labelPause.setOnFinished(e -> lblMessage.setVisible(false));
-           labelPause.play();
+        if (interactedEntity == null) { return; }
+
+        switch (interactedEntity.getType()) {
+
+            case NPC:
+
+                Label lblMessage = new Label();
+                lblMessage.setText(((NPC) interactedEntity).getMessage());
+                lblMessage.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
+                lblMessage.setLayoutX(interactedEntity.getX() - 53);
+                lblMessage.setLayoutY(interactedEntity.getY() - 30);
+     
+                apaneMain.getChildren().add(lblMessage);
+     
+                PauseTransition labelPause = new PauseTransition(Duration.seconds(3));
+                labelPause.setOnFinished(e -> lblMessage.setVisible(false));
+                labelPause.play();
+                
+                return;
+        
+            default:
+
+                return;
+
         }
 
     }
 
     // Animation timer specifically for the player, does not effect the other entities movement.
     AnimationTimer playerMovement = new AnimationTimer() {
+
         @Override
         public void handle(long timestamp) {
+
             double speed = world.getPlayer().getSpeed();
 
             if (uPressed.get()) {
+
                 world.getPlayer().setY(world.getPlayer().getY() - speed);
                 imgviewPlayer.setY(world.getPlayer().getY());
+
             }
 
             if (dPressed.get()) {
+
                 world.getPlayer().setY(world.getPlayer().getY() + speed);
                 imgviewPlayer.setY(world.getPlayer().getY());
+
             }
 
             if (lPressed.get()) {
+
                 world.getPlayer().setX(world.getPlayer().getX() - speed);
                 imgviewPlayer.setX(world.getPlayer().getX());
+
             }
 
             if (rPressed.get()) {
+
                 world.getPlayer().setX(world.getPlayer().getX() + speed);
                 imgviewPlayer.setX(world.getPlayer().getX());
+
             }
+
         }
+
     };
 
     /**
@@ -222,6 +251,7 @@ public class GameWindow {
      * @param event - the key currently held down.
      */
     public void keyPressed(KeyEvent event) {
+
         switch (event.getCode()) {
 
         case UP:
@@ -229,26 +259,33 @@ public class GameWindow {
             imgviewPlayer.setImage(imgPlayerBackMove);
             world.getPlayer().setDirection(90);
             break;
+
         case LEFT:
             lPressed.set(true);
             imgviewPlayer.setImage(imgPlayerLeftMove);
             world.getPlayer().setDirection(180);
             break;
+
         case DOWN:
             dPressed.set(true);
             imgviewPlayer.setImage(imgPlayerFrontMove);
             world.getPlayer().setDirection(270);
             break;
+
         case RIGHT:
             rPressed.set(true);
             imgviewPlayer.setImage(imgPlayerRightMove);
             world.getPlayer().setDirection(0);
             break;
+
         case Q:
             int i = 0; // for pinging the debugger to peek at variables, delete on final release.
+
         default:
             break;
+
         }
+
     }
 
     /**
@@ -256,28 +293,35 @@ public class GameWindow {
      * @param event - the key the player released.
      */
     public void keyReleased(KeyEvent event) {
+
         switch (event.getCode()) {
 
         case UP:
             uPressed.set(false);
             imgviewPlayer.setImage(imgPlayerBack);
             break;
+
         case LEFT:
             lPressed.set(false);
             imgviewPlayer.setImage(imgPlayerLeft);
             break;
+
         case DOWN:
             dPressed.set(false);
             imgviewPlayer.setImage(imgPlayerFront);
             break;
+
         case RIGHT:
             rPressed.set(false);
             imgviewPlayer.setImage(imgPlayerRight);
             break;
+
         case Z:
             handleInteract();
+
         default:
             break;
+
         }
 
     }
@@ -287,40 +331,51 @@ public class GameWindow {
      * @param health - the player's current health value.
      */
     public void displayHealth(int health) {
+
         switch (health) {
 
         case 10:
             imgviewHeart.setImage(imgHeart10);
             break;
+
         case 9:
             imgviewHeart.setImage(imgHeart9);
             break;
+
         case 8:
             imgviewHeart.setImage(imgHeart8);
             break;
+
         case 7:
             imgviewHeart.setImage(imgHeart7);
             break;
+
         case 6:
             imgviewHeart.setImage(imgHeart6);
             break;
+
         case 5:
             imgviewHeart.setImage(imgHeart5);
             break;
+
         case 4:
             imgviewHeart.setImage(imgHeart4);
             break;
+
         case 3:
             imgviewHeart.setImage(imgHeart3);
             break;
+
         case 2:
             imgviewHeart.setImage(imgHeart2);
             break;
+
         case 1:
             imgviewHeart.setImage(imgHeart1);
             break;
 
         }
+        
     }
 
     /**
