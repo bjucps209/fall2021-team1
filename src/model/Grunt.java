@@ -1,25 +1,54 @@
 package model;
 
-import java.lang.Thread.State;
-
 public class Grunt extends Enemy {
+
+    public enum GruntState {
+
+        PATROL, ATTACK
+
+    }
 
     private GruntState state;
 
-    public Grunt(EntityType entityType) {
-        super();
-        //TODO Auto-generated constructor stub
+    public Grunt() {
+
+        // TODO: use actual width, height
+        super(10, 10);
+
+        // Load base stats
+        this.setMaxHealth(3);
+        this.setHealth(3);
+        this.setDamage(1);
+        this.setSpeed(2);
+        this.setDetectionRadius(10);
+
     }
 
+    /// Methods from Living ///
+    @Override
+    public void move() {}
 
-    /**
-     * Changes the Grunt's state if the player is within its vicinty.
-     * @param x - the player's x coordinate
-     * @param y - the player's y coordinate
-     */
-    public void changeState(int x, int y) {
-        super.scanArea(x, y);
+    @Override
+    public void attack() {}
+
+    @Override
+    public void handleDamage(int damage) {}
+
+    @Override
+    public void handleDeath() {}
+
+    /// Methods from Enemy ///
+    @Override
+    public void interact() {}
+
+    @Override
+    public String serialize() { return null; }
+
+    @Override
+    public EntityType getType() {
+        
+        return EntityType.GRUNT_ENEMY;
+    
     }
-
     
 }

@@ -5,47 +5,34 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class Entity {
+public abstract class Entity {
 
-    protected IntegerProperty health;
-    protected DoubleProperty x, y;
-    protected IntegerProperty damage;
-    protected IntegerProperty speed;
-    protected IntegerProperty direction;
-    protected boolean hasCollision;
-    protected boolean isInteractable;
+    private DoubleProperty x, y;
+    private IntegerProperty width, height;
 
-    public Entity() {
+    private boolean isCollidable = true;
+    private boolean isInteractable = false;
 
-        this.health = new SimpleIntegerProperty(0);
+    public Entity(int width, int height) {
+
         this.x = new SimpleDoubleProperty();
         this.y = new SimpleDoubleProperty();
-        this.damage = new SimpleIntegerProperty(0);
-        this.speed = new SimpleIntegerProperty(0);
-        this.direction = new SimpleIntegerProperty();
 
-        this.hasCollision = true;
-        this.isInteractable = false;
+        this.width = new SimpleIntegerProperty(width);
+        this.height = new SimpleIntegerProperty(height);
 
     }
 
     /**
-     * Moves the entity based on its state, speed, and direction. 
+     * Checks to see if another entity overlaps with this entity.
+     * @param other the other entity
+     * @return true if overlapping
      */
-    public void move() {
+    public boolean intersects(Entity other) {
 
-        this.x.setValue(x.get() + (int) (speed.get() * Math.cos(direction.get() * Math.PI / 180)));
-        this.y.setValue(y.get() + (int) (speed.get() * Math.cos(direction.get() * Math.PI / 180)));
+        // TODO: implement
 
-    }
-
-    /**
-     * Creates and returns a string of data representing the entity.
-     * @return the string of data
-     */
-    public String serialize() {
-
-        return "";
+        return false;
 
     }
 
@@ -54,115 +41,102 @@ public class Entity {
      * @param data the line of data
      * @return a new entity with the saved properties
      */
-    public Entity deserialize(String data) {
+    public static Entity deserialize(String data) {
 
-        throw new RuntimeException("Cannot deserialize.");
+        // TODO: implement
+
+        return null;
 
     }
+
+    // Override these methods
+    public abstract void interact();
+    public abstract String serialize();
+    public abstract EntityType getType();
 
     /// Getters and Setters ///
-
-    public EntityType getType() {
-
-        return EntityType.ITEM;
-
-    }
-
-    public IntegerProperty healthProperty() {
-
-        return this.health;
-
-    }
-
-    public int getHealth() {
-
-        return this.health.get();
-
-    }
-
-    public void setHealth(int health) {
-
-        this.health.setValue(health);
-
-    }
-
+    
     public DoubleProperty xProperty() {
 
         return this.x;
 
     }
 
+    public double getX() {
 
-    public void setPosition(double x, double y) {
-
-        this.x.setValue(x);
-        this.y.setValue(y);
+        return this.x.get();
 
     }
 
-    public IntegerProperty damageProperty() {
+    public void setX(double x) {
 
-        return this.damage;
-
-    }
-
-    public int getDamage() {
-
-        return this.damage.get();
+        this.x.set(x);
 
     }
 
-    public void setDamage(int damage) {
+    public DoubleProperty yProperty() {
 
-        this.damage.setValue(damage);
-
-    }
-
-    public IntegerProperty speedProperty() {
-
-        return this.speed;
+        return this.y;
 
     }
 
-    public int getSpeed() {
+    public double getY() {
 
-        return this.speed.get();
-
-    }
-
-    public void setSpeed(int speed) {
-
-        this.speed.setValue(speed);
+        return this.y.get();
 
     }
 
-    public IntegerProperty directionProperty() {
+    public void setY(double y) {
 
-        return this.direction;
-
-    }
-
-    public int getDirection() {
-
-        return this.direction.get();
+        this.y.set(y);
 
     }
 
-    public void setDirection(int direction) {
+    public IntegerProperty widthProperty() {
 
-        this.direction.setValue(direction);
-
-    }
-
-    public boolean canCollide() {
-
-        return this.hasCollision;
+        return this.width;
 
     }
 
-    public void setCollision(boolean state) {
+    public int getWidth() {
 
-        this.hasCollision = state;
+        return this.width.get();
+
+    }
+
+    public void setWidth(int width) {
+
+        this.width.set(width);
+
+    }
+
+    public IntegerProperty heightProperty() {
+
+        return this.height;
+
+    }
+
+    public int getHeight() {
+
+        return this.height.get();
+
+    }
+
+    public void setHeight(int height) {
+
+        this.height.set(height);
+
+    }
+
+    public boolean isCollidable() {
+
+        return this.isCollidable;
+
+    }
+
+    public void setCollidable(boolean state) {
+
+        this.isCollidable = state;
 
     }
 
@@ -177,30 +151,5 @@ public class Entity {
         this.isInteractable = state;
 
     }
-
     
-    public double getX() {
-        return x.get();
-    }
-
-    public void setX(double x) {
-        this.x.set(x);
-    }
-
-    public DoubleProperty x() {
-        return x;
-    }
-
-    public double getY() {
-        return y.get();
-    }
-
-    public void setY(double y) {
-        this.y.set(y);
-    }
-
-    public DoubleProperty y() {
-        return y;
-    }
-
 }

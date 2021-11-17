@@ -1,41 +1,50 @@
 package model;
 
-public class Enemy extends Entity {
-    
-    Enemy() {
-        super();
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
+public abstract class Enemy extends Living {
+
+    private IntegerProperty detectionRadius;
+
+    public Enemy(int width, int height) {
+
+        super(width, height);
+
+        this.detectionRadius = new SimpleIntegerProperty();
+        
     }
 
     /**
-     * Scans the area for the player within a certain vicinity of the enemy's x and y value.
-     * @param x - the player's x coordinate
-     * @param y - the player's y coordinate
-     * @return
+     * Whether or not the player is within detection range.
+     * @return true if player is in detection range
      */
-    public boolean scanArea(int x, int y) {
-        throw new RuntimeException("Method not implemented");
-    }
+    public boolean foundPlayer() {
 
-    /**
-     * Moves the enemy based on its speed and direction
-     */
-    public void move() {
-        throw new RuntimeException("Method not implemented");
-    }
+        // TODO: implement
 
-    /**
-     * Decrements the enemies health based on the damage it recieves from the player.
-     * @param damage - the damage the player inflicts on the enemy
-     */
-    public void handleDamage(int damage) {
+        return true;
 
     }
 
-    /**
-     * Calls the players handle damage method if the enemy is in range of the players attack.
-     * @param damage - the damage the enemy inflicts
-     */
-    public void handleAttack(int damage) {
-        throw new RuntimeException("Method not implemented");
+    /// Getters and Setters ///
+
+    public IntegerProperty detectionRadiusProperty() {
+
+        return this.detectionRadius;
+
     }
+
+    public int getDetectionRadius() {
+
+        return this.detectionRadius.get();
+
+    }
+
+    public void setDetectionRadius(int radius) {
+
+        this.detectionRadius.set(radius);
+
+    }
+
 }
