@@ -4,6 +4,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -17,51 +18,52 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.stage.Stage;
 import model.World;
 
-public class GameWindow  {
-
+public class GameWindow {
 
     // Entire game is displayed through AnchorPane, gives more flexibility than
     // an HBox or a VBox. Allows for an adjustable screen as well through
     // screen anchors.
 
-
     // Control Attributes
 
-    //https://gist.github.com/Da9el00/5f698b3839f00ab3e0f28118edd6c947
+    // https://gist.github.com/Da9el00/5f698b3839f00ab3e0f28118edd6c947
     private BooleanProperty uPressed = new SimpleBooleanProperty();
     private BooleanProperty lPressed = new SimpleBooleanProperty();
     private BooleanProperty dPressed = new SimpleBooleanProperty();
     private BooleanProperty rPressed = new SimpleBooleanProperty();
 
     private BooleanBinding keyPressed = uPressed.or(lPressed).or(dPressed).or(rPressed);
-    
+
     // FXML Attributes
     @FXML
     private AnchorPane apaneMain;
     @FXML
-    private ImageView imgviewPlayer;
+    private ImageView imgviewPlayer, imgviewHeart;
     @FXML
-    private Image imgPlayerBack, imgPlayerLeft, imgPlayerFront, imgPlayerRight, imgPlayerBackMove,
-                  imgPlayerLeftMove, imgPlayerRightMove, imgPlayerFrontMove;
+    private Image imgPlayerBack, imgPlayerLeft, imgPlayerFront, imgPlayerRight, imgPlayerBackMove, imgPlayerLeftMove,
+            imgPlayerRightMove, imgPlayerFrontMove; // needs organizing
+    @FXML
+    private Label lblScore, lblLocation;
+
+    @FXML
+    private Image imgHeart10 = new Image("Final Assets/UI/PNG/10-hearts.png");
+    private Image imgHeart9 = new Image("Final Assets/UI/PNG/9-hearts.png");
+    private Image imgHeart8 = new Image("Final Assets/UI/PNG/8-hearts.png");
+    private Image imgHeart7 = new Image("Final Assets/UI/PNG/7-hearts.png");
+    private Image imgHeart6 = new Image("Final Assets/UI/PNG/6-hearts.png");
+    private Image imgHeart5 = new Image("Final Assets/UI/PNG/5-hearts.png");
+    private Image imgHeart4 = new Image("Final Assets/UI/PNG/4-hearts.png");
+    private Image imgHeart3 = new Image("Final Assets/UI/PNG/3-hearts.png");
+    private Image imgHeart2 = new Image("Final Assets/UI/PNG/2-hearts.png");
+    private Image imgHeart1 = new Image("Final Assets/UI/PNG/1-hearts.png");
 
     // Model Attributes
     private World world;
 
-    // placeholder
-    private int speed = 3;
-
     @FXML
-    void initialize(Stage stage) {  
+    void initialize(Stage stage) {
 
-        keyPressed.addListener((ObservableValue, booleanVal, timer) -> {
-            if (!booleanVal) {
-                playerMovement.start();
-            } else {
-                playerMovement.stop();
-            }
-        });
-
-        //Images *****************************
+        // Images *****************************
         Image imgAboutScreen = new Image("Final Assets/World/PNG/World-AboutArea-1440x900.png");
         imgPlayerBack = new Image("Final Assets/Player/PNG/Player-Back-Stationary-128x128.png");
         imgPlayerFront = new Image("Final Assets/Player/PNG/Player-Front-Stationary-128x128.png");
@@ -73,23 +75,16 @@ public class GameWindow  {
         imgPlayerRightMove = new Image("Final Assets/Player/GIF/Player-Right-Walking-128x128.gif");
         imgPlayerFrontMove = new Image("Final Assets/Player/GIF/Player-Front-Walking-128x128.gif");
         // ***********************************
-        
-        imgviewPlayer = new ImageView(imgPlayerBack);
 
-        imgviewPlayer.setX(650);
-        imgviewPlayer.setY(750);
-        apaneMain.getChildren().add(imgviewPlayer);
+        // Set up user control ******************************************
+        keyPressed.addListener((ObservableValue, booleanVal, timer) -> {
+            if (!booleanVal) {
+                playerMovement.start();
+            } else {
+                playerMovement.stop();
+            }
+        });
 
-
-
-        BackgroundImage bImg = new BackgroundImage(imgAboutScreen, 
-            BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
-            BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-        Background bGround = new Background(bImg);
-        apaneMain.setBackground(bGround);
-        
-
-        
         stage.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -103,14 +98,61 @@ public class GameWindow  {
                 keyReleased(event);
             }
         });
+        // ***************************************************************
 
+        // Create player's imageview
+        imgviewPlayer = new ImageView(imgPlayerBack);
+        imgviewPlayer.setX(650);
+        imgviewPlayer.setY(750);
+        apaneMain.getChildren().add(imgviewPlayer);
+
+        // Bind the player imageview's x and y to the player object
+        world = World.instance();
+        world.getPlayer().x().bindBidirectional(imgviewPlayer.xProperty());
+        world.getPlayer().y().bindBidirectional(imgviewPlayer.yProperty());
+
+        // Set background for the world
+        BackgroundImage bImg = new BackgroundImage(imgAboutScreen, BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        Background bGround = new Background(bImg);
+        apaneMain.setBackground(bGround);
+
+        // Generate health bar
+        imgviewHeart = new ImageView();
+        displayHealth(world.getPlayer().getHealth());
+        AnchorPane.setTopAnchor(imgviewHeart, 10.0);
+        AnchorPane.setRightAnchor(imgviewHeart, 10.0);
+        apaneMain.getChildren().add(imgviewHeart);
+
+        // Generate score label
+        lblScore = new Label();
+        // TEMPORARY ***
+        world.setScore(1500);
+        // *************
+        lblScore.setText(String.valueOf(world.getScore()));
+        lblScore.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
+        AnchorPane.setBottomAnchor(lblScore, 10.0);
+        AnchorPane.setLeftAnchor(lblScore, 10.0);
+        apaneMain.getChildren().add(lblScore);
+
+        // Generate location label
+        lblLocation = new Label();
+        // TEMPORARY *****
+        world.setCurrentlocation("Start Area");
+        // ****************
+        lblLocation.setText(world.getCurrentlocation());
+        lblLocation.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
+        AnchorPane.setTopAnchor(lblLocation, 10.0);
+        AnchorPane.setLeftAnchor(lblLocation, 10.0);
+        apaneMain.getChildren().add(lblLocation);
 
     }
-
 
     AnimationTimer playerMovement = new AnimationTimer() {
         @Override
         public void handle(long timestamp) {
+            int speed = world.getPlayer().getSpeed();
+
             if (uPressed.get()) {
                 imgviewPlayer.setLayoutY(imgviewPlayer.getLayoutY() - speed);
             }
@@ -129,52 +171,97 @@ public class GameWindow  {
         }
     };
 
-
     public void keyPressed(KeyEvent event) {
         switch (event.getCode()) {
 
-            case UP:
-                uPressed.set(true);
-                imgviewPlayer.setImage(imgPlayerBackMove);
-                break;
-            case LEFT:
-                lPressed.set(true);
-                imgviewPlayer.setImage(imgPlayerLeftMove);
-                break;
-            case DOWN:
-                dPressed.set(true);
-                imgviewPlayer.setImage(imgPlayerFrontMove);
-                break;
-            case RIGHT:
-                rPressed.set(true);
-                imgviewPlayer.setImage(imgPlayerRightMove);
-                break;
+        case UP:
+            uPressed.set(true);
+            imgviewPlayer.setImage(imgPlayerBackMove);
+            world.getPlayer().setDirection(90);
+            break;
+        case LEFT:
+            lPressed.set(true);
+            imgviewPlayer.setImage(imgPlayerLeftMove);
+            world.getPlayer().setDirection(180);
+            break;
+        case DOWN:
+            dPressed.set(true);
+            imgviewPlayer.setImage(imgPlayerFrontMove);
+            world.getPlayer().setDirection(270);
+            break;
+        case RIGHT:
+            rPressed.set(true);
+            imgviewPlayer.setImage(imgPlayerRightMove);
+            world.getPlayer().setDirection(0);
+            break;
+        case Q:
+            int i = 0; // for pinging the debugger to peek at variables, delete on final release.
+        default:
+            break;
         }
     }
 
     public void keyReleased(KeyEvent event) {
         switch (event.getCode()) {
 
-            case UP:
-                uPressed.set(false);
-                imgviewPlayer.setImage(imgPlayerBack);
-                break;
-            case LEFT:
-                lPressed.set(false);
-                imgviewPlayer.setImage(imgPlayerLeft);
-                break;
-            case DOWN:
-                dPressed.set(false);
-                imgviewPlayer.setImage(imgPlayerFront);
-                break;
-            case RIGHT:
-                rPressed.set(false);
-                imgviewPlayer.setImage(imgPlayerRight);
-                break;
+        case UP:
+            uPressed.set(false);
+            imgviewPlayer.setImage(imgPlayerBack);
+            break;
+        case LEFT:
+            lPressed.set(false);
+            imgviewPlayer.setImage(imgPlayerLeft);
+            break;
+        case DOWN:
+            dPressed.set(false);
+            imgviewPlayer.setImage(imgPlayerFront);
+            break;
+        case RIGHT:
+            rPressed.set(false);
+            imgviewPlayer.setImage(imgPlayerRight);
+            break;
+        default:
+            break;
         }
-        
+
     }
 
+    public void displayHealth(int health) {
+        switch (health) {
+
+        case 10:
+            imgviewHeart.setImage(imgHeart10);
+            break;
+        case 9:
+            imgviewHeart.setImage(imgHeart9);
+            break;
+        case 8:
+            imgviewHeart.setImage(imgHeart8);
+            break;
+        case 7:
+            imgviewHeart.setImage(imgHeart7);
+            break;
+        case 6:
+            imgviewHeart.setImage(imgHeart6);
+            break;
+        case 5:
+            imgviewHeart.setImage(imgHeart5);
+            break;
+        case 4:
+            imgviewHeart.setImage(imgHeart4);
+            break;
+        case 3:
+            imgviewHeart.setImage(imgHeart3);
+            break;
+        case 2:
+            imgviewHeart.setImage(imgHeart2);
+            break;
+        case 1:
+            imgviewHeart.setImage(imgHeart1);
+            break;
+
+        }
+    }
 
     /**
      * Generates the Game Screen that the user sees and interacts with.
@@ -183,7 +270,5 @@ public class GameWindow  {
     void generateGamescreen() {
 
     }
-
-
 
 }

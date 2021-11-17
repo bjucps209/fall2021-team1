@@ -3,15 +3,31 @@ package model;
 import java.util.ArrayList;
 
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
 public class World {
     
     private ArrayList<Entity> entityList;
-    private int currentlocation;
+    private String currentlocation;
     private IntegerProperty score;
+    private Player player;
 
-    public World() {
+    // We want the world class to be a singleton so that other classes in the view can 
+    // access the same world object.
+    private World() {
         entityList = new ArrayList<Entity>();
+        player = new Player();
+        score = new SimpleIntegerProperty();
+    }
+
+    private static World instance = new World(); // create instance to be referenced 
+
+    public static World instance() {
+        return instance;
+    }
+
+    public static void reset() {
+        instance = new World();
     }
 
     /**
@@ -55,5 +71,31 @@ public class World {
 
 
     }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public int getScore() {
+        return score.get();
+    }
+
+    public void setScore(int score) {
+        this.score.set(score);
+    }
+
+    public IntegerProperty score() {
+        return score;
+    }
+
+    public String getCurrentlocation() {
+        return currentlocation;
+    }
+
+    public void setCurrentlocation(String currentlocation) {
+        this.currentlocation = currentlocation;
+    }
+
+    
 
 }

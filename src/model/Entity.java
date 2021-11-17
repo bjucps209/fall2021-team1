@@ -1,19 +1,20 @@
 package model;
 
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 
 public class Entity {
 
-    private IntegerProperty health;
-    private IntegerProperty x, y;
-    private IntegerProperty damage;
-    private IntegerProperty speed;
-    private IntegerProperty direction;
+    protected IntegerProperty health;
+    protected DoubleProperty x, y;
+    protected IntegerProperty damage;
+    protected IntegerProperty speed;
+    protected IntegerProperty direction;
 
-    private DifficultyLevel difficulty;
+    protected DifficultyLevel difficulty;
 
-    private boolean hasCollision;
-    private boolean isInteractable;
+    protected boolean hasCollision;
+    protected boolean isInteractable;
 
 
     public Entity() {}
