@@ -12,12 +12,8 @@ public class Entity {
     private IntegerProperty damage;
     private IntegerProperty speed;
     private IntegerProperty direction;
-
-    //private DifficultyLevel difficulty;
-
     private boolean hasCollision;
     private boolean isInteractable;
-
 
     public Entity() {
 
@@ -36,7 +32,12 @@ public class Entity {
     /**
      * Moves the entity based on its state, speed, and direction. 
      */
-    public void move() {}
+    public void move() {
+
+        this.x.setValue(x.get() + (int) (speed.get() * Math.cos(direction.get() * Math.PI / 180)));
+        this.y.setValue(y.get() + (int) (speed.get() * Math.cos(direction.get() * Math.PI / 180)));
+
+    }
 
     /**
      * Creates and returns a string of data representing the entity.
