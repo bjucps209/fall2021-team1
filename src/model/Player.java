@@ -7,7 +7,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public class Player extends Entity {
 
-
     public Player() {
         health = new SimpleIntegerProperty(5);
         speed = new SimpleIntegerProperty(2);
@@ -27,6 +26,7 @@ public class Player extends Entity {
 
     /**
      * Decrements the player's health upon an enemy hit.
+     * 
      * @param damage - the amount the player's health is decremented by
      */
     public void handleDamage(int damage) {
@@ -34,7 +34,9 @@ public class Player extends Entity {
     }
 
     /**
-     * Calls an enemies handle damage method if the enemy is in range of the players attack.
+     * Calls an enemies handle damage method if the enemy is in range of the players
+     * attack.
+     * 
      * @param damage - the damage the player inflicts
      */
     public void handleAttack(int damage) {
@@ -48,6 +50,26 @@ public class Player extends Entity {
 
     }
 
+    /**
+     * Checks if an entity near the player is NPC or Item, if so displays the
+     * entity's message.
+     */
+    public NPC interact() {
+        double distance = 0;
+        for (Entity entity : World.instance().getEntityList()) {
+            if (entity instanceof NPC) {
+                NPC npcEntity = (NPC) entity;
+                distance = Math.sqrt((npcEntity.getX() - getX()) * (npcEntity.getX() - getX())
+                        + Math.sqrt((npcEntity.getY() - getY()) * (npcEntity.getY() - getY())));
+
+                if (distance <= 200) {
+                    return npcEntity;
+                }
+            }
+        }
+        return null;
+    }
+
     // Property getters and setters *****************************************
     public int getHealth() {
         return health.get();
@@ -59,30 +81,6 @@ public class Player extends Entity {
 
     public IntegerProperty health() {
         return health;
-    }
-
-    public double getX() {
-        return x.get();
-    }
-
-    public void setX(int x) {
-        this.x.set(x);
-    }
-
-    public DoubleProperty x() {
-        return x;
-    }
-
-    public double getY() {
-        return y.get();
-    }
-
-    public void setY(int y) {
-        this.y.set(y);
-    }
-
-    public DoubleProperty y() {
-        return y;
     }
 
     public int getSpeed() {
@@ -110,5 +108,4 @@ public class Player extends Entity {
     }
     // ***************************************************************
 
-    
 }

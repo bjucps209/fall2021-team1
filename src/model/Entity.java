@@ -79,4 +79,29 @@ public class Entity {
 
     }
 
+    
+    public double getX() {
+        return x.get();
+    }
+
+    public void setX(double x) {
+        this.x.set(x);
+    }
+
+    public DoubleProperty x() {
+        return x;
+    }
+
+    public double getY() {
+        return y.get();
+    }
+
+    public void setY(double y) {
+        this.y.set(y);
+    }
+
+    public DoubleProperty y() {
+        return y;
+    }
+
 }

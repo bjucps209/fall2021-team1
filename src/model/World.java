@@ -96,6 +96,16 @@ public class World {
         this.currentlocation = currentlocation;
     }
 
+    public ArrayList<Entity> getEntityList() {
+        return entityList;
+    }
+
+    public void setEntityList(ArrayList<Entity> entityList) {
+        this.entityList = entityList;
+    }
+
+    
+
     
 
 }

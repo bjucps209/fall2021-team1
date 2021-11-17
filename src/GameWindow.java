@@ -1,3 +1,5 @@
+import java.net.InetAddress;
+
 import javafx.animation.AnimationTimer;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
@@ -7,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -16,6 +17,8 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.stage.Stage;
+import model.Entity;
+import model.NPC;
 import model.World;
 
 public class GameWindow {
@@ -56,6 +59,8 @@ public class GameWindow {
     private Image imgHeart3 = new Image("Final Assets/UI/PNG/3-hearts.png");
     private Image imgHeart2 = new Image("Final Assets/UI/PNG/2-hearts.png");
     private Image imgHeart1 = new Image("Final Assets/UI/PNG/1-hearts.png");
+
+    private Image imgNPC = new Image("Final Assets/NPC/PNG/NPC-Front-Stationary-128x128.png");
 
     // Model Attributes
     private World world;
@@ -146,6 +151,32 @@ public class GameWindow {
         AnchorPane.setLeftAnchor(lblLocation, 10.0);
         apaneMain.getChildren().add(lblLocation);
 
+
+        // Adding an NPC to the starter area
+        world.getEntityList().add(new NPC("Welcome to Terrene!"));
+        for (Entity entity : world.getEntityList()) {
+            if (entity instanceof NPC) {
+                ImageView imgviewNPC = new ImageView(imgNPC);
+                imgviewNPC.xProperty().bindBidirectional(entity.x());
+                imgviewNPC.yProperty().bindBidirectional(entity.y());
+                apaneMain.getChildren().add(imgviewNPC);
+            }
+        }
+
+    }
+
+    @FXML
+    public void handleInteract() {
+        NPC interactedEntity = world.getPlayer().interact();
+        if (interactedEntity != null) {
+           Label lblMessage = new Label();
+           lblMessage.setText(interactedEntity.getMessage());
+           lblMessage.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
+           lblMessage.setLayoutX(interactedEntity.getX() - 30);
+           lblMessage.setLayoutY(interactedEntity.getY() - 20);
+           apaneMain.getChildren().add(lblMessage);
+        }
+
     }
 
     AnimationTimer playerMovement = new AnimationTimer() {
@@ -154,19 +185,23 @@ public class GameWindow {
             int speed = world.getPlayer().getSpeed();
 
             if (uPressed.get()) {
-                imgviewPlayer.setLayoutY(imgviewPlayer.getLayoutY() - speed);
+                world.getPlayer().setY(world.getPlayer().getY() - speed);
+                imgviewPlayer.setY(world.getPlayer().getY());
             }
 
             if (dPressed.get()) {
-                imgviewPlayer.setLayoutY(imgviewPlayer.getLayoutY() + speed);
+                world.getPlayer().setY(world.getPlayer().getY() + speed);
+                imgviewPlayer.setY(world.getPlayer().getY());
             }
 
             if (lPressed.get()) {
-                imgviewPlayer.setLayoutX(imgviewPlayer.getLayoutX() - speed);
+                world.getPlayer().setX(world.getPlayer().getX() - speed);
+                imgviewPlayer.setX(world.getPlayer().getX());
             }
 
             if (rPressed.get()) {
-                imgviewPlayer.setLayoutX(imgviewPlayer.getLayoutX() + speed);
+                world.getPlayer().setX(world.getPlayer().getX() + speed);
+                imgviewPlayer.setX(world.getPlayer().getX());
             }
         }
     };
@@ -220,6 +255,8 @@ public class GameWindow {
             rPressed.set(false);
             imgviewPlayer.setImage(imgPlayerRight);
             break;
+        case Z:
+            handleInteract();
         default:
             break;
         }
