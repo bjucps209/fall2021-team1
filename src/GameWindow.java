@@ -1,6 +1,7 @@
 import java.net.InetAddress;
 
 import javafx.animation.AnimationTimer;
+import javafx.animation.PauseTransition;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -17,6 +18,7 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import model.Entity;
 import model.NPC;
 import model.World;
@@ -132,7 +134,7 @@ public class GameWindow {
         // Generate score label
         lblScore = new Label();
         // TEMPORARY ***
-        world.setScore(1500);
+        world.setScore(0);
         // *************
         lblScore.setText(String.valueOf(world.getScore()));
         lblScore.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
@@ -153,7 +155,7 @@ public class GameWindow {
 
 
         // Adding an NPC to the starter area
-        world.getEntityList().add(new NPC("Welcome to Terrene!"));
+        world.getEntityList().add(new NPC("Welcome to Terrene!\nPress 'x' to spawn an enemy."));
         for (Entity entity : world.getEntityList()) {
             if (entity instanceof NPC) {
                 ImageView imgviewNPC = new ImageView(imgNPC);
@@ -165,6 +167,9 @@ public class GameWindow {
 
     }
 
+    /**
+     * Calls the Player's interact method, if an entity is within range of the player displays the entities message as a Label.
+     */
     @FXML
     public void handleInteract() {
         NPC interactedEntity = world.getPlayer().interact();
@@ -172,17 +177,23 @@ public class GameWindow {
            Label lblMessage = new Label();
            lblMessage.setText(interactedEntity.getMessage());
            lblMessage.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
-           lblMessage.setLayoutX(interactedEntity.getX() - 30);
-           lblMessage.setLayoutY(interactedEntity.getY() - 20);
+           lblMessage.setLayoutX(interactedEntity.getX() - 53);
+           lblMessage.setLayoutY(interactedEntity.getY() - 30);
+
            apaneMain.getChildren().add(lblMessage);
+
+           PauseTransition labelPause = new PauseTransition(Duration.seconds(3));
+           labelPause.setOnFinished(e -> lblMessage.setVisible(false));
+           labelPause.play();
         }
 
     }
 
+    // Animation timer specifically for the player, does not effect the other entities movement.
     AnimationTimer playerMovement = new AnimationTimer() {
         @Override
         public void handle(long timestamp) {
-            int speed = world.getPlayer().getSpeed();
+            double speed = world.getPlayer().getSpeed();
 
             if (uPressed.get()) {
                 world.getPlayer().setY(world.getPlayer().getY() - speed);
@@ -206,6 +217,10 @@ public class GameWindow {
         }
     };
 
+    /**
+     * Handles various different cases when the player presses a key.
+     * @param event - the key currently held down.
+     */
     public void keyPressed(KeyEvent event) {
         switch (event.getCode()) {
 
@@ -236,6 +251,10 @@ public class GameWindow {
         }
     }
 
+    /**
+     * Handles various different cases when a player releases a key
+     * @param event - the key the player released.
+     */
     public void keyReleased(KeyEvent event) {
         switch (event.getCode()) {
 
@@ -263,6 +282,10 @@ public class GameWindow {
 
     }
 
+    /**
+     * Displays the player's health as a bar of hearts.
+     * @param health - the player's current health value.
+     */
     public void displayHealth(int health) {
         switch (health) {
 

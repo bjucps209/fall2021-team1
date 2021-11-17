@@ -10,7 +10,7 @@ public class Entity {
     protected IntegerProperty health;
     protected DoubleProperty x, y;
     protected IntegerProperty damage;
-    protected IntegerProperty speed;
+    protected DoubleProperty speed;
     protected IntegerProperty direction;
     protected boolean hasCollision;
     protected boolean isInteractable;
@@ -21,7 +21,7 @@ public class Entity {
         this.x = new SimpleDoubleProperty();
         this.y = new SimpleDoubleProperty();
         this.damage = new SimpleIntegerProperty(0);
-        this.speed = new SimpleIntegerProperty(0);
+        this.speed = new SimpleDoubleProperty(0);
         this.direction = new SimpleIntegerProperty();
 
         this.hasCollision = true;
@@ -118,13 +118,13 @@ public class Entity {
 
     }
 
-    public IntegerProperty speedProperty() {
+    public DoubleProperty speedProperty() {
 
         return this.speed;
 
     }
 
-    public int getSpeed() {
+    public double getSpeed() {
 
         return this.speed.get();
 
