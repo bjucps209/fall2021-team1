@@ -12,9 +12,9 @@ public class NPC extends Entity {
 
     public NPC(String message) {
         Random num = new Random();
-        speed = new SimpleIntegerProperty(0);
-        x = new SimpleDoubleProperty(num.nextInt(1300));
-        y = new SimpleDoubleProperty(num.nextInt(800));
+        speed = new SimpleDoubleProperty(0);
+        x = new SimpleDoubleProperty(num.nextInt(900));
+        y = new SimpleDoubleProperty(num.nextInt(400));
 
         isInteractable = true;
         this.message = message;

@@ -9,7 +9,7 @@ public class Player extends Entity {
 
     public Player() {
         health = new SimpleIntegerProperty(5);
-        speed = new SimpleIntegerProperty(2);
+        speed = new SimpleDoubleProperty(2.3);
         damage = new SimpleIntegerProperty(1);
         direction = new SimpleIntegerProperty();
         x = new SimpleDoubleProperty();
@@ -62,7 +62,7 @@ public class Player extends Entity {
                 distance = Math.sqrt((npcEntity.getX() - getX()) * (npcEntity.getX() - getX())
                         + Math.sqrt((npcEntity.getY() - getY()) * (npcEntity.getY() - getY())));
 
-                if (distance <= 200) {
+                if (distance <= 95) {
                     return npcEntity;
                 }
             }
@@ -83,15 +83,15 @@ public class Player extends Entity {
         return health;
     }
 
-    public int getSpeed() {
+    public double getSpeed() {
         return speed.get();
     }
 
-    public void setSpeed(int speed) {
+    public void setSpeed(double speed) {
         this.speed.set(speed);
     }
 
-    public IntegerProperty speed() {
+    public DoubleProperty speed() {
         return speed;
     }
 
