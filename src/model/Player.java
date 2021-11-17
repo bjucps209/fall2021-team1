@@ -1,111 +1,76 @@
 package model;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-
-public class Player extends Entity {
+public class Player extends Living {
 
     public Player() {
-        health = new SimpleIntegerProperty(5);
-        speed = new SimpleDoubleProperty(2.3);
-        damage = new SimpleIntegerProperty(1);
-        direction = new SimpleIntegerProperty();
-        x = new SimpleDoubleProperty();
-        y = new SimpleDoubleProperty();
 
+        // TODO: use actual width, height of player
+        super(10, 10);
+
+        // Load base stats
+        this.setMaxHealth(5);
+        this.setHealth(5);
+        this.setDamage(1);
+        this.setSpeed(2.3);
+    
     }
 
     /**
-     * Handles the logic when the player dies
+     * Finds the nearest interactable entity. Returns it if in range.
+     * @return nearest interactable entity or null
      */
-    public void handleDeath() {
+    public Entity interact() {
 
-    }
+        var list = World.instance().getEntityList().stream().filter(e -> e.isInteractable()).toList();
+        Entity closest = null;
+        double closeDistance = 95;
 
-    /**
-     * Decrements the player's health upon an enemy hit.
-     * 
-     * @param damage - the amount the player's health is decremented by
-     */
-    public void handleDamage(int damage) {
+        for (Entity entity : list) {
 
-    }
+            double distance = Math.sqrt((entity.getX() - getX()) * (entity.getX() - getX()) + Math.sqrt((entity.getY() - getY()) * (entity.getY() - getY())));
 
-    /**
-     * Calls an enemies handle damage method if the enemy is in range of the players
-     * attack.
-     * 
-     * @param damage - the damage the player inflicts
-     */
-    public void handleAttack(int damage) {
-        throw new RuntimeException("Method not implemented");
-    }
+            if (distance < 95 && closest != null && closeDistance > distance) {
 
-    /**
-     * Changes the location if the player reaches the edges of the map.
-     */
-    public void changeLocation() {
+                closest = entity;
+                closeDistance = distance;
 
-    }
-
-    /**
-     * Checks if an entity near the player is NPC or Item, if so displays the
-     * entity's message.
-     */
-    public NPC interact() {
-        double distance = 0;
-        for (Entity entity : World.instance().getEntityList()) {
-            if (entity instanceof NPC) {
-                NPC npcEntity = (NPC) entity;
-                distance = Math.sqrt((npcEntity.getX() - getX()) * (npcEntity.getX() - getX())
-                        + Math.sqrt((npcEntity.getY() - getY()) * (npcEntity.getY() - getY())));
-
-                if (distance <= 95) {
-                    return npcEntity;
-                }
             }
+
         }
-        return null;
+
+        return closest;
+
     }
 
-    // Property getters and setters *****************************************
-    public int getHealth() {
-        return health.get();
-    }
 
-    public void setHealth(int health) {
-        this.health.set(health);
-    }
+    /// Methods from Living ///
 
-    public IntegerProperty health() {
-        return health;
-    }
+    @Override
+    public void move() {}
 
-    public double getSpeed() {
-        return speed.get();
-    }
+    @Override
+    public void attack() {}
 
-    public void setSpeed(double speed) {
-        this.speed.set(speed);
-    }
+    @Override
+    public void handleDamage(int damage) {}
 
-    public DoubleProperty speed() {
-        return speed;
-    }
+    @Override
+    public void handleDeath() {}
 
-    public int getDirection() {
-        return direction.get();
-    }
 
-    public void setDirection(int direction) {
-        this.direction.set(direction);
-    }
+    /// Methods from Entity ///
 
-    public IntegerProperty direction() {
-        return direction;
-    }
-    // ***************************************************************
+    @Override
+    public void action() {}
 
+    @Override
+    public String serialize() { return null; }
+
+    @Override
+    public EntityType getType() {
+
+        return EntityType.PLAYER;
+
+    }
+    
 }

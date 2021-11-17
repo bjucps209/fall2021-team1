@@ -24,7 +24,9 @@ public class Grunt extends Enemy {
 
     }
 
+
     /// Methods from Living ///
+    
     @Override
     public void move() {}
 
@@ -37,9 +39,11 @@ public class Grunt extends Enemy {
     @Override
     public void handleDeath() {}
 
+
     /// Methods from Enemy ///
+
     @Override
-    public void interact() {}
+    public void action() {}
 
     @Override
     public String serialize() { return null; }

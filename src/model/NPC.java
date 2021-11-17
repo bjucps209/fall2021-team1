@@ -1,32 +1,50 @@
 package model;
 
-import java.util.Random;
-
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.StringProperty;
 
 public class NPC extends Entity {
 
-    private String message;
-
+    private StringProperty message;
 
     public NPC(String message) {
-        Random num = new Random();
-        speed = new SimpleDoubleProperty(0);
-        x = new SimpleDoubleProperty(num.nextInt(900));
-        y = new SimpleDoubleProperty(num.nextInt(400));
+        
+        // TODO: use actual dimensions
+        super(10, 10);
 
-        isInteractable = true;
-        this.message = message;
+        this.message.set(message);
+        this.setInteractable(true);
+        
     }
- 
+
+    /// Methods from Entity ///
+
+    @Override
+    public void action() {}
+
+    @Override
+    public String serialize() { return null; }
+
+    @Override
+    public EntityType getType() { return null; }
+
+    /// Getters and Setters ///
+
+    public StringProperty messageProperty() {
+
+        return this.message;
+
+    }
+
     public String getMessage() {
-        return message;
+
+        return this.message.get();
+
     }
 
     public void setMessage(String message) {
-        this.message = message;
-    }
 
+        this.message.set(message);
+
+    }
     
 }
