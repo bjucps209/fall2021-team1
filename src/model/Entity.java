@@ -7,13 +7,13 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public class Entity {
 
-    private IntegerProperty health;
-    private DoubleProperty x, y;
-    private IntegerProperty damage;
-    private IntegerProperty speed;
-    private IntegerProperty direction;
-    private boolean hasCollision;
-    private boolean isInteractable;
+    protected IntegerProperty health;
+    protected DoubleProperty x, y;
+    protected IntegerProperty damage;
+    protected IntegerProperty speed;
+    protected IntegerProperty direction;
+    protected boolean hasCollision;
+    protected boolean isInteractable;
 
     public Entity() {
 
@@ -92,35 +92,6 @@ public class Entity {
 
     }
 
-    public double getX() {
-
-        return this.x.get();
-
-    }
-
-    public void setX(double x) {
-
-        this.x.setValue(x);
-
-    }
-
-    public DoubleProperty yProperty() {
-
-        return this.y;
-
-    }
-
-    public double getY() {
-
-        return this.y.get();
-
-    }
-
-    public void setY(double y) {
-
-        this.y.setValue(y);
-
-    }
 
     public void setPosition(double x, double y) {
 
