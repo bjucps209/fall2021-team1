@@ -1,5 +1,6 @@
 package model;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class NPC extends Entity {
@@ -11,7 +12,7 @@ public class NPC extends Entity {
         // TODO: use actual dimensions
         super(10, 10);
 
-        this.message.set(message);
+        this.message = new SimpleStringProperty(message);
         this.setInteractable(true);
         
     }
