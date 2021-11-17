@@ -21,6 +21,7 @@ public abstract class Living extends Entity {
         this.maxHealth = new SimpleIntegerProperty(5);
         this.damage = new SimpleIntegerProperty(1);
         this.speed = new SimpleDoubleProperty(1);
+        this.direction = new SimpleIntegerProperty();
 
     }
 
