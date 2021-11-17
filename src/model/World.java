@@ -10,24 +10,32 @@ public class World {
     private ArrayList<Entity> entityList;
     private String currentlocation;
     private IntegerProperty score;
+    private DifficultyLevel difficulty;
     private Player player;
 
     // We want the world class to be a singleton so that other classes in the view can 
     // access the same world object.
     private World() {
+
         entityList = new ArrayList<Entity>();
         player = new Player();
         score = new SimpleIntegerProperty();
+        difficulty = DifficultyLevel.EASY;
+
     }
 
-    private static World instance = new World(); // create instance to be referenced 
+    private static World instance = new World(); // create instance to be referenced
 
     public static World instance() {
+
         return instance;
+
     }
 
     public static void reset() {
+
         instance = new World();
+    
     }
 
     /**
@@ -72,28 +80,42 @@ public class World {
 
     }
 
+    /// Getters and Setters ///
+
     public Player getPlayer() {
+
         return player;
+
     }
 
     public int getScore() {
+
         return score.get();
+
     }
 
     public void setScore(int score) {
+
         this.score.set(score);
+
     }
 
-    public IntegerProperty score() {
+    public IntegerProperty scoreProperty() {
+
         return score;
+
     }
 
     public String getCurrentlocation() {
+
         return currentlocation;
+    
     }
 
     public void setCurrentlocation(String currentlocation) {
+
         this.currentlocation = currentlocation;
+    
     }
 
     public ArrayList<Entity> getEntityList() {
@@ -107,5 +129,16 @@ public class World {
     
 
     
+    public DifficultyLevel getDifficulty() {
+
+        return this.difficulty;
+
+    }
+
+    public void setDifficulty(DifficultyLevel level) {
+
+        this.difficulty = level;
+
+    }
 
 }
