@@ -52,6 +52,10 @@ public class Player extends Living {
     public void move() {
     }
 
+    /**
+     * Checks if an enemy is within a semicircle of the player's direction, and if the enemy is within a certain distance of the player.
+     * If the enemy meets these conditions, the player's damage is passed to the corresponding enemies.
+     */
     @Override
     public void attack(int damage) {
         List<Entity> list = World.instance().getEntityList().stream().filter(e -> e.getType() == EntityType.GRUNT_ENEMY)
@@ -72,7 +76,7 @@ public class Player extends Living {
                     smallestDistance = distance;
                     double theta = Math.atan2(grunt.getY() - getY(), grunt.getX() - getX());
                     double angle = Math.toDegrees(theta);
-                    
+
                     if (angle < 0) {
                         angle += 360;
                     }
@@ -91,6 +95,9 @@ public class Player extends Living {
 
     @Override
     public void handleDeath() {
+        if (this.getHealth() <= 0) {
+            this.setDead(true);
+        }
     }
 
     /// Methods from Entity ///

@@ -13,6 +13,8 @@ public abstract class Living extends Entity {
     private DoubleProperty speed;
     private IntegerProperty direction;
 
+    private boolean isDead;
+
     public Living(int width, int height) {
 
         super(width, height);
@@ -22,6 +24,7 @@ public abstract class Living extends Entity {
         this.damage = new SimpleIntegerProperty(1);
         this.speed = new SimpleDoubleProperty(1);
         this.direction = new SimpleIntegerProperty();
+        this.isDead = false;
 
     }
 
@@ -122,5 +125,15 @@ public abstract class Living extends Entity {
         this.direction.set(direction);
 
     }
+
+    public boolean isDead() {
+        return isDead;
+    }
+
+    public void setDead(boolean isDead) {
+        this.isDead = isDead;
+    }
+
+    
     
 }
