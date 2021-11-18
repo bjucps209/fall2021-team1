@@ -92,6 +92,8 @@ public class Serialization {
 
         }
 
+        world.setEntityList(entities);
+
         reader.close();
 
     }

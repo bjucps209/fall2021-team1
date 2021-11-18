@@ -18,7 +18,7 @@ public class Item extends NPC {
     @Override
     public String serialize() {
 
-        return "" + getType() + "::" + getMessage() + "::" + scoreIncrease.get() + "\n";
+        return "" + getType() + "::" + getMessage().replaceAll("\n", "█") + "::" + scoreIncrease.get() + "\n";
 
     }
 

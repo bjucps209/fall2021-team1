@@ -12,7 +12,7 @@ public class NPC extends Entity {
         // TODO: use actual dimensions
         super(10, 10);
 
-        this.message = new SimpleStringProperty(message);
+        this.message = new SimpleStringProperty(message.replaceAll("█", "\n"));
         this.setInteractable(true);
         setPosition(300, 300);
         
@@ -23,7 +23,7 @@ public class NPC extends Entity {
     @Override
     public String serialize() {
 
-        return "" + getType() + "::" + getMessage() + "\n";
+        return "" + getType() + "::" + getMessage().replaceAll("\n", "█") + "\n";
 
     }
 
