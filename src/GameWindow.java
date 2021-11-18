@@ -61,6 +61,7 @@ public class GameWindow {
     private Image imgHeart3 = new Image("Final Assets/UI/PNG/3-hearts.png");
     private Image imgHeart2 = new Image("Final Assets/UI/PNG/2-hearts.png");
     private Image imgHeart1 = new Image("Final Assets/UI/PNG/1-hearts.png");
+    private Image imgattackAnim = new Image("Final Assets/Player/GIF/Player-Attack-128x128.gif");
 
     private Image imgNPC = new Image("Final Assets/NPC/PNG/NPC-Front-Stationary-128x128.png");
 
@@ -172,6 +173,7 @@ public class GameWindow {
             }
 
         }
+
 
     }
 
@@ -350,13 +352,16 @@ public class GameWindow {
 
         case Z:
             handleInteract();
+            break;
 
         case X:
             spawnEnemies();
+            break;
         
         case SPACE:
-        world.getPlayer().attack(world.getPlayer().getDamage());
-        handleAttackGraphic();
+            world.getPlayer().attack(world.getPlayer().getDamage());
+            handleAttackGraphic();
+            break;
 
         default:
             break;
@@ -370,7 +375,43 @@ public class GameWindow {
      */
     @FXML
     public void handleAttackGraphic() {
-        
+        int direction = world.getPlayer().getDirection();
+        ImageView imgviewAttack = new ImageView(imgattackAnim);
+        PauseTransition attackPause = new PauseTransition(Duration.seconds(0.3));
+        attackPause.setOnFinished(e -> imgviewAttack.setVisible(false));
+
+        switch (direction) {
+            case 270:
+                imgviewAttack.setX(world.getPlayer().getX());
+                imgviewAttack.setY(world.getPlayer().getY() + 90);
+                apaneMain.getChildren().add(imgviewAttack);
+                attackPause.play();
+                break;
+
+            case 180:
+                imgviewAttack.setX(world.getPlayer().getX() - 50);
+                imgviewAttack.setY(world.getPlayer().getY());
+                apaneMain.getChildren().add(imgviewAttack);
+                attackPause.play();
+                break;
+                
+            case 90:
+                imgviewAttack.setX(world.getPlayer().getX());
+                imgviewAttack.setY(world.getPlayer().getY() - 90);
+                apaneMain.getChildren().add(imgviewAttack);
+                attackPause.play();
+                break;
+            
+            case 0:
+                imgviewAttack.setX(world.getPlayer().getX() + 90);
+                imgviewAttack.setY(world.getPlayer().getY());
+                apaneMain.getChildren().add(imgviewAttack);
+                attackPause.play();
+                break;
+
+            default:
+                break;
+        }
     }
 
     /**
