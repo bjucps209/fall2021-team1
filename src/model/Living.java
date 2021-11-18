@@ -27,7 +27,7 @@ public abstract class Living extends Entity {
 
     // Override these methods and any methods from Entity
     public abstract void move();
-    public abstract void attack();
+    public abstract void attack(int damage);
     public abstract void handleDamage(int damage);
     public abstract void handleDeath();
 

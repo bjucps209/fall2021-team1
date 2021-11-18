@@ -49,7 +49,7 @@ public class Player extends Living {
     public void move() {}
 
     @Override
-    public void attack() {}
+    public void attack(int damage) {}
 
     @Override
     public void handleDamage(int damage) {}

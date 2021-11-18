@@ -353,12 +353,24 @@ public class GameWindow {
 
         case X:
             spawnEnemies();
+        
+        case SPACE:
+        world.getPlayer().attack(world.getPlayer().getDamage());
+        handleAttackGraphic();
 
         default:
             break;
 
         }
 
+    }
+
+    /**
+     * Displays the attack animation depending on where the player is standing.
+     */
+    @FXML
+    public void handleAttackGraphic() {
+        
     }
 
     /**
