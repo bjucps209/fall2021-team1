@@ -14,6 +14,7 @@ public class NPC extends Entity {
 
         this.message = new SimpleStringProperty(message);
         this.setInteractable(true);
+        setPosition(300, 300);
         
     }
 
@@ -26,7 +27,7 @@ public class NPC extends Entity {
     public String serialize() { return null; }
 
     @Override
-    public EntityType getType() { return null; }
+    public EntityType getType() { return EntityType.NPC; }
 
     /// Getters and Setters ///
 
