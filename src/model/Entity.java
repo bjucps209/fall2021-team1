@@ -55,7 +55,7 @@ public abstract class Entity {
 
     /// Getters and Setters ///
 
-    public void setPosition(int x, int y) {
+    public void setPosition(double x, double y) {
 
         this.x.set(x);
         this.y.set(y);
