@@ -64,6 +64,15 @@ public class World {
         entityList.add(new Grunt());
     }
 
+    
+    /// Serialization ///
+
+    public String serialize() {
+
+        return "WORLD::" + difficulty + "::" + currentlocation + "::" + score + "\n";
+
+    }
+
 
     /// Getters and Setters ///
 
