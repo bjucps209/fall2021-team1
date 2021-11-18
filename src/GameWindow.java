@@ -259,6 +259,9 @@ public class GameWindow {
         }
     }
 
+    /**
+     * Central "timer" method that calls the world's updateworld method.
+     */
     @FXML
     public void updateWorld() {
         world.updateWorld();
@@ -406,7 +409,9 @@ public class GameWindow {
             world.getPlayer().attack(world.getPlayer().getDamage());
             handleAttackGraphic();
             break;
-
+        
+        case S:
+            // Put save logic or function calls here.
         default:
             break;
 
@@ -415,7 +420,7 @@ public class GameWindow {
     }
 
     /**
-     * Displays the attack animation depending on where the player is standing.
+     * Displays the attack animation depending on the player's direction.
      */
     @FXML
     public void handleAttackGraphic() {
