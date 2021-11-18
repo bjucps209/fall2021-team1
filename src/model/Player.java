@@ -29,7 +29,7 @@ public class Player extends Living {
 
             double distance = Math.sqrt((entity.getX() - getX()) * (entity.getX() - getX()) + Math.sqrt((entity.getY() - getY()) * (entity.getY() - getY())));
 
-            if (distance < 95 && closest != null && closeDistance > distance) {
+            if (distance < closeDistance) {
 
                 closest = entity;
                 closeDistance = distance;
