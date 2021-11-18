@@ -36,7 +36,12 @@ public class Grunt extends Enemy {
     public void attack(int damage) {}
 
     @Override
-    public void handleDamage(int damage) {}
+    public void handleDamage(int damage) {
+        this.setHealth(this.getHealth() - damage);
+        if (this.getHealth() <= 0) {
+            handleDeath();
+        }
+    }
 
     @Override
     public void handleDeath() {}
