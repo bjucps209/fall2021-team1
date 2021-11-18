@@ -19,8 +19,10 @@ public class Grunt extends Enemy {
         this.setMaxHealth(3);
         this.setHealth(3);
         this.setDamage(1);
-        this.setSpeed(2);
+        this.setSpeed(1.5);
         this.setDetectionRadius(10);
+        state = GruntState.PATROL;
+        setPosition(900, 300);
 
     }
 
