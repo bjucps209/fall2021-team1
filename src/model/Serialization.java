@@ -44,7 +44,7 @@ public class Serialization {
         // Load Player data
         var player = world.getPlayer();
 
-        player.setPosition(Integer.parseInt(data[1]), Integer.parseInt(data[2]));
+        player.setPosition(Double.parseDouble(data[1]), Double.parseDouble(data[2]));
         player.setHealth(Integer.parseInt(data[3]));
         player.setDamage(Integer.parseInt(data[4]));
         player.setSpeed(Double.parseDouble(data[5]));
@@ -80,7 +80,7 @@ public class Serialization {
 
                     var grunt = new Grunt();
 
-                    grunt.setPosition(Integer.parseInt(data[1]), Integer.parseInt(data[2]));
+                    grunt.setPosition(Double.parseDouble(data[1]), Double.parseDouble(data[2]));
                     grunt.setState(data[3]);
 
                     entities.add(grunt);
@@ -91,6 +91,8 @@ public class Serialization {
             line = reader.readLine();
 
         }
+
+        world.setEntityList(entities);
 
         reader.close();
 

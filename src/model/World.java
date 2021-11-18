@@ -74,7 +74,7 @@ public class World {
 
     public String serialize() {
 
-        return "WORLD::" + difficulty + "::" + currentlocation + "::" + score + "\n";
+        return "WORLD::" + getDifficulty() + "::" + getCurrentlocation() + "::" + getScore() + "\n";
 
     }
 
