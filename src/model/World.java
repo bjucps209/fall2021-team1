@@ -61,7 +61,7 @@ public class World {
      * Spawns enemies in the current world location of the player.
      */
     public void spawnEnemies() {
-
+        entityList.add(new Grunt());
     }
 
     /**

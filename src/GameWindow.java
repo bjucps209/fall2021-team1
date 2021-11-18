@@ -17,8 +17,9 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.Enemy;
 import model.Entity;
-import model.Item;
+import model.Living;
 import model.NPC;
 import model.World;
 
@@ -62,6 +63,9 @@ public class GameWindow {
     private Image imgHeart1 = new Image("Final Assets/UI/PNG/1-hearts.png");
 
     private Image imgNPC = new Image("Final Assets/NPC/PNG/NPC-Front-Stationary-128x128.png");
+
+    private Image imgGrunt = new Image("Final Assets/Grunt/PNG/Grunt-Front-Stationary-128x128.png");
+
 
     // Model Attributes
     private World world;
@@ -214,6 +218,26 @@ public class GameWindow {
 
     }
 
+    
+    /**
+     * Spawns enemies in the current player's location, barebones implementation for alpha.
+     */
+    @FXML 
+    public void spawnEnemies() {
+        world.spawnEnemies();
+        for (Entity entity : world.getEntityList()) {
+            if (entity instanceof Enemy) {
+                Enemy enemy = (Enemy) entity;
+                ImageView imgViewGrunt = new ImageView(imgGrunt);
+                imgViewGrunt.xProperty().bindBidirectional(enemy.xProperty());
+                imgViewGrunt.yProperty().bindBidirectional(enemy.yProperty());
+                apaneMain.getChildren().add(imgViewGrunt);
+
+            }
+        }
+    }
+
+
     // Animation timer specifically for the player, does not effect the other entities movement.
     AnimationTimer playerMovement = new AnimationTimer() {
 
@@ -326,6 +350,9 @@ public class GameWindow {
 
         case Z:
             handleInteract();
+
+        case X:
+            spawnEnemies();
 
         default:
             break;
