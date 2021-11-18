@@ -72,12 +72,15 @@ public class Player extends Living {
                     smallestDistance = distance;
                     double theta = Math.atan2(grunt.getY() - getY(), grunt.getX() - getX());
                     double angle = Math.toDegrees(theta);
-                    
+
                     if (angle < 0) {
                         angle += 360;
                     }
                     if ((angle <= (getDirection() + 90)) || (angle >= (getDirection() - 90)) && smallestDistance <= 100) {
                         grunt.handleDamage(damage);
+                        if (grunt.isDead()) {
+                            World.instance().setScore(World.instance().getScore() + 100);
+                        }
                     }
                 }
 
@@ -91,6 +94,9 @@ public class Player extends Living {
 
     @Override
     public void handleDeath() {
+        if (this.getHealth() <= 0) {
+            this.setDead(true);
+        }
     }
 
     /// Methods from Entity ///

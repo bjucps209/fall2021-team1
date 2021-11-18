@@ -39,15 +39,16 @@ public class World {
     }
 
     /**
-     * Keeps track of all of the current enetities in the world's location. Calls their move methods if appropriate.
+     * Keeps track of all of the current enetities in the world's location. Calls various methods to update the game.
      */
     public void updateWorld() {
-        // For every entity in entity list
-        // Check what kind of entity it is
-        // If the entity is a moveable type enemy, call its move method
-        // If the entity has a collision factor, process in regards to its movement.
-        // If the entity has died or been removed, update its properties accordingly
-        // If the entity has been attacked, update its properties accordingly
+        for (Entity entity : entityList) {
+            if (entity instanceof Grunt) {
+                Grunt grunt = (Grunt) entity;
+                grunt.handleDeath();
+            }
+            player.handleDeath();
+        }
     }
 
     /**

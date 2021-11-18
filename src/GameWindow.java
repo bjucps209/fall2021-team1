@@ -1,5 +1,10 @@
+import java.util.ArrayList;
+
 import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
+import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -19,7 +24,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Enemy;
 import model.Entity;
-import model.Living;
+import model.Grunt;
 import model.NPC;
 import model.World;
 
@@ -62,17 +67,27 @@ public class GameWindow {
     private Image imgHeart2 = new Image("Final Assets/UI/PNG/2-hearts.png");
     private Image imgHeart1 = new Image("Final Assets/UI/PNG/1-hearts.png");
     private Image imgattackAnim = new Image("Final Assets/Player/GIF/Player-Attack-128x128.gif");
+    private Image imgGruntDeath = new Image("Final Assets/Grunt/GIF/Grunt-Death-128x128.gif");
 
     private Image imgNPC = new Image("Final Assets/NPC/PNG/NPC-Front-Stationary-128x128.png");
 
     private Image imgGrunt = new Image("Final Assets/Grunt/PNG/Grunt-Front-Stationary-128x128.png");
 
-
     // Model Attributes
     private World world;
 
+    // Temporary list to hold ImageViews. Similar functionality will be implemented
+    // with enemy ID's later.
+    ArrayList<ImageView> imgViewList;
+
     @FXML
     void initialize(Stage stage) {
+        imgViewList = new ArrayList<ImageView>();
+
+        // Timer for the updateworld method
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> updateWorld()));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
 
         // Images *****************************
         Image imgAboutScreen = new Image("Final Assets/World/PNG/World-AboutArea-1440x900.png");
@@ -142,6 +157,8 @@ public class GameWindow {
         // *************
         lblScore.setText(String.valueOf(world.getScore()));
         lblScore.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
+        lblScore.textProperty()
+                .bind(Bindings.createStringBinding(() -> String.valueOf(world.getScore()), world.scoreProperty()));
         AnchorPane.setBottomAnchor(lblScore, 10.0);
         AnchorPane.setLeftAnchor(lblScore, 10.0);
         apaneMain.getChildren().add(lblScore);
@@ -156,7 +173,6 @@ public class GameWindow {
         AnchorPane.setTopAnchor(lblLocation, 10.0);
         AnchorPane.setLeftAnchor(lblLocation, 10.0);
         apaneMain.getChildren().add(lblLocation);
-
 
         // Adding an NPC to the starter area
         world.getEntityList().add(new NPC("Welcome to Terrene!\nPress 'x' to spawn an enemy."));
@@ -174,57 +190,60 @@ public class GameWindow {
 
         }
 
-
     }
 
     /**
-     * Calls the Player's interact method, if an entity is within range of the player displays the entities message as a Label.
+     * Calls the Player's interact method, if an entity is within range of the
+     * player displays the entities message as a Label.
      */
     @FXML
     public void handleInteract() {
 
         Entity interactedEntity = world.getPlayer().interact();
 
-        if (interactedEntity == null) { return; }
+        if (interactedEntity == null) {
+            return;
+        }
 
         switch (interactedEntity.getType()) {
 
-            case NPC:
+        case NPC:
 
-                Label lblMessage = new Label();
-                lblMessage.setText(((NPC) interactedEntity).getMessage());
-                lblMessage.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
-                lblMessage.setLayoutX(interactedEntity.getX() - 53);
-                lblMessage.setLayoutY(interactedEntity.getY() - 30);
-            
-                apaneMain.getChildren().add(lblMessage);
-            
-                PauseTransition labelPause = new PauseTransition(Duration.seconds(3));
-                labelPause.setOnFinished(e -> lblMessage.setVisible(false));
-                labelPause.play();
-                        
-                return;
+            Label lblMessage = new Label();
+            lblMessage.setText(((NPC) interactedEntity).getMessage());
+            lblMessage.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
+            lblMessage.setLayoutX(interactedEntity.getX() - 53);
+            lblMessage.setLayoutY(interactedEntity.getY() - 30);
 
-            case ITEM:
+            apaneMain.getChildren().add(lblMessage);
 
-                // var item = (Item) interactedEntity;
-                // displayText(interactedEntity.getX() - 53, interactedEntity.getY() - 30, item.getMessage());
+            PauseTransition labelPause = new PauseTransition(Duration.seconds(3));
+            labelPause.setOnFinished(e -> lblMessage.setVisible(false));
+            labelPause.play();
 
-                // World.instance().increaseScore(item.getScoreIncrease());
-        
-            default:
+            return;
 
-                return;
+        case ITEM:
+
+            // var item = (Item) interactedEntity;
+            // displayText(interactedEntity.getX() - 53, interactedEntity.getY() - 30,
+            // item.getMessage());
+
+            // World.instance().increaseScore(item.getScoreIncrease());
+
+        default:
+
+            return;
 
         }
 
     }
 
-    
     /**
-     * Spawns enemies in the current player's location, barebones implementation for alpha.
+     * Spawns enemies in the current player's location, barebones implementation for
+     * alpha.
      */
-    @FXML 
+    @FXML
     public void spawnEnemies() {
         world.spawnEnemies();
         for (Entity entity : world.getEntityList()) {
@@ -234,13 +253,34 @@ public class GameWindow {
                 imgViewGrunt.xProperty().bindBidirectional(enemy.xProperty());
                 imgViewGrunt.yProperty().bindBidirectional(enemy.yProperty());
                 apaneMain.getChildren().add(imgViewGrunt);
+                imgViewList.add(imgViewGrunt);
 
             }
         }
     }
 
+    @FXML
+    public void updateWorld() {
+        world.updateWorld();
 
-    // Animation timer specifically for the player, does not effect the other entities movement.
+        for (Entity entity : world.getEntityList()) {
+            if (entity instanceof Grunt) {
+                Grunt grunt = (Grunt) entity;
+                if (grunt.isDead()) {
+                    for (ImageView imgview : imgViewList) {
+                        imgview.setImage(imgGruntDeath);
+                        PauseTransition gruntPause = new PauseTransition(Duration.seconds(0.5));
+                        gruntPause.setOnFinished(e -> imgview.setVisible(false));
+                        gruntPause.play();
+                    }
+                }
+            }
+        }
+
+    }
+
+    // Animation timer specifically for the player, does not effect the other
+    // entities movement.
     AnimationTimer playerMovement = new AnimationTimer() {
 
         @Override
@@ -282,6 +322,7 @@ public class GameWindow {
 
     /**
      * Handles various different cases when the player presses a key.
+     * 
      * @param event - the key currently held down.
      */
     public void keyPressed(KeyEvent event) {
@@ -324,6 +365,7 @@ public class GameWindow {
 
     /**
      * Handles various different cases when a player releases a key
+     * 
      * @param event - the key the player released.
      */
     public void keyReleased(KeyEvent event) {
@@ -357,7 +399,7 @@ public class GameWindow {
         case X:
             spawnEnemies();
             break;
-        
+
         case SPACE:
             world.getPlayer().attack(world.getPlayer().getDamage());
             handleAttackGraphic();
@@ -377,45 +419,46 @@ public class GameWindow {
     public void handleAttackGraphic() {
         int direction = world.getPlayer().getDirection();
         ImageView imgviewAttack = new ImageView(imgattackAnim);
-        PauseTransition attackPause = new PauseTransition(Duration.seconds(0.3));
+        PauseTransition attackPause = new PauseTransition(Duration.seconds(0.28));
         attackPause.setOnFinished(e -> imgviewAttack.setVisible(false));
 
         switch (direction) {
-            case 270:
-                imgviewAttack.setX(world.getPlayer().getX());
-                imgviewAttack.setY(world.getPlayer().getY() + 90);
-                apaneMain.getChildren().add(imgviewAttack);
-                attackPause.play();
-                break;
+        case 270:
+            imgviewAttack.setX(world.getPlayer().getX());
+            imgviewAttack.setY(world.getPlayer().getY() + 90);
+            apaneMain.getChildren().add(imgviewAttack);
+            attackPause.play();
+            break;
 
-            case 180:
-                imgviewAttack.setX(world.getPlayer().getX() - 50);
-                imgviewAttack.setY(world.getPlayer().getY());
-                apaneMain.getChildren().add(imgviewAttack);
-                attackPause.play();
-                break;
-                
-            case 90:
-                imgviewAttack.setX(world.getPlayer().getX());
-                imgviewAttack.setY(world.getPlayer().getY() - 90);
-                apaneMain.getChildren().add(imgviewAttack);
-                attackPause.play();
-                break;
-            
-            case 0:
-                imgviewAttack.setX(world.getPlayer().getX() + 90);
-                imgviewAttack.setY(world.getPlayer().getY());
-                apaneMain.getChildren().add(imgviewAttack);
-                attackPause.play();
-                break;
+        case 180:
+            imgviewAttack.setX(world.getPlayer().getX() - 50);
+            imgviewAttack.setY(world.getPlayer().getY());
+            apaneMain.getChildren().add(imgviewAttack);
+            attackPause.play();
+            break;
 
-            default:
-                break;
+        case 90:
+            imgviewAttack.setX(world.getPlayer().getX());
+            imgviewAttack.setY(world.getPlayer().getY() - 90);
+            apaneMain.getChildren().add(imgviewAttack);
+            attackPause.play();
+            break;
+
+        case 0:
+            imgviewAttack.setX(world.getPlayer().getX() + 90);
+            imgviewAttack.setY(world.getPlayer().getY());
+            apaneMain.getChildren().add(imgviewAttack);
+            attackPause.play();
+            break;
+
+        default:
+            break;
         }
     }
 
     /**
      * Displays the player's health as a bar of hearts.
+     * 
      * @param health - the player's current health value.
      */
     public void displayHealth(int health) {
@@ -463,37 +506,6 @@ public class GameWindow {
             break;
 
         }
-        
-    }
-
-    /**
-     * Display a text message on the screen at the given coordinates.
-     * @param x the x coordinate of the message
-     * @param y the y coordinate of the message
-     * @param message the message to display
-     */
-    // private void displayText(double x, double y, String message) {
-
-    //     Label lblMessage = new Label();
-    //     lblMessage.setText(message);
-    //     lblMessage.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
-    //     lblMessage.setLayoutX(x);
-    //     lblMessage.setLayoutY(y);
-     
-    //     apaneMain.getChildren().add(lblMessage);
-     
-    //     PauseTransition labelPause = new PauseTransition(Duration.seconds(3));
-    //     labelPause.setOnFinished(e -> lblMessage.setVisible(false));
-    //     labelPause.play();
-
-    // }
-
-    /**
-     * Generates the Game Screen that the user sees and interacts with.
-     */
-    @FXML
-    void generateGamescreen() {
 
     }
-
 }
