@@ -208,7 +208,7 @@ public class GameWindow {
                 // var item = (Item) interactedEntity;
                 // displayText(interactedEntity.getX() - 53, interactedEntity.getY() - 30, item.getMessage());
 
-                // // TODO: Increase score by item.getScoreIncrease()
+                // World.instance().increaseScore(item.getScoreIncrease());
         
             default:
 

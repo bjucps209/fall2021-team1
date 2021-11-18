@@ -100,6 +100,12 @@ public class World {
 
     }
 
+    public void increaseScore(int value) {
+
+        this.score.set(this.score.get() + value);
+
+    }
+
     public IntegerProperty scoreProperty() {
 
         return score;
@@ -119,15 +125,16 @@ public class World {
     }
 
     public ArrayList<Entity> getEntityList() {
+
         return entityList;
+
     }
 
     public void setEntityList(ArrayList<Entity> entityList) {
+
         this.entityList = entityList;
+
     }
-
-    
-
     
     public DifficultyLevel getDifficulty() {
 
