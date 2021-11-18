@@ -1,19 +1,38 @@
 package model;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 public class Item extends NPC {
 
-    public Item(String message) {
+    private IntegerProperty scoreIncrease;
+
+    public Item(String message, int score) {
+
         super(message);
+
+        this.scoreIncrease = new SimpleIntegerProperty(score);
+
     }
 
-    public String getMessage() {
-        return super.getMessage();
+    /// Getters and Setters ///
+
+    public IntegerProperty scoreIncreaseProperty() {
+
+        return this.scoreIncrease;
+
     }
 
-    public void setMessage(String message) {
-        super.setMessage(message);
+    public int getScoreIncrease() {
+
+        return this.scoreIncrease.get();
+
     }
 
-    
-    
+    public void setScoreIncrease(int value) {
+
+        this.scoreIncrease.set(value);
+        
+    }
+
 }
