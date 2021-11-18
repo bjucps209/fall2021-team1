@@ -61,9 +61,6 @@ public class Player extends Living {
     /// Methods from Entity ///
 
     @Override
-    public void action() {}
-
-    @Override
     public String serialize() { return null; }
 
     @Override
