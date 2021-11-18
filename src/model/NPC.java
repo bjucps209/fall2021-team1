@@ -21,10 +21,18 @@ public class NPC extends Entity {
     /// Methods from Entity ///
 
     @Override
-    public String serialize() { return null; }
+    public String serialize() {
+
+        return "" + getType() + "::" + getMessage() + "\n";
+
+    }
 
     @Override
-    public EntityType getType() { return EntityType.NPC; }
+    public EntityType getType() {
+        
+        return EntityType.NPC;
+    
+    }
 
     /// Getters and Setters ///
 

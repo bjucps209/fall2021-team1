@@ -61,7 +61,11 @@ public class Player extends Living {
     /// Methods from Entity ///
 
     @Override
-    public String serialize() { return null; }
+    public String serialize() {
+
+        return "" + getType() + "::" + getX() + "::" + getY() + "::" + getHealth() + "::" + getDamage() + "::" + getSpeed() + "\n";
+
+    }
 
     @Override
     public EntityType getType() {
