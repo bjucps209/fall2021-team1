@@ -185,16 +185,26 @@ public class GameWindow {
 
             case NPC:
 
-                displayText(interactedEntity.getX() - 53, interactedEntity.getY() - 30, ((NPC) interactedEntity).getMessage());
-                
+                Label lblMessage = new Label();
+                lblMessage.setText(((NPC) interactedEntity).getMessage());
+                lblMessage.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
+                lblMessage.setLayoutX(interactedEntity.getX() - 53);
+                lblMessage.setLayoutY(interactedEntity.getY() - 30);
+            
+                apaneMain.getChildren().add(lblMessage);
+            
+                PauseTransition labelPause = new PauseTransition(Duration.seconds(3));
+                labelPause.setOnFinished(e -> lblMessage.setVisible(false));
+                labelPause.play();
+                        
                 return;
 
             case ITEM:
 
-                var item = (Item) interactedEntity;
-                displayText(interactedEntity.getX() - 53, interactedEntity.getY() - 30, item.getMessage());
+                // var item = (Item) interactedEntity;
+                // displayText(interactedEntity.getX() - 53, interactedEntity.getY() - 30, item.getMessage());
 
-                // TODO: Increase score by item.getScoreIncrease()
+                // // TODO: Increase score by item.getScoreIncrease()
         
             default:
 
@@ -382,21 +392,21 @@ public class GameWindow {
      * @param y the y coordinate of the message
      * @param message the message to display
      */
-    private void displayText(double x, double y, String message) {
+    // private void displayText(double x, double y, String message) {
 
-        Label lblMessage = new Label();
-        lblMessage.setText(message);
-        lblMessage.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
-        lblMessage.setLayoutX(x);
-        lblMessage.setLayoutY(y);
+    //     Label lblMessage = new Label();
+    //     lblMessage.setText(message);
+    //     lblMessage.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
+    //     lblMessage.setLayoutX(x);
+    //     lblMessage.setLayoutY(y);
      
-        apaneMain.getChildren().add(lblMessage);
+    //     apaneMain.getChildren().add(lblMessage);
      
-        PauseTransition labelPause = new PauseTransition(Duration.seconds(3));
-        labelPause.setOnFinished(e -> lblMessage.setVisible(false));
-        labelPause.play();
+    //     PauseTransition labelPause = new PauseTransition(Duration.seconds(3));
+    //     labelPause.setOnFinished(e -> lblMessage.setVisible(false));
+    //     labelPause.play();
 
-    }
+    // }
 
     /**
      * Generates the Game Screen that the user sees and interacts with.
