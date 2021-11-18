@@ -6,14 +6,15 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class World {
-    
+
     private ArrayList<Entity> entityList;
     private String currentlocation;
     private IntegerProperty score;
     private DifficultyLevel difficulty;
     private Player player;
 
-    // We want the world class to be a singleton so that other classes in the view can 
+    // We want the world class to be a singleton so that other classes in the view
+    // can
     // access the same world object.
     private World() {
 
@@ -35,19 +36,22 @@ public class World {
     public static void reset() {
 
         instance = new World();
-    
+
     }
 
     /**
-     * Keeps track of all of the current enetities in the world's location. Calls various methods to update the game.
+     * Keeps track of all of the current enetities in the world's location. Calls
+     * various methods to update the game.
      */
     public void updateWorld() {
-        for (Entity entity : entityList) {
-            if (entity instanceof Grunt) {
-                Grunt grunt = (Grunt) entity;
-                grunt.handleDeath();
+        if (entityList.size() > 0) {
+            for (Entity entity : entityList) {
+                if (entity instanceof Grunt) {
+                    Grunt grunt = (Grunt) entity;
+                    grunt.handleDeath();
+                }
+                player.handleDeath();
             }
-            player.handleDeath();
         }
     }
 
@@ -64,7 +68,6 @@ public class World {
     public void spawnEnemies() {
         entityList.add(new Grunt());
     }
-
 
     /// Getters and Setters ///
 
@@ -101,13 +104,13 @@ public class World {
     public String getCurrentlocation() {
 
         return currentlocation;
-    
+
     }
 
     public void setCurrentlocation(String currentlocation) {
 
         this.currentlocation = currentlocation;
-    
+
     }
 
     public ArrayList<Entity> getEntityList() {
@@ -121,7 +124,7 @@ public class World {
         this.entityList = entityList;
 
     }
-    
+
     public DifficultyLevel getDifficulty() {
 
         return this.difficulty;

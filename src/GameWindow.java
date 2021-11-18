@@ -273,6 +273,8 @@ public class GameWindow {
                         gruntPause.setOnFinished(e -> imgview.setVisible(false));
                         gruntPause.play();
                     }
+                    world.setScore(world.getScore() + 100);
+                    world.getEntityList().remove(grunt);
                 }
             }
         }

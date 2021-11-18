@@ -78,9 +78,6 @@ public class Player extends Living {
                     }
                     if ((angle <= (getDirection() + 90)) || (angle >= (getDirection() - 90)) && smallestDistance <= 100) {
                         grunt.handleDamage(damage);
-                        if (grunt.isDead()) {
-                            World.instance().setScore(World.instance().getScore() + 100);
-                        }
                     }
                 }
 
