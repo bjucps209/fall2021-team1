@@ -265,19 +265,21 @@ public class GameWindow {
     @FXML
     public void updateWorld() {
         world.updateWorld();
-
-        for (Entity entity : world.getEntityList()) {
-            if (entity instanceof Grunt) {
-                Grunt grunt = (Grunt) entity;
-                if (grunt.isDead()) {
-                    for (ImageView imgview : imgViewList) {
-                        imgview.setImage(imgGruntDeath);
-                        PauseTransition gruntPause = new PauseTransition(Duration.seconds(0.5));
-                        gruntPause.setOnFinished(e -> imgview.setVisible(false));
-                        gruntPause.play();
+        if (world.getEntityList().size() > 0) {
+            for (Entity entity : world.getEntityList()) {
+                if (entity instanceof Grunt) {
+                    Grunt grunt = (Grunt) entity;
+                    if (grunt.isDead()) {
+                        for (ImageView imgview : imgViewList) {
+                            imgview.setImage(imgGruntDeath);
+                            PauseTransition gruntPause = new PauseTransition(Duration.seconds(0.5));
+                            gruntPause.setOnFinished(e -> imgview.setVisible(false));
+                            gruntPause.play();
+                        }
+                        world.setScore(world.getScore() + 100);
+                        world.getEntityList().remove(grunt);
+                        
                     }
-                    world.setScore(world.getScore() + 100);
-                    world.getEntityList().remove(grunt);
                 }
             }
         }
@@ -409,7 +411,7 @@ public class GameWindow {
             world.getPlayer().attack(world.getPlayer().getDamage());
             handleAttackGraphic();
             break;
-        
+
         case S:
             // Put save logic or function calls here.
         default:
