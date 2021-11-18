@@ -21,9 +21,6 @@ public class NPC extends Entity {
     /// Methods from Entity ///
 
     @Override
-    public void action() {}
-
-    @Override
     public String serialize() { return null; }
 
     @Override

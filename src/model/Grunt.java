@@ -43,9 +43,6 @@ public class Grunt extends Enemy {
     /// Methods from Enemy ///
 
     @Override
-    public void action() {}
-
-    @Override
     public String serialize() { return null; }
 
     @Override

@@ -50,7 +50,6 @@ public abstract class Entity {
     }
 
     // Override these methods
-    public abstract void action();
     public abstract String serialize();
     public abstract EntityType getType();
 
