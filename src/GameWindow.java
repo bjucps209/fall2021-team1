@@ -434,6 +434,7 @@ public class GameWindow {
                 System.out.println(e.getMessage());
 
             }
+            break;
 
         default:
             break;
