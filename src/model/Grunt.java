@@ -63,5 +63,37 @@ public class Grunt extends Enemy {
         return EntityType.GRUNT_ENEMY;
     
     }
+
+    /// Getters and Setters ///
+
+    public GruntState getState() {
+
+        return this.state;
+
+    }
+
+    public void setState(GruntState state) {
+
+        this.state = state;
+        
+    }
+
+    public void setState(String state) {
+
+        switch (state) {
+
+            case "PATROL":
+                
+                this.state = GruntState.PATROL;
+                break;
+        
+            default:
+
+                this.state = GruntState.ATTACK;
+                break;
+                
+        }
+
+    }
     
 }
