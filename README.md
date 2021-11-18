@@ -3,7 +3,7 @@
 Welcome to the Fall 2021 Team 1 Github Repository
 
 ### Instructions
-Use the arrow keys to move the player character around the screen. The Z key interacts with the world, such as talking to NPC's or picking up items. The X key spawns an enemy to the screen (Alpha only). The spacebar allows the player to attack.
+Use the arrow keys to move the player character around the screen. The Z key interacts with the world, such as talking to NPC's or picking up items. The X key spawns an enemy to the screen (Alpha only). The spacebar allows the player to attack. S saves the current state of the game, and L loads it.
 
 ### Work Completed
 Gameplay: Basic gameplay is working, the player can move around the screen, interact with NPC's or items, and attack and kill enemies. The game screen is finished as well, it displays the appropriate amount of hearts for the player's health as well as the current score and current location. Enemies currently have barebones implementation, can be spawned in killed only. NPC's work as intended.
