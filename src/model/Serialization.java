@@ -8,7 +8,7 @@ public class Serialization {
     /**
      * Loads the game from a text file.
      */
-    public void load() throws IOException {
+    public static void load() throws IOException {
 
         var file = new File("SAVEGAME.txt");
 
@@ -99,7 +99,7 @@ public class Serialization {
     /**
      * Saves the game to a text file.
      */
-    public void save(ArrayList<Entity> entities) throws IOException {
+    public static void save(ArrayList<Entity> entities) throws IOException {
 
         // Clear old save
         var file = new File("SAVEGAME.txt");
@@ -127,7 +127,7 @@ public class Serialization {
 
     /// Utility ///
 
-    private DifficultyLevel stringToDifficulty(String difficulty) throws IOException {
+    private static DifficultyLevel stringToDifficulty(String difficulty) throws IOException {
 
         switch (difficulty) {
 
@@ -156,7 +156,7 @@ public class Serialization {
      * @param type the type string
      * @return the string representing type
      */
-    private EntityType stringToType(String type) throws IOException {
+    private static EntityType stringToType(String type) throws IOException {
 
         switch (type) {
 

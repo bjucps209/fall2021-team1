@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javafx.animation.AnimationTimer;
@@ -26,6 +27,7 @@ import model.Enemy;
 import model.Entity;
 import model.Grunt;
 import model.NPC;
+import model.Serialization;
 import model.World;
 
 public class GameWindow {
@@ -411,7 +413,28 @@ public class GameWindow {
             break;
         
         case S:
-            // Put save logic or function calls here.
+            try {
+                
+                Serialization.save(World.instance().getEntityList());
+
+            } catch (IOException e) {
+
+                System.out.println(e.getMessage());
+            
+            }
+            break;
+
+        case L:
+            try {
+
+                Serialization.load();
+
+            } catch (IOException e) {
+
+                System.out.println(e.getMessage());
+
+            }
+
         default:
             break;
 
