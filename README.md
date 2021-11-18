@@ -32,3 +32,4 @@ https://bju-my.sharepoint.com/:v:/g/personal/afox797_students_bju_edu/EfU9zCAlrF
 | David Goff | dgoff448 | | | |
 
 [Andrew Fox Journal](https://github.com/bjucps209/fall2021-team1/wiki/Andrew-Fox-Journal)
+[Joshua Douglas Journal](https://github.com/bjucps209/fall2021-team1/wiki/Joshua-Douglas-Journal)
