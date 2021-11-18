@@ -65,21 +65,6 @@ public class World {
         entityList.add(new Grunt());
     }
 
-    /**
-     * Saves the game to a text file.
-     */
-    public void save() {
-
-
-    }
-
-    /**
-     * Loads the game from a text file.
-     */
-    public void load() {
-
-
-    }
 
     /// Getters and Setters ///
 

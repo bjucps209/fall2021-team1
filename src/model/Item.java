@@ -15,6 +15,20 @@ public class Item extends NPC {
 
     }
 
+    @Override
+    public String serialize() {
+
+        return "" + getType() + "::" + getMessage() + "::" + scoreIncrease.get() + "\n";
+
+    }
+
+    @Override
+    public EntityType getType() {
+        
+        return EntityType.ITEM;
+    
+    }
+
     /// Getters and Setters ///
 
     public IntegerProperty scoreIncreaseProperty() {

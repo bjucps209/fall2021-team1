@@ -103,7 +103,9 @@ public class Player extends Living {
 
     @Override
     public String serialize() {
-        return null;
+
+        return "" + getType() + "::" + getX() + "::" + getY() + "::" + getHealth() + "::" + getDamage() + "::" + getSpeed() + "\n";
+
     }
 
     @Override
