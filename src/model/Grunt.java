@@ -53,7 +53,7 @@ public class Grunt extends Enemy {
     @Override
     public String serialize() {
 
-        return "" + getType() + "::" + getX() + "::" + getY() + "::" + state + "\n";
+        return "" + getType() + "::" + getId() + "::" + getX() + "::" + getY() + "::" + state + "\n";
 
     }
 

@@ -5,12 +5,14 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public abstract class Enemy extends Living {
 
+    private IntegerProperty id;
     private IntegerProperty detectionRadius;
 
     public Enemy(int width, int height) {
 
         super(width, height);
 
+        this.id = new SimpleIntegerProperty();
         this.detectionRadius = new SimpleIntegerProperty();
         
     }
@@ -44,6 +46,25 @@ public abstract class Enemy extends Living {
     public void setDetectionRadius(int radius) {
 
         this.detectionRadius.set(radius);
+
+    }
+
+    public IntegerProperty idProperty() {
+
+        return this.id;
+
+    }
+
+    public int getId() {
+
+        return this.id.get();
+
+    }
+
+
+    public void setId(int id) {
+
+        this.id.set(id);
 
     }
 

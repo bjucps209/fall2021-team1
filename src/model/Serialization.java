@@ -80,8 +80,9 @@ public class Serialization {
 
                     var grunt = new Grunt();
 
-                    grunt.setPosition(Double.parseDouble(data[1]), Double.parseDouble(data[2]));
-                    grunt.setState(data[3]);
+                    grunt.setId(Integer.parseInt(data[1]));
+                    grunt.setPosition(Double.parseDouble(data[2]), Double.parseDouble(data[3]));
+                    grunt.setState(data[4]);
 
                     entities.add(grunt);
                     break;
