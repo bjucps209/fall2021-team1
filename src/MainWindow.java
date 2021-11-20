@@ -198,9 +198,6 @@ public class MainWindow  {
         Joshua Douglass
         Andrew Fox
         David Goff
-        
-        SFX:
-        btnClick.mp3 by Zapsplat.com
 
         Music:
         'Retro Forest' by David Fesliyan
