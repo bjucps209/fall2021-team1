@@ -15,24 +15,31 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
 import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class MainWindow  {
-    @FXML AnchorPane apaneMain;
+    @FXML StackPane spaneMain;
 
     /**
      * Intializes the start screen with music in the background and the font style used for the application.
      * @param stage
      */
     void initialize(Stage stage) {
+        // Music
         AudioClip music = new AudioClip(getClass().getResource("Audio/Retro_Forest_-_David_Fesliyan.mp3").toExternalForm());
         music.setVolume(0.5);
         // music.play();
-        startScreen();
+
+        // Font
         Font.loadFont(getClass().getResourceAsStream("/Final Assets/UI/Minecraft.ttf"), 64);
+
+        // Start Screen
+        startScreen();
     }
 
 
@@ -47,7 +54,7 @@ public class MainWindow  {
             BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
             BackgroundPosition.DEFAULT, new BackgroundSize(1.0, 1.0, true, true, false, false));
         Background bGround = new Background(bImg);
-        apaneMain.setBackground(bGround);
+        spaneMain.setBackground(bGround);
 
         VBox vbox = new VBox();
         vbox.setAlignment(Pos.CENTER);
@@ -144,10 +151,9 @@ public class MainWindow  {
         vbox.getChildren().add(HSbtn);
         vbox.getChildren().add(Helpbtn);
 
-        vbox.setLayoutX(200);
-        vbox.setLayoutY(-75);
+        vbox.setTranslateY(-75);
 
-        apaneMain.getChildren().add(vbox);
+        spaneMain.getChildren().add(vbox);
     }
 
 
@@ -156,7 +162,6 @@ public class MainWindow  {
      */
     public void aboutScreen(MouseEvent e) {
         clearVBox();
-
         Image back = new Image("Final Assets/UI/PNG/UI-BackBtn1-312x80.png");
         ImageView backBtn = new ImageView(back);
 
@@ -182,22 +187,35 @@ public class MainWindow  {
         vbox.setAlignment(Pos.CENTER);
         vbox.setSpacing(10.0);
         vbox.getChildren().add(backBtn);
-        vbox.setLayoutX(553);
-        vbox.setLayoutY(800);
+        vbox.setTranslateY(350);
 
         VBox v = new VBox();
-        v.setAlignment(Pos.BOTTOM_CENTER);
+        v.setAlignment(Pos.TOP_CENTER);
         v.setSpacing(10.0);
-        v.setLayoutX(570);
-        v.setLayoutY(100);
 
-        // TODO: Label will get a string of text from High Score or Leaderboard class
-        Label lbl = new Label("    Developers:\n\nJoshua Douglass\n    Andrew Fox\n    David Goff");
+        Label lbl = new Label("""
+        Game Developers:
+        Joshua Douglass
+        Andrew Fox
+        David Goff
+        
+        SFX:
+        btnClick.mp3 by Zapsplat.com
+
+        Music:
+        'Retro Forest' by David Fesliyan
+
+        Art Design:
+        David Goff
+        """);
+
         lbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
+        lbl.setTextAlignment(TextAlignment.CENTER);
         v.getChildren().add(lbl);
 
-        apaneMain.getChildren().add(v);
-        apaneMain.getChildren().add(vbox);
+
+        spaneMain.getChildren().add(v);
+        spaneMain.getChildren().add(vbox);
     }
 
     /**
@@ -206,10 +224,9 @@ public class MainWindow  {
     public void hsScreen(MouseEvent e) {
         clearVBox();
         VBox vbox = new VBox();
-        vbox.setAlignment(Pos.BOTTOM_CENTER);
+        vbox.setAlignment(Pos.CENTER);
         vbox.setSpacing(10.0);
-        vbox.setLayoutX(553);
-        vbox.setLayoutY(800);
+        vbox.setTranslateY(350);
 
         Image back = new Image("Final Assets/UI/PNG/UI-BackBtn1-312x80.png");
         ImageView backBtn = new ImageView(back);
@@ -232,9 +249,8 @@ public class MainWindow  {
         backBtn.setOnMouseClicked(backEvent -> callStartScreen(backEvent));
 
         VBox v = new VBox();
-        v.setAlignment(Pos.BOTTOM_CENTER);
+        v.setAlignment(Pos.TOP_CENTER);
         v.setSpacing(10.0);
-        v.setLayoutX(553);
 
         // TODO: Label will get a string of text from High Score or Leaderboard class
         Label lbl = new Label("TestName   TestScore \nTestName   TestScore \nTestName   TestScore \nTestName   TestScore \nTestName   TestScore \n");
@@ -243,8 +259,8 @@ public class MainWindow  {
         v.getChildren().add(lbl);
         vbox.getChildren().add(backBtn);
 
-        apaneMain.getChildren().add(v);
-        apaneMain.getChildren().add(vbox);
+        spaneMain.getChildren().add(v);
+        spaneMain.getChildren().add(vbox);
     }
 
     /**
@@ -253,10 +269,9 @@ public class MainWindow  {
     public void helpScreen(MouseEvent e) {
         clearVBox();
         VBox vbox = new VBox();
-        vbox.setAlignment(Pos.BOTTOM_CENTER);
+        vbox.setAlignment(Pos.CENTER);
         vbox.setSpacing(10.0);
-        vbox.setLayoutX(553);
-        vbox.setLayoutY(800);
+        vbox.setTranslateY(350);
 
         Image back = new Image("Final Assets/UI/PNG/UI-BackBtn1-312x80.png");
         ImageView backBtn = new ImageView(back);
@@ -279,7 +294,7 @@ public class MainWindow  {
         backBtn.setOnMouseClicked(backEvent -> callStartScreen(backEvent));
 
         vbox.getChildren().add(backBtn);
-        apaneMain.getChildren().add(vbox);
+        spaneMain.getChildren().add(vbox);
     }
 
     /**
@@ -294,9 +309,9 @@ public class MainWindow  {
      * Clears the vboxes that populates the screen.
      */
     public void clearVBox() {
-        int size = apaneMain.getChildren().size();
+        int size = spaneMain.getChildren().size();
         for (int i = 0; i < size; ++i) {
-            apaneMain.getChildren().remove(0);
+            spaneMain.getChildren().remove(0);
         }
     }
 

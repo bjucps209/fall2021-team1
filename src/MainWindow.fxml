@@ -5,7 +5,7 @@
 
 
 
-<AnchorPane fx:id="apaneMain" fx:controller="MainWindow" xmlns:fx="http://javafx.com/fxml"  stylesheets="@MainWindow.css"
+<StackPane fx:id="spaneMain" fx:controller="MainWindow" xmlns:fx="http://javafx.com/fxml"  stylesheets="@MainWindow.css"
      prefHeight="900" prefWidth="1440">
 
-</AnchorPane>
+</StackPane>
