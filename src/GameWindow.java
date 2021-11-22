@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
@@ -262,28 +263,87 @@ public class GameWindow {
     }
 
     /**
+     * BROKEN
      * Central "timer" method that calls the world's updateworld method.
      */
     @FXML
-    public void updateWorld() {
+    public void BROKEN_updateWorld() {
+
         world.updateWorld();
-        if (world.getEntityList().size() > 0) {
-            for (Entity entity : world.getEntityList()) {
+        var entities = world.getEntityList();
+
+        if (entities.size() > 0) {
+
+            for (Entity entity : entities) {
+
                 if (entity instanceof Grunt) {
+
                     Grunt grunt = (Grunt) entity;
+
                     if (grunt.isDead()) {
+
                         for (ImageView imgview : imgViewList) {
+
                             imgview.setImage(imgGruntDeath);
                             PauseTransition gruntPause = new PauseTransition(Duration.seconds(0.5));
                             gruntPause.setOnFinished(e -> imgview.setVisible(false));
                             gruntPause.play();
+
                         }
+
                         world.setScore(world.getScore() + 100);
-                        world.getEntityList().remove(grunt);
+
+                        // TODO: fix bug related to this line
+                        entities.remove(grunt); // Causes ConcurrentModificationException
                         
                     }
+
                 }
+
             }
+
+        }
+
+    }
+
+    /**
+     * Central "timer" method that calls the world's updateWorld() method.
+     */
+    @FXML
+    public void updateWorld() {
+
+        world.updateWorld();
+        var iterator = world.getEntityList().iterator();
+
+        while (iterator.hasNext()) {
+
+            Entity entity = iterator.next();
+
+            // Update grunts
+            if (entity instanceof Grunt) {
+
+                // Play death animation if dead
+                if (((Grunt) entity).isDead()) {
+
+                    for (ImageView imgview : imgViewList) {
+
+                        imgview.setImage(imgGruntDeath);
+                        PauseTransition gruntPause = new PauseTransition(Duration.seconds(0.5));
+                        gruntPause.setOnFinished(e -> imgview.setVisible(false));
+                        gruntPause.play();
+
+                    }
+
+                    // Increase score
+                    world.increaseScore(100);
+
+                    // Remove grunt
+                    iterator.remove();
+
+                }
+
+            }
+
         }
 
     }
