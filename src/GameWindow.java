@@ -263,50 +263,6 @@ public class GameWindow {
     }
 
     /**
-     * BROKEN
-     * Central "timer" method that calls the world's updateworld method.
-     */
-    @FXML
-    public void BROKEN_updateWorld() {
-
-        world.updateWorld();
-        var entities = world.getEntityList();
-
-        if (entities.size() > 0) {
-
-            for (Entity entity : entities) {
-
-                if (entity instanceof Grunt) {
-
-                    Grunt grunt = (Grunt) entity;
-
-                    if (grunt.isDead()) {
-
-                        for (ImageView imgview : imgViewList) {
-
-                            imgview.setImage(imgGruntDeath);
-                            PauseTransition gruntPause = new PauseTransition(Duration.seconds(0.5));
-                            gruntPause.setOnFinished(e -> imgview.setVisible(false));
-                            gruntPause.play();
-
-                        }
-
-                        world.setScore(world.getScore() + 100);
-
-                        // TODO: fix bug related to this line
-                        entities.remove(grunt); // Causes ConcurrentModificationException
-                        
-                    }
-
-                }
-
-            }
-
-        }
-
-    }
-
-    /**
      * Central "timer" method that calls the world's updateWorld() method.
      */
     @FXML
