@@ -1,6 +1,5 @@
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
@@ -248,9 +247,13 @@ public class GameWindow {
      */
     @FXML
     public void spawnEnemies() {
+
         world.spawnEnemies();
+
         for (Entity entity : world.getEntityList()) {
+
             if (entity instanceof Enemy) {
+
                 Enemy enemy = (Enemy) entity;
                 ImageView imgViewGrunt = new ImageView(imgGrunt);
                 imgViewGrunt.xProperty().bindBidirectional(enemy.xProperty());
@@ -259,7 +262,9 @@ public class GameWindow {
                 imgViewList.add(imgViewGrunt);
 
             }
+
         }
+
     }
 
     /**
@@ -313,28 +318,28 @@ public class GameWindow {
 
             double speed = world.getPlayer().getSpeed();
 
-            if (uPressed.get()) {
+            if (uPressed.get()) { // Up
 
                 world.getPlayer().setY(world.getPlayer().getY() - speed);
                 imgviewPlayer.setY(world.getPlayer().getY());
 
             }
 
-            if (dPressed.get()) {
+            if (dPressed.get()) { // Down
 
                 world.getPlayer().setY(world.getPlayer().getY() + speed);
                 imgviewPlayer.setY(world.getPlayer().getY());
 
             }
 
-            if (lPressed.get()) {
+            if (lPressed.get()) { // Left
 
                 world.getPlayer().setX(world.getPlayer().getX() - speed);
                 imgviewPlayer.setX(world.getPlayer().getX());
 
             }
 
-            if (rPressed.get()) {
+            if (rPressed.get()) { // Right
 
                 world.getPlayer().setX(world.getPlayer().getX() + speed);
                 imgviewPlayer.setX(world.getPlayer().getX());
@@ -344,6 +349,65 @@ public class GameWindow {
         }
 
     };
+
+    /// Animation Attribute ///
+    private enum AnimationDirection {
+
+        UP, DOWN, LEFT, RIGHT, NONE
+
+    }
+
+    // The direction of the last animation
+    private AnimationDirection lastAnimationDirection = AnimationDirection.NONE;
+
+    /**
+     * Update the player image view's image to reflect movement direction.
+     */
+    private void processAnimationDirection() {
+
+        if (uPressed.get() && !dPressed.get() && !lPressed.get() && !rPressed.get()) {
+
+            lastAnimationDirection = AnimationDirection.UP;
+            imgviewPlayer.setImage(imgPlayerBackMove);
+    
+        } else if (dPressed.get() && !uPressed.get() && !lPressed.get() && !rPressed.get()) {
+    
+            lastAnimationDirection = AnimationDirection.DOWN;
+            imgviewPlayer.setImage(imgPlayerFrontMove);
+
+        } else if (rPressed.get() && !lPressed.get()) {
+
+            lastAnimationDirection = AnimationDirection.RIGHT;
+            imgviewPlayer.setImage(imgPlayerRightMove);
+    
+        } else if (lPressed.get() && !rPressed.get()) {
+    
+            lastAnimationDirection = AnimationDirection.LEFT;
+            imgviewPlayer.setImage(imgPlayerLeftMove);
+
+        } else if (lastAnimationDirection == AnimationDirection.UP) {
+
+            lastAnimationDirection = AnimationDirection.NONE;
+            imgviewPlayer.setImage(imgPlayerBack);
+
+        } else if (lastAnimationDirection == AnimationDirection.DOWN) {
+
+            lastAnimationDirection = AnimationDirection.NONE;
+            imgviewPlayer.setImage(imgPlayerFront);
+        
+        } else if (lastAnimationDirection == AnimationDirection.LEFT) {
+
+            lastAnimationDirection = AnimationDirection.NONE;
+            imgviewPlayer.setImage(imgPlayerLeft);
+
+        } else {
+
+            lastAnimationDirection = AnimationDirection.NONE;
+            imgviewPlayer.setImage(imgPlayerRight);
+
+        }
+
+    }
 
     /**
      * Handles various different cases when the player presses a key.
@@ -356,25 +420,33 @@ public class GameWindow {
 
         case UP:
             uPressed.set(true);
-            imgviewPlayer.setImage(imgPlayerBackMove);
+
+            processAnimationDirection();
+
             world.getPlayer().setDirection(90);
             break;
 
         case LEFT:
             lPressed.set(true);
-            imgviewPlayer.setImage(imgPlayerLeftMove);
+            
+            processAnimationDirection();
+
             world.getPlayer().setDirection(180);
             break;
 
         case DOWN:
             dPressed.set(true);
-            imgviewPlayer.setImage(imgPlayerFrontMove);
+
+            processAnimationDirection();
+            
             world.getPlayer().setDirection(270);
             break;
 
         case RIGHT:
             rPressed.set(true);
-            imgviewPlayer.setImage(imgPlayerRightMove);
+            
+            processAnimationDirection();
+
             world.getPlayer().setDirection(0);
             break;
 
@@ -399,22 +471,30 @@ public class GameWindow {
 
         case UP:
             uPressed.set(false);
-            imgviewPlayer.setImage(imgPlayerBack);
+
+            processAnimationDirection();
+
             break;
 
         case LEFT:
             lPressed.set(false);
-            imgviewPlayer.setImage(imgPlayerLeft);
+
+            processAnimationDirection();
+
             break;
 
         case DOWN:
             dPressed.set(false);
-            imgviewPlayer.setImage(imgPlayerFront);
+
+            processAnimationDirection();
+
             break;
 
         case RIGHT:
             rPressed.set(false);
-            imgviewPlayer.setImage(imgPlayerRight);
+
+            processAnimationDirection();
+
             break;
 
         case Z:
