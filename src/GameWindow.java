@@ -353,12 +353,12 @@ public class GameWindow {
     /// Animation Attribute ///
     private enum AnimationDirection {
 
-        UP, DOWN, LEFT, RIGHT, NONE
+        UP, DOWN, LEFT, RIGHT
 
     }
 
     // The direction of the last animation
-    private AnimationDirection lastAnimationDirection = AnimationDirection.NONE;
+    private AnimationDirection lastAnimationDirection = AnimationDirection.RIGHT;
 
     /**
      * Update the player image view's image to reflect movement direction.
@@ -387,22 +387,18 @@ public class GameWindow {
 
         } else if (lastAnimationDirection == AnimationDirection.UP) {
 
-            lastAnimationDirection = AnimationDirection.NONE;
             imgviewPlayer.setImage(imgPlayerBack);
 
         } else if (lastAnimationDirection == AnimationDirection.DOWN) {
 
-            lastAnimationDirection = AnimationDirection.NONE;
             imgviewPlayer.setImage(imgPlayerFront);
         
         } else if (lastAnimationDirection == AnimationDirection.LEFT) {
 
-            lastAnimationDirection = AnimationDirection.NONE;
             imgviewPlayer.setImage(imgPlayerLeft);
 
         } else {
 
-            lastAnimationDirection = AnimationDirection.NONE;
             imgviewPlayer.setImage(imgPlayerRight);
 
         }
