@@ -3,46 +3,60 @@ package model;
 import java.util.ArrayList;
 
 public class Leaderboard {
-    private ArrayList<HighScore> highscores = new ArrayList<HighScore>();
-    private HighScore currentScore;
 
-    public Leaderboard(String name, int score) {
-        // calls load()
-        // calls process()
-        // setCurrentScore(HighScore(name, score))
+    private Leaderboard instance;
+    private ArrayList<HighScore> highscores;
+
+    /**
+     * Creates a new leaderboard with the given score list.
+     * @param scores a list of HighScore objects
+     */
+    private Leaderboard(ArrayList<HighScore> scores) {
+
+        this.highscores = scores;
 
     }
 
-    public void process() {
-        // compares currentScore to lowest score in highscores
-        // If currrentScore is bigger, add it appropriately to highscores
-        // If currentScore is lower, do nothing
+    /**
+     * Compares the provided score information to the saved scores and adds it if it is higher.
+     * @param name the player name
+     * @param score the score
+     */
+    public void process(String name, int score) {
+
+        
+        
     }
 
-    public void load() {
-        // loads data from text file into two variables
-        // make new HighScore object with the two variables
-        // add the Highscore object to highscores
+    /**
+     * Sorts the scores highest to lowest.
+     */
+    private void sortScores() {
+
+
+
     }
 
-    public void save() {
-        // saves the current highscores to text file
+    /**
+     * Returns the single instance of the leaderboard.
+     * @return the leaderboard
+     */
+    public Leaderboard getInstance() {
+
+        return this.instance;
+
     }
 
     public ArrayList<HighScore> getHighscores() {
+
         return highscores;
+
     }
 
     public void setHighscores(ArrayList<HighScore> highscores) {
+
         this.highscores = highscores;
-    }
-
-    public HighScore getCurrentScore() {
-        return currentScore;
-    }
-
-    public void setCurrentScore(HighScore currentScore) {
-        this.currentScore = currentScore;
+    
     }
 
 }
