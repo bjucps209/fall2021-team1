@@ -53,6 +53,8 @@ public class GameWindow {
     private AnchorPane apaneMain;
     @FXML
     private ImageView imgviewPlayer, imgviewHeart;
+    @FXML
+    private boolean isPaused;
 
     @FXML
     private Label lblScore, lblLocation;
@@ -117,6 +119,38 @@ public class GameWindow {
     private Image imgStump = new Image("Final Assets/Objects/PNG/Objects-Stump-256x256.png");
     private Image imgTree = new Image("Final Assets/Objects/PNG/Objects-Tree-256x256.png");
     private Image imgWell = new Image("Final Assets/Objects/PNG/Objects-Well-256x256.png");
+    // **********************
+
+    // UI Images ************
+    private Image imgBackgroundDim = new Image("Final Assets/UI/PNG/UI-BackgroundDim-1440x900.png");
+    private Image imgPauseBtn1 = new Image("Final Assets/UI/PNG/UI-PauseBtn1-80x80.png");
+    private Image imgPauseBtn2 = new Image("Final Assets/UI/PNG/UI-PauseBtn2-80x80.png");
+    private Image imgSaveBtn1 = new Image("Final Assets/UI/PNG/UI-SaveBtn1-312x80.png");
+    private Image imgSaveBtn2 = new Image("Final Assets/UI/PNG/UI-SaveBtn2-312x80.png");
+    private Image imgLoadbtn1 = new Image("Final Assets/UI/PNG/UI-LoadBtn1-312x80.png");
+    private Image imgLoadbtn2 = new Image("Final Assets/UI/PNG/UI-LoadBtn2-312x80.png");
+    private Image imgHelpBtn1 = new Image("Final Assets/UI/PNG/UI-HelpBtn1-312x80.png");
+    private Image imgHelpBtn2 = new Image("Final Assets/UI/PNG/UI-HelpBtn2-312x80.png");
+    private Image imgQuitBtn1 = new Image("Final Assets/UI/PNG/UI-QuitBtn1-312x80.png");
+    private Image imgQuitBtn2 = new Image("Final Assets/UI/PNG/UI-QuitBtn2-312x80.png");
+    private Image imgBackBtn1 = new Image("Final Assets/UI/PNG/UI-BackBtn1-312x80.png");
+    private Image imgBackBtn2 = new Image("Final Assets/UI/PNG/UI-BackBtn2-312x80.png");
+    // **********************
+
+    // UI ImageViews ************
+    private ImageView imgviewBackgroundDim = new ImageView(imgBackgroundDim);
+    private ImageView imgviewPauseBtn1 = new ImageView(imgPauseBtn1);
+    private ImageView imgviewPauseBtn2 = new ImageView(imgPauseBtn2);
+    private ImageView imgviewSaveBtn1 = new ImageView(imgSaveBtn1);
+    private ImageView imgviewSaveBtn2 = new ImageView(imgSaveBtn2);
+    private ImageView imgviewLoadbtn1 = new ImageView(imgLoadbtn1);
+    private ImageView imgviewLoadbtn2 = new ImageView(imgLoadbtn2);
+    private ImageView imgviewHelpBtn1 = new ImageView(imgHelpBtn1);
+    private ImageView imgviewHelpBtn2 = new ImageView(imgHelpBtn2);
+    private ImageView imgviewQuitBtn1 = new ImageView(imgQuitBtn1);
+    private ImageView imgviewQuitBtn2 = new ImageView(imgQuitBtn2);
+    private ImageView imgviewBackBtn1 = new ImageView(imgBackBtn1);
+    private ImageView imgviewBackBtn2 = new ImageView(imgBackBtn2);
     // **********************
     
     
@@ -597,11 +631,33 @@ public class GameWindow {
 
             }
             break;
+        
+        case ESCAPE:
+            if (isPaused()) {
+                setIsPaused(false);
+                unpause();
+            } else {
+                setIsPaused(true);
+                pause();
+            }
+            
+            break;
 
         default:
             break;
 
         }
+
+    }
+
+    @FXML
+    public void pause() {
+        ImageView imgviewBD = new ImageView(imgBackgroundDim);
+        apaneMain.getChildren().add(imgviewBD);
+    }
+
+    @FXML
+    public void unpause() {
 
     }
 
@@ -700,5 +756,13 @@ public class GameWindow {
 
         }
 
+    }
+    
+    public void setIsPaused(boolean bool) {
+        this.isPaused = bool;
+    }
+
+    public boolean isPaused() {
+        return this.isPaused;
     }
 }
