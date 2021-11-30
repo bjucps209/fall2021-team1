@@ -30,9 +30,17 @@ public abstract class Entity {
      */
     public boolean intersects(Entity other) {
 
-        // TODO: implement
+        // Check horizontal collision
+        if (this.getX() + this.getWidth() > other.getX() && this.getX() < other.getX() + other.getWidth()) {
 
-        return false;
+            // Check vertical collision
+            if (this.getY() + this.getHeight() > other.getY() && this.getY() < other.getY() + other.getHeight()) {
+
+                return true;
+
+            }
+
+        }
 
     }
 
