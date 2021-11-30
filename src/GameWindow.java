@@ -21,6 +21,7 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Enemy;
@@ -152,6 +153,10 @@ public class GameWindow {
     private ImageView imgviewBackBtn1 = new ImageView(imgBackBtn1);
     private ImageView imgviewBackBtn2 = new ImageView(imgBackBtn2);
     // **********************
+
+    // UI VBox *********************
+    private VBox uiVbox = new VBox();
+    // *****************************
     
     
 
@@ -651,13 +656,12 @@ public class GameWindow {
 
     @FXML
     public void pause() {
-        ImageView imgviewBD = new ImageView(imgBackgroundDim);
-        apaneMain.getChildren().add(imgviewBD);
+        apaneMain.getChildren().add(imgviewBackgroundDim);
     }
 
     @FXML
     public void unpause() {
-
+        apaneMain.getChildren().remove(imgviewBackgroundDim);
     }
 
     /**
