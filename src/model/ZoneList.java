@@ -7,15 +7,18 @@ public class ZoneList {
     
     private ArrayList<NPC> listStarterArea, listPathways;
     private ArrayList<Zone> levels;
-    private Zone currentZone;
+    private Zone start, pathway, villageSquare, grassyPlains, graveyard;
 
     private ZoneList() {
         generateLists();
-        levels = new ArrayList<Zone>();
-        levels.add(new Zone("Start Zone", "Pathway", null, null, null, listStarterArea));
-        levels.add(new Zone("Pathway", "Village Square", "Grassy Plains", "Start Zone", "Graveyard", listPathways));
 
-        currentZone = levels.get(0);
+        pathway = new Zone ("Pathways", "Final Assets/World/PNG/World-Pathways-1440x900.png", villageSquare, grassyPlains, start, graveyard, listPathways);
+        start = new Zone("Start Zone", "Final Assets/World/PNG/World-StartArea-1440x900.png", pathway, null, null, null, listStarterArea);
+        
+
+        levels = new ArrayList<Zone>();
+        levels.add(start);
+        levels.add(pathway);
     }
 
     // Singleton for Zonelist.
@@ -94,14 +97,5 @@ public class ZoneList {
     public void setLevels(ArrayList<Zone> levels) {
         this.levels = levels;
     }
-
-    public Zone getCurrentZone() {
-        return currentZone;
-    }
-
-    public void setCurrentZone(Zone currentZone) {
-        this.currentZone = currentZone;
-    }
-
     
 }

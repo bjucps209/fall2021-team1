@@ -8,7 +8,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class World {
 
     private ArrayList<Entity> entityList;
-    private String currentlocation;
+    private Zone currentlocation;
     private IntegerProperty score;
     private DifficultyLevel difficulty;
     private Player player;
@@ -22,7 +22,7 @@ public class World {
         player = new Player();
         score = new SimpleIntegerProperty();
         difficulty = DifficultyLevel.EASY;
-        currentlocation = ZoneList.instance().getCurrentZone().getZoneName();
+        currentlocation = ZoneList.instance().getLevels().get(0);
 
     }
 
@@ -112,13 +112,13 @@ public class World {
 
     }
 
-    public String getCurrentlocation() {
+    public Zone getCurrentlocation() {
 
         return currentlocation;
 
     }
 
-    public void setCurrentlocation(String currentlocation) {
+    public void setCurrentlocation(Zone currentlocation) {
 
         this.currentlocation = currentlocation;
 
