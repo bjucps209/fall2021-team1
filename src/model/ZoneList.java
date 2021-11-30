@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class ZoneList {
     
-    private ArrayList<NPC> listStarterArea;
+    private ArrayList<NPC> listStarterArea, listPathways;
     private ArrayList<Zone> levels;
     private Zone currentZone;
 
@@ -13,6 +13,7 @@ public class ZoneList {
         generateLists();
         levels = new ArrayList<Zone>();
         levels.add(new Zone("Start Zone", "Pathway", null, null, null, listStarterArea));
+        levels.add(new Zone("Pathway", "Village Square", "Grassy Plains", "Start Zone", "Graveyard", listPathways));
 
         currentZone = levels.get(0);
     }
@@ -34,6 +35,7 @@ public class ZoneList {
         listStarterArea = new ArrayList<NPC>();
         listStarterArea.add(new NPC("Be careful out there, it's dangerous.", "NPC"));
         listStarterArea.get(0).setPosition(332, 393);
+        listStarterArea.get(0).setInteractable(true);
         listStarterArea.add(new Item("", "tree", 0));
         listStarterArea.get(1).setPosition(26, 395);
         listStarterArea.add(new Item("", "tree", 0));
@@ -61,6 +63,22 @@ public class ZoneList {
         listStarterArea.add(new Item("", "arch", 0));
         listStarterArea.get(13).setPosition(600, 18);
         //**************************************
+
+        // Pathways ****************************
+        listPathways = new ArrayList<NPC>();
+        listPathways.add(new Item("", "stump", 0));
+        listPathways.get(0).setPosition(-46, -143);
+        listPathways.add(new Item("", "tree", 0));
+        listPathways.get(1).setPosition(994, -34);
+        listPathways.add(new Item("", "hFence", 0));
+        listPathways.get(2).setPosition(903, 84);
+        listPathways.add(new Item("", "vFence", 0));
+        listPathways.get(3).setPosition(395, 575);
+        listPathways.add(new Item("", "well", 0));
+        listPathways.get(4).setPosition(903, 575);
+        // *************************************
+
+
 
         
 
