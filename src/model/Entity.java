@@ -44,19 +44,6 @@ public abstract class Entity {
 
     }
 
-    /**
-     * Translates a line of save data.
-     * @param data the line of data
-     * @return a new entity with the saved properties
-     */
-    public static Entity deserialize(String data) {
-
-        // TODO: implement
-
-        return null;
-
-    }
-
     // Override these methods
     public abstract String serialize();
     public abstract EntityType getType();
