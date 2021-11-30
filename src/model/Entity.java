@@ -30,22 +30,17 @@ public abstract class Entity {
      */
     public boolean intersects(Entity other) {
 
-        // TODO: implement
+        // Check horizontal collision
+        if (this.getX() + this.getWidth() > other.getX() && this.getX() < other.getX() + other.getWidth()) {
 
-        return false;
+            // Check vertical collision
+            if (this.getY() + this.getHeight() > other.getY() && this.getY() < other.getY() + other.getHeight()) {
 
-    }
+                return true;
 
-    /**
-     * Translates a line of save data.
-     * @param data the line of data
-     * @return a new entity with the saved properties
-     */
-    public static Entity deserialize(String data) {
+            }
 
-        // TODO: implement
-
-        return null;
+        }
 
     }
 
