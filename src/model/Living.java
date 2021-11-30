@@ -127,11 +127,15 @@ public abstract class Living extends Entity {
     }
 
     public boolean isDead() {
+    
         return isDead;
+    
     }
 
     public void setDead(boolean isDead) {
+
         this.isDead = isDead;
+    
     }
 
     

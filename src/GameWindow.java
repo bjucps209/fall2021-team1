@@ -31,6 +31,7 @@ import model.Serialization;
 import model.World;
 import model.Zone;
 import model.ZoneList;
+import model.World.mapDirection;
 
 public class GameWindow {
 
@@ -418,15 +419,8 @@ public class GameWindow {
 
     };
 
-    /// Animation Attribute ///
-    private enum AnimationDirection {
-
-        UP, DOWN, LEFT, RIGHT
-
-    }
-
     // The direction of the last animation
-    private AnimationDirection lastAnimationDirection = AnimationDirection.RIGHT;
+    private mapDirection lastAnimationDirection = mapDirection.RIGHT;
 
     /**
      * Update the player image view's image to reflect movement direction.
@@ -435,33 +429,33 @@ public class GameWindow {
 
         if (uPressed.get() && !dPressed.get() && !lPressed.get() && !rPressed.get()) {
 
-            lastAnimationDirection = AnimationDirection.UP;
+            lastAnimationDirection = mapDirection.UP;
             imgviewPlayer.setImage(imgPlayerBackMove);
     
         } else if (dPressed.get() && !uPressed.get() && !lPressed.get() && !rPressed.get()) {
     
-            lastAnimationDirection = AnimationDirection.DOWN;
+            lastAnimationDirection = mapDirection.DOWN;
             imgviewPlayer.setImage(imgPlayerFrontMove);
 
         } else if (rPressed.get() && !lPressed.get()) {
 
-            lastAnimationDirection = AnimationDirection.RIGHT;
+            lastAnimationDirection = mapDirection.RIGHT;
             imgviewPlayer.setImage(imgPlayerRightMove);
     
         } else if (lPressed.get() && !rPressed.get()) {
     
-            lastAnimationDirection = AnimationDirection.LEFT;
+            lastAnimationDirection = mapDirection.LEFT;
             imgviewPlayer.setImage(imgPlayerLeftMove);
 
-        } else if (lastAnimationDirection == AnimationDirection.UP) {
+        } else if (lastAnimationDirection == mapDirection.UP) {
 
             imgviewPlayer.setImage(imgPlayerBack);
 
-        } else if (lastAnimationDirection == AnimationDirection.DOWN) {
+        } else if (lastAnimationDirection == mapDirection.DOWN) {
 
             imgviewPlayer.setImage(imgPlayerFront);
         
-        } else if (lastAnimationDirection == AnimationDirection.LEFT) {
+        } else if (lastAnimationDirection == mapDirection.LEFT) {
 
             imgviewPlayer.setImage(imgPlayerLeft);
 
@@ -570,7 +564,8 @@ public class GameWindow {
             break;
 
         case SPACE:
-            world.getPlayer().attack(world.getPlayer().getDamage());
+
+            world.getPlayer().attack(lastAnimationDirection); // Temporary. If this note is still here, tell Josh.
             handleAttackGraphic();
             break;
 
