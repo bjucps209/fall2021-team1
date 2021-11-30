@@ -211,12 +211,6 @@ public class GameWindow {
         world.getPlayer().xProperty().bindBidirectional(imgviewPlayer.xProperty());
         world.getPlayer().yProperty().bindBidirectional(imgviewPlayer.yProperty());
 
-        // Set background for the world
-        BackgroundImage bImg = new BackgroundImage(startScreen, BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-        Background bGround = new Background(bImg);
-        apaneMain.setBackground(bGround);
-
         // Generate health bar
         imgviewHeart = new ImageView();
         displayHealth(world.getPlayer().getHealth());
@@ -237,14 +231,14 @@ public class GameWindow {
 
         // Generate location label
         lblLocation = new Label();
-        lblLocation.setText(world.getCurrentlocation());
+        lblLocation.setText(world.getCurrentlocation().getZoneName());
         lblLocation.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
         AnchorPane.setTopAnchor(lblLocation, 10.0);
         AnchorPane.setLeftAnchor(lblLocation, 10.0);
         apaneMain.getChildren().add(lblLocation);
 
-        // Adding an NPC to the starter area
-        spawnObjects();
+        // Building the entire scene of a zone.
+        drawWorld();
 
     }
 
@@ -322,14 +316,24 @@ public class GameWindow {
     }
 
     @FXML
-    public void spawnObjects() {
+    public void drawWorld() {
         for (Zone zone : ZoneList.instance().getLevels()) {
-            if (world.getCurrentlocation().equals(zone.getZoneName())) {
+            if (world.getCurrentlocation().getZoneName().equals(zone.getZoneName())) {
+
+                // Set background for the zone
+                BackgroundImage bImg = new BackgroundImage(new Image(zone.getBackgroundPath()), BackgroundRepeat.NO_REPEAT,
+                    BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+                Background bGround = new Background(bImg);
+                apaneMain.setBackground(bGround);
+
+                // Draw items inside of the zone onto the screen
                 for (NPC landObjects : zone.getObjectList()) {
 
                     switch (landObjects.getDescription()) {
                         
                         case "NPC":
+                            landObjects.setWidth(128);
+                            landObjects.setHeight(128);
                             ImageView imgviewNPC = new ImageView(imgNPC);
                             apaneMain.getChildren().add(imgviewNPC);
                             imgviewNPC.setLayoutX(landObjects.getX() - imgviewNPC.getLayoutBounds().getMinX());
@@ -337,6 +341,8 @@ public class GameWindow {
                             break;
                         
                         case "tree":
+                            landObjects.setWidth(256);
+                            landObjects.setHeight(256);
                             ImageView imgviewTree = new ImageView(imgTree);
                             apaneMain.getChildren().add(imgviewTree);
                             imgviewTree.setLayoutX(landObjects.getX() - imgviewTree.getLayoutBounds().getMinX());
@@ -344,13 +350,26 @@ public class GameWindow {
                             break;
                         
                         case "hFence":
+                            landObjects.setWidth(256);
+                            landObjects.setHeight(256);
                             ImageView imgviewHFence = new ImageView(imgHFence);
                             apaneMain.getChildren().add(imgviewHFence);
                             imgviewHFence.setLayoutX(landObjects.getX() - imgviewHFence.getLayoutBounds().getMinX());
                             imgviewHFence.setLayoutY(landObjects.getY() - imgviewHFence.getLayoutBounds().getMinY());
                             break;
                         
+                        case "vFence":
+                            landObjects.setWidth(256);
+                            landObjects.setHeight(256);
+                            ImageView imgviewVFence = new ImageView(imgVFence);
+                            apaneMain.getChildren().add(imgviewVFence);
+                            imgviewVFence.setLayoutX(landObjects.getX() - imgviewVFence.getLayoutBounds().getMinX());
+                            imgviewVFence.setLayoutY(landObjects.getY() - imgviewVFence.getLayoutBounds().getMinY());
+                            break;
+                        
                         case "archPoles":
+                            landObjects.setWidth(256);
+                            landObjects.setHeight(256);
                             ImageView imgviewArchPoles = new ImageView(imgArchposts);
                             apaneMain.getChildren().add(imgviewArchPoles);
                             imgviewArchPoles.setLayoutX(landObjects.getX() - imgviewArchPoles.getLayoutBounds().getMinX());
@@ -358,10 +377,21 @@ public class GameWindow {
                             break;
                         
                         case "arch":
+                            landObjects.setWidth(256);
+                            landObjects.setHeight(256);
                             ImageView imgviewArch = new ImageView(imgArch);
                             apaneMain.getChildren().add(imgviewArch);
                             imgviewArch.setLayoutX(landObjects.getX() - imgviewArch.getLayoutBounds().getMinX());
                             imgviewArch.setLayoutY(landObjects.getY() - imgviewArch.getLayoutBounds().getMinY());
+                            break;
+                        
+                        case "stump":
+                            landObjects.setWidth(256);
+                            landObjects.setHeight(256);
+                            ImageView imgviewStump = new ImageView(imgStump);
+                            apaneMain.getChildren().add(imgviewStump);
+                            imgviewStump.setLayoutX(landObjects.getX() - imgviewStump.getLayoutBounds().getMinX());
+                            imgviewStump.setLayoutY(landObjects.getY() - imgviewStump.getLayoutBounds().getMinY());
                             break;
                         
                         default:
@@ -369,6 +399,21 @@ public class GameWindow {
 
                     }
                 }
+            }
+        }
+    }
+
+    /**
+     * Switches the zone the player is in depending on his x and y coordinates. 
+     * Only switches if the direction the player is trying to move to is not null.
+     */
+    @FXML
+    public void switchZones() {
+        if (world.getPlayer().getY() <= 15) {
+            if (world.getCurrentlocation().getNorthZone() != null) {
+                world.setCurrentlocation(world.getCurrentlocation().getNorthZone());
+
+                drawWorld();
             }
         }
     }
@@ -604,7 +649,7 @@ public class GameWindow {
             break;
 
         case X:
-            spawnEnemies();
+            switchZones();
             break;
 
         case SPACE:
