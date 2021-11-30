@@ -11,6 +11,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -22,6 +23,8 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Enemy;
@@ -155,7 +158,7 @@ public class GameWindow {
     // **********************
 
     // UI VBox *********************
-    private VBox uiVbox = new VBox();
+    private VBox pauseVbox = new VBox();
     // *****************************
     
     
@@ -239,6 +242,12 @@ public class GameWindow {
 
         // Building the entire scene of a zone.
         drawWorld();
+
+        // Set Default Font
+        Font.loadFont(getClass().getResourceAsStream("/Final Assets/UI/Minecraft.ttf"), 64);
+
+        // Populating pauseVbox
+        createPauseVbox();
 
     }
 
@@ -702,11 +711,34 @@ public class GameWindow {
     @FXML
     public void pause() {
         apaneMain.getChildren().add(imgviewBackgroundDim);
+        apaneMain.getChildren().add(pauseVbox);
     }
 
     @FXML
     public void unpause() {
         apaneMain.getChildren().remove(imgviewBackgroundDim);
+        apaneMain.getChildren().remove(pauseVbox);
+    }
+
+    @FXML
+    public void createPauseVbox() {
+        pauseVbox.setAlignment(Pos.TOP_CENTER);
+        pauseVbox.setSpacing(10.0);
+
+        Label pauseLbl = new Label();
+        pauseLbl.setText("GAME PAUSED");
+        pauseLbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 48px; -fx-text-fill: #ffffff;");
+        pauseLbl.setTextAlignment(TextAlignment.CENTER);
+
+        pauseVbox.getChildren().add(pauseLbl);
+        pauseVbox.getChildren().add(imgviewSaveBtn1);
+        pauseVbox.getChildren().add(imgviewLoadbtn1);
+        pauseVbox.getChildren().add(imgviewHelpBtn1);
+        pauseVbox.getChildren().add(imgviewQuitBtn1);
+
+
+        pauseVbox.setLayoutX(550);
+        pauseVbox.setLayoutY(250);
     }
 
     /**
