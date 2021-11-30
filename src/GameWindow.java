@@ -29,6 +29,8 @@ import model.Grunt;
 import model.NPC;
 import model.Serialization;
 import model.World;
+import model.Zone;
+import model.ZoneList;
 
 public class GameWindow {
 
@@ -51,13 +53,12 @@ public class GameWindow {
     private AnchorPane apaneMain;
     @FXML
     private ImageView imgviewPlayer, imgviewHeart;
-    @FXML
-    private Image imgPlayerBack, imgPlayerLeft, imgPlayerFront, imgPlayerRight, imgPlayerBackMove, imgPlayerLeftMove,
-            imgPlayerRightMove, imgPlayerFrontMove; // needs organizing
+
     @FXML
     private Label lblScore, lblLocation;
 
     @FXML
+    // Heart Images ********
     private Image imgHeart10 = new Image("Final Assets/UI/PNG/10-hearts.png");
     private Image imgHeart9 = new Image("Final Assets/UI/PNG/9-hearts.png");
     private Image imgHeart8 = new Image("Final Assets/UI/PNG/8-hearts.png");
@@ -68,12 +69,57 @@ public class GameWindow {
     private Image imgHeart3 = new Image("Final Assets/UI/PNG/3-hearts.png");
     private Image imgHeart2 = new Image("Final Assets/UI/PNG/2-hearts.png");
     private Image imgHeart1 = new Image("Final Assets/UI/PNG/1-hearts.png");
+    // *********************
+
+    // Player Images *******
     private Image imgattackAnim = new Image("Final Assets/Player/GIF/Player-Attack-128x128.gif");
-    private Image imgGruntDeath = new Image("Final Assets/Grunt/GIF/Grunt-Death-128x128.gif");
+    private Image imgPlayerBack = new Image("Final Assets/Player/PNG/Player-Back-Stationary-128x128.png");
+    private Image imgPlayerFront = new Image("Final Assets/Player/PNG/Player-Front-Stationary-128x128.png");
+    private Image imgPlayerLeft = new Image("Final Assets/Player/PNG/Player-Left-Stationary-128x128.png");
+    private Image imgPlayerRight = new Image("Final Assets/Player/PNG/Player-Right-Stationary-128x128.png");
+    private Image imgPlayerBackMove = new Image("Final Assets/Player/GIF/Player-Back-Walking-128x128.gif");
+    private Image imgPlayerLeftMove = new Image("Final Assets/Player/GIF/Player-Left-Walking-128x128.gif");
+    private Image imgPlayerRightMove = new Image("Final Assets/Player/GIF/Player-Right-Walking-128x128.gif");
+    private Image imgPlayerFrontMove = new Image("Final Assets/Player/GIF/Player-Front-Walking-128x128.gif");
+    // **********************
 
+    // NPC Images ***********
     private Image imgNPC = new Image("Final Assets/NPC/PNG/NPC-Front-Stationary-128x128.png");
+    // **********************
 
+    // Enemy Images *********
+    private Image imgGruntDeath = new Image("Final Assets/Grunt/GIF/Grunt-Death-128x128.gif");
     private Image imgGrunt = new Image("Final Assets/Grunt/PNG/Grunt-Front-Stationary-128x128.png");
+    // **********************
+
+    // World Images *********
+    private Image startScreen = new Image("Final Assets/World/PNG/World-StartArea-1440x900.png");
+    private Image pathway = new Image("Final Assets/World/PNG/World-Pathways-1440x900.png");
+    private Image grassyPlains = new Image("Final Assets/World/PNG/World-GrassyPlains-1440x900.png");
+    private Image market = new Image("Final Assets/World/PNG/World-RunDown-1440x900.png");
+    private Image lumberYard = new Image("Final Assets/World/PNG/World-LumberYard-1440x900.png");
+    private Image farm = new Image("Final Assets/World/PNG/World-ForestEdge-1440x900.png");
+    private Image wheatFields = new Image("Final Assets/World/PNG/World-WheatField-1440x900.png");
+    private Image lake = new Image("Final Assets/World/PNG/World-Lake-1440x900.png");
+    private Image graveyard = new Image("Final Assets/World/PNG/World-Graveyard-1440x900.png");
+    private Image villageSquare = new Image("Final Assets/World/PNG/World-VillageSquare-1440x900.png");
+    // **********************
+
+    // Object Images ********
+    private Image imgDSignLeft = new Image("Final Assets/Objects/PNG/Objects-DSign-Left-64x64.png");
+    private Image imgDSignRight = new Image("Final Assets/Objects/PNG/Objects-DSign-Right-64x64.png");
+    private Image imgSign = new Image("Final Assets/Objects/PNG/Objects-FSign-64x64.png");
+    private Image imgArch = new Image("Final Assets/Objects/PNG/Objects-GateArch-256x256.png");
+    private Image imgArchposts = new Image("Final Assets/Objects/PNG/Objects-GatePosts-256x256.png");
+    private Image imgGravestone = new Image("Final Assets/Objects/PNG/Objects-Gravestone-64x64.png");
+    private Image imgHFence = new Image("Final Assets/Objects/PNG/Objects-HFence-256x256.png");
+    private Image imgVFence = new Image("Final Assets/Objects/PNG/Objects-VFence-256x256.png");
+    private Image imgStump = new Image("Final Assets/Objects/PNG/Objects-Stump-256x256.png");
+    private Image imgTree = new Image("Final Assets/Objects/PNG/Objects-Tree-256x256.png");
+    private Image imgWell = new Image("Final Assets/Objects/PNG/Objects-Well-256x256.png");
+    // **********************
+    
+    
 
     // Model Attributes
     private World world;
@@ -90,19 +136,6 @@ public class GameWindow {
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> updateWorld()));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
-
-        // Images *****************************
-        Image imgAboutScreen = new Image("Final Assets/World/PNG/World-AboutArea-1440x900.png");
-        imgPlayerBack = new Image("Final Assets/Player/PNG/Player-Back-Stationary-128x128.png");
-        imgPlayerFront = new Image("Final Assets/Player/PNG/Player-Front-Stationary-128x128.png");
-        imgPlayerLeft = new Image("Final Assets/Player/PNG/Player-Left-Stationary-128x128.png");
-        imgPlayerRight = new Image("Final Assets/Player/PNG/Player-Right-Stationary-128x128.png");
-
-        imgPlayerBackMove = new Image("Final Assets/Player/GIF/Player-Back-Walking-128x128.gif");
-        imgPlayerLeftMove = new Image("Final Assets/Player/GIF/Player-Left-Walking-128x128.gif");
-        imgPlayerRightMove = new Image("Final Assets/Player/GIF/Player-Right-Walking-128x128.gif");
-        imgPlayerFrontMove = new Image("Final Assets/Player/GIF/Player-Front-Walking-128x128.gif");
-        // ***********************************
 
         // Set up user control ******************************************
         keyPressed.addListener((ObservableValue, booleanVal, timer) -> {
@@ -140,7 +173,7 @@ public class GameWindow {
         world.getPlayer().yProperty().bindBidirectional(imgviewPlayer.yProperty());
 
         // Set background for the world
-        BackgroundImage bImg = new BackgroundImage(imgAboutScreen, BackgroundRepeat.NO_REPEAT,
+        BackgroundImage bImg = new BackgroundImage(startScreen, BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
         Background bGround = new Background(bImg);
         apaneMain.setBackground(bGround);
@@ -154,9 +187,7 @@ public class GameWindow {
 
         // Generate score label
         lblScore = new Label();
-        // TEMPORARY ***
         world.setScore(0);
-        // *************
         lblScore.setText(String.valueOf(world.getScore()));
         lblScore.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
         lblScore.textProperty()
@@ -167,9 +198,6 @@ public class GameWindow {
 
         // Generate location label
         lblLocation = new Label();
-        // TEMPORARY *****
-        world.setCurrentlocation("Start Area");
-        // ****************
         lblLocation.setText(world.getCurrentlocation());
         lblLocation.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
         AnchorPane.setTopAnchor(lblLocation, 10.0);
@@ -177,20 +205,7 @@ public class GameWindow {
         apaneMain.getChildren().add(lblLocation);
 
         // Adding an NPC to the starter area
-        world.getEntityList().add(new NPC("Welcome to Terrene!\nPress 'x' to spawn an enemy."));
-
-        for (Entity entity : world.getEntityList()) {
-
-            if (entity instanceof NPC) {
-
-                ImageView imgviewNPC = new ImageView(imgNPC);
-                imgviewNPC.xProperty().bindBidirectional(entity.xProperty());
-                imgviewNPC.yProperty().bindBidirectional(entity.yProperty());
-                apaneMain.getChildren().add(imgviewNPC);
-
-            }
-
-        }
+        spawnObjects();
 
     }
 
@@ -265,6 +280,59 @@ public class GameWindow {
 
         }
 
+    }
+
+    @FXML
+    public void spawnObjects() {
+        for (Zone zone : ZoneList.instance().getLevels()) {
+            if (world.getCurrentlocation().equals(zone.getZoneName())) {
+                for (NPC landObjects : zone.getObjectList()) {
+
+                    switch (landObjects.getDescription()) {
+                        
+                        case "NPC":
+                            ImageView imgviewNPC = new ImageView(imgNPC);
+                            apaneMain.getChildren().add(imgviewNPC);
+                            imgviewNPC.setLayoutX(landObjects.getX() - imgviewNPC.getLayoutBounds().getMinX());
+                            imgviewNPC.setLayoutY(landObjects.getY() - imgviewNPC.getLayoutBounds().getMinY());
+                            break;
+                        
+                        case "tree":
+                            ImageView imgviewTree = new ImageView(imgTree);
+                            apaneMain.getChildren().add(imgviewTree);
+                            imgviewTree.setLayoutX(landObjects.getX() - imgviewTree.getLayoutBounds().getMinX());
+                            imgviewTree.setLayoutY(landObjects.getY() - imgviewTree.getLayoutBounds().getMinY());
+                            break;
+                        
+                        case "hFence":
+                            ImageView imgviewHFence = new ImageView(imgHFence);
+                            apaneMain.getChildren().add(imgviewHFence);
+                            imgviewHFence.setLayoutX(landObjects.getX() - imgviewHFence.getLayoutBounds().getMinX());
+                            imgviewHFence.setLayoutY(landObjects.getY() - imgviewHFence.getLayoutBounds().getMinY());
+                            break;
+                        
+                        case "archPoles":
+                            ImageView imgviewArchPoles = new ImageView(imgArchposts);
+                            apaneMain.getChildren().add(imgviewArchPoles);
+                            imgviewArchPoles.setLayoutX(landObjects.getX() - imgviewArchPoles.getLayoutBounds().getMinX());
+                            imgviewArchPoles.setLayoutY(landObjects.getY() - imgviewArchPoles.getLayoutBounds().getMinY());
+                            break;
+                        
+                        case "arch":
+                            ImageView imgviewArch = new ImageView(imgArch);
+                            apaneMain.getChildren().add(imgviewArch);
+                            imgviewArch.setLayoutX(landObjects.getX() - imgviewArch.getLayoutBounds().getMinX());
+                            imgviewArch.setLayoutY(landObjects.getY() - imgviewArch.getLayoutBounds().getMinY());
+                            break;
+                        
+                        default:
+                            break;
+
+
+                    }
+                }
+            }
+        }
     }
 
     /**

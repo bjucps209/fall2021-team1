@@ -63,12 +63,14 @@ public class Serialization {
 
                 case NPC:
                     
-                    entities.add(new NPC(data[1]));
+                    // needs fix
+                    entities.add(new NPC(data[1], line));
                     break;
 
                 case ITEM:
 
-                    entities.add(new Item(data[1], Integer.parseInt(data[2])));
+                    // needs fix
+                    entities.add(new Item(data[1], line, Integer.parseInt(data[2])));
                     break;
 
                 case PROJECTILE:

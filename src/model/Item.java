@@ -7,9 +7,9 @@ public class Item extends NPC {
 
     private IntegerProperty scoreIncrease;
 
-    public Item(String message, int score) {
+    public Item(String message, String description, int score) {
 
-        super(message);
+        super(message, description);
 
         this.scoreIncrease = new SimpleIntegerProperty(score);
 

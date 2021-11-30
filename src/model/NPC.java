@@ -3,17 +3,21 @@ package model;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+
 public class NPC extends Entity {
 
     private StringProperty message;
+    private String description;
+    
 
-    public NPC(String message) {
+    public NPC(String message, String description) {
         
         // TODO: use actual dimensions
         super(10, 10);
 
         this.message = new SimpleStringProperty(message.replaceAll("█", "\n"));
         this.setInteractable(true);
+        this.description = description;
         setPosition(300, 300);
         
     }
@@ -53,5 +57,18 @@ public class NPC extends Entity {
         this.message.set(message);
 
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+
+    
+
+    
     
 }

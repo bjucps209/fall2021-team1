@@ -22,6 +22,7 @@ public class World {
         player = new Player();
         score = new SimpleIntegerProperty();
         difficulty = DifficultyLevel.EASY;
+        currentlocation = ZoneList.instance().getCurrentZone().getZoneName();
 
     }
 
