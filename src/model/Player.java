@@ -2,6 +2,8 @@ package model;
 
 import java.util.List;
 
+import model.World.mapDirection;
+
 public class Player extends Living {
 
     public Player() {
@@ -56,40 +58,75 @@ public class Player extends Living {
     }
 
     /**
+     * This method is not to be used. It only exists because it must be inherited from Living.
+     * Instead, please use the other attack method.
+     */
+    @Override
+    public void attack(int DO_NOT_USE_THIS_METHOD) {}
+
+    /**
      * Checks if an enemy is within a semicircle of the player's direction, and if the enemy is within a certain distance of the player.
      * If the enemy meets these conditions, the player's damage is passed to the corresponding enemies.
      */
-    @Override
-    public void attack(int damage) {
-        List<Entity> list = World.instance().getEntityList().stream().filter(e -> e.getType() == EntityType.GRUNT_ENEMY)
-                .toList();
-        double distance = 0;
-        double smallestDistance = 1000000000;
+    public void attack(mapDirection direction) {
+
+        List<Entity> list = World.instance().getEntityList().stream().filter(e -> (e instanceof Enemy)).toList();
 
         if (list.size() > 0) {
+
             for (Entity enemy : list) {
 
-                Grunt grunt = (Grunt) enemy;
+                Enemy target = (Enemy) enemy;
 
-                distance = Math.sqrt((grunt.getX() - getX()) * (grunt.getX() - getX())
-                        + Math.sqrt((grunt.getY() - getY()) * (grunt.getY() - getY())));
+                // NOTE: Currently assumes that all creatures are the same size.
+                if (Math.hypot(this.getX() - target.getX(), this.getX() - target.getY()) < 128) {
 
-                if (distance < smallestDistance) {
+                    boolean hit = false;
 
-                    smallestDistance = distance;
-                    double theta = Math.atan2(grunt.getY() - getY(), grunt.getX() - getX());
-                    double angle = Math.toDegrees(theta);
+                    switch (direction) {
 
-                    if (angle < 0) {
-                        angle += 360;
+                        case UP:
+                            
+                            if (target.getY() < this.getY() + this.getWidth() / 2) return;
+                            hit = true;
+                            break;
+
+                        case DOWN:
+                            
+                            if (target.getY() > this.getY() + this.getWidth() / 2) return;
+                            hit = true;
+                            break;
+
+                        case LEFT:
+                            
+                            if (target.getX() > this.getX() + this.getHeight() / 2) return;
+                            hit = true;
+                            break;
+
+                        case RIGHT:
+                            
+                            if (target.getX() < this.getX() + this.getHeight() / 2) return;
+                            hit = true;
+                            break;
+                    
+                        default: // Default case so Code will be happy.
+
+                            break;
+
                     }
-                    if ((angle <= (getDirection() + 90)) || (angle >= (getDirection() - 90)) && smallestDistance <= 100) {
-                        grunt.handleDamage(damage);
+
+                    if (hit == true) {
+
+                        // TODO: knockback
+
                     }
+
                 }
 
             }
+
         }
+
     }
 
     @Override

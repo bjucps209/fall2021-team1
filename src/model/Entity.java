@@ -94,6 +94,13 @@ public abstract class Entity {
 
     }
 
+    public void setDimensions(int width, int height) {
+
+        this.setWidth(width);
+        this.setHeight(height);
+
+    }
+
     public IntegerProperty widthProperty() {
 
         return this.width;

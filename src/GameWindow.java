@@ -11,6 +11,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -21,6 +22,9 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Enemy;
@@ -31,6 +35,7 @@ import model.Serialization;
 import model.World;
 import model.Zone;
 import model.ZoneList;
+import model.World.mapDirection;
 
 public class GameWindow {
 
@@ -153,6 +158,12 @@ public class GameWindow {
     private ImageView imgviewBackBtn2 = new ImageView(imgBackBtn2);
     // **********************
 
+    // UI VBox *********************
+    private VBox pauseVbox = new VBox();
+    // *****************************
+    
+    
+
     // Model Attributes
     private World world;
 
@@ -208,6 +219,12 @@ public class GameWindow {
 
         // Building the entire scene of a zone.
         drawWorld();
+
+        // Set Default Font
+        Font.loadFont(getClass().getResourceAsStream("/Final Assets/UI/Minecraft.ttf"), 64);
+
+        // Populating pauseVbox
+        createPauseVbox();
 
     }
 
@@ -567,15 +584,8 @@ public class GameWindow {
 
     };
 
-    /// Animation Attribute ///
-    private enum AnimationDirection {
-
-        UP, DOWN, LEFT, RIGHT
-
-    }
-
     // The direction of the last animation
-    private AnimationDirection lastAnimationDirection = AnimationDirection.RIGHT;
+    private mapDirection lastAnimationDirection = mapDirection.RIGHT;
 
     /**
      * Update the player image view's image to reflect movement direction.
@@ -584,33 +594,33 @@ public class GameWindow {
 
         if (uPressed.get() && !dPressed.get() && !lPressed.get() && !rPressed.get()) {
 
-            lastAnimationDirection = AnimationDirection.UP;
+            lastAnimationDirection = mapDirection.UP;
             imgviewPlayer.setImage(imgPlayerBackMove);
     
         } else if (dPressed.get() && !uPressed.get() && !lPressed.get() && !rPressed.get()) {
     
-            lastAnimationDirection = AnimationDirection.DOWN;
+            lastAnimationDirection = mapDirection.DOWN;
             imgviewPlayer.setImage(imgPlayerFrontMove);
 
         } else if (rPressed.get() && !lPressed.get()) {
 
-            lastAnimationDirection = AnimationDirection.RIGHT;
+            lastAnimationDirection = mapDirection.RIGHT;
             imgviewPlayer.setImage(imgPlayerRightMove);
     
         } else if (lPressed.get() && !rPressed.get()) {
     
-            lastAnimationDirection = AnimationDirection.LEFT;
+            lastAnimationDirection = mapDirection.LEFT;
             imgviewPlayer.setImage(imgPlayerLeftMove);
 
-        } else if (lastAnimationDirection == AnimationDirection.UP) {
+        } else if (lastAnimationDirection == mapDirection.UP) {
 
             imgviewPlayer.setImage(imgPlayerBack);
 
-        } else if (lastAnimationDirection == AnimationDirection.DOWN) {
+        } else if (lastAnimationDirection == mapDirection.DOWN) {
 
             imgviewPlayer.setImage(imgPlayerFront);
         
-        } else if (lastAnimationDirection == AnimationDirection.LEFT) {
+        } else if (lastAnimationDirection == mapDirection.LEFT) {
 
             imgviewPlayer.setImage(imgPlayerLeft);
 
@@ -719,7 +729,8 @@ public class GameWindow {
             break;
 
         case SPACE:
-            world.getPlayer().attack(world.getPlayer().getDamage());
+
+            world.getPlayer().attack(lastAnimationDirection); // Temporary. If this note is still here, tell Josh.
             handleAttackGraphic();
             break;
 
@@ -767,13 +778,35 @@ public class GameWindow {
 
     @FXML
     public void pause() {
-        ImageView imgviewBD = new ImageView(imgBackgroundDim);
-        apaneMain.getChildren().add(imgviewBD);
+        apaneMain.getChildren().add(imgviewBackgroundDim);
+        apaneMain.getChildren().add(pauseVbox);
     }
 
     @FXML
     public void unpause() {
+        apaneMain.getChildren().remove(imgviewBackgroundDim);
+        apaneMain.getChildren().remove(pauseVbox);
+    }
 
+    @FXML
+    public void createPauseVbox() {
+        pauseVbox.setAlignment(Pos.TOP_CENTER);
+        pauseVbox.setSpacing(10.0);
+
+        Label pauseLbl = new Label();
+        pauseLbl.setText("GAME PAUSED");
+        pauseLbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 48px; -fx-text-fill: #ffffff;");
+        pauseLbl.setTextAlignment(TextAlignment.CENTER);
+
+        pauseVbox.getChildren().add(pauseLbl);
+        pauseVbox.getChildren().add(imgviewSaveBtn1);
+        pauseVbox.getChildren().add(imgviewLoadbtn1);
+        pauseVbox.getChildren().add(imgviewHelpBtn1);
+        pauseVbox.getChildren().add(imgviewQuitBtn1);
+
+
+        pauseVbox.setLayoutX(550);
+        pauseVbox.setLayoutY(250);
     }
 
     /**

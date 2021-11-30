@@ -13,6 +13,13 @@ public class World {
     private DifficultyLevel difficulty;
     private Player player;
 
+    // Directional Enum
+    public enum mapDirection {
+
+        UP, DOWN, LEFT, RIGHT
+
+    }
+
     // We want the world class to be a singleton so that other classes in the view
     // can
     // access the same world object.
