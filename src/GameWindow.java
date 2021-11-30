@@ -328,7 +328,6 @@ public class GameWindow {
                         default:
                             break;
 
-
                     }
                 }
             }
