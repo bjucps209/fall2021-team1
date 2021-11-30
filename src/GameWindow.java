@@ -152,8 +152,6 @@ public class GameWindow {
     private ImageView imgviewBackBtn1 = new ImageView(imgBackBtn1);
     private ImageView imgviewBackBtn2 = new ImageView(imgBackBtn2);
     // **********************
-    
-    
 
     // Model Attributes
     private World world;
@@ -165,6 +163,7 @@ public class GameWindow {
     @FXML
     void initialize(Stage stage) {
         imgViewList = new ArrayList<ImageView>();
+        world = World.instance();
 
         // Timer for the updateworld method
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> updateWorld()));
@@ -195,42 +194,17 @@ public class GameWindow {
         });
         // ***************************************************************
 
-        // Create player's imageview
-        imgviewPlayer = new ImageView(imgPlayerBack);
-        imgviewPlayer.setX(650);
-        imgviewPlayer.setY(750);
-        apaneMain.getChildren().add(imgviewPlayer);
-
-        // Bind the player imageview's x and y to the player object
-        world = World.instance();
-        world.getPlayer().xProperty().bindBidirectional(imgviewPlayer.xProperty());
-        world.getPlayer().yProperty().bindBidirectional(imgviewPlayer.yProperty());
+        // Display player
+        drawPlayer(650, 750);
 
         // Generate health bar
-        imgviewHeart = new ImageView();
-        displayHealth(world.getPlayer().getHealth());
-        AnchorPane.setTopAnchor(imgviewHeart, 10.0);
-        AnchorPane.setRightAnchor(imgviewHeart, 10.0);
-        apaneMain.getChildren().add(imgviewHeart);
+        drawHealth();
 
         // Generate score label
-        lblScore = new Label();
-        world.setScore(0);
-        lblScore.setText(String.valueOf(world.getScore()));
-        lblScore.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
-        lblScore.textProperty()
-                .bind(Bindings.createStringBinding(() -> String.valueOf(world.getScore()), world.scoreProperty()));
-        AnchorPane.setBottomAnchor(lblScore, 10.0);
-        AnchorPane.setLeftAnchor(lblScore, 10.0);
-        apaneMain.getChildren().add(lblScore);
+        drawScore();
 
         // Generate location label
-        lblLocation = new Label();
-        lblLocation.setText(world.getCurrentlocation().getZoneName());
-        lblLocation.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
-        AnchorPane.setTopAnchor(lblLocation, 10.0);
-        AnchorPane.setLeftAnchor(lblLocation, 10.0);
-        apaneMain.getChildren().add(lblLocation);
+        drawLocationLabel();
 
         // Building the entire scene of a zone.
         drawWorld();
@@ -310,6 +284,82 @@ public class GameWindow {
 
     }
 
+
+    /**
+     * Draws the player to the screen.
+     * @param x - the x coordinate the player will be placed at
+     * @param y - the y coordinate the player will be placed at
+     */
+    @FXML
+    public void drawPlayer(double x, double y) {
+        // Create player's imageview
+        imgviewPlayer = new ImageView(imgPlayerBack);
+        imgviewPlayer.setX(x);
+        imgviewPlayer.setY(y);
+        apaneMain.getChildren().add(imgviewPlayer);
+        
+        // Bind the player imageview's x and y to the player object
+        
+        world.getPlayer().xProperty().bindBidirectional(imgviewPlayer.xProperty());
+        world.getPlayer().yProperty().bindBidirectional(imgviewPlayer.yProperty());
+    }
+
+    /**
+     * Displays the player's heart meter on the top right of the screen.
+     */
+    @FXML
+    public void drawHealth() {
+        if (imgviewHeart != null) {
+            apaneMain.getChildren().remove(imgviewHeart);
+        }
+
+        imgviewHeart = new ImageView();
+        displayHealth(world.getPlayer().getHealth());
+        AnchorPane.setTopAnchor(imgviewHeart, 10.0);
+        AnchorPane.setRightAnchor(imgviewHeart, 10.0);
+        apaneMain.getChildren().add(imgviewHeart);
+    }
+
+    /**
+     * Draws the score label on the bottom left of the screen.
+     */
+    @FXML
+    public void drawScore() {
+        if (lblScore != null) {
+            apaneMain.getChildren().remove(lblScore);
+        }
+
+        lblScore = new Label();
+        world.setScore(0);
+        lblScore.setText(String.valueOf(world.getScore()));
+        lblScore.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
+        lblScore.textProperty()
+                .bind(Bindings.createStringBinding(() -> String.valueOf(world.getScore()), world.scoreProperty()));
+        AnchorPane.setBottomAnchor(lblScore, 10.0);
+        AnchorPane.setLeftAnchor(lblScore, 10.0);
+        apaneMain.getChildren().add(lblScore);
+    }
+
+    /**
+     * Draws the location label on the top right of the screen.
+     */
+    @FXML
+    public void drawLocationLabel() {
+        if (lblLocation != null) {
+            apaneMain.getChildren().remove(lblLocation);
+        }
+
+        lblLocation = new Label();
+        lblLocation.setText(world.getCurrentlocation().getZoneName());
+        lblLocation.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
+        AnchorPane.setTopAnchor(lblLocation, 10.0);
+        AnchorPane.setLeftAnchor(lblLocation, 10.0);
+        apaneMain.getChildren().add(lblLocation);
+    }
+
+    /**
+     * Displays the background and the objects contained inside of the current zone.
+     */
     @FXML
     public void drawWorld() {
         for (Zone zone : ZoneList.instance().getLevels()) {
@@ -389,6 +439,16 @@ public class GameWindow {
                             imgviewStump.setLayoutY(landObjects.getY() - imgviewStump.getLayoutBounds().getMinY());
                             break;
                         
+                        case "well":
+                            landObjects.setWidth(256);
+                            landObjects.setHeight(256);
+                            ImageView imgviewWell = new ImageView(imgWell);
+                            apaneMain.getChildren().add(imgviewWell);
+                            imgviewWell.setLayoutX(landObjects.getX() - imgviewWell.getLayoutBounds().getMinX());
+                            imgviewWell.setLayoutY(landObjects.getY() - imgviewWell.getLayoutBounds().getMinY());
+                            break;
+                    
+                        
                         default:
                             break;
 
@@ -397,6 +457,17 @@ public class GameWindow {
             }
         }
     }
+
+    @FXML 
+    public void drawScreen(double x, double y) {
+        drawPlayer(x,y);
+        drawHealth();
+        drawLocationLabel();
+        drawScore();
+        drawWorld();
+    }
+
+
 
     /**
      * Switches the zone the player is in depending on his x and y coordinates. 
@@ -407,8 +478,8 @@ public class GameWindow {
         if (world.getPlayer().getY() <= 15) {
             if (world.getCurrentlocation().getNorthZone() != null) {
                 world.setCurrentlocation(world.getCurrentlocation().getNorthZone());
-
-                drawWorld();
+                apaneMain.getChildren().removeAll(apaneMain.getChildren());
+                drawScreen(world.getPlayer().getX(), world.getPlayer().getY() + 1000);
             }
         }
     }
