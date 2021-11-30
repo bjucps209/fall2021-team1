@@ -5,18 +5,19 @@ import java.util.ArrayList;
 // Holds information for each individual zone. Does not contain enemies, only Items and NPCS. 
 public class Zone {
     
-    private String zoneName;
-    private String northName, westName, southName, eastName;
+    private String zoneName, backgroundPath;
+    private Zone northZone, westZone, southZone, eastZone;
     private ArrayList<NPC> objectList;
     
 
-    public Zone(String zoneName, String northName, String westName, String southName, String eastName,
+    public Zone(String zoneName, String backgroundPath, Zone northZone, Zone westZone, Zone southZone, Zone eastZone,
             ArrayList<NPC> objectList) {
         this.zoneName = zoneName;
-        this.northName = northName;
-        this.westName = westName;
-        this.southName = southName;
-        this.eastName = eastName;
+        this.backgroundPath = backgroundPath;
+        this.northZone = northZone;
+        this.westZone = westZone;
+        this.southZone = southZone;
+        this.eastZone = eastZone;
         this.objectList = objectList;
     }
 
@@ -28,36 +29,44 @@ public class Zone {
         this.zoneName = zoneName;
     }
 
-    public String getNorthName() {
-        return northName;
+    public String getBackgroundPath() {
+        return backgroundPath;
     }
 
-    public void setNorthName(String northName) {
-        this.northName = northName;
+    public void setBackgroundPath(String backgroundPath) {
+        this.backgroundPath = backgroundPath;
     }
 
-    public String getWestName() {
-        return westName;
+    public Zone getNorthZone() {
+        return northZone;
     }
 
-    public void setWestName(String westName) {
-        this.westName = westName;
+    public void setNorthZone(Zone northZone) {
+        this.northZone = northZone;
     }
 
-    public String getSouthName() {
-        return southName;
+    public Zone getWestZone() {
+        return westZone;
     }
 
-    public void setSouthName(String southName) {
-        this.southName = southName;
+    public void setWestZone(Zone westZone) {
+        this.westZone = westZone;
     }
 
-    public String getEastName() {
-        return eastName;
+    public Zone getSouthZone() {
+        return southZone;
     }
 
-    public void setEastName(String eastName) {
-        this.eastName = eastName;
+    public void setSouthZone(Zone southZone) {
+        this.southZone = southZone;
+    }
+
+    public Zone getEastZone() {
+        return eastZone;
+    }
+
+    public void setEastZone(Zone eastZone) {
+        this.eastZone = eastZone;
     }
 
     public ArrayList<NPC> getObjectList() {

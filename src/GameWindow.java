@@ -11,6 +11,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -21,6 +22,9 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Enemy;
@@ -54,6 +58,8 @@ public class GameWindow {
     private AnchorPane apaneMain;
     @FXML
     private ImageView imgviewPlayer, imgviewHeart;
+    @FXML
+    private boolean isPaused;
 
     @FXML
     private Label lblScore, lblLocation;
@@ -119,6 +125,42 @@ public class GameWindow {
     private Image imgTree = new Image("Final Assets/Objects/PNG/Objects-Tree-256x256.png");
     private Image imgWell = new Image("Final Assets/Objects/PNG/Objects-Well-256x256.png");
     // **********************
+
+    // UI Images ************
+    private Image imgBackgroundDim = new Image("Final Assets/UI/PNG/UI-BackgroundDim-1440x900.png");
+    private Image imgPauseBtn1 = new Image("Final Assets/UI/PNG/UI-PauseBtn1-80x80.png");
+    private Image imgPauseBtn2 = new Image("Final Assets/UI/PNG/UI-PauseBtn2-80x80.png");
+    private Image imgSaveBtn1 = new Image("Final Assets/UI/PNG/UI-SaveBtn1-312x80.png");
+    private Image imgSaveBtn2 = new Image("Final Assets/UI/PNG/UI-SaveBtn2-312x80.png");
+    private Image imgLoadbtn1 = new Image("Final Assets/UI/PNG/UI-LoadBtn1-312x80.png");
+    private Image imgLoadbtn2 = new Image("Final Assets/UI/PNG/UI-LoadBtn2-312x80.png");
+    private Image imgHelpBtn1 = new Image("Final Assets/UI/PNG/UI-HelpBtn1-312x80.png");
+    private Image imgHelpBtn2 = new Image("Final Assets/UI/PNG/UI-HelpBtn2-312x80.png");
+    private Image imgQuitBtn1 = new Image("Final Assets/UI/PNG/UI-QuitBtn1-312x80.png");
+    private Image imgQuitBtn2 = new Image("Final Assets/UI/PNG/UI-QuitBtn2-312x80.png");
+    private Image imgBackBtn1 = new Image("Final Assets/UI/PNG/UI-BackBtn1-312x80.png");
+    private Image imgBackBtn2 = new Image("Final Assets/UI/PNG/UI-BackBtn2-312x80.png");
+    // **********************
+
+    // UI ImageViews ************
+    private ImageView imgviewBackgroundDim = new ImageView(imgBackgroundDim);
+    private ImageView imgviewPauseBtn1 = new ImageView(imgPauseBtn1);
+    private ImageView imgviewPauseBtn2 = new ImageView(imgPauseBtn2);
+    private ImageView imgviewSaveBtn1 = new ImageView(imgSaveBtn1);
+    private ImageView imgviewSaveBtn2 = new ImageView(imgSaveBtn2);
+    private ImageView imgviewLoadbtn1 = new ImageView(imgLoadbtn1);
+    private ImageView imgviewLoadbtn2 = new ImageView(imgLoadbtn2);
+    private ImageView imgviewHelpBtn1 = new ImageView(imgHelpBtn1);
+    private ImageView imgviewHelpBtn2 = new ImageView(imgHelpBtn2);
+    private ImageView imgviewQuitBtn1 = new ImageView(imgQuitBtn1);
+    private ImageView imgviewQuitBtn2 = new ImageView(imgQuitBtn2);
+    private ImageView imgviewBackBtn1 = new ImageView(imgBackBtn1);
+    private ImageView imgviewBackBtn2 = new ImageView(imgBackBtn2);
+    // **********************
+
+    // UI VBox *********************
+    private VBox pauseVbox = new VBox();
+    // *****************************
     
     
 
@@ -173,12 +215,6 @@ public class GameWindow {
         world.getPlayer().xProperty().bindBidirectional(imgviewPlayer.xProperty());
         world.getPlayer().yProperty().bindBidirectional(imgviewPlayer.yProperty());
 
-        // Set background for the world
-        BackgroundImage bImg = new BackgroundImage(startScreen, BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-        Background bGround = new Background(bImg);
-        apaneMain.setBackground(bGround);
-
         // Generate health bar
         imgviewHeart = new ImageView();
         displayHealth(world.getPlayer().getHealth());
@@ -199,14 +235,20 @@ public class GameWindow {
 
         // Generate location label
         lblLocation = new Label();
-        lblLocation.setText(world.getCurrentlocation());
+        lblLocation.setText(world.getCurrentlocation().getZoneName());
         lblLocation.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
         AnchorPane.setTopAnchor(lblLocation, 10.0);
         AnchorPane.setLeftAnchor(lblLocation, 10.0);
         apaneMain.getChildren().add(lblLocation);
 
-        // Adding an NPC to the starter area
-        spawnObjects();
+        // Building the entire scene of a zone.
+        drawWorld();
+
+        // Set Default Font
+        Font.loadFont(getClass().getResourceAsStream("/Final Assets/UI/Minecraft.ttf"), 64);
+
+        // Populating pauseVbox
+        createPauseVbox();
 
     }
 
@@ -284,14 +326,24 @@ public class GameWindow {
     }
 
     @FXML
-    public void spawnObjects() {
+    public void drawWorld() {
         for (Zone zone : ZoneList.instance().getLevels()) {
-            if (world.getCurrentlocation().equals(zone.getZoneName())) {
+            if (world.getCurrentlocation().getZoneName().equals(zone.getZoneName())) {
+
+                // Set background for the zone
+                BackgroundImage bImg = new BackgroundImage(new Image(zone.getBackgroundPath()), BackgroundRepeat.NO_REPEAT,
+                    BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+                Background bGround = new Background(bImg);
+                apaneMain.setBackground(bGround);
+
+                // Draw items inside of the zone onto the screen
                 for (NPC landObjects : zone.getObjectList()) {
 
                     switch (landObjects.getDescription()) {
                         
                         case "NPC":
+                            landObjects.setWidth(128);
+                            landObjects.setHeight(128);
                             ImageView imgviewNPC = new ImageView(imgNPC);
                             apaneMain.getChildren().add(imgviewNPC);
                             imgviewNPC.setLayoutX(landObjects.getX() - imgviewNPC.getLayoutBounds().getMinX());
@@ -299,6 +351,8 @@ public class GameWindow {
                             break;
                         
                         case "tree":
+                            landObjects.setWidth(256);
+                            landObjects.setHeight(256);
                             ImageView imgviewTree = new ImageView(imgTree);
                             apaneMain.getChildren().add(imgviewTree);
                             imgviewTree.setLayoutX(landObjects.getX() - imgviewTree.getLayoutBounds().getMinX());
@@ -306,13 +360,26 @@ public class GameWindow {
                             break;
                         
                         case "hFence":
+                            landObjects.setWidth(256);
+                            landObjects.setHeight(256);
                             ImageView imgviewHFence = new ImageView(imgHFence);
                             apaneMain.getChildren().add(imgviewHFence);
                             imgviewHFence.setLayoutX(landObjects.getX() - imgviewHFence.getLayoutBounds().getMinX());
                             imgviewHFence.setLayoutY(landObjects.getY() - imgviewHFence.getLayoutBounds().getMinY());
                             break;
                         
+                        case "vFence":
+                            landObjects.setWidth(256);
+                            landObjects.setHeight(256);
+                            ImageView imgviewVFence = new ImageView(imgVFence);
+                            apaneMain.getChildren().add(imgviewVFence);
+                            imgviewVFence.setLayoutX(landObjects.getX() - imgviewVFence.getLayoutBounds().getMinX());
+                            imgviewVFence.setLayoutY(landObjects.getY() - imgviewVFence.getLayoutBounds().getMinY());
+                            break;
+                        
                         case "archPoles":
+                            landObjects.setWidth(256);
+                            landObjects.setHeight(256);
                             ImageView imgviewArchPoles = new ImageView(imgArchposts);
                             apaneMain.getChildren().add(imgviewArchPoles);
                             imgviewArchPoles.setLayoutX(landObjects.getX() - imgviewArchPoles.getLayoutBounds().getMinX());
@@ -320,18 +387,43 @@ public class GameWindow {
                             break;
                         
                         case "arch":
+                            landObjects.setWidth(256);
+                            landObjects.setHeight(256);
                             ImageView imgviewArch = new ImageView(imgArch);
                             apaneMain.getChildren().add(imgviewArch);
                             imgviewArch.setLayoutX(landObjects.getX() - imgviewArch.getLayoutBounds().getMinX());
                             imgviewArch.setLayoutY(landObjects.getY() - imgviewArch.getLayoutBounds().getMinY());
                             break;
                         
+                        case "stump":
+                            landObjects.setWidth(256);
+                            landObjects.setHeight(256);
+                            ImageView imgviewStump = new ImageView(imgStump);
+                            apaneMain.getChildren().add(imgviewStump);
+                            imgviewStump.setLayoutX(landObjects.getX() - imgviewStump.getLayoutBounds().getMinX());
+                            imgviewStump.setLayoutY(landObjects.getY() - imgviewStump.getLayoutBounds().getMinY());
+                            break;
+                        
                         default:
                             break;
 
-
                     }
                 }
+            }
+        }
+    }
+
+    /**
+     * Switches the zone the player is in depending on his x and y coordinates. 
+     * Only switches if the direction the player is trying to move to is not null.
+     */
+    @FXML
+    public void switchZones() {
+        if (world.getPlayer().getY() <= 15) {
+            if (world.getCurrentlocation().getNorthZone() != null) {
+                world.setCurrentlocation(world.getCurrentlocation().getNorthZone());
+
+                drawWorld();
             }
         }
     }
@@ -560,7 +652,7 @@ public class GameWindow {
             break;
 
         case X:
-            spawnEnemies();
+            switchZones();
             break;
 
         case SPACE:
@@ -592,12 +684,56 @@ public class GameWindow {
 
             }
             break;
+        
+        case ESCAPE:
+            if (isPaused()) {
+                setIsPaused(false);
+                unpause();
+            } else {
+                setIsPaused(true);
+                pause();
+            }
+            
+            break;
 
         default:
             break;
 
         }
 
+    }
+
+    @FXML
+    public void pause() {
+        apaneMain.getChildren().add(imgviewBackgroundDim);
+        apaneMain.getChildren().add(pauseVbox);
+    }
+
+    @FXML
+    public void unpause() {
+        apaneMain.getChildren().remove(imgviewBackgroundDim);
+        apaneMain.getChildren().remove(pauseVbox);
+    }
+
+    @FXML
+    public void createPauseVbox() {
+        pauseVbox.setAlignment(Pos.TOP_CENTER);
+        pauseVbox.setSpacing(10.0);
+
+        Label pauseLbl = new Label();
+        pauseLbl.setText("GAME PAUSED");
+        pauseLbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 48px; -fx-text-fill: #ffffff;");
+        pauseLbl.setTextAlignment(TextAlignment.CENTER);
+
+        pauseVbox.getChildren().add(pauseLbl);
+        pauseVbox.getChildren().add(imgviewSaveBtn1);
+        pauseVbox.getChildren().add(imgviewLoadbtn1);
+        pauseVbox.getChildren().add(imgviewHelpBtn1);
+        pauseVbox.getChildren().add(imgviewQuitBtn1);
+
+
+        pauseVbox.setLayoutX(550);
+        pauseVbox.setLayoutY(250);
     }
 
     /**
@@ -695,5 +831,13 @@ public class GameWindow {
 
         }
 
+    }
+    
+    public void setIsPaused(boolean bool) {
+        this.isPaused = bool;
+    }
+
+    public boolean isPaused() {
+        return this.isPaused;
     }
 }
