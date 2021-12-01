@@ -44,6 +44,12 @@ public class Grunt extends Enemy {
         }
     }
 
+    @Override
+    public void navigate() {
+        
+        
+    }
+
 
     /// Methods from Enemy ///
 

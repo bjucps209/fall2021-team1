@@ -17,6 +17,8 @@ public abstract class Enemy extends Living {
         
     }
 
+    public abstract void navigate();
+
     /**
      * Whether or not the player is within detection range.
      * @return true if player is in detection range
