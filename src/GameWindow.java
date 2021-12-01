@@ -645,35 +645,47 @@ public class GameWindow {
         switch (event.getCode()) {
 
         case UP:
-            uPressed.set(true);
+            if (!isPaused()) {
+                uPressed.set(true);
 
-            processAnimationDirection();
+                processAnimationDirection();
 
-            world.getPlayer().setDirection(90);
+                world.getPlayer().setDirection(90);      
+            }
+            
             break;
 
         case LEFT:
-            lPressed.set(true);
-            
-            processAnimationDirection();
+            if (!isPaused()) {
+                lPressed.set(true);
+                
+                processAnimationDirection();
 
-            world.getPlayer().setDirection(180);
+                world.getPlayer().setDirection(180);        
+            }
+            
             break;
 
         case DOWN:
-            dPressed.set(true);
+            if (!isPaused()) {
+                dPressed.set(true);
 
-            processAnimationDirection();
+                processAnimationDirection();
+                
+                world.getPlayer().setDirection(270);        
+            }
             
-            world.getPlayer().setDirection(270);
             break;
 
         case RIGHT:
-            rPressed.set(true);
-            
-            processAnimationDirection();
+            if (!isPaused()) {
+                rPressed.set(true);
+                
+                processAnimationDirection();
 
-            world.getPlayer().setDirection(0);
+                world.getPlayer().setDirection(0);        
+            }
+            
             break;
 
         case Q:
@@ -696,45 +708,66 @@ public class GameWindow {
         switch (event.getCode()) {
 
         case UP:
-            uPressed.set(false);
+            if (!isPaused()) {
+                uPressed.set(false);
 
-            processAnimationDirection();
+                processAnimationDirection();   
+            }
+            
 
             break;
 
         case LEFT:
-            lPressed.set(false);
+            if (!isPaused()) {
+                lPressed.set(false);
 
-            processAnimationDirection();
+                processAnimationDirection(); 
+            }
+            
 
             break;
 
         case DOWN:
-            dPressed.set(false);
+            if (!isPaused()) {
+                dPressed.set(false);
 
-            processAnimationDirection();
+                processAnimationDirection();        
+            }
+            
 
             break;
 
         case RIGHT:
-            rPressed.set(false);
+            if (!isPaused()) {
+                rPressed.set(false);
 
-            processAnimationDirection();
+                processAnimationDirection();        
+            }
+            
 
             break;
 
         case Z:
-            handleInteract();
+            if (!isPaused()) {
+                handleInteract();        
+            }
+            
             break;
 
         case X:
-            switchZones();
+            if (!isPaused()) {
+                switchZones();        
+            }
+            
             break;
 
         case SPACE:
+            if (!isPaused()) {
+                world.getPlayer().attack(lastAnimationDirection); // Temporary. If this note is still here, tell Josh.
+                handleAttackGraphic();          
+            }
 
-            world.getPlayer().attack(lastAnimationDirection); // Temporary. If this note is still here, tell Josh.
-            handleAttackGraphic();
+            
             break;
 
         case S:
