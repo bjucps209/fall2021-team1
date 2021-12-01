@@ -17,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -150,8 +151,8 @@ public class GameWindow {
     private ImageView imgviewPauseBtn2 = new ImageView(imgPauseBtn2);
     private ImageView imgviewSaveBtn1 = new ImageView(imgSaveBtn1);
     private ImageView imgviewSaveBtn2 = new ImageView(imgSaveBtn2);
-    private ImageView imgviewLoadbtn1 = new ImageView(imgLoadbtn1);
-    private ImageView imgviewLoadbtn2 = new ImageView(imgLoadbtn2);
+    private ImageView imgviewLoadBtn1 = new ImageView(imgLoadbtn1);
+    private ImageView imgviewLoadBtn2 = new ImageView(imgLoadbtn2);
     private ImageView imgviewHelpBtn1 = new ImageView(imgHelpBtn1);
     private ImageView imgviewHelpBtn2 = new ImageView(imgHelpBtn2);
     private ImageView imgviewQuitBtn1 = new ImageView(imgQuitBtn1);
@@ -160,8 +161,9 @@ public class GameWindow {
     private ImageView imgviewBackBtn2 = new ImageView(imgBackBtn2);
     // **********************
 
-    // UI VBox *********************
+    // UI VBoxes *********************
     private VBox pauseVbox = new VBox();
+    private VBox helpVbox = new VBox();
     // *****************************
 
     // Model Attributes
@@ -171,13 +173,14 @@ public class GameWindow {
     // with enemy ID's later.
     ArrayList<ImageView> imgViewList;
 
+    Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> updateWorld()));
+
     @FXML
     void initialize(Stage stage) {
         imgViewList = new ArrayList<ImageView>();
         world = World.instance();
 
         // Timer for the updateworld method
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> updateWorld()));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
 
@@ -223,8 +226,9 @@ public class GameWindow {
         // Set Default Font
         Font.loadFont(getClass().getResourceAsStream("/Final Assets/UI/Minecraft.ttf"), 64);
 
-        // Populating pauseVbox
+        // Populating UI VBoxes
         createPauseVbox();
+        createHelpVbox();
 
     }
 
@@ -713,37 +717,54 @@ public class GameWindow {
 
         switch (event.getCode()) {
 
-            case UP:
+        case UP:
+            if (!isPaused()) {
                 uPressed.set(true);
 
                 processAnimationDirection();
 
-                world.getPlayer().setDirection(90);
-                break;
+                world.getPlayer().setDirection(90);      
+            }
+            
+            break;
 
-            case LEFT:
+        case LEFT:
+            if (!isPaused()) {
                 lPressed.set(true);
-
+                
                 processAnimationDirection();
 
-                world.getPlayer().setDirection(180);
-                break;
+                world.getPlayer().setDirection(180);        
+            }
+            
+            break;
 
-            case DOWN:
+        case DOWN:
+            if (!isPaused()) {
                 dPressed.set(true);
 
                 processAnimationDirection();
+                
+                world.getPlayer().setDirection(270);        
+            }
+            
+            break;
 
-                world.getPlayer().setDirection(270);
-                break;
-
-            case RIGHT:
+        case RIGHT:
+            if (!isPaused()) {
                 rPressed.set(true);
-
+                
                 processAnimationDirection();
 
-                world.getPlayer().setDirection(0);
-                break;
+                world.getPlayer().setDirection(0);        
+            }
+            
+            break;
+
+                //processAnimationDirection();
+
+               // world.getPlayer().setDirection(0);
+               //break;
 
             case Q:
                 int i = 0; // for pinging the debugger to peek at variables, delete on final release.
@@ -764,47 +785,68 @@ public class GameWindow {
 
         switch (event.getCode()) {
 
-            case UP:
+        case UP:
+            if (!isPaused()) {
                 uPressed.set(false);
 
-                processAnimationDirection();
+                processAnimationDirection();   
+            }
+            
 
                 break;
 
-            case LEFT:
+        case LEFT:
+            if (!isPaused()) {
                 lPressed.set(false);
 
-                processAnimationDirection();
+                processAnimationDirection(); 
+            }
+            
 
                 break;
 
-            case DOWN:
+        case DOWN:
+            if (!isPaused()) {
                 dPressed.set(false);
 
-                processAnimationDirection();
+                processAnimationDirection();        
+            }
+            
 
                 break;
 
-            case RIGHT:
+        case RIGHT:
+            if (!isPaused()) {
                 rPressed.set(false);
 
-                processAnimationDirection();
+                processAnimationDirection();        
+            }
+            
 
                 break;
 
-            case Z:
-                handleInteract();
-                break;
+        case Z:
+            if (!isPaused()) {
+                handleInteract();        
+            }
+            
+            break;
 
-            case X:
-                switchZones();
-                break;
+        case X:
+            if (!isPaused()) {
+                switchZones();        
+            }
+            
+            break;
 
-            case SPACE:
-
+        case SPACE:
+            if (!isPaused()) {
                 world.getPlayer().attack(lastAnimationDirection); // Temporary. If this note is still here, tell Josh.
-                handleAttackGraphic();
-                break;
+                handleAttackGraphic();          
+            }
+
+            
+            break;
 
             case S:
                 try {
@@ -848,18 +890,29 @@ public class GameWindow {
 
     }
 
+    /** 
+     * Pauses the game and brings up the pause menu
+     */
     @FXML
     public void pause() {
+        timeline.pause();
         apaneMain.getChildren().add(imgviewBackgroundDim);
         apaneMain.getChildren().add(pauseVbox);
     }
 
+    /**
+     * Unpauses the game and hides the pause menu
+     */
     @FXML
     public void unpause() {
+        timeline.play();
         apaneMain.getChildren().remove(imgviewBackgroundDim);
         apaneMain.getChildren().remove(pauseVbox);
     }
 
+    /** 
+     * Populates a VBox with the buttons for the pause menu
+     */
     @FXML
     public void createPauseVbox() {
         pauseVbox.setAlignment(Pos.TOP_CENTER);
@@ -870,14 +923,147 @@ public class GameWindow {
         pauseLbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 48px; -fx-text-fill: #ffffff;");
         pauseLbl.setTextAlignment(TextAlignment.CENTER);
 
+
+
+        // Button Graphic Changing *****************************************************************************
+        imgviewSaveBtn1.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                imgviewSaveBtn1.setImage(imgSaveBtn2);
+            }
+        });
+        imgviewSaveBtn1.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                imgviewSaveBtn1.setImage(imgSaveBtn1);
+            }
+        });
+        // ------------------------------------------------------------------------------------------------------
+        imgviewLoadBtn1.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                imgviewLoadBtn1.setImage(imgLoadbtn2);
+            }
+        });
+        imgviewLoadBtn1.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                imgviewLoadBtn1.setImage(imgLoadbtn1);
+            }
+        });
+        // ------------------------------------------------------------------------------------------------------
+        imgviewHelpBtn1.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                imgviewHelpBtn1.setImage(imgHelpBtn2);
+            }
+        });
+        imgviewHelpBtn1.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                imgviewHelpBtn1.setImage(imgHelpBtn1);
+            }
+        });
+        // ------------------------------------------------------------------------------------------------------
+        imgviewQuitBtn1.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                imgviewQuitBtn1.setImage(imgQuitBtn2);
+            }
+        });
+        imgviewQuitBtn1.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                imgviewQuitBtn1.setImage(imgQuitBtn1);
+            }
+        });
+        // ******************************************************************************************************
+
+        // Button Functions *************************************************************************************
+        imgviewSaveBtn1.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                try {
+                
+                    Serialization.save(World.instance().getEntityList());
+                    System.out.println("Game Saved!");
+                } catch (IOException ev) {
+        
+                    System.out.println(ev.getMessage());
+                
+                }
+            }
+        });
+        
+        // ------------------------------------------------------------------------------------------------------
+        imgviewLoadBtn1.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                try {
+
+                    Serialization.load();
+                    System.out.println("Game Loaded!");
+        
+                } catch (IOException ev) {
+        
+                    System.out.println(ev.getMessage());
+        
+                }
+            }
+        });
+        
+        // ------------------------------------------------------------------------------------------------------
+        imgviewHelpBtn1.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                apaneMain.getChildren().remove(pauseVbox);
+                apaneMain.getChildren().add(helpVbox);
+            }
+        });
+
+        // ------------------------------------------------------------------------------------------------------
+        imgviewQuitBtn1.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                World.instance();
+                World.reset();
+                Stage stage = (Stage) imgviewQuitBtn1.getScene().getWindow();
+                stage.close();
+            }
+        });
+        // ******************************************************************************************************
+
+
+
         pauseVbox.getChildren().add(pauseLbl);
         pauseVbox.getChildren().add(imgviewSaveBtn1);
-        pauseVbox.getChildren().add(imgviewLoadbtn1);
+        pauseVbox.getChildren().add(imgviewLoadBtn1);
         pauseVbox.getChildren().add(imgviewHelpBtn1);
         pauseVbox.getChildren().add(imgviewQuitBtn1);
 
         pauseVbox.setLayoutX(550);
         pauseVbox.setLayoutY(250);
+    }
+
+    @FXML
+    public void createHelpVbox() {
+        helpVbox.setAlignment(Pos.TOP_CENTER);
+        helpVbox.setSpacing(10.0);
+        helpVbox.getChildren().add(imgviewBackBtn1);
+
+
+        // Button Graphic Changing *****************************************************************************
+        imgviewBackBtn1.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                imgviewBackBtn1.setImage(imgBackBtn2);
+            }
+        });
+        imgviewBackBtn1.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                imgviewBackBtn1.setImage(imgBackBtn1);
+            }
+        });
+        // ******************************************************************************************************
+
+        // Button Functions *************************************************************************************
+        imgviewBackBtn1.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                apaneMain.getChildren().remove(helpVbox);
+                apaneMain.getChildren().add(pauseVbox);
+            }
+        });
+        // ******************************************************************************************************
+
+        helpVbox.setLayoutX(550);  //TODO: Needs Tweaking
+        helpVbox.setLayoutY(250);
     }
 
     /**
