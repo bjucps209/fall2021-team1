@@ -130,6 +130,8 @@ public class ZoneList {
         listPathways.get(3).setPosition(395, 575);
         listPathways.add(new Item("", "well", 0));
         listPathways.get(4).setPosition(903, 575);
+        listPathways.add(new NPC("","coord"));
+        listPathways.get(5).setPosition(301, 81);
         // *************************************
 
         // Graveyard ***************************

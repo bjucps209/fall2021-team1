@@ -503,6 +503,9 @@ public class GameWindow {
                             imgviewHouse.setLayoutX(landObjects.getX() - imgviewHouse.getLayoutBounds().getMinX());
                             imgviewHouse.setLayoutY(landObjects.getY() - imgviewHouse.getLayoutBounds().getMinY());
                             break;
+                        
+                        case "coord":
+                        
 
                         default:
                             break;
