@@ -52,10 +52,6 @@ public class Player extends Living {
 
     /// Methods from Living ///
 
-    @Override
-    public void move() {
-    }
-
     /**
      * This method is not to be used. It only exists because it must be inherited from Living.
      * Instead, please use the other attack method.
