@@ -880,8 +880,16 @@ public class GameWindow {
     @FXML
     public void pause() {
         timeline.pause();
+        uPressed.set(false);
+        lPressed.set(false);
+        dPressed.set(false);
+        rPressed.set(false);
+        processAnimationDirection();
+
+
         apaneMain.getChildren().add(imgviewBackgroundDim);
         apaneMain.getChildren().add(pauseVbox);
+
     }
 
     /**
@@ -1153,4 +1161,14 @@ public class GameWindow {
     public boolean isPaused() {
         return this.isPaused;
     }
+
+    public BooleanBinding getKeyPressed() {
+        return keyPressed;
+    }
+
+    public void setKeyPressed(BooleanBinding keyPressed) {
+        this.keyPressed = keyPressed;
+    }
+
+    
 }
