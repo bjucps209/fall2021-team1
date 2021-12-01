@@ -190,8 +190,10 @@ public class ZoneList {
         listGraveyard.get(25).setPosition(1192, 231);
         listGraveyard.add(new Item("", "vFence", 0));
         listGraveyard.get(26).setPosition(1192, 630);
-        listGraveyard.add(new NPC("Here lies the CpS 209 class of fall, 2021. Eleven started, three left.", "lSign"));
-        listGraveyard.get(27).setPosition(360, 358);
+        // listGraveyard.add(new NPC("Here lies the CpS 209 class of fall, 2021. Eleven started, three left.", "lSign"));   <- Feel free to change if you like Andrew
+        // listGraveyard.get(27).setPosition(360, 358);
+        listGraveyard.add(new NPC("Here lies the CpS 209 class of fall, 2021. Eleven started, three left.", "sign"));
+        listGraveyard.get(27).setPosition(368, 358);
         listGraveyard.get(27).setInteractable(true);
         // **************************************
 
