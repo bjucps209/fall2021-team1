@@ -78,7 +78,7 @@ public class ZoneList {
     }
 
     // ********************************************************** //
-    // BEWARE: Ugliest code you have ever seen, turn back now!    //
+    // BEWARE: Ugliest code you have ever seen, turn back now! //
     // ********************************************************** //
 
     /**
