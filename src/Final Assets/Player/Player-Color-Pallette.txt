@@ -3,6 +3,9 @@ Blue: #546fa1
 Red: #a11a1a
 Gray: #919191
 Background: #4f9655
+Top Sword: #cfcfcf
+Bottom Sword: #bababa
+
 
 Notes:
 * Shadows on Player-Right-Walking / Stationary
