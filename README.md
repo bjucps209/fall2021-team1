@@ -28,7 +28,7 @@ https://bju-my.sharepoint.com/:v:/g/personal/afox797_students_bju_edu/EfU9zCAlrF
 | Member Name | Username | Hours Invested | Hours Remaining |
 |-------------|----------|----------------|-----------------|
 | Andrew Fox | afox797 | 13:30 | 36:70 |
-| Joshua Douglas | Josh-Douglas | 8:45 | 41:15 |
+| Joshua Douglas | Josh-Douglas | 12:45 | 37:15 |
 | David Goff | dgoff448 | | | |
   
 [Andrew Fox Journal](https://github.com/bjucps209/fall2021-team1/wiki/Andrew-Fox-Journal)  
