@@ -30,9 +30,6 @@ public class Grunt extends Enemy {
     /// Methods from Living ///
     
     @Override
-    public void move() {}
-
-    @Override
     public void attack(int damage) {}
 
     @Override
