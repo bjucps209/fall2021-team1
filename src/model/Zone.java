@@ -10,14 +10,10 @@ public class Zone {
     private ArrayList<NPC> objectList;
     
 
-    public Zone(String zoneName, String backgroundPath, Zone northZone, Zone westZone, Zone southZone, Zone eastZone,
+    public Zone(String zoneName, String backgroundPath,
             ArrayList<NPC> objectList) {
         this.zoneName = zoneName;
         this.backgroundPath = backgroundPath;
-        this.northZone = northZone;
-        this.westZone = westZone;
-        this.southZone = southZone;
-        this.eastZone = eastZone;
         this.objectList = objectList;
     }
 

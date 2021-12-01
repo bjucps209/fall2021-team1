@@ -26,10 +26,9 @@ public class Player extends Living {
      */
     public Entity interact() {
 
-        for (int i = 0; i < ZoneList.instance().getLevels().size(); ++i) {
-            var list = ZoneList.instance().getLevels().get(i).getObjectList().stream().filter(e -> e.isInteractable()).toList();
-        }
-        var list = World.instance().getEntityList().stream().filter(e -> e.isInteractable()).toList();
+        Zone zone = World.instance().getCurrentlocation();
+
+        var list = zone.getObjectList().stream().filter(e -> e.isInteractable()).toList();
         Entity closest = null;
         double closeDistance = 95;
 

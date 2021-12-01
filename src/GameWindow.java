@@ -5,6 +5,7 @@ import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
@@ -118,12 +119,13 @@ public class GameWindow {
     private Image imgSign = new Image("Final Assets/Objects/PNG/Objects-FSign-64x64.png");
     private Image imgArch = new Image("Final Assets/Objects/PNG/Objects-GateArch-256x256.png");
     private Image imgArchposts = new Image("Final Assets/Objects/PNG/Objects-GatePosts-256x256.png");
-    private Image imgGravestone = new Image("Final Assets/Objects/PNG/Objects-Gravestone-64x64.png");
+    private Image imgTomb = new Image("Final Assets/Objects/PNG/Objects-Gravestone-64x64.png");
     private Image imgHFence = new Image("Final Assets/Objects/PNG/Objects-HFence-256x256.png");
     private Image imgVFence = new Image("Final Assets/Objects/PNG/Objects-VFence-256x256.png");
     private Image imgStump = new Image("Final Assets/Objects/PNG/Objects-Stump-256x256.png");
     private Image imgTree = new Image("Final Assets/Objects/PNG/Objects-Tree-256x256.png");
     private Image imgWell = new Image("Final Assets/Objects/PNG/Objects-Well-256x256.png");
+    private Image imgHouse = new Image("Final Assets/Objects/PNG/Objects-House-Front-512x512.png");
     // **********************
 
     // UI Images ************
@@ -161,8 +163,6 @@ public class GameWindow {
     // UI VBox *********************
     private VBox pauseVbox = new VBox();
     // *****************************
-    
-    
 
     // Model Attributes
     private World world;
@@ -243,33 +243,33 @@ public class GameWindow {
 
         switch (interactedEntity.getType()) {
 
-        case NPC:
+            case NPC:
 
-            Label lblMessage = new Label();
-            lblMessage.setText(((NPC) interactedEntity).getMessage());
-            lblMessage.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
-            lblMessage.setLayoutX(interactedEntity.getX() - 53);
-            lblMessage.setLayoutY(interactedEntity.getY() - 30);
+                Label lblMessage = new Label();
+                lblMessage.setText(((NPC) interactedEntity).getMessage());
+                lblMessage.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
+                lblMessage.setLayoutX(interactedEntity.getX() - 53);
+                lblMessage.setLayoutY(interactedEntity.getY() - 30);
 
-            apaneMain.getChildren().add(lblMessage);
+                apaneMain.getChildren().add(lblMessage);
 
-            PauseTransition labelPause = new PauseTransition(Duration.seconds(3));
-            labelPause.setOnFinished(e -> lblMessage.setVisible(false));
-            labelPause.play();
+                PauseTransition labelPause = new PauseTransition(Duration.seconds(3));
+                labelPause.setOnFinished(e -> lblMessage.setVisible(false));
+                labelPause.play();
 
-            return;
+                return;
 
-        case ITEM:
+            case ITEM:
 
-            // var item = (Item) interactedEntity;
-            // displayText(interactedEntity.getX() - 53, interactedEntity.getY() - 30,
-            // item.getMessage());
+                // var item = (Item) interactedEntity;
+                // displayText(interactedEntity.getX() - 53, interactedEntity.getY() - 30,
+                // item.getMessage());
 
-            // World.instance().increaseScore(item.getScoreIncrease());
+                // World.instance().increaseScore(item.getScoreIncrease());
 
-        default:
+            default:
 
-            return;
+                return;
 
         }
 
@@ -301,9 +301,9 @@ public class GameWindow {
 
     }
 
-
     /**
      * Draws the player to the screen.
+     * 
      * @param x - the x coordinate the player will be placed at
      * @param y - the y coordinate the player will be placed at
      */
@@ -314,9 +314,9 @@ public class GameWindow {
         imgviewPlayer.setX(x);
         imgviewPlayer.setY(y);
         apaneMain.getChildren().add(imgviewPlayer);
-        
+
         // Bind the player imageview's x and y to the player object
-        
+
         world.getPlayer().xProperty().bindBidirectional(imgviewPlayer.xProperty());
         world.getPlayer().yProperty().bindBidirectional(imgviewPlayer.yProperty());
     }
@@ -383,8 +383,9 @@ public class GameWindow {
             if (world.getCurrentlocation().getZoneName().equals(zone.getZoneName())) {
 
                 // Set background for the zone
-                BackgroundImage bImg = new BackgroundImage(new Image(zone.getBackgroundPath()), BackgroundRepeat.NO_REPEAT,
-                    BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+                BackgroundImage bImg = new BackgroundImage(new Image(zone.getBackgroundPath()),
+                        BackgroundRepeat.NO_REPEAT,
+                        BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
                 Background bGround = new Background(bImg);
                 apaneMain.setBackground(bGround);
 
@@ -392,7 +393,7 @@ public class GameWindow {
                 for (NPC landObjects : zone.getObjectList()) {
 
                     switch (landObjects.getDescription()) {
-                        
+
                         case "NPC":
                             landObjects.setWidth(128);
                             landObjects.setHeight(128);
@@ -401,7 +402,7 @@ public class GameWindow {
                             imgviewNPC.setLayoutX(landObjects.getX() - imgviewNPC.getLayoutBounds().getMinX());
                             imgviewNPC.setLayoutY(landObjects.getY() - imgviewNPC.getLayoutBounds().getMinY());
                             break;
-                        
+
                         case "tree":
                             landObjects.setWidth(256);
                             landObjects.setHeight(256);
@@ -410,7 +411,7 @@ public class GameWindow {
                             imgviewTree.setLayoutX(landObjects.getX() - imgviewTree.getLayoutBounds().getMinX());
                             imgviewTree.setLayoutY(landObjects.getY() - imgviewTree.getLayoutBounds().getMinY());
                             break;
-                        
+
                         case "hFence":
                             landObjects.setWidth(256);
                             landObjects.setHeight(256);
@@ -419,7 +420,7 @@ public class GameWindow {
                             imgviewHFence.setLayoutX(landObjects.getX() - imgviewHFence.getLayoutBounds().getMinX());
                             imgviewHFence.setLayoutY(landObjects.getY() - imgviewHFence.getLayoutBounds().getMinY());
                             break;
-                        
+
                         case "vFence":
                             landObjects.setWidth(256);
                             landObjects.setHeight(256);
@@ -428,16 +429,18 @@ public class GameWindow {
                             imgviewVFence.setLayoutX(landObjects.getX() - imgviewVFence.getLayoutBounds().getMinX());
                             imgviewVFence.setLayoutY(landObjects.getY() - imgviewVFence.getLayoutBounds().getMinY());
                             break;
-                        
+
                         case "archPoles":
                             landObjects.setWidth(256);
                             landObjects.setHeight(256);
                             ImageView imgviewArchPoles = new ImageView(imgArchposts);
                             apaneMain.getChildren().add(imgviewArchPoles);
-                            imgviewArchPoles.setLayoutX(landObjects.getX() - imgviewArchPoles.getLayoutBounds().getMinX());
-                            imgviewArchPoles.setLayoutY(landObjects.getY() - imgviewArchPoles.getLayoutBounds().getMinY());
+                            imgviewArchPoles
+                                    .setLayoutX(landObjects.getX() - imgviewArchPoles.getLayoutBounds().getMinX());
+                            imgviewArchPoles
+                                    .setLayoutY(landObjects.getY() - imgviewArchPoles.getLayoutBounds().getMinY());
                             break;
-                        
+
                         case "arch":
                             landObjects.setWidth(256);
                             landObjects.setHeight(256);
@@ -446,7 +449,7 @@ public class GameWindow {
                             imgviewArch.setLayoutX(landObjects.getX() - imgviewArch.getLayoutBounds().getMinX());
                             imgviewArch.setLayoutY(landObjects.getY() - imgviewArch.getLayoutBounds().getMinY());
                             break;
-                        
+
                         case "stump":
                             landObjects.setWidth(256);
                             landObjects.setHeight(256);
@@ -455,7 +458,7 @@ public class GameWindow {
                             imgviewStump.setLayoutX(landObjects.getX() - imgviewStump.getLayoutBounds().getMinX());
                             imgviewStump.setLayoutY(landObjects.getY() - imgviewStump.getLayoutBounds().getMinY());
                             break;
-                        
+
                         case "well":
                             landObjects.setWidth(256);
                             landObjects.setHeight(256);
@@ -464,8 +467,52 @@ public class GameWindow {
                             imgviewWell.setLayoutX(landObjects.getX() - imgviewWell.getLayoutBounds().getMinX());
                             imgviewWell.setLayoutY(landObjects.getY() - imgviewWell.getLayoutBounds().getMinY());
                             break;
-                    
-                        
+
+                        case "tomb":
+                            landObjects.setWidth(64);
+                            landObjects.setHeight(64);
+                            ImageView imgviewTomb = new ImageView(imgTomb);
+                            apaneMain.getChildren().add(imgviewTomb);
+                            imgviewTomb.setLayoutX(landObjects.getX() - imgviewTomb.getLayoutBounds().getMinX());
+                            imgviewTomb.setLayoutY(landObjects.getY() - imgviewTomb.getLayoutBounds().getMinY());
+                            break;
+
+                        case "lSign":
+                            landObjects.setWidth(64);
+                            landObjects.setHeight(64);
+                            ImageView imgviewlSign = new ImageView(imgDSignLeft);
+                            apaneMain.getChildren().add(imgviewlSign);
+                            imgviewlSign.setLayoutX(landObjects.getX() - imgviewlSign.getLayoutBounds().getMinX());
+                            imgviewlSign.setLayoutY(landObjects.getY() - imgviewlSign.getLayoutBounds().getMinY());
+                            break;
+
+                        case "rSign":
+                            landObjects.setWidth(64);
+                            landObjects.setHeight(64);
+                            ImageView imgviewrSign = new ImageView(imgDSignRight);
+                            apaneMain.getChildren().add(imgviewrSign);
+                            imgviewrSign.setLayoutX(landObjects.getX() - imgviewrSign.getLayoutBounds().getMinX());
+                            imgviewrSign.setLayoutY(landObjects.getY() - imgviewrSign.getLayoutBounds().getMinY());
+                            break;
+
+                        case "sign":
+                            landObjects.setWidth(64);
+                            landObjects.setHeight(64);
+                            ImageView imgviewSign = new ImageView(imgSign);
+                            apaneMain.getChildren().add(imgviewSign);
+                            imgviewSign.setLayoutX(landObjects.getX() - imgviewSign.getLayoutBounds().getMinX());
+                            imgviewSign.setLayoutY(landObjects.getY() - imgviewSign.getLayoutBounds().getMinY());
+                            break;
+
+                        case "house":
+                            landObjects.setWidth(512);
+                            landObjects.setHeight(512);
+                            ImageView imgviewHouse = new ImageView(imgHouse);
+                            apaneMain.getChildren().add(imgviewHouse);
+                            imgviewHouse.setLayoutX(landObjects.getX() - imgviewHouse.getLayoutBounds().getMinX());
+                            imgviewHouse.setLayoutY(landObjects.getY() - imgviewHouse.getLayoutBounds().getMinY());
+                            break;
+
                         default:
                             break;
 
@@ -475,19 +522,23 @@ public class GameWindow {
         }
     }
 
-    @FXML 
+    /**
+     * Draws the entire game screen.
+     * 
+     * @param x - the x value to set the player at
+     * @param y - the y value to set the player at
+     */
+    @FXML
     public void drawScreen(double x, double y) {
-        drawPlayer(x,y);
+        drawPlayer(x, y);
+        drawWorld();
         drawHealth();
         drawLocationLabel();
         drawScore();
-        drawWorld();
     }
 
-
-
     /**
-     * Switches the zone the player is in depending on his x and y coordinates. 
+     * Switches the zone the player is in depending on his x and y coordinates.
      * Only switches if the direction the player is trying to move to is not null.
      */
     @FXML
@@ -496,7 +547,28 @@ public class GameWindow {
             if (world.getCurrentlocation().getNorthZone() != null) {
                 world.setCurrentlocation(world.getCurrentlocation().getNorthZone());
                 apaneMain.getChildren().removeAll(apaneMain.getChildren());
-                drawScreen(world.getPlayer().getX(), world.getPlayer().getY() + 1000);
+                drawScreen(world.getPlayer().getX(), world.getPlayer().getY() + 700);
+            }
+
+        } else if (world.getPlayer().getX() <= 15) {
+            if (world.getCurrentlocation().getWestZone() != null) {
+                world.setCurrentlocation(world.getCurrentlocation().getWestZone());
+                apaneMain.getChildren().removeAll(apaneMain.getChildren());
+                drawScreen(world.getPlayer().getX() + 1200 , world.getPlayer().getY());
+            }
+
+        } else if (world.getPlayer().getY() >= 885) {
+            if (world.getCurrentlocation().getSouthZone() != null) {
+                world.setCurrentlocation(world.getCurrentlocation().getSouthZone());
+                apaneMain.getChildren().removeAll(apaneMain.getChildren());
+                drawScreen(world.getPlayer().getX(), world.getPlayer().getY() - 700);
+            }
+            
+        } else if (world.getPlayer().getX() >= 1380 ) {
+            if (world.getCurrentlocation().getEastZone() != null) {
+                world.setCurrentlocation(world.getCurrentlocation().getEastZone());
+                apaneMain.getChildren().removeAll(apaneMain.getChildren());
+                drawScreen(world.getPlayer().getX() - 1200, world.getPlayer().getY());
             }
         }
     }
@@ -596,9 +668,9 @@ public class GameWindow {
 
             lastAnimationDirection = mapDirection.UP;
             imgviewPlayer.setImage(imgPlayerBackMove);
-    
+
         } else if (dPressed.get() && !uPressed.get() && !lPressed.get() && !rPressed.get()) {
-    
+
             lastAnimationDirection = mapDirection.DOWN;
             imgviewPlayer.setImage(imgPlayerFrontMove);
 
@@ -606,9 +678,9 @@ public class GameWindow {
 
             lastAnimationDirection = mapDirection.RIGHT;
             imgviewPlayer.setImage(imgPlayerRightMove);
-    
+
         } else if (lPressed.get() && !rPressed.get()) {
-    
+
             lastAnimationDirection = mapDirection.LEFT;
             imgviewPlayer.setImage(imgPlayerLeftMove);
 
@@ -619,7 +691,7 @@ public class GameWindow {
         } else if (lastAnimationDirection == mapDirection.DOWN) {
 
             imgviewPlayer.setImage(imgPlayerFront);
-        
+
         } else if (lastAnimationDirection == mapDirection.LEFT) {
 
             imgviewPlayer.setImage(imgPlayerLeft);
@@ -641,43 +713,43 @@ public class GameWindow {
 
         switch (event.getCode()) {
 
-        case UP:
-            uPressed.set(true);
+            case UP:
+                uPressed.set(true);
 
-            processAnimationDirection();
+                processAnimationDirection();
 
-            world.getPlayer().setDirection(90);
-            break;
+                world.getPlayer().setDirection(90);
+                break;
 
-        case LEFT:
-            lPressed.set(true);
-            
-            processAnimationDirection();
+            case LEFT:
+                lPressed.set(true);
 
-            world.getPlayer().setDirection(180);
-            break;
+                processAnimationDirection();
 
-        case DOWN:
-            dPressed.set(true);
+                world.getPlayer().setDirection(180);
+                break;
 
-            processAnimationDirection();
-            
-            world.getPlayer().setDirection(270);
-            break;
+            case DOWN:
+                dPressed.set(true);
 
-        case RIGHT:
-            rPressed.set(true);
-            
-            processAnimationDirection();
+                processAnimationDirection();
 
-            world.getPlayer().setDirection(0);
-            break;
+                world.getPlayer().setDirection(270);
+                break;
 
-        case Q:
-            int i = 0; // for pinging the debugger to peek at variables, delete on final release.
+            case RIGHT:
+                rPressed.set(true);
 
-        default:
-            break;
+                processAnimationDirection();
+
+                world.getPlayer().setDirection(0);
+                break;
+
+            case Q:
+                int i = 0; // for pinging the debugger to peek at variables, delete on final release.
+
+            default:
+                break;
 
         }
 
@@ -692,85 +764,85 @@ public class GameWindow {
 
         switch (event.getCode()) {
 
-        case UP:
-            uPressed.set(false);
+            case UP:
+                uPressed.set(false);
 
-            processAnimationDirection();
+                processAnimationDirection();
 
-            break;
+                break;
 
-        case LEFT:
-            lPressed.set(false);
+            case LEFT:
+                lPressed.set(false);
 
-            processAnimationDirection();
+                processAnimationDirection();
 
-            break;
+                break;
 
-        case DOWN:
-            dPressed.set(false);
+            case DOWN:
+                dPressed.set(false);
 
-            processAnimationDirection();
+                processAnimationDirection();
 
-            break;
+                break;
 
-        case RIGHT:
-            rPressed.set(false);
+            case RIGHT:
+                rPressed.set(false);
 
-            processAnimationDirection();
+                processAnimationDirection();
 
-            break;
+                break;
 
-        case Z:
-            handleInteract();
-            break;
+            case Z:
+                handleInteract();
+                break;
 
-        case X:
-            switchZones();
-            break;
+            case X:
+                switchZones();
+                break;
 
-        case SPACE:
+            case SPACE:
 
-            world.getPlayer().attack(lastAnimationDirection); // Temporary. If this note is still here, tell Josh.
-            handleAttackGraphic();
-            break;
+                world.getPlayer().attack(lastAnimationDirection); // Temporary. If this note is still here, tell Josh.
+                handleAttackGraphic();
+                break;
 
-        case S:
-            try {
-                
-                Serialization.save(World.instance().getEntityList());
+            case S:
+                try {
 
-            } catch (IOException e) {
+                    Serialization.save(World.instance().getEntityList());
 
-                System.out.println(e.getMessage());
-            
-            }
-            break;
+                } catch (IOException e) {
 
-        case L:
-            try {
+                    System.out.println(e.getMessage());
 
-                Serialization.load();
+                }
+                break;
 
-            } catch (IOException e) {
+            case L:
+                try {
 
-                System.out.println(e.getMessage());
+                    Serialization.load();
 
-            }
-            break;
-        
-        case ESCAPE:
-            if (isPaused()) {
-                setIsPaused(false);
-                unpause();
-            } else {
-                setIsPaused(true);
-                pause();
-            }
-            
-            break;
+                } catch (IOException e) {
 
-        default:
-            break;
+                    System.out.println(e.getMessage());
+
+                }
+                break;
+
+            case ESCAPE:
+                if (isPaused()) {
+                    setIsPaused(false);
+                    unpause();
+                } else {
+                    setIsPaused(true);
+                    pause();
+                }
+
+                break;
+
+            default:
+                break;
 
         }
 
@@ -804,7 +876,6 @@ public class GameWindow {
         pauseVbox.getChildren().add(imgviewHelpBtn1);
         pauseVbox.getChildren().add(imgviewQuitBtn1);
 
-
         pauseVbox.setLayoutX(550);
         pauseVbox.setLayoutY(250);
     }
@@ -820,36 +891,36 @@ public class GameWindow {
         attackPause.setOnFinished(e -> imgviewAttack.setVisible(false));
 
         switch (direction) {
-        case 270:
-            imgviewAttack.setX(world.getPlayer().getX());
-            imgviewAttack.setY(world.getPlayer().getY() + 90);
-            apaneMain.getChildren().add(imgviewAttack);
-            attackPause.play();
-            break;
+            case 270:
+                imgviewAttack.setX(world.getPlayer().getX());
+                imgviewAttack.setY(world.getPlayer().getY() + 90);
+                apaneMain.getChildren().add(imgviewAttack);
+                attackPause.play();
+                break;
 
-        case 180:
-            imgviewAttack.setX(world.getPlayer().getX() - 50);
-            imgviewAttack.setY(world.getPlayer().getY());
-            apaneMain.getChildren().add(imgviewAttack);
-            attackPause.play();
-            break;
+            case 180:
+                imgviewAttack.setX(world.getPlayer().getX() - 50);
+                imgviewAttack.setY(world.getPlayer().getY());
+                apaneMain.getChildren().add(imgviewAttack);
+                attackPause.play();
+                break;
 
-        case 90:
-            imgviewAttack.setX(world.getPlayer().getX());
-            imgviewAttack.setY(world.getPlayer().getY() - 90);
-            apaneMain.getChildren().add(imgviewAttack);
-            attackPause.play();
-            break;
+            case 90:
+                imgviewAttack.setX(world.getPlayer().getX());
+                imgviewAttack.setY(world.getPlayer().getY() - 90);
+                apaneMain.getChildren().add(imgviewAttack);
+                attackPause.play();
+                break;
 
-        case 0:
-            imgviewAttack.setX(world.getPlayer().getX() + 90);
-            imgviewAttack.setY(world.getPlayer().getY());
-            apaneMain.getChildren().add(imgviewAttack);
-            attackPause.play();
-            break;
+            case 0:
+                imgviewAttack.setX(world.getPlayer().getX() + 90);
+                imgviewAttack.setY(world.getPlayer().getY());
+                apaneMain.getChildren().add(imgviewAttack);
+                attackPause.play();
+                break;
 
-        default:
-            break;
+            default:
+                break;
         }
     }
 
@@ -862,50 +933,50 @@ public class GameWindow {
 
         switch (health) {
 
-        case 10:
-            imgviewHeart.setImage(imgHeart10);
-            break;
+            case 10:
+                imgviewHeart.setImage(imgHeart10);
+                break;
 
-        case 9:
-            imgviewHeart.setImage(imgHeart9);
-            break;
+            case 9:
+                imgviewHeart.setImage(imgHeart9);
+                break;
 
-        case 8:
-            imgviewHeart.setImage(imgHeart8);
-            break;
+            case 8:
+                imgviewHeart.setImage(imgHeart8);
+                break;
 
-        case 7:
-            imgviewHeart.setImage(imgHeart7);
-            break;
+            case 7:
+                imgviewHeart.setImage(imgHeart7);
+                break;
 
-        case 6:
-            imgviewHeart.setImage(imgHeart6);
-            break;
+            case 6:
+                imgviewHeart.setImage(imgHeart6);
+                break;
 
-        case 5:
-            imgviewHeart.setImage(imgHeart5);
-            break;
+            case 5:
+                imgviewHeart.setImage(imgHeart5);
+                break;
 
-        case 4:
-            imgviewHeart.setImage(imgHeart4);
-            break;
+            case 4:
+                imgviewHeart.setImage(imgHeart4);
+                break;
 
-        case 3:
-            imgviewHeart.setImage(imgHeart3);
-            break;
+            case 3:
+                imgviewHeart.setImage(imgHeart3);
+                break;
 
-        case 2:
-            imgviewHeart.setImage(imgHeart2);
-            break;
+            case 2:
+                imgviewHeart.setImage(imgHeart2);
+                break;
 
-        case 1:
-            imgviewHeart.setImage(imgHeart1);
-            break;
+            case 1:
+                imgviewHeart.setImage(imgHeart1);
+                break;
 
         }
 
     }
-    
+
     public void setIsPaused(boolean bool) {
         this.isPaused = bool;
     }
