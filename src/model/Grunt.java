@@ -49,7 +49,7 @@ public class Grunt extends Enemy {
 
     @Override
     public void navigate() {
-        // TODO Auto-generated method stub
+        
         
     }
 
