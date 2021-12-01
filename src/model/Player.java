@@ -30,7 +30,7 @@ public class Player extends Living {
 
         var list = zone.getObjectList().stream().filter(e -> e.isInteractable()).toList();
         Entity closest = null;
-        double closeDistance = 95;
+        double closeDistance = 150;
 
         for (Entity entity : list) {
 

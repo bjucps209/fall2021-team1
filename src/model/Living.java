@@ -33,9 +33,9 @@ public abstract class Living extends Entity {
     public abstract void attack(int damage);
     public abstract void handleDamage(int damage);
     public abstract void handleDeath();
+    
 
     /// Getters and Setters ///
-
     public IntegerProperty healthProperty() {
 
         return this.health;
