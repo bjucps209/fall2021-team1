@@ -173,13 +173,14 @@ public class GameWindow {
     // with enemy ID's later.
     ArrayList<ImageView> imgViewList;
 
+    Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> updateWorld()));
+
     @FXML
     void initialize(Stage stage) {
         imgViewList = new ArrayList<ImageView>();
         world = World.instance();
 
         // Timer for the updateworld method
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> updateWorld()));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
 
@@ -817,6 +818,7 @@ public class GameWindow {
      */
     @FXML
     public void pause() {
+        timeline.pause();
         apaneMain.getChildren().add(imgviewBackgroundDim);
         apaneMain.getChildren().add(pauseVbox);
     }
@@ -826,6 +828,7 @@ public class GameWindow {
      */
     @FXML
     public void unpause() {
+        timeline.play();
         apaneMain.getChildren().remove(imgviewBackgroundDim);
         apaneMain.getChildren().remove(pauseVbox);
     }
@@ -892,12 +895,44 @@ public class GameWindow {
         // ******************************************************************************************************
 
         // Button Functions *************************************************************************************
+        imgviewSaveBtn1.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                try {
+                
+                    Serialization.save(World.instance().getEntityList());
+                    System.out.println("Game Saved!");
+                } catch (IOException ev) {
+        
+                    System.out.println(ev.getMessage());
+                
+                }
+            }
+        });
+        
+        // ------------------------------------------------------------------------------------------------------
+        imgviewLoadBtn1.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                try {
+
+                    Serialization.load();
+                    System.out.println("Game Loaded!");
+        
+                } catch (IOException ev) {
+        
+                    System.out.println(ev.getMessage());
+        
+                }
+            }
+        });
+        
+        // ------------------------------------------------------------------------------------------------------
         imgviewHelpBtn1.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
                 apaneMain.getChildren().remove(pauseVbox);
                 apaneMain.getChildren().add(helpVbox);
             }
         });
+
         // ------------------------------------------------------------------------------------------------------
         imgviewQuitBtn1.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
