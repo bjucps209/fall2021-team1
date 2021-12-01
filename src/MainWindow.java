@@ -24,7 +24,7 @@ import javafx.stage.Stage;
 
 public class MainWindow  {
     @FXML StackPane spaneMain;
-    private AudioClip click = new AudioClip(getClass().getResource("Audio/UI/btnClick0.mp3").toExternalForm());
+    private AudioClip click = new AudioClip(getClass().getResource("Audio/UI/btnClick1.mp3").toExternalForm());
 
     /**
      * Intializes the start screen with music in the background and the font style used for the application.
@@ -78,7 +78,6 @@ public class MainWindow  {
         Startbtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
                 Startbtn.setImage(new Image("Final Assets/UI/PNG/UI-StartBtn2-312x80.png"));
-                click.play();
             }
         });
         Startbtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
@@ -105,7 +104,6 @@ public class MainWindow  {
         HSbtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
                 HSbtn.setImage(new Image("Final Assets/UI/PNG/UI-HighscoreBtn2-312x80.png"));
-                click.play();
             }
         });
         HSbtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
@@ -117,7 +115,6 @@ public class MainWindow  {
         Helpbtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
                 Helpbtn.setImage(new Image("Final Assets/UI/PNG/UI-HelpBtn2-312x80.png"));
-                click.play();
             }
         });
         Helpbtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
