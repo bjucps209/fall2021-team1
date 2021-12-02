@@ -126,11 +126,11 @@ public class Player extends Living {
                                 break;
                             
                             case DOWN:
-                                target.setY(target.getY() + 100);
+                                target.setY(target.getY() + 200);
                                 break;
                             
                             case RIGHT:
-                                target.setX(target.getX() + 100);
+                                target.setX(target.getX() + 200);
                                 break;
                                 
                             default:

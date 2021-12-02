@@ -2,7 +2,7 @@ package model;
 
 public class Grunt extends Enemy {
 
-    private int count;
+    private int count; // Counter so the enemy doesnt attack every 35 miliseconds
 
     public enum GruntState {
 
@@ -20,7 +20,7 @@ public class Grunt extends Enemy {
         this.setHealth(3);
         this.setDamage(1);
         this.setSpeed(1.3);
-        this.setDetectionRadius(125);
+        this.setDetectionRadius(300);
         state = GruntState.PATROL;
 
     }

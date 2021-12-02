@@ -80,7 +80,10 @@ public class GameWindow {
     // *********************
 
     // Player Images *******
-    private Image imgattackAnim = new Image("Final Assets/Player/GIF/Player-Attack-128x128.gif");
+    private Image imgPlayerAttackFront = new Image("Final Assets/Player/GIF/Player-Front-Attack-128x192.gif");
+    private Image imgPlayerAttackBack = new Image("Final Assets/Player/GIF/Player-Back-Attack-128x128.gif");
+    private Image imgPlayerAttackLeft = new Image("Final Assets/Player/GIF/Player-Attack-Left-128x128.gif");
+    private Image imgPlayerAttackRight = new Image("Final Assets/Player/GIF/Player-Right-Attack-128x128.gif");
     private Image imgPlayerBack = new Image("Final Assets/Player/PNG/Player-Back-Stationary-128x128.png");
     private Image imgPlayerFront = new Image("Final Assets/Player/PNG/Player-Front-Stationary-128x128.png");
     private Image imgPlayerLeft = new Image("Final Assets/Player/PNG/Player-Left-Stationary-128x128.png");
@@ -1106,36 +1109,27 @@ public class GameWindow {
     @FXML
     public void handleAttackGraphic() {
         int direction = world.getPlayer().getDirection();
-        ImageView imgviewAttack = new ImageView(imgattackAnim);
         PauseTransition attackPause = new PauseTransition(Duration.seconds(0.28));
-        attackPause.setOnFinished(e -> imgviewAttack.setVisible(false));
+        attackPause.setOnFinished(e -> processAnimationDirection());
 
         switch (direction) {
             case 270:
-                imgviewAttack.setX(world.getPlayer().getX());
-                imgviewAttack.setY(world.getPlayer().getY() + 90);
-                apaneMain.getChildren().add(imgviewAttack);
+                imgviewPlayer.setImage(imgPlayerAttackFront);
                 attackPause.play();
                 break;
 
             case 180:
-                imgviewAttack.setX(world.getPlayer().getX() - 50);
-                imgviewAttack.setY(world.getPlayer().getY());
-                apaneMain.getChildren().add(imgviewAttack);
+                imgviewPlayer.setImage(imgPlayerAttackLeft);
                 attackPause.play();
                 break;
 
             case 90:
-                imgviewAttack.setX(world.getPlayer().getX());
-                imgviewAttack.setY(world.getPlayer().getY() - 90);
-                apaneMain.getChildren().add(imgviewAttack);
+                imgviewPlayer.setImage(imgPlayerAttackBack);
                 attackPause.play();
                 break;
 
             case 0:
-                imgviewAttack.setX(world.getPlayer().getX() + 90);
-                imgviewAttack.setY(world.getPlayer().getY());
-                apaneMain.getChildren().add(imgviewAttack);
+                imgviewPlayer.setImage(imgPlayerAttackRight);  
                 attackPause.play();
                 break;
 
