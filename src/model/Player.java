@@ -57,7 +57,7 @@ public class Player extends Living {
      * Instead, please use the other attack method.
      */
     @Override
-    public void attack(int DO_NOT_USE_THIS_METHOD) {}
+    public void attack() {}
 
     /**
      * Checks if an enemy is within a semicircle of the player's direction, and if the enemy is within a certain distance of the player.
@@ -148,6 +148,7 @@ public class Player extends Living {
 
     @Override
     public void handleDamage(int damage) {
+        this.setHealth(this.getHealth() - damage);
     }
 
     @Override

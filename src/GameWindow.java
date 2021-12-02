@@ -164,12 +164,13 @@ public class GameWindow {
     ArrayList<ImageView> imgViewList;
 
     // Game clock
-    Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> updateWorld()));
+    Timeline timeline = new Timeline(new KeyFrame(Duration.millis(35), e -> updateWorld()));
 
     @FXML
     void initialize(Stage stage) {
         imgViewList = new ArrayList<ImageView>();
         world = World.instance();
+        world.setScore(0);
 
         // Timer for the updateworld method
         timeline.setCycleCount(Timeline.INDEFINITE);
@@ -345,7 +346,6 @@ public class GameWindow {
         }
 
         lblScore = new Label();
-        world.setScore(0);
         lblScore.setText(String.valueOf(world.getScore()));
         lblScore.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
         lblScore.textProperty()
@@ -589,8 +589,7 @@ public class GameWindow {
 
         world.updateWorld();
         var iterator = world.getEntityList().iterator();
-
-
+        drawHealth();
 
         while (iterator.hasNext()) {
 
