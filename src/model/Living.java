@@ -28,22 +28,12 @@ public abstract class Living extends Entity {
 
     }
 
-    /**
-     * Attempts to move the entity.
-     * @param direction the direction to move in
-     * @return true if the move was successful, false otherwise
-     */
-    public boolean move(int direction) {
-
-        return true;
-
-    }
 
     // Override these methods and any methods from Entity
     public abstract void attack(int damage);
     public abstract void handleDamage(int damage);
     public abstract void handleDeath();
-    
+
 
     /// Getters and Setters ///
     public IntegerProperty healthProperty() {

@@ -9,7 +9,7 @@ public class Player extends Living {
     public Player() {
 
         // TODO: use actual width, height of player
-        super(10, 10);
+        super(128, 128);
 
         // Load base stats
         this.setMaxHealth(5);
@@ -66,6 +66,7 @@ public class Player extends Living {
     public void attack(mapDirection direction) {
 
         List<Entity> list = World.instance().getEntityList().stream().filter(e -> (e instanceof Enemy)).toList();
+        boolean hit = false;
 
         if (list.size() > 0) {
 
@@ -74,15 +75,13 @@ public class Player extends Living {
                 Enemy target = (Enemy) enemy;
 
                 // NOTE: Currently assumes that all creatures are the same size.
-                if (Math.hypot(this.getX() - target.getX(), this.getX() - target.getY()) < 128) {
-
-                    boolean hit = false;
+                if (Math.hypot(this.getX() - target.getX(), this.getY() - target.getY()) < 128) {
 
                     switch (direction) {
 
                         case UP:
                             
-                            if (target.getY() < this.getY() + this.getWidth() / 2) return;
+                            if (target.getY() < this.getY() - this.getWidth() / 2) return;
                             hit = true;
                             break;
 
@@ -100,7 +99,7 @@ public class Player extends Living {
 
                         case RIGHT:
                             
-                            if (target.getX() < this.getX() + this.getHeight() / 2) return;
+                            if (target.getX() < this.getX() - this.getHeight() / 2) return;
                             hit = true;
                             break;
                     
@@ -110,10 +109,33 @@ public class Player extends Living {
 
                     }
 
-                    if (hit == true) {
+                }
 
-                        // TODO: knockback
+                if (hit == true) {
+                    target.handleDamage(getDamage());
+                    if (target instanceof Grunt) {
 
+                        switch (direction) {
+                            
+                            case UP:
+                                target.setY(target.getY() - 100);
+                                break;
+
+                            case LEFT:
+                                target.setX(target.getX() - 100);
+                                break;
+                            
+                            case DOWN:
+                                target.setY(target.getY() + 100);
+                                break;
+                            
+                            case RIGHT:
+                                target.setX(target.getX() + 100);
+                                break;
+                                
+                            default:
+                                break;
+                        }
                     }
 
                 }

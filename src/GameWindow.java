@@ -98,6 +98,10 @@ public class GameWindow {
     // Enemy Images *********
     private Image imgGruntDeath = new Image("Final Assets/Grunt/GIF/Grunt-Death-128x128.gif");
     private Image imgGrunt = new Image("Final Assets/Grunt/PNG/Grunt-Front-Stationary-128x128.png");
+    private Image imgGruntRightMove = new Image("Final Assets/Grunt/GIF/Grunt-Right-Walking-128x128.gif");
+    private Image imgGruntBackMove = new Image("Final Assets/Grunt/GIF/Grunt-Back-Walking-128x128.gif");
+    private Image imgGruntFrontMove = new Image("Final Assets/Grunt/GIF/Grunt-Front-Walking-128x128.gif");
+    private Image imgGruntLefttMove = new Image("Final Assets/Grunt/GIF/Grunt-Left-Walking-128x128.gif");
     // **********************
 
     // Object Images ********
@@ -269,20 +273,23 @@ public class GameWindow {
     /**
      * Spawns enemies in the current player's location, barebones implementation for
      * alpha.
+     * @param enemy - the enemy to be spawned
      */
     @FXML
-    public void spawnEnemies() {
+    public void spawnEnemies(Enemy enemy) {
 
-        world.spawnEnemies();
+        world.spawnEnemies(enemy);
 
         for (Entity entity : world.getEntityList()) {
 
             if (entity instanceof Enemy) {
 
-                Enemy enemy = (Enemy) entity;
+                Enemy spawnedEnemy = (Enemy) entity;
+                spawnedEnemy.setOriginalX(spawnedEnemy.getX());
+                spawnedEnemy.setOriginalY(spawnedEnemy.getY());
                 ImageView imgViewGrunt = new ImageView(imgGrunt);
-                imgViewGrunt.xProperty().bindBidirectional(enemy.xProperty());
-                imgViewGrunt.yProperty().bindBidirectional(enemy.yProperty());
+                imgViewGrunt.xProperty().bindBidirectional(spawnedEnemy.xProperty());
+                imgViewGrunt.yProperty().bindBidirectional(spawnedEnemy.yProperty());
                 apaneMain.getChildren().add(imgViewGrunt);
                 imgViewList.add(imgViewGrunt);
 
@@ -505,7 +512,13 @@ public class GameWindow {
                             break;
                         
                         case "coord":
-                        
+                            Grunt grunt = new Grunt();
+                            grunt.setX(landObjects.getX());
+                            grunt.setY(landObjects.getY());
+                            grunt.setWidth(128);
+                            grunt.setHeight(128);
+                            spawnEnemies(grunt);
+
 
                         default:
                             break;
@@ -577,25 +590,19 @@ public class GameWindow {
         world.updateWorld();
         var iterator = world.getEntityList().iterator();
 
+
+
         while (iterator.hasNext()) {
 
             Entity entity = iterator.next();
 
             // Update grunts
             if (entity instanceof Grunt) {
-
-                // Play death animation if dead
+                Grunt grunt = (Grunt) entity;
+                grunt.move(0);
+                updateGruntGraphic(grunt);
+                // Increase score if grunt is dead
                 if (((Grunt) entity).isDead()) {
-
-                    for (ImageView imgview : imgViewList) {
-
-                        imgview.setImage(imgGruntDeath);
-                        PauseTransition gruntPause = new PauseTransition(Duration.seconds(0.5));
-                        gruntPause.setOnFinished(e -> imgview.setVisible(false));
-                        gruntPause.play();
-
-                    }
-
                     // Increase score
                     world.increaseScore(100);
 
@@ -608,6 +615,34 @@ public class GameWindow {
 
         }
 
+    }
+
+    @FXML
+    public void updateGruntGraphic(Grunt grunt) {
+        ImageView imgview = new ImageView();
+
+        for (ImageView foundImageView : imgViewList) {
+            if (foundImageView.getX() == grunt.getX() && foundImageView.getY() == grunt.getY())
+            imgview = foundImageView;
+        }
+
+        if (grunt.getDirection() >= 0 && grunt.getDirection() < 90 || grunt.getDirection() > 270 && grunt.getDirection() <= 360 ) {
+            imgview.setImage(imgGruntRightMove);
+        } else if (grunt.getDirection() == 90) {
+            imgview.setImage(imgGruntBackMove);
+        } else if (grunt.getDirection() > 90 && grunt.getDirection() <= 180 || grunt.getDirection() > 180 && grunt.getDirection() < 270) {
+            imgview.setImage(imgGruntLefttMove);
+        } else if (grunt.getDirection() == 270) {
+            imgview.setImage(imgGruntFrontMove);
+        }
+
+        if (grunt.isDead()) {
+            imgview.setImage(imgGruntDeath);
+            ImageView gruntdeathImageView = imgview;
+            PauseTransition gruntPause = new PauseTransition(Duration.seconds(0.5));
+            gruntPause.setOnFinished(e -> gruntdeathImageView.setVisible(false));
+            gruntPause.play();
+        }
     }
 
     // Animation timer specifically for the player, does not effect the other

@@ -2,6 +2,7 @@ package model;
 
 public class Grunt extends Enemy {
 
+
     public enum GruntState {
 
         PATROL, ATTACK
@@ -13,16 +14,15 @@ public class Grunt extends Enemy {
     public Grunt() {
 
         // TODO: use actual width, height
-        super(10, 10);
+        super(128, 128);
 
         // Load base stats
         this.setMaxHealth(3);
         this.setHealth(3);
         this.setDamage(1);
-        this.setSpeed(1.5);
+        this.setSpeed(6.5);
         this.setDetectionRadius(10);
         state = GruntState.PATROL;
-        setPosition(900, 300);
 
     }
 
@@ -42,6 +42,28 @@ public class Grunt extends Enemy {
         if (this.getHealth() <= 0) {
             this.setDead(true);
         }
+    }
+
+    @Override
+    public boolean move(int direction) {
+        double x = this.getX();
+        double y = this.getY();
+
+        if (state == GruntState.PATROL) {
+            if (x > this.getOriginalX() + 60 || x < this.getOriginalX() - 60) {
+                this.setDirection(this.getDirection() + 180);
+            }
+        }
+
+        if (this.getDirection() >= 360) {
+            this.setDirection(this.getDirection() - 360);
+        }
+
+        super.move(direction);
+
+
+        return true;
+
     }
 
     @Override

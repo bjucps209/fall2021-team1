@@ -72,9 +72,10 @@ public class World {
 
     /**
      * Spawns enemies in the current world location of the player.
+     * @param enemy - the enemy to be added to the entity list
      */
-    public void spawnEnemies() {
-        entityList.add(new Grunt());
+    public void spawnEnemies(Enemy enemy) {
+        entityList.add(enemy);
     }
     
 
