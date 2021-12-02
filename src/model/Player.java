@@ -66,13 +66,13 @@ public class Player extends Living {
     public void attack(mapDirection direction) {
 
         List<Entity> list = World.instance().getEntityList().stream().filter(e -> (e instanceof Enemy)).toList();
-        boolean hit = false;
 
         if (list.size() > 0) {
 
             for (Entity enemy : list) {
 
                 Enemy target = (Enemy) enemy;
+                boolean hit = false;
 
                 // NOTE: Currently assumes that all creatures are the same size.
                 if (Math.hypot(this.getX() - target.getX(), this.getY() - target.getY()) < 128) {
