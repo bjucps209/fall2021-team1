@@ -195,6 +195,10 @@ public class ZoneList {
         listGraveyard.add(new NPC("Here lies the CpS 209 class of fall, 2021. Eleven started, three left.", "sign"));
         listGraveyard.get(27).setPosition(368, 358);
         listGraveyard.get(27).setInteractable(true);
+        listGraveyard.add(new NPC("", "coord"));
+        listGraveyard.get(28).setPosition(909, 84);
+        listGraveyard.add(new NPC("", "coord"));
+        listGraveyard.get(28).setPosition(768, 450);
         // **************************************
 
         // Grassy Plains ********************
@@ -217,6 +221,12 @@ public class ZoneList {
         listGrassyplains.get(7).setPosition(14, 153);
         listGrassyplains.add(new Item("", "stump", 0));
         listGrassyplains.get(8).setPosition(-50, 644);
+        listGrassyplains.add(new NPC("", "coord"));
+        listGrassyplains.get(9).setPosition(467, 386);
+        listGrassyplains.add(new NPC("", "coord"));
+        listGrassyplains.get(10).setPosition(403, 20);
+        listGrassyplains.add(new NPC("", "coord"));
+        listGrassyplains.get(11).setPosition(1113, 20);
         // **************************************
 
         // Village Square ***********************
@@ -230,6 +240,12 @@ public class ZoneList {
         listVillageSquare.add(new NPC("Scary times, stranger.", "NPC"));
         listVillageSquare.get(3).setPosition(228, 270);
         listVillageSquare.get(3).setInteractable(true);
+        listVillageSquare.add(new NPC("", "coord"));
+        listVillageSquare.get(4).setPosition(1007, 280);
+        listVillageSquare.add(new NPC("", "coord"));
+        listVillageSquare.get(5).setPosition(1245, 505);
+        listVillageSquare.add(new NPC("", "coord"));
+        listVillageSquare.get(6).setPosition(228, 578);
         // **************************************
 
         // Run-down Market **********************
@@ -264,6 +280,10 @@ public class ZoneList {
         listMarket.get(12).setPosition(-55, 515);
         listMarket.add(new Item("", "hFence", 0));
         listMarket.get(13).setPosition(130, 515);
+        listMarket.add(new NPC("", "coord"));
+        listMarket.get(14).setPosition(656, 14);
+        listMarket.add(new NPC("", "coord"));
+        listMarket.get(15).setPosition(1020, 726);
         // **************************************
 
         // Lumber Yard **************************
@@ -304,6 +324,12 @@ public class ZoneList {
         listLumberYard.add(new NPC("Johnson Lumber Farm", "sign"));
         listLumberYard.get(16).setPosition(450, 600);
         listLumberYard.get(16).setInteractable(true);
+        listLumberYard.add(new NPC("", "coord"));
+        listLumberYard.get(17).setPosition(592, 557);
+        listLumberYard.add(new NPC("", "coord"));
+        listLumberYard.get(18).setPosition(925, 14);
+        listLumberYard.add(new NPC("", "coord"));
+        listLumberYard.get(19).setPosition(1053, 290);
         // **************************************
 
         // Lake *********************************
@@ -352,6 +378,12 @@ public class ZoneList {
         listWheatField.add(new NPC("Haven't had a good yield in years...", "NPC"));
         listWheatField.get(17).setPosition(363, 133);
         listWheatField.get(17).setInteractable(true);
+        listWheatField.add(new NPC("", "coord"));
+        listWheatField.get(18).setPosition(1026, 115);
+        listWheatField.add(new NPC("", "coord"));
+        listWheatField.get(19).setPosition(1090, 699);
+        listWheatField.add(new NPC("", "coord"));
+        listWheatField.get(20).setPosition(720, 257);
         // ***************************************
 
         // Forest Edge ***************************
@@ -382,6 +414,10 @@ public class ZoneList {
         listForestEdge.get(10).setPosition(1131, -49);
         listForestEdge.add(new Item("", "tree", 0));
         listForestEdge.get(11).setPosition(-78, -49);
+        listForestEdge.add(new NPC("", "coord"));
+        listForestEdge.get(12).setPosition(998, 500);
+        listForestEdge.add(new NPC("", "coord"));
+        listForestEdge.get(13).setPosition(344, 243);
         // ****************************************
     }
 

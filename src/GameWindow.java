@@ -377,6 +377,8 @@ public class GameWindow {
      */
     @FXML
     public void drawWorld() {
+        world.getEntityList().clear();
+        imgViewList.clear();
         for (Zone zone : ZoneList.instance().getLevels()) {
             if (world.getCurrentlocation().getZoneName().equals(zone.getZoneName())) {
 
@@ -518,7 +520,6 @@ public class GameWindow {
                             grunt.setWidth(128);
                             grunt.setHeight(128);
                             spawnEnemies(grunt);
-
 
                         default:
                             break;
