@@ -118,11 +118,11 @@ public class Player extends Living {
                         switch (direction) {
                             
                             case UP:
-                                target.setY(target.getY() - 100);
+                                target.setY(target.getY() - 200);
                                 break;
 
                             case LEFT:
-                                target.setX(target.getX() - 100);
+                                target.setX(target.getX() - 200);
                                 break;
                             
                             case DOWN:

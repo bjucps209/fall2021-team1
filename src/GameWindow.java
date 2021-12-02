@@ -272,8 +272,7 @@ public class GameWindow {
     }
 
     /**
-     * Spawns enemies in the current player's location, barebones implementation for
-     * alpha.
+     * Spawns enemies in the current player's location.
      * @param enemy - the enemy to be spawned
      */
     @FXML
@@ -283,14 +282,14 @@ public class GameWindow {
 
         for (Entity entity : world.getEntityList()) {
 
-            if (entity instanceof Enemy) {
+            if (entity instanceof Grunt) {
 
-                Enemy spawnedEnemy = (Enemy) entity;
-                spawnedEnemy.setOriginalX(spawnedEnemy.getX());
-                spawnedEnemy.setOriginalY(spawnedEnemy.getY());
-                ImageView imgViewGrunt = new ImageView(imgGrunt);
-                imgViewGrunt.xProperty().bindBidirectional(spawnedEnemy.xProperty());
-                imgViewGrunt.yProperty().bindBidirectional(spawnedEnemy.yProperty());
+                Grunt spawnedGrunt = (Grunt) entity;
+                spawnedGrunt.setOriginalX(spawnedGrunt.getX());
+                spawnedGrunt.setOriginalY(spawnedGrunt.getY());
+                ImageView imgViewGrunt = new ImageView();
+                imgViewGrunt.xProperty().bindBidirectional(spawnedGrunt.xProperty());
+                imgViewGrunt.yProperty().bindBidirectional(spawnedGrunt.yProperty());
                 apaneMain.getChildren().add(imgViewGrunt);
                 imgViewList.add(imgViewGrunt);
 
@@ -600,7 +599,9 @@ public class GameWindow {
             if (entity instanceof Grunt) {
                 Grunt grunt = (Grunt) entity;
                 grunt.move(0);
-                updateGruntGraphic(grunt);
+                for (ImageView imgview : imgViewList) {
+                    updateGruntGraphic(grunt);
+                }
                 // Increase score if grunt is dead
                 if (((Grunt) entity).isDead()) {
                     // Increase score
@@ -617,6 +618,10 @@ public class GameWindow {
 
     }
 
+    /**
+     * Changes the grunt's ImageView to the appropriate animation based on its direction and movement.
+     * @param grunt - the grunt to animate
+     */
     @FXML
     public void updateGruntGraphic(Grunt grunt) {
         ImageView imgview = new ImageView();
