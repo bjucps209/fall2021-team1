@@ -97,6 +97,12 @@ public class World {
 
     /// Getters and Setters ///
 
+    public boolean isGameOver() {
+
+        return player.getHealth() <= 0;
+
+    }
+
     public Player getPlayer() {
 
         return player;
