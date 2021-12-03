@@ -37,6 +37,7 @@ import model.Serialization;
 import model.World;
 import model.Zone;
 import model.ZoneList;
+import model.Juggernaut.JuggernautState;
 import model.World.mapDirection;
 
 public class GameWindow {
@@ -109,7 +110,11 @@ public class GameWindow {
     // **********************
 
     // Jugg Images **********
-    private Image imgJugg = new Image ("Final Assets/Jugg/PNG/Jugg-Front-Stationary-192x192.png");
+    private Image imgJugg = new Image("Final Assets/Jugg/PNG/Jugg-Front-Stationary-192x192.png");
+    private Image imgJuggRightMoveSlow = new Image("Final Assets/Jugg/GIF/Jugg-Right-Walking-192x192-150ms.gif");
+    private Image imgJuggRightMoveFast = new Image("Final Assets/Jugg/GIF/Jugg-Right-Walking-192x192-50ms.gif");
+    private Image imgJuggLeftMoveSlow = new Image("Final Assets/Jugg/GIF/Jugg-Left-Walking-192x192-150ms.gif");
+    private Image imgJuggLefttMoveFast = new Image("Final Assets/Jugg/GIF/Jugg-Left-Walking-192x192-50ms.gif");
     // **********************
 
     // Object Images ********
@@ -281,6 +286,7 @@ public class GameWindow {
 
     /**
      * Spawns enemies in the current player's location.
+     * 
      * @param enemy - the enemy to be spawned
      */
     @FXML
@@ -310,8 +316,8 @@ public class GameWindow {
     /**
      * Draws the player to the screen.
      * 
-     * @param x - the x coordinate the player will be placed at
-     * @param y - the y coordinate the player will be placed at
+     * @param x           - the x coordinate the player will be placed at
+     * @param y           - the y coordinate the player will be placed at
      * @param playerImage - the image to load into the player's image view.
      */
     @FXML
@@ -519,7 +525,7 @@ public class GameWindow {
                             imgviewHouse.setLayoutX(landObjects.getX() - imgviewHouse.getLayoutBounds().getMinX());
                             imgviewHouse.setLayoutY(landObjects.getY() - imgviewHouse.getLayoutBounds().getMinY());
                             break;
-                        
+
                         case "coord":
                             Grunt grunt = new Grunt();
                             grunt.setX(landObjects.getX());
@@ -540,8 +546,8 @@ public class GameWindow {
     /**
      * Draws the entire game screen.
      * 
-     * @param x - the x value to set the player at
-     * @param y - the y value to set the player at
+     * @param x           - the x value to set the player at
+     * @param y           - the y value to set the player at
      * @param playerImage - the image to load into the player imageview.
      */
     @FXML
@@ -627,7 +633,9 @@ public class GameWindow {
     }
 
     /**
-     * Changes the grunt's ImageView to the appropriate animation based on its direction and movement.
+     * Changes the grunt's ImageView to the appropriate animation based on its
+     * direction and movement.
+     * 
      * @param grunt - the grunt to animate
      */
     @FXML
@@ -636,15 +644,20 @@ public class GameWindow {
 
         for (ImageView foundImageView : imgViewList) {
             if (foundImageView.getX() == grunt.getX() && foundImageView.getY() == grunt.getY())
-            imgview = foundImageView;
+                imgview = foundImageView;
         }
 
-        if (grunt.getDirection() >= 0 && grunt.getDirection() < 90 || grunt.getDirection() > 270 && grunt.getDirection() <= 360 ) {
+        if (grunt.getDirection() >= 0 && grunt.getDirection() < 90
+                || grunt.getDirection() > 270 && grunt.getDirection() <= 360) {
             imgview.setImage(imgGruntRightMove);
+
         } else if (grunt.getDirection() == 90) {
             imgview.setImage(imgGruntBackMove);
-        } else if (grunt.getDirection() > 90 && grunt.getDirection() <= 180 || grunt.getDirection() > 180 && grunt.getDirection() < 270) {
+
+        } else if (grunt.getDirection() > 90 && grunt.getDirection() <= 180
+                || grunt.getDirection() > 180 && grunt.getDirection() < 270) {
             imgview.setImage(imgGruntLefttMove);
+
         } else if (grunt.getDirection() == 270) {
             imgview.setImage(imgGruntFrontMove);
         }
@@ -659,7 +672,9 @@ public class GameWindow {
     }
 
     /**
-     * Changes the juggernaut's ImageView to the appropriate animation based on its direction and movement.
+     * Changes the juggernaut's ImageView to the appropriate animation based on its
+     * direction and movement.
+     * 
      * @param jugg - the juggernaut to be animated
      */
     @FXML
@@ -668,17 +683,43 @@ public class GameWindow {
 
         for (ImageView foundImageView : imgViewList) {
             if (foundImageView.getX() == jugg.getX() && foundImageView.getY() == jugg.getY())
-            imgview = foundImageView;
+                imgview = foundImageView;
         }
 
-        if (jugg.getDirection() >= 0 && jugg.getDirection() < 90 || jugg.getDirection() > 270 && jugg.getDirection() <= 360 ) {
-            imgview.setImage(imgGruntRightMove);
-        } else if (jugg.getDirection() == 90) {
-            imgview.setImage(imgGruntBackMove);
-        } else if (jugg.getDirection() > 90 && jugg.getDirection() <= 180 || jugg.getDirection() > 180 && jugg.getDirection() < 270) {
-            imgview.setImage(imgGruntLefttMove);
-        } else if (jugg.getDirection() == 270) {
-            imgview.setImage(imgGruntFrontMove);
+        if (jugg.getState() == JuggernautState.PATROL || jugg.getState() == JuggernautState.ATTACK) {
+
+            if (jugg.getDirection() >= 0 && jugg.getDirection() < 90
+                    || jugg.getDirection() > 270 && jugg.getDirection() <= 360) {
+                imgview.setImage(imgJuggRightMoveSlow);
+
+            } else if (jugg.getDirection() == 90) {
+                imgview.setImage(imgJugg);
+
+            } else if (jugg.getDirection() > 90 && jugg.getDirection() <= 180
+                    || jugg.getDirection() > 180 && jugg.getDirection() < 270) {
+                imgview.setImage(imgJuggLeftMoveSlow);
+
+            } else if (jugg.getDirection() == 270) {
+                imgview.setImage(imgJugg);
+            }
+
+        } else if (jugg.getState() == JuggernautState.FRENZY) {
+
+            if (jugg.getDirection() >= 0 && jugg.getDirection() < 90
+                    || jugg.getDirection() > 270 && jugg.getDirection() <= 360) {
+                imgview.setImage(imgJuggRightMoveFast);
+
+            } else if (jugg.getDirection() == 90) {
+                imgview.setImage(imgJugg);
+
+            } else if (jugg.getDirection() > 90 && jugg.getDirection() <= 180
+                    || jugg.getDirection() > 180 && jugg.getDirection() < 270) {
+                imgview.setImage(imgJuggLefttMoveFast);
+
+            } else if (jugg.getDirection() == 270) {
+                imgview.setImage(imgJugg);
+            }
+            
         }
 
         if (jugg.isDead()) {
@@ -969,7 +1010,6 @@ public class GameWindow {
         rPressed.set(false);
         processAnimationDirection();
 
-
         apaneMain.getChildren().add(imgviewBackgroundDim);
         apaneMain.getChildren().add(pauseVbox);
 
@@ -1166,7 +1206,7 @@ public class GameWindow {
                 break;
 
             case 0:
-                imgviewPlayer.setImage(imgPlayerAttackRight);  
+                imgviewPlayer.setImage(imgPlayerAttackRight);
                 attackPause.play();
                 break;
 
@@ -1244,5 +1284,4 @@ public class GameWindow {
         this.keyPressed = keyPressed;
     }
 
-    
 }
