@@ -688,8 +688,10 @@ public class GameWindow {
 
             // Update grunts
             if (entity instanceof Grunt) {
+
                 Grunt grunt = (Grunt) entity;
-                grunt.move(0);
+                grunt.navigate();
+
                 for (ImageView imgview : imgViewList) {
                     updateGruntGraphic(grunt);
                 }
@@ -705,7 +707,7 @@ public class GameWindow {
 
             } else if (entity instanceof Juggernaut) {
                 Juggernaut jugg = (Juggernaut) entity;
-                jugg.move(0);
+                jugg.navigate();
 
                 for (ImageView imgview : imgViewList) {
                     updateJuggGraphic(jugg);

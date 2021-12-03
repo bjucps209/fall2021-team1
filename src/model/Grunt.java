@@ -2,7 +2,8 @@ package model;
 
 public class Grunt extends Enemy {
 
-    private int count; // Counter so the enemy doesnt attack every 35 miliseconds
+    /** Controls the frequency of attacks. */
+    private int count = 50;
 
     public enum GruntState {
 
@@ -14,7 +15,6 @@ public class Grunt extends Enemy {
 
     public Grunt() {
         super(128, 128);
-        count = 50;
         // Load base stats
         this.setMaxHealth(3);
         this.setHealth(3);
@@ -52,53 +52,67 @@ public class Grunt extends Enemy {
      * Moves the grunt in a certain direction depending on its state.
      */
     @Override
-    public boolean move(int direction) {
-        if (state != GruntState.ATTACK) {
-            determineState();
-        }
+    public void navigate() {
+
+        if (state != GruntState.ATTACK) determineState();
 
         double x = this.getX();
         double y = this.getY();
 
-        if (state == GruntState.PATROL) {
-            if (x > this.getOriginalX() + 60 || x < this.getOriginalX() - 60) {
-                this.setDirection(this.getDirection() + 180);
-            }
-        } else if (state == GruntState.ATTACK) {
-            double theta = Math.atan2(World.instance().getPlayer().getY() - y, World.instance().getPlayer().getX() - x);
-            double angle = Math.toDegrees(theta);
-            if (angle < 0) {
-                angle += 360;
-            }
-            this.setDirection((int) angle);
+        boolean moved = false;
 
-            if (count % 50 == 0) {
-                this.attack();
+        for (int i = 0; i < 10; ++ i) {
+
+            if (moved) break;
+
+            if (state == GruntState.PATROL) {
+
+                if (x > this.getOriginalX() + 60 || x < this.getOriginalX() - 60) {
+    
+                    this.setDirection(this.getDirection() + 180);
+    
+                }
+    
+            } else if (state == GruntState.ATTACK) {
+    
+                double angle = Math.toDegrees(Math.atan2(World.instance().getPlayer().getY() - y, World.instance().getPlayer().getX() - x));
+    
+                if (angle < 0) angle += 360;
+    
+                this.setDirection((int) angle);
+    
+                if (count < 1) {
+                    
+                    count = 50;
+                    this.attack();
+
+                }
+    
             }
+    
+            if (this.getDirection() >= 360) this.setDirection(this.getDirection() - 360);
+    
+            moved = move(this.getDirection());
 
         }
 
-        if (this.getDirection() >= 360) {
-            this.setDirection(this.getDirection() - 360);
-        }
-
-        super.move(this.getDirection());
-        ++count;
-        return true;
-    }
-
-    @Override
-    public void navigate() {
+        -- count;
 
     }
 
     public void determineState() {
+
         if (super.foundPlayer()) {
+
             this.state = GruntState.ATTACK;
             this.setSpeed(this.getSpeed() + 7);
+
         } else {
+
             this.state = GruntState.PATROL;
+
         }
+
     }
 
     /// Methods from Enemy ///
