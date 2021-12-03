@@ -1,5 +1,7 @@
 import java.io.IOException;
 
+import javax.swing.text.html.HTMLDocument.HTMLReader.SpecialAction;
+
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -11,13 +13,16 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
@@ -25,6 +30,59 @@ import javafx.stage.Stage;
 public class MainWindow  {
     @FXML StackPane spaneMain;
     private AudioClip click = new AudioClip(getClass().getResource("Audio/UI/btnClick1.mp3").toExternalForm());
+    private ImageView imgviewLogo = new ImageView ( new Image("Final Assets/Logo/Final Logo.png"));
+
+    // UI Images **********************************************************************
+    private Image imgStart1 = new Image("Final Assets/UI/PNG/UI-StartBtn1-312x80.png");
+    private Image imgStart2 = new Image("Final Assets/UI/PNG/UI-StartBtn2-312x80.png");
+    private Image imgAbout1 = new Image("Final Assets/UI/PNG/UI-AboutBtn1-312x80.png");
+    private Image imgAbout2 = new Image("Final Assets/UI/PNG/UI-AboutBtn2-312x80.png");
+    private Image imgHighscore1 = new Image("Final Assets/UI/PNG/UI-HighscoreBtn1-312x80.png");
+    private Image imgHighscore2 = new Image("Final Assets/UI/PNG/UI-HighscoreBtn2-312x80.png");
+    private Image imgBackgroundDim = new Image("Final Assets/UI/PNG/UI-BackgroundDim-1440x900.png");
+    private Image imgPauseBtn1 = new Image("Final Assets/UI/PNG/UI-PauseBtn1-80x80.png");
+    private Image imgPauseBtn2 = new Image("Final Assets/UI/PNG/UI-PauseBtn2-80x80.png");
+    private Image imgSaveBtn1 = new Image("Final Assets/UI/PNG/UI-SaveBtn1-312x80.png");
+    private Image imgSaveBtn2 = new Image("Final Assets/UI/PNG/UI-SaveBtn2-312x80.png");
+    private Image imgLoadbtn1 = new Image("Final Assets/UI/PNG/UI-LoadBtn1-312x80.png");
+    private Image imgLoadbtn2 = new Image("Final Assets/UI/PNG/UI-LoadBtn2-312x80.png");
+    private Image imgHelpBtn1 = new Image("Final Assets/UI/PNG/UI-HelpBtn1-312x80.png");
+    private Image imgHelpBtn2 = new Image("Final Assets/UI/PNG/UI-HelpBtn2-312x80.png");
+    private Image imgQuitBtn1 = new Image("Final Assets/UI/PNG/UI-QuitBtn1-312x80.png");
+    private Image imgQuitBtn2 = new Image("Final Assets/UI/PNG/UI-QuitBtn2-312x80.png");
+    private Image imgBackBtn1 = new Image("Final Assets/UI/PNG/UI-BackBtn1-312x80.png");
+    private Image imgBackBtn2 = new Image("Final Assets/UI/PNG/UI-BackBtn2-312x80.png");
+    // *********************************************************************************
+
+    // UI ImageViews **********************************************************************
+    private ImageView imgviewStart1 = new ImageView(imgStart1);
+    private ImageView imgviewStart2 = new ImageView(imgStart2);
+    private ImageView imgviewAbout1 = new ImageView(imgAbout1);
+    private ImageView imgviewAbout2 = new ImageView(imgAbout2);
+    private ImageView imgviewHighscore1 = new ImageView(imgHighscore1);
+    private ImageView imgviewHighscore2 = new ImageView(imgHighscore2);
+    private ImageView imgviewBackgroundDim = new ImageView(imgBackgroundDim);
+    private ImageView imgviewPauseBtn1 = new ImageView(imgPauseBtn1);
+    private ImageView imgviewPauseBtn2 = new ImageView(imgPauseBtn2);
+    private ImageView imgviewSaveBtn1 = new ImageView(imgSaveBtn1);
+    private ImageView imgviewSaveBtn2 = new ImageView(imgSaveBtn2);
+    private ImageView imgviewLoadBtn1 = new ImageView(imgLoadbtn1);
+    private ImageView imgviewLoadBtn2 = new ImageView(imgLoadbtn2);
+    private ImageView imgviewHelpBtn1 = new ImageView(imgHelpBtn1);
+    private ImageView imgviewHelpBtn2 = new ImageView(imgHelpBtn2);
+    private ImageView imgviewQuitBtn1 = new ImageView(imgQuitBtn1);
+    private ImageView imgviewQuitBtn2 = new ImageView(imgQuitBtn2);
+    private ImageView imgviewBackAboutBtn = new ImageView(imgBackBtn1);
+    private ImageView imgviewBackHsBtn = new ImageView(imgBackBtn1);
+    private ImageView imgviewBackHelpBtn = new ImageView(imgBackBtn1);
+    // ************************************************************************************
+
+    // UI VBoxes *********************
+    private VBox startVbox = new VBox();
+    private VBox aboutVbox = new VBox();
+    private VBox hsVbox = new VBox();
+    private VBox helpVbox = new VBox();
+    // *****************************
 
     /**
      * Intializes the start screen with music in the background and the font style used for the application.
@@ -39,17 +97,6 @@ public class MainWindow  {
         // Font
         Font.loadFont(getClass().getResourceAsStream("/Final Assets/UI/Minecraft.ttf"), 64);
 
-        // Start Screen
-        startScreen();
-    }
-
-
-    /**
-     * The build of the start screen.
-     */
-    public void startScreen() {
-        clearVBox();
-
         Image imgAboutScreen = new Image("Final Assets/UI/PNG/UI-StartScreen-Background-1440x900.png");
         BackgroundImage bImg = new BackgroundImage(imgAboutScreen, 
             BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
@@ -57,75 +104,75 @@ public class MainWindow  {
         Background bGround = new Background(bImg);
         spaneMain.setBackground(bGround);
 
-        VBox vbox = new VBox();
-        vbox.setAlignment(Pos.CENTER);
-        vbox.setSpacing(10.0);
+        // Build Vboxes
+        createStartVbox();
+        createAboutVbox();
+        createHsVbox();
+        createHelpVbox();
 
-        Image logo = new Image("Final Assets/Logo/Final Logo.png");
-        Image start = new Image("Final Assets/UI/PNG/UI-StartBtn1-312x80.png");
-        Image about = new Image("Final Assets/UI/PNG/UI-AboutBtn1-312x80.png");
-        Image highscore = new Image("Final Assets/UI/PNG/UI-HighscoreBtn1-312x80.png");
-        Image help = new Image("Final Assets/UI/PNG/UI-HelpBtn1-312x80.png");
+        // Display startVbox
+        spaneMain.getChildren().add(startVbox);
+    }
 
-        ImageView Logo = new ImageView(logo);
-        ImageView Startbtn = new ImageView(start);
-        ImageView Aboutbtn = new ImageView(about);
-        ImageView HSbtn = new ImageView(highscore);
-        ImageView Helpbtn = new ImageView(help);
 
-    
+    /**
+     * The build of the start screen.
+     */
+    public void createStartVbox() {
+
         //onMousePressed/Released-----------------------------------------------------------------------------
-        Startbtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewStart1.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                Startbtn.setImage(new Image("Final Assets/UI/PNG/UI-StartBtn2-312x80.png"));
+                imgviewStart1.setImage(imgStart2);
             }
         });
-        Startbtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewStart1.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                Startbtn.setImage(new Image("Final Assets/UI/PNG/UI-StartBtn1-312x80.png"));
+                imgviewStart1.setImage(imgStart1);
                 
             }
         });
 
-        Aboutbtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewAbout1.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                Aboutbtn.setImage(new Image("Final Assets/UI/PNG/UI-AboutBtn2-312x80.png"));
-                Thread thread = new Thread(() -> click.play());
-                thread.start();
+                imgviewAbout1.setImage(imgAbout2);
+                // Thread thread = new Thread(() -> click.play());
+                // thread.start();
             }
         });
-        Aboutbtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewAbout1.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                Aboutbtn.setImage(new Image("Final Assets/UI/PNG/UI-AboutBtn1-312x80.png"));
+                imgviewAbout1.setImage(imgAbout1);
                 
             }
         });
 
-        HSbtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewHighscore1.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                HSbtn.setImage(new Image("Final Assets/UI/PNG/UI-HighscoreBtn2-312x80.png"));
+                imgviewHighscore1.setImage(imgHighscore2);
             }
         });
-        HSbtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewHighscore1.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                HSbtn.setImage(new Image("Final Assets/UI/PNG/UI-HighscoreBtn1-312x80.png"));
+                imgviewHighscore1.setImage(imgHighscore1);
             }
         });
 
-        Helpbtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewHelpBtn1.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                Helpbtn.setImage(new Image("Final Assets/UI/PNG/UI-HelpBtn2-312x80.png"));
+                imgviewHelpBtn1.setImage(imgHelpBtn2);
             }
         });
-        Helpbtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewHelpBtn1.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                Helpbtn.setImage(new Image("Final Assets/UI/PNG/UI-HelpBtn1-312x80.png"));
+                imgviewHelpBtn1.setImage(imgHelpBtn1);
             }
         });
         //-----------------------------------------------------------------------------------------------
 
-
-        Startbtn.setOnMouseClicked(event -> {
+        // Button Functions
+        // *************************************************************************************
+        imgviewStart1.setOnMouseClicked(event -> {
             try {
                 onStartClicked(event);
             } catch (IOException e1) {
@@ -133,70 +180,85 @@ public class MainWindow  {
             }
         });
 
-        Aboutbtn.setOnMouseClicked(aboutEvent -> aboutScreen(aboutEvent));
+        imgviewAbout1.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                spaneMain.getChildren().remove(startVbox);
+                spaneMain.getChildren().add(aboutVbox);
+            }
+        });
 
-        HSbtn.setOnMouseClicked(hsEvent -> hsScreen(hsEvent));
+        imgviewHighscore1.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                spaneMain.getChildren().remove(startVbox);
+                spaneMain.getChildren().add(hsVbox);
+            }
+        });
         
-        Helpbtn.setOnMouseClicked(helpEvent -> helpScreen(helpEvent));
+        imgviewHelpBtn1.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                spaneMain.getChildren().remove(startVbox);
+                spaneMain.getChildren().add(helpVbox);
+            }
+        });
+        // *************************************************************************************
+
+        imgviewLogo.setFitHeight(512);
+        imgviewLogo.setFitWidth(1024);
+        imgviewStart1.setFitHeight(80);
+        imgviewStart1.setFitWidth(312);
+        imgviewAbout1.setFitHeight(80);
+        imgviewAbout1.setFitWidth(312);
+        imgviewHelpBtn1.setFitHeight(80);
+        imgviewHelpBtn1.setFitWidth(312);
 
 
-        Logo.setFitHeight(512);
-        Logo.setFitWidth(1024);
-        Startbtn.setFitHeight(80);
-        Startbtn.setFitWidth(312);
-        Aboutbtn.setFitHeight(80);
-        Aboutbtn.setFitWidth(312);
-        HSbtn.setFitHeight(80);
-        HSbtn.setFitWidth(312);
+        startVbox.getChildren().add(imgviewLogo);
+        startVbox.getChildren().add(imgviewStart1);
+        startVbox.getChildren().add(imgviewAbout1);
+        startVbox.getChildren().add(imgviewHighscore1);
+        startVbox.getChildren().add(imgviewHelpBtn1);
 
-
-        vbox.getChildren().add(Logo);
-        vbox.getChildren().add(Startbtn);
-        vbox.getChildren().add(Aboutbtn);
-        vbox.getChildren().add(HSbtn);
-        vbox.getChildren().add(Helpbtn);
-
-        vbox.setTranslateY(-75);
-
-        spaneMain.getChildren().add(vbox);
+        startVbox.setTranslateY(-75);
+        startVbox.setAlignment(Pos.CENTER);
+        startVbox.setSpacing(10.0);
     }
 
 
     /**
      * The build of the "About" screen.
      */
-    public void aboutScreen(MouseEvent e) {
-        clearVBox();
-        Image back = new Image("Final Assets/UI/PNG/UI-BackBtn1-312x80.png");
-        ImageView backBtn = new ImageView(back);
-
+    public void createAboutVbox() {
 
         //Mouse Pressed/Released------------------------------------------------------------------------------
-        backBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewBackAboutBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                backBtn.setImage(new Image("Final Assets/UI/PNG/UI-BackBtn2-312x80.png"));
+                imgviewBackAboutBtn.setImage(imgBackBtn2);
             }
         });
-        backBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewBackAboutBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                backBtn.setImage(new Image("Final Assets/UI/PNG/UI-BackBtn1-312x80.png"));
+                imgviewBackAboutBtn.setImage(imgBackBtn1);
             }
         });
         //-------------------------------------------------------------------------------------------------
 
-        backBtn.setFitHeight(80);
-        backBtn.setFitWidth(312);
-        backBtn.setOnMouseClicked(backEvent -> callStartScreen(backEvent));
+        imgviewBackAboutBtn.setFitHeight(80);
+        imgviewBackAboutBtn.setFitWidth(312);
+        imgviewBackAboutBtn.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                spaneMain.getChildren().remove(aboutVbox);
+                spaneMain.getChildren().add(startVbox);
+            }
+        });
 
-        VBox vbox = new VBox();
-        vbox.setAlignment(Pos.CENTER);
-        vbox.setSpacing(10.0);
-        vbox.getChildren().add(backBtn);
-        vbox.setTranslateY(350);
+        
+        // aboutVbox.setAlignment(Pos.CENTER);
+        // aboutVbox.setSpacing(10.0);
+        // aboutVbox.getChildren().add(backBtn);
+        // aboutVbox.setTranslateY(350);
 
-        VBox v = new VBox();
-        v.setAlignment(Pos.TOP_CENTER);
-        v.setSpacing(10.0);
+        aboutVbox.setAlignment(Pos.TOP_CENTER);
+        aboutVbox.setSpacing(10.0);
 
         Label lbl = new Label("""
         Game Developers:
@@ -213,108 +275,149 @@ public class MainWindow  {
 
         lbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
         lbl.setTextAlignment(TextAlignment.CENTER);
-        v.getChildren().add(lbl);
-
-
-        spaneMain.getChildren().add(v);
-        spaneMain.getChildren().add(vbox);
+        aboutVbox.getChildren().add(lbl);
+        aboutVbox.getChildren().add(imgviewBackAboutBtn);
     }
 
     /**
      * The build of the "Highscore" screen.
      */
-    public void hsScreen(MouseEvent e) {
-        clearVBox();
-        VBox vbox = new VBox();
-        vbox.setAlignment(Pos.CENTER);
-        vbox.setSpacing(10.0);
-        vbox.setTranslateY(350);
-
-        Image back = new Image("Final Assets/UI/PNG/UI-BackBtn1-312x80.png");
-        ImageView backBtn = new ImageView(back);
+    public void createHsVbox() {
+        // hsVbox.setAlignment(Pos.CENTER);
+        // hsVbox.setSpacing(10.0);
+        // hsVbox.setTranslateY(350);
 
         //Mouse Pressed/Released------------------------------------------------------------------------------
-        backBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewBackHsBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                backBtn.setImage(new Image("Final Assets/UI/PNG/UI-BackBtn2-312x80.png"));
+                imgviewBackHsBtn.setImage(imgBackBtn2);
             }
         });
-        backBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewBackHsBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                backBtn.setImage(new Image("Final Assets/UI/PNG/UI-BackBtn1-312x80.png"));
+                imgviewBackHsBtn.setImage(imgBackBtn1);
+                
             }
         });
         //-------------------------------------------------------------------------------------------------
 
-        backBtn.setFitHeight(80);
-        backBtn.setFitWidth(312);
-        backBtn.setOnMouseClicked(backEvent -> callStartScreen(backEvent));
+        imgviewBackHsBtn.setFitHeight(80);
+        imgviewBackHsBtn.setFitWidth(312);
+        imgviewBackHsBtn.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                spaneMain.getChildren().remove(hsVbox);
+                spaneMain.getChildren().add(startVbox);
+            }
+        });
 
-        VBox v = new VBox();
-        v.setAlignment(Pos.TOP_CENTER);
-        v.setSpacing(10.0);
+        hsVbox.setAlignment(Pos.TOP_CENTER);
+        hsVbox.setSpacing(10.0);
 
         // TODO: Label will get a string of text from High Score or Leaderboard class
         Label lbl = new Label("TestName   TestScore \nTestName   TestScore \nTestName   TestScore \nTestName   TestScore \nTestName   TestScore \n");
         lbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
 
-        v.getChildren().add(lbl);
-        vbox.getChildren().add(backBtn);
-
-        spaneMain.getChildren().add(v);
-        spaneMain.getChildren().add(vbox);
+        hsVbox.getChildren().add(lbl);
+        hsVbox.getChildren().add(imgviewBackHsBtn);
     }
 
     /**
      * The build of the "Help" screen.
      */
-    public void helpScreen(MouseEvent e) {
-        clearVBox();
-        VBox vbox = new VBox();
-        vbox.setAlignment(Pos.CENTER);
-        vbox.setSpacing(10.0);
-        vbox.setTranslateY(350);
-
-        Image back = new Image("Final Assets/UI/PNG/UI-BackBtn1-312x80.png");
-        ImageView backBtn = new ImageView(back);
+    public void createHelpVbox() {
+        // vbox.setAlignment(Pos.CENTER);
+        // vbox.setSpacing(10.0);
+        // vbox.setTranslateY(350);
 
         //Mouse Pressed/Released------------------------------------------------------------------------------
-        backBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewBackHelpBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                backBtn.setImage(new Image("Final Assets/UI/PNG/UI-BackBtn2-312x80.png"));
+                imgviewBackHelpBtn.setImage(imgBackBtn2);
             }
         });
-        backBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewBackHelpBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                backBtn.setImage(new Image("Final Assets/UI/PNG/UI-BackBtn1-312x80.png"));
+                imgviewBackHelpBtn.setImage(imgBackBtn1);
             }
         });
         //-------------------------------------------------------------------------------------------------
 
-        backBtn.setFitHeight(80);
-        backBtn.setFitWidth(312);
-        backBtn.setOnMouseClicked(backEvent -> callStartScreen(backEvent));
+        imgviewBackHelpBtn.setFitHeight(80);
+        imgviewBackHelpBtn.setFitWidth(312);
+        imgviewBackHelpBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                spaneMain.getChildren().remove(helpVbox);
+                spaneMain.getChildren().add(startVbox);
+            }
+        });
 
-        vbox.getChildren().add(backBtn);
-        spaneMain.getChildren().add(vbox);
-    }
+        ImageView move = new ImageView(new Image("Final Assets/Help/PNG/Help-Move-156x88.png"));
+        ImageView attack = new ImageView(new Image("Final Assets/Help/PNG/Help-Attack-156x88.png"));
+        ImageView interact = new ImageView(new Image("Final Assets/Help/PNG/Help-Interact-156x88.png"));
+        ImageView travel = new ImageView(new Image("Final Assets/Help/PNG/Help-Travel-156x88.png"));
+        ImageView pause = new ImageView(new Image("Final Assets/Help/PNG/Help-Pause-156x88.png"));
 
-    /**
-     * Calls the start screen with a MouseEvent.
-     * @param e <- MouseEvent
-     */
-    public void callStartScreen(MouseEvent e) {
-        startScreen();
-    }
+        move.setFitHeight(88);
+        move.setFitWidth(156);
+        attack.setFitHeight(88);
+        attack.setFitWidth(156);
+        interact.setFitHeight(88);
+        interact.setFitWidth(156);
+        travel.setFitHeight(88);
+        travel.setFitWidth(156);
+        pause.setFitHeight(88);
+        pause.setFitWidth(156);
 
-    /**
-     * Clears the vboxes that populates the screen.
-     */
-    public void clearVBox() {
-        int size = spaneMain.getChildren().size();
-        for (int i = 0; i < size; ++i) {
-            spaneMain.getChildren().remove(0);
-        }
+        Label movelbl = new Label();
+        Label attacklbl = new Label();
+        Label interactlbl = new Label();
+        Label travellbl = new Label();
+        Label pauselbl = new Label();
+
+        movelbl.setText("Move: ");
+        attacklbl.setText("Attack: ");
+        interactlbl.setText("Interact: ");
+        travellbl.setText("Travel: ");
+        pauselbl.setText("Pause: ");
+
+        movelbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
+        attacklbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
+        interactlbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
+        travellbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
+        pauselbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
+
+        HBox moveHbox = new HBox();
+        HBox attackHbox = new HBox();
+        HBox interactHbox = new HBox();
+        HBox travelHbox = new HBox();
+        HBox pauseHbox = new HBox();
+
+        moveHbox.getChildren().add(movelbl);
+        moveHbox.getChildren().add(move);
+        attackHbox.getChildren().add(attacklbl);
+        attackHbox.getChildren().add(attack);
+        interactHbox.getChildren().add(interactlbl);
+        interactHbox.getChildren().add(interact);
+        travelHbox.getChildren().add(travellbl);
+        travelHbox.getChildren().add(travel);
+        pauseHbox.getChildren().add(pauselbl);
+        pauseHbox.getChildren().add(pause);
+
+        moveHbox.setAlignment(Pos.CENTER);
+        attackHbox.setAlignment(Pos.CENTER);
+        interactHbox.setAlignment(Pos.CENTER);
+        travelHbox.setAlignment(Pos.CENTER);
+        pauseHbox.setAlignment(Pos.CENTER);
+
+        helpVbox.getChildren().add(moveHbox);
+        helpVbox.getChildren().add(attackHbox);
+        helpVbox.getChildren().add(interactHbox);
+        helpVbox.getChildren().add(travelHbox);
+        helpVbox.getChildren().add(pauseHbox);
+        helpVbox.getChildren().add(imgviewBackHelpBtn);
+
+        helpVbox.setAlignment(Pos.CENTER);
+        helpVbox.setSpacing(10.0);
     }
 
     /**
