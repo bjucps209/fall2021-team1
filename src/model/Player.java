@@ -147,8 +147,12 @@ public class Player extends Living {
     }
 
     @Override
-    public void handleDamage(int damage) {
+    public boolean handleDamage(int damage) {
         this.setHealth(this.getHealth() - damage);
+        if (damage > 0) {
+            return true;
+        }
+        return false;
     }
 
     @Override

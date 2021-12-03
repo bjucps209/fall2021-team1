@@ -9,9 +9,6 @@ public abstract class Entity {
 
     private DoubleProperty x, y;
     private IntegerProperty width, height;
-    
-    private double originalX, originalY;
-    
 
     private boolean isCollidable = true;
     private boolean isInteractable = false;
@@ -164,23 +161,5 @@ public abstract class Entity {
         this.isInteractable = state;
 
     }
-
-    public double getOriginalX() {
-        return originalX;
-    }
-
-    public void setOriginalX(double originalX) {
-        this.originalX = originalX;
-    }
-
-    public double getOriginalY() {
-        return originalY;
-    }
-
-    public void setOriginalY(double originalY) {
-        this.originalY = originalY;
-    }
-
-    
     
 }

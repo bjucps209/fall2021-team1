@@ -57,6 +57,9 @@ public class World {
                 if (entity instanceof Grunt) {
                     Grunt grunt = (Grunt) entity;
                     grunt.handleDeath();
+                } else if (entity instanceof Juggernaut) {
+                    Juggernaut jugg = (Juggernaut) entity;
+                    jugg.handleDeath();
                 }
                 player.handleDeath();
             }

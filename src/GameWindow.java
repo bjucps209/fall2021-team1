@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
@@ -111,10 +112,19 @@ public class GameWindow {
 
     // Jugg Images **********
     private Image imgJugg = new Image("Final Assets/Jugg/PNG/Jugg-Front-Stationary-192x192.png");
+    private Image imgJuggDeath = new Image("Final Assets/Jugg/GIF/Jugg-Death-192x192.gif");
     private Image imgJuggRightMoveSlow = new Image("Final Assets/Jugg/GIF/Jugg-Right-Walking-192x192-150ms.gif");
     private Image imgJuggRightMoveFast = new Image("Final Assets/Jugg/GIF/Jugg-Right-Walking-192x192-50ms.gif");
     private Image imgJuggLeftMoveSlow = new Image("Final Assets/Jugg/GIF/Jugg-Left-Walking-192x192-150ms.gif");
     private Image imgJuggLefttMoveFast = new Image("Final Assets/Jugg/GIF/Jugg-Left-Walking-192x192-50ms.gif");
+    private Image imgJuggFrontMoveSlow = new Image("Final Assets/Jugg/GIF/Jugg-Front-Walking-192x192-150ms.gif");
+    private Image imgJuggFrontMoveFast = new Image("Final Assets/Jugg/GIF/Jugg-Front-Walking-192x192-50ms.gif");
+    private Image imgJuggBackMoveSlow = new Image("Final Assets/Jugg/GIF/Jugg-Back-Walking-192x192-150ms.gif");
+    private Image imgJuggBackMoveFast = new Image("Final Assets/Jugg/GIF/Jugg-Back-Walking-192x192-50ms.gif");
+    private Image imgJuggBackAttack = new Image("Final Assets/Jugg/GIF/Jugg-Back-Attack-192x192.gif");
+    private Image imgJuggFrontAttack = new Image("Final Assets/Jugg/GIF/Jugg-Front-Attack-192x192.gif");
+    private Image imgJuggRightAttack = new Image("Final Assets/Jugg/GIF/Jugg-Right-Attack-192x192.gif");
+    private Image imgJuggLeftAttack = new Image("Final Assets/Jugg/GIF/Jugg-Left-Attack-192x192.gif");
     // **********************
 
     // Object Images ********
@@ -307,6 +317,15 @@ public class GameWindow {
                 apaneMain.getChildren().add(imgViewGrunt);
                 imgViewList.add(imgViewGrunt);
 
+            } else if (entity instanceof Juggernaut) {
+                Juggernaut spawnedJuggernaut = (Juggernaut) entity;
+                spawnedJuggernaut.setOriginalX(spawnedJuggernaut.getX());
+                spawnedJuggernaut.setOriginalY(spawnedJuggernaut.getY());
+                ImageView imgViewJuggernaut = new ImageView();
+                imgViewJuggernaut.xProperty().bindBidirectional(spawnedJuggernaut.xProperty());
+                imgViewJuggernaut.yProperty().bindBidirectional(spawnedJuggernaut.yProperty());
+                apaneMain.getChildren().add(imgViewJuggernaut);
+                imgViewList.add(imgViewJuggernaut);
             }
 
         }
@@ -527,12 +546,70 @@ public class GameWindow {
                             break;
 
                         case "coord":
-                            Grunt grunt = new Grunt();
-                            grunt.setX(landObjects.getX());
-                            grunt.setY(landObjects.getY());
-                            grunt.setWidth(128);
-                            grunt.setHeight(128);
-                            spawnEnemies(grunt);
+                            int spawnNum = ThreadLocalRandom.current().nextInt(10);
+                            switch (world.getDifficulty()) {
+
+                                case EASY:
+                                    if (spawnNum > 0 && spawnNum <= 8) {
+                                        Grunt grunt = new Grunt();
+                                        grunt.setX(landObjects.getX());
+                                        grunt.setY(landObjects.getY());
+                                        grunt.setWidth(128);
+                                        grunt.setHeight(128);
+                                        spawnEnemies(grunt);
+
+                                    } else if (spawnNum > 8) {
+                                        Juggernaut jugg = new Juggernaut();
+                                        jugg.setX(landObjects.getX());
+                                        jugg.setY(landObjects.getY());
+                                        jugg.setWidth(128);
+                                        jugg.setHeight(128);
+                                        spawnEnemies(jugg);
+                                    }
+                                    break;
+
+                                case MEDIUM:
+                                    if (spawnNum > 0 && spawnNum <= 6) {
+                                        Grunt grunt = new Grunt();
+                                        grunt.setX(landObjects.getX());
+                                        grunt.setY(landObjects.getY());
+                                        grunt.setWidth(128);
+                                        grunt.setHeight(128);
+                                        spawnEnemies(grunt);
+
+                                    } else if (spawnNum > 6) {
+                                        Juggernaut jugg = new Juggernaut();
+                                        jugg.setX(landObjects.getX());
+                                        jugg.setY(landObjects.getY());
+                                        jugg.setWidth(128);
+                                        jugg.setHeight(128);
+                                        spawnEnemies(jugg);
+                                    }
+                                    break;
+
+                                case HARD:
+                                    if (spawnNum > 0 && spawnNum <= 4) {
+                                        Grunt grunt = new Grunt();
+                                        grunt.setX(landObjects.getX());
+                                        grunt.setY(landObjects.getY());
+                                        grunt.setWidth(128);
+                                        grunt.setHeight(128);
+                                        spawnEnemies(grunt);
+
+                                    } else if (spawnNum > 4) {
+                                        Juggernaut jugg = new Juggernaut();
+                                        jugg.setX(landObjects.getX());
+                                        jugg.setY(landObjects.getY());
+                                        jugg.setWidth(128);
+                                        jugg.setHeight(128);
+                                        spawnEnemies(jugg);
+                                    }
+                                    break;
+
+                                default:
+                                    break;
+
+                            }
 
                         default:
                             break;
@@ -611,8 +688,10 @@ public class GameWindow {
 
             // Update grunts
             if (entity instanceof Grunt) {
+
                 Grunt grunt = (Grunt) entity;
-                grunt.move(0);
+                grunt.navigate();
+
                 for (ImageView imgview : imgViewList) {
                     updateGruntGraphic(grunt);
                 }
@@ -626,6 +705,19 @@ public class GameWindow {
 
                 }
 
+            } else if (entity instanceof Juggernaut) {
+                Juggernaut jugg = (Juggernaut) entity;
+                jugg.navigate();
+
+                for (ImageView imgview : imgViewList) {
+                    updateJuggGraphic(jugg);
+                }
+
+                if (jugg.isDead()) {
+                    world.increaseScore(300);
+
+                    iterator.remove();
+                }
             }
 
         }
@@ -693,14 +785,14 @@ public class GameWindow {
                 imgview.setImage(imgJuggRightMoveSlow);
 
             } else if (jugg.getDirection() == 90) {
-                imgview.setImage(imgJugg);
+                imgview.setImage(imgJuggBackMoveSlow);
 
             } else if (jugg.getDirection() > 90 && jugg.getDirection() <= 180
                     || jugg.getDirection() > 180 && jugg.getDirection() < 270) {
                 imgview.setImage(imgJuggLeftMoveSlow);
 
             } else if (jugg.getDirection() == 270) {
-                imgview.setImage(imgJugg);
+                imgview.setImage(imgJuggFrontMoveSlow);
             }
 
         } else if (jugg.getState() == JuggernautState.FRENZY) {
@@ -710,24 +802,62 @@ public class GameWindow {
                 imgview.setImage(imgJuggRightMoveFast);
 
             } else if (jugg.getDirection() == 90) {
-                imgview.setImage(imgJugg);
+                imgview.setImage(imgJuggBackMoveFast);
 
             } else if (jugg.getDirection() > 90 && jugg.getDirection() <= 180
                     || jugg.getDirection() > 180 && jugg.getDirection() < 270) {
                 imgview.setImage(imgJuggLefttMoveFast);
 
             } else if (jugg.getDirection() == 270) {
-                imgview.setImage(imgJugg);
+                imgview.setImage(imgJuggFrontMoveFast);
             }
-            
+
+        }
+
+        if (jugg.isHitPlayer()) {
+
+            if (jugg.getDirection() >= 0 && jugg.getDirection() < 90
+                    || jugg.getDirection() > 270 && jugg.getDirection() <= 360) {
+                ImageView juggHitImageView = imgview;
+                PauseTransition juggPause = new PauseTransition(Duration.seconds(0.9));
+                juggPause.setOnFinished(e -> juggHitImageView.setImage(imgJuggRightAttack));
+                juggPause.play();
+                jugg.setHitPlayer(false);
+                updateJuggGraphic(jugg);
+
+            } else if (jugg.getDirection() == 90) {
+                ImageView juggHitImageView = imgview;
+                PauseTransition juggPause = new PauseTransition(Duration.seconds(0.9));
+                juggPause.setOnFinished(e -> juggHitImageView.setImage(imgJuggBackAttack));
+                juggPause.play();
+                jugg.setHitPlayer(false);
+                updateJuggGraphic(jugg);
+
+            } else if (jugg.getDirection() > 90 && jugg.getDirection() <= 180
+                    || jugg.getDirection() > 180 && jugg.getDirection() < 270) {
+                ImageView juggHitImageView = imgview;
+                PauseTransition juggPause = new PauseTransition(Duration.seconds(0.9));
+                juggPause.setOnFinished(e -> juggHitImageView.setImage(imgJuggLeftAttack));
+                juggPause.play();
+                jugg.setHitPlayer(false);
+                updateJuggGraphic(jugg);
+
+            } else if (jugg.getDirection() == 270) {
+                ImageView juggHitImageView = imgview;
+                PauseTransition juggPause = new PauseTransition(Duration.seconds(0.9));
+                juggPause.setOnFinished(e -> juggHitImageView.setImage(imgJuggRightAttack));
+                juggPause.play();
+                jugg.setHitPlayer(false);
+                updateJuggGraphic(jugg);
+            }
         }
 
         if (jugg.isDead()) {
-            imgview.setImage(imgGruntDeath);
-            ImageView gruntdeathImageView = imgview;
-            PauseTransition gruntPause = new PauseTransition(Duration.seconds(0.5));
-            gruntPause.setOnFinished(e -> gruntdeathImageView.setVisible(false));
-            gruntPause.play();
+            imgview.setImage(imgJuggDeath);
+            ImageView juggdeathImageView = imgview;
+            PauseTransition juggPause = new PauseTransition(Duration.seconds(0.5));
+            juggPause.setOnFinished(e -> juggdeathImageView.setVisible(false));
+            juggPause.play();
         }
     }
 
@@ -1186,7 +1316,7 @@ public class GameWindow {
     @FXML
     public void handleAttackGraphic() {
         int direction = world.getPlayer().getDirection();
-        PauseTransition attackPause = new PauseTransition(Duration.seconds(0.28));
+        PauseTransition attackPause = new PauseTransition(Duration.seconds(0.32));
         attackPause.setOnFinished(e -> processAnimationDirection());
 
         switch (direction) {

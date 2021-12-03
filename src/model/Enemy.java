@@ -7,33 +7,19 @@ public abstract class Enemy extends Living {
 
     private IntegerProperty id;
     private IntegerProperty detectionRadius;
+    private double originalX, originalY;
 
     public Enemy(int width, int height) {
 
         super(width, height);
 
+        this.setCollidable(false);
         this.id = new SimpleIntegerProperty();
         this.detectionRadius = new SimpleIntegerProperty();
         
     }
 
-
-    /**
-     * Attempts to move the entity.
-     * @param direction the direction to move in
-     * @return true if the move was successful, false otherwise
-     */
-    public boolean move(int direction) {
-        double x = this.getX();
-        double y = this.getY();
-
-        this.setX(x += this.getSpeed() * Math.cos(this.getDirection() * Math.PI / 180));
-        this.setY(y += this.getSpeed() * Math.sin(this.getDirection() * Math.PI / 180));
-        return true;
-
-    }
-
-
+    // Abstract methods
     public abstract void navigate();
 
     /**
@@ -42,10 +28,8 @@ public abstract class Enemy extends Living {
      */
 
     public boolean foundPlayer() {
-        if (Math.hypot(this.getX() - World.instance().getPlayer().getX(), this.getY() - World.instance().getPlayer().getY()) <= this.getDetectionRadius()) {
-            return true;
-        }
-        return false;
+
+        return Math.hypot(this.getX() - World.instance().getPlayer().getX(), this.getY() - World.instance().getPlayer().getY()) <= this.getDetectionRadius();
 
     }
 
@@ -86,6 +70,30 @@ public abstract class Enemy extends Living {
 
         this.id.set(id);
 
+    }
+
+    public double getOriginalX() {
+
+        return originalX;
+    
+    }
+
+    public void setOriginalX(double originalX) {
+
+        this.originalX = originalX;
+    
+    }
+
+    public double getOriginalY() {
+
+        return originalY;
+    
+    }
+
+    public void setOriginalY(double originalY) {
+
+        this.originalY = originalY;
+    
     }
 
 }
