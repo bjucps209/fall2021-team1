@@ -24,17 +24,10 @@ public class Leaderboard {
      */
     public void process(String name, int score) {
 
+        highscores.add(new HighScore(name, score));
+        highscores.stream().sorted((s1, s2) -> s1.getScore());
+        highscores = new ArrayList<>(highscores.subList(0, 9));
         
-        
-    }
-
-    /**
-     * Sorts the scores highest to lowest.
-     */
-    private void sortScores() {
-
-
-
     }
 
     /**

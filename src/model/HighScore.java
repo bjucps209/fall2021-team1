@@ -12,6 +12,12 @@ class HighScore {
 
     }
 
+    public String serialize() {
+
+        return "" + getPlayerName() + "::" + getScore() + "\n";
+
+    }
+
     public String getPlayerName() {
 
         return playerName;

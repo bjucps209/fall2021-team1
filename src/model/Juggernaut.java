@@ -167,6 +167,29 @@ public class Juggernaut extends Enemy {
         this.state = state;
     }
 
+    public void setState(String state) {
+
+        switch (state) {
+
+            case "PATROL":
+
+                this.state = JuggernautState.PATROL;
+                break;
+
+            case "ATTACK":
+
+                this.state = JuggernautState.ATTACK;
+                break;
+
+            default:
+
+                this.state = JuggernautState.FRENZY;
+                break;
+
+        }
+
+    }
+
     public boolean isHitPlayer() {
         return hitPlayer;
     }

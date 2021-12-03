@@ -58,35 +58,54 @@ public class Serialization {
             data = line.split("::");
             EntityType type = stringToType(data[0]);
 
-            switch (type) {
+            try {
 
-                case NPC:
-                    
-                    // needs fix
-                    entities.add(new NPC(data[1], line));
-                    break;
+                switch (type) {
 
-                case ITEM:
+                    case NPC:
+                        
+                        // needs fix
+                        entities.add(new NPC(data[1], line));
+                        break;
+    
+                    case ITEM:
+    
+                        // needs fix
+                        entities.add(new Item(data[1], line, Integer.parseInt(data[2])));
+                        break;
+    
+                    case PROJECTILE:
+    
+                        // TODO: add projectiles
+                        break;
+    
+                    case GRUNT_ENEMY:
+    
+                        var grunt = new Grunt();
+    
+                        grunt.setId(Integer.parseInt(data[1]));
+                        grunt.setPosition(Double.parseDouble(data[2]), Double.parseDouble(data[3]));
+                        grunt.setState(data[4]);
+    
+                        entities.add(grunt);
+                        break;
 
-                    // needs fix
-                    entities.add(new Item(data[1], line, Integer.parseInt(data[2])));
-                    break;
+                    case JUGGERNAUT_ENEMY:
 
-                case PROJECTILE:
+                        var jugg = new Juggernaut();
 
-                    // TODO: add projectiles
-                    break;
+                        jugg.setId(Integer.parseInt(data[1]));
+                        jugg.setPosition(Double.parseDouble(data[2]), Double.parseDouble(data[3]));
+                        jugg.setState(data[4]);
 
-                case GRUNT_ENEMY:
+                        break;
+    
+                }
 
-                    var grunt = new Grunt();
+            } catch (Exception e) {
 
-                    grunt.setId(Integer.parseInt(data[1]));
-                    grunt.setPosition(Double.parseDouble(data[2]), Double.parseDouble(data[3]));
-                    grunt.setState(data[4]);
-
-                    entities.add(grunt);
-                    break;
+                reader.close();
+                throw new IOException("Invalid save");
 
             }
 
@@ -161,6 +180,29 @@ public class Serialization {
         reader.close();
 
         return scores;
+
+    }
+
+    /**
+     * Saves the game to a text file.
+     */
+    public static void saveScores(ArrayList<HighScore> scores) throws IOException {
+
+        // Clear old save
+        var file = new File("HIGHSCORES.txt");
+        if (file.exists()) file.delete();
+
+        // Open new file
+        var writer = new PrintWriter(new FileWriter(file));
+
+        // Save entity data
+        for (HighScore s : scores) {
+
+            writer.print(s.serialize());
+
+        }
+
+        writer.close();
 
     }
 
