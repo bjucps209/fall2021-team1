@@ -11,7 +11,6 @@ public class Serialization {
     public static void load() throws IOException {
 
         var file = new File("SAVEGAME.txt");
-
         var reader = new BufferedReader(new FileReader(file));
 
         String line = reader.readLine();
@@ -28,8 +27,7 @@ public class Serialization {
         var world = World.instance();
 
         world.setDifficulty(stringToDifficulty(data[1]));
-        // TODO needs fixed
-       // world.setCurrentlocation(data[2]);
+        //world.setCurrentlocation(data[2]);
         world.setScore(Integer.parseInt(data[3]));
 
         line = reader.readLine();
@@ -127,6 +125,42 @@ public class Serialization {
         }
 
         writer.close();
+
+    }
+
+    /** Loads the saved highscores. */
+    public static ArrayList<HighScore> loadScores() throws IOException {
+
+        var file = new File("HIGHSCORES.txt");
+        var reader = new BufferedReader(new FileReader(file));
+
+        String line = reader.readLine();
+        String[] data;
+
+        ArrayList<HighScore> scores = new ArrayList<>();
+
+        while (line != null) {
+
+            data = line.split("::");
+
+            try {
+
+                scores.add(new HighScore(data[0], Integer.parseInt(data[1])));
+
+            } catch (Exception e) {
+
+                reader.close();
+                throw new IOException("Invalid save");
+
+            }
+            
+            line = reader.readLine();
+
+        }
+
+        reader.close();
+
+        return scores;
 
     }
 

@@ -691,10 +691,10 @@ public class GameWindow {
 
                 Grunt grunt = (Grunt) entity;
                 grunt.navigate();
+                updateGruntGraphic(grunt);
 
-                for (ImageView imgview : imgViewList) {
-                    updateGruntGraphic(grunt);
-                }
+                //for (ImageView imgview : imgViewList) {}
+
                 // Increase score if grunt is dead
                 if (((Grunt) entity).isDead()) {
                     // Increase score
@@ -708,10 +708,9 @@ public class GameWindow {
             } else if (entity instanceof Juggernaut) {
                 Juggernaut jugg = (Juggernaut) entity;
                 jugg.navigate();
+                updateJuggGraphic(jugg);
 
-                for (ImageView imgview : imgViewList) {
-                    updateJuggGraphic(jugg);
-                }
+                //for (ImageView imgview : imgViewList) {}
 
                 if (jugg.isDead()) {
                     world.increaseScore(300);
