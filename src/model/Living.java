@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -7,13 +9,18 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public abstract class Living extends Entity {
 
+    /** The health of the Entity. */
     private IntegerProperty health;
+    /** The maximum health of the Entity. */
     private IntegerProperty maxHealth;
+    /** The damage the Entity will do */
     private IntegerProperty damage;
+    /** The rate at which the Entity will move. */
     private DoubleProperty speed;
+    /** The direction the Entity is facing, in degrees. */
     private IntegerProperty direction;
-
-    private boolean isDead;
+    /** Is the Entity dead? */
+    private boolean isDead = false;
 
     public Living(int width, int height) {
 
@@ -24,7 +31,6 @@ public abstract class Living extends Entity {
         this.damage = new SimpleIntegerProperty(1);
         this.speed = new SimpleDoubleProperty(1);
         this.direction = new SimpleIntegerProperty();
-        this.isDead = false;
 
     }
 
@@ -35,6 +41,35 @@ public abstract class Living extends Entity {
      */
     public boolean move(int direction) {
 
+        double oldX = getX();
+        double oldY = getY();
+
+        double newX = getX() + getSpeed() * Math.cos(direction * Math.PI / 180);
+        double newY = getY() + getSpeed() * Math.sin(direction * Math.PI / 180);
+
+        /* Bounds unimplemented
+        int w = World.instance().getWidth();
+        int h = World.instance().getHeight();
+        
+        if (newX < 0 || newX > w || newY < 0 || newY > h) return false;
+        */
+
+        setPosition(newX, newY);
+
+        List<Entity> obstacles = World.instance().getEntityList().stream().filter(e -> (e.isCollidable())).toList();
+        if (obstacles.size() < 1) return true;
+
+        for (Entity obstacle : obstacles) {
+
+            if (intersects(obstacle)) {
+                
+                setPosition(oldX, oldY);
+                return false;
+
+            }
+
+        }
+        
         return true;
 
     }
