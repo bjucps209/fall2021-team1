@@ -4,14 +4,13 @@ import java.util.ArrayList;
 
 public class Leaderboard {
 
-    private Leaderboard instance;
     private ArrayList<HighScore> highscores;
 
     /**
      * Creates a new leaderboard with the given score list.
      * @param scores a list of HighScore objects
      */
-    private Leaderboard(ArrayList<HighScore> scores) {
+    public Leaderboard(ArrayList<HighScore> scores) {
 
         this.highscores = scores;
 
@@ -24,21 +23,23 @@ public class Leaderboard {
      */
     public void process(String name, int score) {
 
+        // Crazy solution
         highscores.add(new HighScore(name, score));
         highscores.stream().sorted((s1, s2) -> s1.getScore());
         highscores = new ArrayList<>(highscores.subList(0, 9));
-        
+
+        /* Tame solution
+        if (score > highscores.get(-1).getScore()) {
+            for (int position = 8; position < 0; --position) {
+                if (score < highscores.get(position).getScore()) {
+                    highscores.remove(position + 1);
+                    highscores.add(position + 1, new HighScore(name, score));
+                }
+            }
+        }
+        */
     }
 
-    /**
-     * Returns the single instance of the leaderboard.
-     * @return the leaderboard
-     */
-    public Leaderboard getInstance() {
-
-        return this.instance;
-
-    }
 
     public ArrayList<HighScore> getHighscores() {
 
