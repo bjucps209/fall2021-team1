@@ -31,6 +31,7 @@ import javafx.util.Duration;
 import model.Enemy;
 import model.Entity;
 import model.Grunt;
+import model.Juggernaut;
 import model.NPC;
 import model.Serialization;
 import model.World;
@@ -98,13 +99,17 @@ public class GameWindow {
     private Image imgNPC = new Image("Final Assets/NPC/PNG/NPC-Front-Stationary-128x128.png");
     // **********************
 
-    // Enemy Images *********
+    // Grunt Images *********
     private Image imgGruntDeath = new Image("Final Assets/Grunt/GIF/Grunt-Death-128x128.gif");
     private Image imgGrunt = new Image("Final Assets/Grunt/PNG/Grunt-Front-Stationary-128x128.png");
     private Image imgGruntRightMove = new Image("Final Assets/Grunt/GIF/Grunt-Right-Walking-128x128.gif");
     private Image imgGruntBackMove = new Image("Final Assets/Grunt/GIF/Grunt-Back-Walking-128x128.gif");
     private Image imgGruntFrontMove = new Image("Final Assets/Grunt/GIF/Grunt-Front-Walking-128x128.gif");
     private Image imgGruntLefttMove = new Image("Final Assets/Grunt/GIF/Grunt-Left-Walking-128x128.gif");
+    // **********************
+
+    // Jugg Images **********
+    private Image imgJugg = new Image ("Final Assets/Jugg/PNG/Jugg-Front-Stationary-192x192.png");
     // **********************
 
     // Object Images ********
@@ -645,6 +650,38 @@ public class GameWindow {
         }
 
         if (grunt.isDead()) {
+            imgview.setImage(imgGruntDeath);
+            ImageView gruntdeathImageView = imgview;
+            PauseTransition gruntPause = new PauseTransition(Duration.seconds(0.5));
+            gruntPause.setOnFinished(e -> gruntdeathImageView.setVisible(false));
+            gruntPause.play();
+        }
+    }
+
+    /**
+     * Changes the juggernaut's ImageView to the appropriate animation based on its direction and movement.
+     * @param jugg - the juggernaut to be animated
+     */
+    @FXML
+    public void updateJuggGraphic(Juggernaut jugg) {
+        ImageView imgview = new ImageView();
+
+        for (ImageView foundImageView : imgViewList) {
+            if (foundImageView.getX() == jugg.getX() && foundImageView.getY() == jugg.getY())
+            imgview = foundImageView;
+        }
+
+        if (jugg.getDirection() >= 0 && jugg.getDirection() < 90 || jugg.getDirection() > 270 && jugg.getDirection() <= 360 ) {
+            imgview.setImage(imgGruntRightMove);
+        } else if (jugg.getDirection() == 90) {
+            imgview.setImage(imgGruntBackMove);
+        } else if (jugg.getDirection() > 90 && jugg.getDirection() <= 180 || jugg.getDirection() > 180 && jugg.getDirection() < 270) {
+            imgview.setImage(imgGruntLefttMove);
+        } else if (jugg.getDirection() == 270) {
+            imgview.setImage(imgGruntFrontMove);
+        }
+
+        if (jugg.isDead()) {
             imgview.setImage(imgGruntDeath);
             ImageView gruntdeathImageView = imgview;
             PauseTransition gruntPause = new PauseTransition(Duration.seconds(0.5));
