@@ -36,8 +36,9 @@ public class Grunt extends Enemy {
     }
 
     @Override
-    public void handleDamage(int damage) {
+    public boolean handleDamage(int damage) {
         this.setHealth(this.getHealth() - damage);
+        return true;
     }
 
     @Override
@@ -81,10 +82,9 @@ public class Grunt extends Enemy {
             this.setDirection(this.getDirection() - 360);
         }
 
-        super.move(direction);
+        super.move(this.getDirection());
         ++count;
         return true;
-
     }
 
     @Override

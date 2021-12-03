@@ -200,7 +200,7 @@ public class MainWindow  {
 
         Label lbl = new Label("""
         Game Developers:
-        Joshua Douglass
+        Joshua Douglas
         Andrew Fox
         David Goff
 
@@ -209,6 +209,12 @@ public class MainWindow  {
 
         Art Design:
         David Goff
+
+        Serialization:
+        Joshua Douglas
+
+        Gameplay:
+        Andrew Fox
         """);
 
         lbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
@@ -326,6 +332,9 @@ public class MainWindow  {
         var loader = new FXMLLoader(getClass().getResource("GameWindow.fxml"));
         var scene = new Scene(loader.load());
         var stage = new Stage();
+
+        // TODO add difficulty selection after start is pressed
+
         GameWindow controller = loader.getController();
 
         stage.setScene(scene);

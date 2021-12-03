@@ -4,6 +4,8 @@ public class Juggernaut extends Enemy {
 
     int count; // cooldown for the basic attack
     int frenzyCooldown; // cooldown before the Juggernaut can enter the frenzy state again
+    boolean hitPlayer; // check if the player was successfully hit
+    double attackSpeed; // default speed when Juggernaut enters attack mode
 
     public enum JuggernautState {
 
@@ -14,14 +16,17 @@ public class Juggernaut extends Enemy {
     private JuggernautState state;
 
     public Juggernaut() {
-        super(256, 256);
+        super(192, 192);
 
+        hitPlayer = false;
         count = 50;
-        frenzyCooldown = 0;
+        attackSpeed = 5;
+
+        frenzyCooldown = 5;
         this.setMaxHealth(10);
         this.setHealth(10);
         this.setDamage(3);
-        this.setSpeed(0.3);
+        this.setSpeed(1);
         this.setDetectionRadius(125);
         this.state = JuggernautState.PATROL;
     }
@@ -41,8 +46,7 @@ public class Juggernaut extends Enemy {
                 this.getY() - World.instance().getPlayer().getY()) <= 95) {
             World.instance().getPlayer().handleDamage(this.getDamage());
 
-            
-            if (getDirection() >= 0 && getDirection() < 90 || getDirection() > 270 && getDirection() <= 360 ) {
+            if (getDirection() >= 0 && getDirection() < 90 || getDirection() > 270 && getDirection() <= 360) {
                 World.instance().getPlayer().setX(World.instance().getPlayer().getX() + 400);
             } else if (getDirection() == 90) {
                 World.instance().getPlayer().setY(World.instance().getPlayer().getY() - 400);
@@ -58,13 +62,15 @@ public class Juggernaut extends Enemy {
                 setState(JuggernautState.ATTACK);
             }
             ++frenzyCooldown;
+            hitPlayer = true;
         }
 
     }
 
     @Override
-    public void handleDamage(int damage) {
+    public boolean handleDamage(int damage) {
         this.setHealth(this.getHealth() - damage);
+        return true;
 
     }
 
@@ -102,9 +108,9 @@ public class Juggernaut extends Enemy {
             this.setDirection((int) angle);
 
             if (state == JuggernautState.FRENZY) {
-                this.setSpeed(this.getSpeed() + 12);
+                this.setSpeed(12);
             } else {
-                this.setSpeed(0.3);
+                this.setSpeed(attackSpeed);
             }
 
             if (count % 50 == 0 || state == JuggernautState.FRENZY) {
@@ -114,10 +120,9 @@ public class Juggernaut extends Enemy {
             if (this.getDirection() >= 360) {
                 this.setDirection(this.getDirection() - 360);
             }
-
-
         }
-        super.move(direction);
+
+        super.move(this.getDirection());
         ++count;
         return true;
 
@@ -148,5 +153,15 @@ public class Juggernaut extends Enemy {
     public void setState(JuggernautState state) {
         this.state = state;
     }
+
+    public boolean isHitPlayer() {
+        return hitPlayer;
+    }
+
+    public void setHitPlayer(boolean hitPlayer) {
+        this.hitPlayer = hitPlayer;
+    }
+
+    
 
 }
