@@ -9,7 +9,7 @@ public class Player extends Living {
     public Player() {
 
         // TODO: use actual width, height of player
-        super(10, 10);
+        super(128, 128);
 
         // Load base stats
         this.setMaxHealth(5);
@@ -57,7 +57,7 @@ public class Player extends Living {
      * Instead, please use the other attack method.
      */
     @Override
-    public void attack(int DO_NOT_USE_THIS_METHOD) {}
+    public void attack() {}
 
     /**
      * Checks if an enemy is within a semicircle of the player's direction, and if the enemy is within a certain distance of the player.
@@ -72,17 +72,16 @@ public class Player extends Living {
             for (Entity enemy : list) {
 
                 Enemy target = (Enemy) enemy;
+                boolean hit = false;
 
                 // NOTE: Currently assumes that all creatures are the same size.
-                if (Math.hypot(this.getX() - target.getX(), this.getX() - target.getY()) < 128) {
-
-                    boolean hit = false;
+                if (Math.hypot(this.getX() - target.getX(), this.getY() - target.getY()) < 128) {
 
                     switch (direction) {
 
                         case UP:
                             
-                            if (target.getY() < this.getY() + this.getWidth() / 2) return;
+                            if (target.getY() < this.getY() - this.getWidth() / 2) return;
                             hit = true;
                             break;
 
@@ -100,7 +99,7 @@ public class Player extends Living {
 
                         case RIGHT:
                             
-                            if (target.getX() < this.getX() + this.getHeight() / 2) return;
+                            if (target.getX() < this.getX() - this.getHeight() / 2) return;
                             hit = true;
                             break;
                     
@@ -110,10 +109,33 @@ public class Player extends Living {
 
                     }
 
-                    if (hit == true) {
+                }
 
-                        // TODO: knockback
+                if (hit == true) {
+                    target.handleDamage(getDamage());
+                    if (target instanceof Grunt) {
 
+                        switch (direction) {
+                            
+                            case UP:
+                                target.setY(target.getY() - 200);
+                                break;
+
+                            case LEFT:
+                                target.setX(target.getX() - 200);
+                                break;
+                            
+                            case DOWN:
+                                target.setY(target.getY() + 200);
+                                break;
+                            
+                            case RIGHT:
+                                target.setX(target.getX() + 200);
+                                break;
+                                
+                            default:
+                                break;
+                        }
                     }
 
                 }
@@ -125,7 +147,12 @@ public class Player extends Living {
     }
 
     @Override
-    public void handleDamage(int damage) {
+    public boolean handleDamage(int damage) {
+        this.setHealth(this.getHealth() - damage);
+        if (damage > 0) {
+            return true;
+        }
+        return false;
     }
 
     @Override

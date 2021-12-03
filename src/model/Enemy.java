@@ -17,17 +17,35 @@ public abstract class Enemy extends Living {
         
     }
 
+
+    /**
+     * Attempts to move the entity.
+     * @param direction the direction to move in
+     * @return true if the move was successful, false otherwise
+     */
+    public boolean move(int direction) {
+        double x = this.getX();
+        double y = this.getY();
+
+        this.setX(x += this.getSpeed() * Math.cos(this.getDirection() * Math.PI / 180));
+        this.setY(y += this.getSpeed() * Math.sin(this.getDirection() * Math.PI / 180));
+        return true;
+
+    }
+
+
     public abstract void navigate();
 
     /**
      * Whether or not the player is within detection range.
      * @return true if player is in detection range
      */
+
     public boolean foundPlayer() {
-
-        // TODO: implement
-
-        return true;
+        if (Math.hypot(this.getX() - World.instance().getPlayer().getX(), this.getY() - World.instance().getPlayer().getY()) <= this.getDetectionRadius()) {
+            return true;
+        }
+        return false;
 
     }
 

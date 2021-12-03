@@ -1,0 +1,7 @@
+Wizard Color Pallette
+
+Skin:     	#
+Skin Outline:   #
+Teeth:		#
+Skirt: 		#
+Skirt Outline:  #

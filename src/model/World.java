@@ -57,6 +57,9 @@ public class World {
                 if (entity instanceof Grunt) {
                     Grunt grunt = (Grunt) entity;
                     grunt.handleDeath();
+                } else if (entity instanceof Juggernaut) {
+                    Juggernaut jugg = (Juggernaut) entity;
+                    jugg.handleDeath();
                 }
                 player.handleDeath();
             }
@@ -72,9 +75,10 @@ public class World {
 
     /**
      * Spawns enemies in the current world location of the player.
+     * @param enemy - the enemy to be added to the entity list
      */
-    public void spawnEnemies() {
-        entityList.add(new Grunt());
+    public void spawnEnemies(Enemy enemy) {
+        entityList.add(enemy);
     }
     
 
