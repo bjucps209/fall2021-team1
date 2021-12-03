@@ -1,5 +1,6 @@
 package model;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javafx.beans.property.IntegerProperty;
@@ -32,7 +33,18 @@ public class World {
         difficulty = DifficultyLevel.EASY;
         currentlocation = ZoneList.instance().getLevels().get(0);
 
-        this.leaderboard = new Leaderboard(Serialization.loadScores());
+        ArrayList<HighScore> dummy = new ArrayList<HighScore>();
+        for (int i = 0; i < 10; ++i) {
+            dummy.add(new HighScore("Bob", i + 1));
+        }
+        
+
+        try {
+            this.leaderboard = new Leaderboard(Serialization.loadScores());    
+        } catch (IOException e) {
+            this.leaderboard = new Leaderboard(dummy);
+        }
+            
 
     }
 
@@ -66,6 +78,9 @@ public class World {
                 }
                 player.handleDeath();
             }
+        }
+        if (isGameOver()) {
+            leaderboard.process("Fred", getScore());
         }
     }
 
