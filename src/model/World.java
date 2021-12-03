@@ -12,6 +12,7 @@ public class World {
     private IntegerProperty score;
     private DifficultyLevel difficulty;
     private Player player;
+    private Leaderboard leaderboard;
 
     // Directional Enum
     public enum mapDirection {
@@ -30,6 +31,8 @@ public class World {
         score = new SimpleIntegerProperty();
         difficulty = DifficultyLevel.EASY;
         currentlocation = ZoneList.instance().getLevels().get(0);
+
+        this.leaderboard = new Leaderboard(Serialization.loadScores());
 
     }
 
