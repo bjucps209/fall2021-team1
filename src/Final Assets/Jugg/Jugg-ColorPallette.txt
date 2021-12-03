@@ -1,7 +1,7 @@
 Juggernaut Color Pallette
 
-Skin:     	#
-Skin Outline:   #
-Teeth:		#
-Skirt: 		#
-Skirt Outline:  #
+Skin:     	#128c14
+Skin Outline:   #09470b
+Teeth:		#dfe0bf
+Skirt: 		#695918
+Skirt Outline:  #362e0c
