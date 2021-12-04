@@ -872,7 +872,7 @@ public class GameWindow {
             var player = world.getPlayer();
             double speed = player.getSpeed();
 
-            var obstacles = world.getEntityList().stream().filter(e -> (e.isCollidable())).toList();
+            var obstacles = world.getCurrentlocation().getObjectList().stream().filter(e -> (e.isCollidable())).toList();
 
             if (uPressed.get() && !dPressed.get()) { // Up
 

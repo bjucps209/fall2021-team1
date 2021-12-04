@@ -57,7 +57,7 @@ public abstract class Living extends Entity {
 
         setPosition(newX, newY);
 
-        List<Entity> obstacles = World.instance().getEntityList().stream().filter(e -> (e.isCollidable())).toList();
+        var obstacles = World.instance().getCurrentlocation().getObjectList().stream().filter(e -> (e.isCollidable())).toList();
         if (obstacles.size() < 1) return true;
 
         for (Entity obstacle : obstacles) {

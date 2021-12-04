@@ -11,6 +11,7 @@ public class Item extends NPC {
 
         super(message, description);
 
+        this.setCollidable(true);
         this.scoreIncrease = new SimpleIntegerProperty(score);
 
     }
