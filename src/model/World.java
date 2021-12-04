@@ -30,7 +30,6 @@ public class World {
         entityList = new ArrayList<Entity>();
         player = new Player();
         score = new SimpleIntegerProperty();
-        difficulty = DifficultyLevel.EASY;
         currentlocation = ZoneList.instance().getLevels().get(0);
 
         ArrayList<HighScore> dummy = new ArrayList<HighScore>();

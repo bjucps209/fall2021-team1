@@ -27,6 +27,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import model.DifficultyLevel;
 import model.HighScore;
 import model.Leaderboard;
 import model.Serialization;
@@ -56,6 +57,14 @@ public class MainWindow  {
     private Image imgQuitBtn2 = new Image("Final Assets/UI/PNG/UI-QuitBtn2-312x80.png");
     private Image imgBackBtn1 = new Image("Final Assets/UI/PNG/UI-BackBtn1-312x80.png");
     private Image imgBackBtn2 = new Image("Final Assets/UI/PNG/UI-BackBtn2-312x80.png");
+    private Image imgEasyBtn1 = new Image("Final Assets/UI/PNG/UI-EasyBtn1-312x80.png");
+    private Image imgEasyBtn2 = new Image("Final Assets/UI/PNG/UI-EasyBtn2-312x80.png");
+    private Image imgMediumBtn1 = new Image("Final Assets/UI/PNG/UI-MediumBtn1-312x80.png");
+    private Image imgMediumBtn2 = new Image("Final Assets/UI/PNG/UI-MediumBtn2-312x80.png");
+    private Image imgHardBtn1 = new Image("Final Assets/UI/PNG/UI-HardBtn1-312x80.png");
+    private Image imgHardBtn2 = new Image("Final Assets/UI/PNG/UI-HardBtn2-312x80.png");
+    private Image imgSubmitBtn1 = new Image("Final Assets/UI/PNG/UI-SubmitBtn1-312x80.png");
+    private Image imgSubmitBtn2 = new Image("Final Assets/UI/PNG/UI-SubmitBtn2-312x80.png");
     // *********************************************************************************
 
     // UI ImageViews **********************************************************************
@@ -79,6 +88,10 @@ public class MainWindow  {
     private ImageView imgviewBackAboutBtn = new ImageView(imgBackBtn1);
     private ImageView imgviewBackHsBtn = new ImageView(imgBackBtn1);
     private ImageView imgviewBackHelpBtn = new ImageView(imgBackBtn1);
+    private ImageView imgviewEasyBtn = new ImageView(imgEasyBtn1);
+    private ImageView imgviewMediumBtn = new ImageView(imgMediumBtn1);
+    private ImageView imgviewHardBtn = new ImageView(imgHardBtn1);
+    private ImageView imgviewSubmitBtn = new ImageView(imgSubmitBtn1);
     // ************************************************************************************
 
     // UI VBoxes *********************
@@ -86,8 +99,11 @@ public class MainWindow  {
     private VBox aboutVbox = new VBox();
     private VBox hsVbox = new VBox();
     private VBox helpVbox = new VBox();
+    private VBox difVbox = new VBox();
     // *****************************
 
+    DifficultyLevel difficulty;
+        
     /**
      * Intializes the start screen with music in the background and the font style used for the application.
      * @param stage
@@ -113,6 +129,7 @@ public class MainWindow  {
         createAboutVbox();
         createHsVbox();
         createHelpVbox();
+        createDifficultyVbox();
 
         // Display startVbox
         spaneMain.getChildren().add(startVbox);
@@ -177,11 +194,9 @@ public class MainWindow  {
         // Button Functions
         // *************************************************************************************
         imgviewStart1.setOnMouseClicked(event -> {
-            try {
-                onStartClicked(event);
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
+            spaneMain.getChildren().remove(startVbox);
+            spaneMain.getChildren().add(imgviewBackgroundDim);
+            spaneMain.getChildren().add(difVbox);
         });
 
         imgviewAbout1.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
@@ -452,6 +467,76 @@ public class MainWindow  {
         helpVbox.setSpacing(10.0);
     }
 
+    @FXML
+    public void createDifficultyVbox() {
+        Label titleLbl = new Label("SELECT DIFFICULTY");
+        titleLbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 48px; -fx-text-fill: #ffffff;");
+
+        //onMousePressed************************************************************************************* 
+        imgviewEasyBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                imgviewEasyBtn.setImage(imgEasyBtn2);
+                imgviewMediumBtn.setImage(imgMediumBtn1);
+                imgviewHardBtn.setImage(imgHardBtn1);
+
+                difficulty = DifficultyLevel.EASY;
+            }
+        });
+        imgviewMediumBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                imgviewEasyBtn.setImage(imgEasyBtn1);
+                imgviewMediumBtn.setImage(imgMediumBtn2);
+                imgviewHardBtn.setImage(imgHardBtn1);
+
+                difficulty = DifficultyLevel.MEDIUM;
+            }
+        });
+        imgviewHardBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                imgviewEasyBtn.setImage(imgEasyBtn1);
+                imgviewMediumBtn.setImage(imgMediumBtn1);
+                imgviewHardBtn.setImage(imgHardBtn2);
+
+                difficulty = DifficultyLevel.HARD;
+            }
+        });
+
+
+        imgviewSubmitBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                imgviewSubmitBtn.setImage(imgSubmitBtn2);
+            }
+        });
+        imgviewSubmitBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                imgviewSubmitBtn.setImage(imgSubmitBtn1);
+            }
+        });
+        //************************************************************************************************************ 
+
+        imgviewSubmitBtn.setOnMouseClicked(event -> {
+            try {
+                onStartClicked(event);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
+       
+        
+        difVbox.getChildren().add(titleLbl);
+        difVbox.setAlignment(Pos.CENTER);
+        difVbox.getChildren().add(imgviewEasyBtn);
+        difVbox.getChildren().add(imgviewMediumBtn);
+        difVbox.getChildren().add(imgviewHardBtn);
+        difVbox.getChildren().add(new Label("\n"));
+        difVbox.getChildren().add(imgviewSubmitBtn);
+        difVbox.setSpacing(10.0);
+        difVbox.setLayoutY(100);
+
+        imgviewBackgroundDim.setFitHeight(900);
+        imgviewBackgroundDim.setFitWidth(1440);
+    }
+
     /**
      * Starts the game.
      * @param e <- Mouse Event
@@ -468,7 +553,7 @@ public class MainWindow  {
 
         stage.setScene(scene);
         stage.show();
-        controller.initialize(stage);
+        controller.initialize(stage, difficulty);
     }
 
 }
