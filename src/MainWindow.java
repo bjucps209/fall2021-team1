@@ -556,6 +556,7 @@ public class MainWindow  {
         difVbox.getChildren().add(imgviewHardBtn);
         difVbox.getChildren().add(new Label("\n"));
         difVbox.getChildren().add(imgviewSubmitBtn);
+        difVbox.getChildren().add(imgviewDifBackBtn);
         difVbox.setSpacing(10.0);
         difVbox.setLayoutY(100);
 
