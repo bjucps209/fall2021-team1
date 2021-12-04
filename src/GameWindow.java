@@ -34,7 +34,9 @@ import model.DifficultyLevel;
 import model.Enemy;
 import model.Entity;
 import model.Grunt;
+import model.HighScore;
 import model.Juggernaut;
+import model.Leaderboard;
 import model.NPC;
 import model.Serialization;
 import model.World;
@@ -1451,11 +1453,48 @@ public class GameWindow {
 
         gameOverVbox.getChildren().add(titleLbl);
         gameOverVbox.getChildren().add(scoreLbl);
+
+
+
+        Leaderboard leaderboard;
+        try {
+            leaderboard = new Leaderboard(Serialization.loadScores("HIGHSCORES.txt"));
+            if (leaderboard.process(name, Integer.parseInt(score))) {
+                Label newHs = new Label("New Highscore!");
+                newHs.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
+                gameOverVbox.getChildren().add(newHs);
+            }
+        } catch (IOException e1) {
+            Label newHs = new Label("Highscore File Not Found 8(");
+            newHs.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
+            gameOverVbox.getChildren().add(newHs);
+        }
+
+        String highscoresStr = "";
+        ArrayList<HighScore> highscoresList;
+        try {
+            highscoresList = Serialization.loadScores("HIGHSCORES.txt");
+            for (int i = 0; i < highscoresList.size(); ++i) {
+                highscoresStr = highscoresStr +highscoresList.get(i).getPlayerName() + "   " + highscoresList.get(i).getScore() + " \n";
+            }
+        } catch (IOException e1) {
+            highscoresStr = "Highscore File Not Found 8(";
+        }
+    
+        Label highscoresLbl = new Label(highscoresStr);
+        highscoresLbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
+
+        Label title2Lbl = new Label("HIGHSCORES");
+        title2Lbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 48px; -fx-text-fill: #ffffff;");
+        
+        gameOverVbox.getChildren().add(title2Lbl);
+        gameOverVbox.getChildren().add(highscoresLbl);
+        
         gameOverVbox.getChildren().add(imgviewGOQuitBtn);
         gameOverVbox.setAlignment(Pos.CENTER);
         gameOverVbox.setSpacing(10.0);
         gameOverVbox.setLayoutX(550);
-        gameOverVbox.setLayoutY(250);
+        gameOverVbox.setLayoutY(100);
     }
 
     /**
@@ -1566,4 +1605,13 @@ public class GameWindow {
         this.keyPressed = keyPressed;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    
 }

@@ -516,12 +516,16 @@ public class MainWindow  {
 
         imgviewSubmitBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewSubmitBtn.setImage(imgSubmitBtn2);
+                if (difficulty != null) {
+                    imgviewSubmitBtn.setImage(imgSubmitBtn2);    
+                }
             }
         });
         imgviewSubmitBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewSubmitBtn.setImage(imgSubmitBtn1);
+                if (difficulty != null) {
+                    imgviewSubmitBtn.setImage(imgSubmitBtn1);    
+                }
             }
         });
         imgviewDifBackBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
@@ -537,14 +541,16 @@ public class MainWindow  {
         //************************************************************************************************************ 
 
         imgviewSubmitBtn.setOnMouseClicked(event -> {
-            try {
-                onStartClicked(event);
-            } catch (IOException e1) {
-                e1.printStackTrace();
+            if (difficulty != null) {
+                try {
+                    onStartClicked(event);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                spaneMain.getChildren().remove(imgviewBackgroundDim);
+                spaneMain.getChildren().remove(difVbox);
+                spaneMain.getChildren().add(startVbox);
             }
-            spaneMain.getChildren().remove(imgviewBackgroundDim);
-            spaneMain.getChildren().remove(difVbox);
-            spaneMain.getChildren().add(startVbox);
         });
 
         imgviewDifBackBtn.setOnMouseClicked(event -> {
@@ -558,7 +564,6 @@ public class MainWindow  {
         difVbox.getChildren().add(imgviewEasyBtn);
         difVbox.getChildren().add(imgviewMediumBtn);
         difVbox.getChildren().add(imgviewHardBtn);
-        difVbox.getChildren().add(txtField);
         difVbox.getChildren().add(new Label("\n"));
         HBox hbox = new HBox();
         hbox.setAlignment(Pos.CENTER);
