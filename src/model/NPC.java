@@ -12,9 +12,9 @@ public class NPC extends Entity {
 
     public NPC(String message, String description) {
         
-        // TODO: use actual dimensions
         super(10, 10);
 
+        this.setCollidable(false);
         this.message = new SimpleStringProperty(message.replaceAll("█", "\n"));
         this.setInteractable(true);
         this.description = description;

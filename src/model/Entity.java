@@ -7,6 +7,9 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public abstract class Entity {
 
+    /** May be useful for collision, waiting to see. Currently does nothing. */
+    private final double scale = 1;
+
     private DoubleProperty x, y;
     private IntegerProperty width, height;
 
@@ -32,18 +35,17 @@ public abstract class Entity {
     public boolean intersects(Entity other) {
 
         // Check horizontal collision
-        if (this.getX() + this.getWidth() > other.getX() && this.getX() < other.getX() + other.getWidth()) {
+        if (this.getX() + this.getWidth() > other.getX() - (other.getWidth() * scale) && this.getX() < other.getX() + (other.getWidth() * scale)) {
 
             // Check vertical collision
             if (this.getY() + this.getHeight() > other.getY() && this.getY() < other.getY() + other.getHeight()) {
-
-                System.out.println("Intersection");
+                
                 return true;
 
             }
 
         }
-        
+
         return false;
 
     }
