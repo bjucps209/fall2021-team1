@@ -555,8 +555,12 @@ public class MainWindow  {
         difVbox.getChildren().add(imgviewMediumBtn);
         difVbox.getChildren().add(imgviewHardBtn);
         difVbox.getChildren().add(new Label("\n"));
-        difVbox.getChildren().add(imgviewSubmitBtn);
-        difVbox.getChildren().add(imgviewDifBackBtn);
+        HBox hbox = new HBox();
+        hbox.setAlignment(Pos.CENTER);
+        hbox.setSpacing(10.0);
+        hbox.getChildren().add(imgviewSubmitBtn);
+        hbox.getChildren().add(imgviewDifBackBtn);
+        difVbox.getChildren().add(hbox);
         difVbox.setSpacing(10.0);
         difVbox.setLayoutY(100);
 
