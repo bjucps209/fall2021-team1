@@ -1,6 +1,6 @@
 package model;
 
-class HighScore {
+public class HighScore {
 
     private String playerName;
     private int score;

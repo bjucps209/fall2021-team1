@@ -40,7 +40,7 @@ public class World {
         
 
         try {
-            this.leaderboard = new Leaderboard(Serialization.loadScores());    
+            this.leaderboard = new Leaderboard(Serialization.loadScores("HIGHSCORES.txt"));
         } catch (IOException e) {
             this.leaderboard = new Leaderboard(dummy);
         }
@@ -105,7 +105,7 @@ public class World {
 
     public String serialize() {
 
-        return "WORLD::" + getDifficulty() + "::" + getCurrentlocation() + "::" + getScore() + "\n";
+        return "WORLD::" + getDifficulty() + "::" + getCurrentlocation().getZoneName() + "::" + getScore() + "\n";
 
     }
 
@@ -157,6 +157,12 @@ public class World {
     public void setCurrentlocation(Zone currentlocation) {
 
         this.currentlocation = currentlocation;
+
+    }
+
+    public void setCurrentlocation(String zoneName) {
+
+        this.currentlocation = ZoneList.instance().getZone(zoneName);
 
     }
 

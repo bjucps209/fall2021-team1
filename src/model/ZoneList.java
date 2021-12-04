@@ -52,6 +52,7 @@ public class ZoneList {
         levels.add(wheatFields);
         levels.add(forestEdge);
         levels.add(lumberYard);
+
     }
 
     // Singleton for Zonelist.
@@ -427,6 +428,12 @@ public class ZoneList {
 
     public void setLevels(ArrayList<Zone> levels) {
         this.levels = levels;
+    }
+
+    public Zone getZone(String name) {
+
+        return this.levels.stream().filter(z -> (z.getZoneName().equals(name))).findFirst().get();
+
     }
 
 }
