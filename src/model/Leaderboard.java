@@ -29,19 +29,25 @@ public class Leaderboard {
         // highscores = new ArrayList<>(highscores.subList(0, 9));
 
         // Tame Solution
-        if (score > highscores.get(9).getScore()) {
-            if (score > highscores.get(0).getScore()) {
-                highscores.remove(0);
+        if (score >= highscores.get(9).getScore()) {
+            if (score > highscores.get(0).getScore()) { // Bigger than #1 -> add to top
+                highscores.remove(9);
                 highscores.add(0, new HighScore(name, score));
-            } else if (score < highscores.get(8).getScore()) {
-                highscores.remove(highscores.get(highscores.size() - 1));
+            } else if (score < highscores.get(8).getScore() && score > highscores.get(9).getScore()) { // Bigger than #10 and smaller than #9 -> remove last score and add new score to list
+                highscores.remove(9);
+                highscores.add(new HighScore(name, score));
+            } else if (score == highscores.get(9).getScore()) { // Equal to #10 score -> remove #10 score and add new score to list
+                highscores.remove(9);
                 highscores.add(new HighScore(name, score));
             } else {
                 for (int position = 8; position > -1; --position) {
-                    if (score < highscores.get(position).getScore()) {
-                        highscores.remove(position + 1);
+                    if (score == highscores.get(position).getScore()) { // Equal to #i -> remove last score and put new score in #i place
+                        highscores.remove(9);
+                        highscores.add(position, new HighScore(name, score));
+                    } else if (score < highscores.get(position).getScore()) { // Smaller than #i -> remove last score and put new score in #(i + 1)'s place 
+                        highscores.remove(9);
                         highscores.add(position + 1, new HighScore(name, score));
-                    }    
+                    }
                 }
             }
         }

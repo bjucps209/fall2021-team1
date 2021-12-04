@@ -32,6 +32,10 @@ public class LeaderboardTest{
         }
         Leaderboard lb = new Leaderboard(dummy);
 
+        lb.process("Gary", 10);
+        assertEquals("Gary", lb.getHighscores().get(0).getPlayerName());
+        assertEquals(10, lb.getHighscores().get(0).getScore());
+
         lb.process("David", 100);
         assertEquals("David", lb.getHighscores().get(0).getPlayerName());
         assertEquals(100, lb.getHighscores().get(0).getScore());
@@ -40,10 +44,15 @@ public class LeaderboardTest{
         assertEquals("Joshua", lb.getHighscores().get(1).getPlayerName());
         assertEquals(15, lb.getHighscores().get(1).getScore());
 
-        lb.getHighscores().get(8).setScore(3);
-        lb.process("Andrew", 2);
+        lb.process("Andrew", 4);
         assertEquals("Andrew", lb.getHighscores().get(9).getPlayerName());
-        assertEquals(2, lb.getHighscores().get(9).getScore());
+        assertEquals(4, lb.getHighscores().get(9).getScore());
+
+        lb.getHighscores().get(8).setScore(lb.getHighscores().get(7).getScore());
+        lb.process("Conner", 5);
+        assertEquals("Conner", lb.getHighscores().get(9).getPlayerName());
+        assertEquals(5, lb.getHighscores().get(9).getScore());
+
     }
 
 
