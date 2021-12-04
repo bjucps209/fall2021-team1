@@ -92,6 +92,7 @@ public class MainWindow  {
     private ImageView imgviewMediumBtn = new ImageView(imgMediumBtn1);
     private ImageView imgviewHardBtn = new ImageView(imgHardBtn1);
     private ImageView imgviewSubmitBtn = new ImageView(imgSubmitBtn1);
+    private ImageView imgviewDifBackBtn = new ImageView(imgBackBtn1);
     // ************************************************************************************
 
     // UI VBoxes *********************
@@ -518,6 +519,16 @@ public class MainWindow  {
                 imgviewSubmitBtn.setImage(imgSubmitBtn1);
             }
         });
+        imgviewDifBackBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                imgviewDifBackBtn.setImage(imgBackBtn2);
+            }
+        });
+        imgviewDifBackBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                imgviewDifBackBtn.setImage(imgBackBtn1);
+            }
+        });
         //************************************************************************************************************ 
 
         imgviewSubmitBtn.setOnMouseClicked(event -> {
@@ -526,6 +537,12 @@ public class MainWindow  {
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
+            spaneMain.getChildren().remove(imgviewBackgroundDim);
+            spaneMain.getChildren().remove(difVbox);
+            spaneMain.getChildren().add(startVbox);
+        });
+
+        imgviewDifBackBtn.setOnMouseClicked(event -> {
             spaneMain.getChildren().remove(imgviewBackgroundDim);
             spaneMain.getChildren().remove(difVbox);
             spaneMain.getChildren().add(startVbox);
