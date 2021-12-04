@@ -8,9 +8,9 @@ public class Serialization {
     /**
      * Loads the game from a text file.
      */
-    public static void load() throws IOException {
+    public static void load(String filename) throws IOException {
 
-        var file = new File("SAVEGAME.txt");
+        var file = new File(filename);
         var reader = new BufferedReader(new FileReader(file));
 
         String line = reader.readLine();
@@ -122,10 +122,10 @@ public class Serialization {
     /**
      * Saves the game to a text file.
      */
-    public static void save(ArrayList<Entity> entities) throws IOException {
+    public static void save(String filename, ArrayList<Entity> entities) throws IOException {
 
         // Clear old save
-        var file = new File("SAVEGAME.txt");
+        var file = new File(filename);
         if (file.exists()) { file.delete(); }
 
         // Open new file

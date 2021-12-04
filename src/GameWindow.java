@@ -1085,30 +1085,6 @@ public class GameWindow {
 
                 break;
 
-            case S:
-                try {
-
-                    Serialization.save(World.instance().getEntityList());
-
-                } catch (IOException e) {
-
-                    System.out.println(e.getMessage());
-
-                }
-                break;
-
-            case L:
-                try {
-
-                    Serialization.load();
-
-                } catch (IOException e) {
-
-                    System.out.println(e.getMessage());
-
-                }
-                break;
-
             case ESCAPE:
                 if (isPaused()) {
                     setIsPaused(false);
@@ -1220,8 +1196,9 @@ public class GameWindow {
             public void handle(MouseEvent e) {
                 try {
 
-                    Serialization.save(World.instance().getEntityList());
+                    Serialization.save("SAVEGAME.txt", World.instance().getEntityList());
                     System.out.println("Game Saved!");
+
                 } catch (IOException ev) {
 
                     System.out.println(ev.getMessage());
@@ -1235,7 +1212,7 @@ public class GameWindow {
             public void handle(MouseEvent e) {
                 try {
 
-                    Serialization.load();
+                    Serialization.load("SAVEGAME.txt");
                     System.out.println("Game Loaded!");
 
                 } catch (IOException ev) {
