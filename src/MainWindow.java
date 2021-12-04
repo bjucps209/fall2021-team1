@@ -520,6 +520,9 @@ public class MainWindow  {
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
+            spaneMain.getChildren().remove(imgviewBackgroundDim);
+            spaneMain.getChildren().remove(difVbox);
+            spaneMain.getChildren().add(startVbox);
         });
        
         
