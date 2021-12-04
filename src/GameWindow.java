@@ -1272,7 +1272,7 @@ public class GameWindow {
 
         imgviewHelpBackBtn.setFitHeight(80);
         imgviewHelpBackBtn.setFitWidth(312);
-        imgviewHelpBackBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewHelpBackBtn.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
                 apaneMain.getChildren().remove(helpVbox);
                 apaneMain.getChildren().add(pauseVbox);

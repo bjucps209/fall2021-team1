@@ -368,9 +368,6 @@ public class MainWindow  {
      * The build of the "Help" screen.
      */
     public void createHelpVbox() {
-        // vbox.setAlignment(Pos.CENTER);
-        // vbox.setSpacing(10.0);
-        // vbox.setTranslateY(350);
 
         //Mouse Pressed/Released------------------------------------------------------------------------------
         imgviewBackHelpBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
@@ -380,14 +377,14 @@ public class MainWindow  {
         });
         imgviewBackHelpBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewBackHelpBtn.setImage(imgBackBtn1);
+            imgviewBackHelpBtn.setImage(imgBackBtn1);
             }
         });
         //-------------------------------------------------------------------------------------------------
 
         imgviewBackHelpBtn.setFitHeight(80);
         imgviewBackHelpBtn.setFitWidth(312);
-        imgviewBackHelpBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewBackHelpBtn.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
                 spaneMain.getChildren().remove(helpVbox);
                 spaneMain.getChildren().add(startVbox);
@@ -467,6 +464,9 @@ public class MainWindow  {
         helpVbox.setSpacing(10.0);
     }
 
+    /**
+     * The build of the "Set Difficulty" Screen
+     */
     @FXML
     public void createDifficultyVbox() {
         Label titleLbl = new Label("SELECT DIFFICULTY");
