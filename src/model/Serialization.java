@@ -27,7 +27,7 @@ public class Serialization {
         var world = World.instance();
 
         world.setDifficulty(stringToDifficulty(data[1]));
-        //world.setCurrentlocation(data[2]);
+        world.setCurrentlocation(data[2]);
         world.setScore(Integer.parseInt(data[3]));
 
         line = reader.readLine();
