@@ -1078,9 +1078,10 @@ public class GameWindow {
 
             case SPACE:
                 if (!isPaused()) {
-                    world.getPlayer().attack(lastAnimationDirection); // Temporary. If this note is still here, tell
-                                                                      // Josh.
-                    handleAttackGraphic();
+                    
+                    world.getPlayer().attack(lastAnimationDirection);
+                    handleAttackGraphic(lastAnimationDirection);
+                
                 }
 
                 break;
@@ -1290,35 +1291,39 @@ public class GameWindow {
      * Displays the attack animation depending on the player's direction.
      */
     @FXML
-    public void handleAttackGraphic() {
-        int direction = world.getPlayer().getDirection();
+    public void handleAttackGraphic(mapDirection direction) {
+        
         PauseTransition attackPause = new PauseTransition(Duration.seconds(0.32));
         attackPause.setOnFinished(e -> processAnimationDirection());
 
         switch (direction) {
-            case 270:
+
+            case DOWN:
+
                 imgviewPlayer.setImage(imgPlayerAttackFront);
                 attackPause.play();
                 break;
 
-            case 180:
+            case LEFT:
+
                 imgviewPlayer.setImage(imgPlayerAttackLeft);
                 attackPause.play();
                 break;
 
-            case 90:
+            case UP:
+
                 imgviewPlayer.setImage(imgPlayerAttackBack);
                 attackPause.play();
                 break;
 
-            case 0:
+            case RIGHT:
+
                 imgviewPlayer.setImage(imgPlayerAttackRight);
                 attackPause.play();
                 break;
 
-            default:
-                break;
         }
+
     }
 
     /**
