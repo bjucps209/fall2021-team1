@@ -202,6 +202,7 @@ public class MainWindow  {
         imgviewAbout1.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
                 spaneMain.getChildren().remove(startVbox);
+                spaneMain.getChildren().add(imgviewBackgroundDim);
                 spaneMain.getChildren().add(aboutVbox);
             }
         });
@@ -209,6 +210,7 @@ public class MainWindow  {
         imgviewHighscore1.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
                 spaneMain.getChildren().remove(startVbox);
+                spaneMain.getChildren().add(imgviewBackgroundDim);
                 spaneMain.getChildren().add(hsVbox);
             }
         });
@@ -216,6 +218,7 @@ public class MainWindow  {
         imgviewHelpBtn1.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
                 spaneMain.getChildren().remove(startVbox);
+                spaneMain.getChildren().add(imgviewBackgroundDim);
                 spaneMain.getChildren().add(helpVbox);
             }
         });
@@ -267,6 +270,7 @@ public class MainWindow  {
             public void handle(MouseEvent e) {
                 spaneMain.getChildren().remove(aboutVbox);
                 spaneMain.getChildren().add(startVbox);
+                spaneMain.getChildren().remove(imgviewBackgroundDim);
             }
         });
 
@@ -335,6 +339,7 @@ public class MainWindow  {
             public void handle(MouseEvent e) {
                 spaneMain.getChildren().remove(hsVbox);
                 spaneMain.getChildren().add(startVbox);
+                spaneMain.getChildren().remove(imgviewBackgroundDim);
             }
         });
 
@@ -388,6 +393,7 @@ public class MainWindow  {
             public void handle(MouseEvent e) {
                 spaneMain.getChildren().remove(helpVbox);
                 spaneMain.getChildren().add(startVbox);
+                spaneMain.getChildren().remove(imgviewBackgroundDim);
             }
         });
 
