@@ -40,7 +40,7 @@ public class World {
         
 
         try {
-            this.leaderboard = new Leaderboard(Serialization.loadScores());    
+            this.leaderboard = new Leaderboard(Serialization.loadScores("HIGHSCORES.txt"));
         } catch (IOException e) {
             this.leaderboard = new Leaderboard(dummy);
         }

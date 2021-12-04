@@ -5,6 +5,7 @@ import org.junit.Test;
 import model.Entity;
 import model.Grunt;
 import model.Serialization;
+import model.HighScore;
 
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertTrue;
@@ -37,6 +38,38 @@ public class SerializationTest {
         }
 
         assertTrue(true);
+
+    }
+
+    @Test
+    public void testSaveAndLoadScores() {
+
+        var scores = new ArrayList<HighScore>();
+
+        scores.add(new HighScore("Bob", 3000));
+        scores.add(new HighScore("Fred", 451));
+        scores.add(new HighScore("Joey", 13));
+
+        try {
+
+            Serialization.saveScores(scoreName, scores);
+
+            var loaded = Serialization.loadScores(scoreName);
+
+            assertTrue(loaded.get(0).getPlayerName().equals(scores.get(0).getPlayerName()));
+            assertTrue(loaded.get(0).getScore() == scores.get(0).getScore());
+
+            assertTrue(loaded.get(1).getPlayerName().equals(scores.get(1).getPlayerName()));
+            assertTrue(loaded.get(1).getScore() == scores.get(1).getScore());
+            
+            assertTrue(loaded.get(2).getPlayerName().equals(scores.get(2).getPlayerName()));
+            assertTrue(loaded.get(2).getScore() == scores.get(2).getScore());
+
+        } catch (IOException e) {
+
+            fail();
+
+        }
 
     }
     

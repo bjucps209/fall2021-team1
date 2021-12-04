@@ -148,9 +148,9 @@ public class Serialization {
     }
 
     /** Loads the saved highscores. */
-    public static ArrayList<HighScore> loadScores() throws IOException {
+    public static ArrayList<HighScore> loadScores(String filename) throws IOException {
 
-        var file = new File("HIGHSCORES.txt");
+        var file = new File(filename);
         var reader = new BufferedReader(new FileReader(file));
 
         String line = reader.readLine();
@@ -186,10 +186,10 @@ public class Serialization {
     /**
      * Saves the game to a text file.
      */
-    public static void saveScores(ArrayList<HighScore> scores) throws IOException {
+    public static void saveScores(String filename, ArrayList<HighScore> scores) throws IOException {
 
         // Clear old save
-        var file = new File("HIGHSCORES.txt");
+        var file = new File(filename);
         if (file.exists()) file.delete();
 
         // Open new file
