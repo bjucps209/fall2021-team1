@@ -88,7 +88,7 @@ public class ZoneList {
     public void generateLists() {
         // Starting area ********************
         listStarterArea = new ArrayList<NPC>();
-        listStarterArea.add(new NPC("Be careful out there, it's dangerous.", "NPC"));
+        listStarterArea.add(new NPC("Be careful in there, it's dangerous.", "NPC"));
         listStarterArea.get(0).setPosition(332, 393);
         listStarterArea.get(0).setInteractable(true);
         listStarterArea.add(new Item("", "tree", 0));

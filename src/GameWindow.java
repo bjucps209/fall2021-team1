@@ -30,6 +30,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.DifficultyLevel;
 import model.Enemy;
 import model.Entity;
 import model.Grunt;
@@ -190,9 +191,10 @@ public class GameWindow {
     Timeline timeline = new Timeline(new KeyFrame(Duration.millis(35), e -> updateWorld()));
 
     @FXML
-    void initialize(Stage stage) {
+    void initialize(Stage stage, DifficultyLevel difficulty) {
         imgViewList = new ArrayList<ImageView>();
         world = World.instance();
+        world.setDifficulty(difficulty);
         world.setScore(0);
 
         // Timer for the updateworld method
@@ -1317,7 +1319,7 @@ public class GameWindow {
 
         imgviewHelpBackBtn.setFitHeight(80);
         imgviewHelpBackBtn.setFitWidth(312);
-        imgviewHelpBackBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewHelpBackBtn.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
                 apaneMain.getChildren().remove(helpVbox);
                 apaneMain.getChildren().add(pauseVbox);

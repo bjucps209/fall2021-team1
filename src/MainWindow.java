@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.text.html.HTMLDocument.HTMLReader.SpecialAction;
 
@@ -26,6 +27,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import model.DifficultyLevel;
+import model.HighScore;
+import model.Leaderboard;
+import model.Serialization;
 
 public class MainWindow  {
     @FXML StackPane spaneMain;
@@ -52,6 +57,14 @@ public class MainWindow  {
     private Image imgQuitBtn2 = new Image("Final Assets/UI/PNG/UI-QuitBtn2-312x80.png");
     private Image imgBackBtn1 = new Image("Final Assets/UI/PNG/UI-BackBtn1-312x80.png");
     private Image imgBackBtn2 = new Image("Final Assets/UI/PNG/UI-BackBtn2-312x80.png");
+    private Image imgEasyBtn1 = new Image("Final Assets/UI/PNG/UI-EasyBtn1-312x80.png");
+    private Image imgEasyBtn2 = new Image("Final Assets/UI/PNG/UI-EasyBtn2-312x80.png");
+    private Image imgMediumBtn1 = new Image("Final Assets/UI/PNG/UI-MediumBtn1-312x80.png");
+    private Image imgMediumBtn2 = new Image("Final Assets/UI/PNG/UI-MediumBtn2-312x80.png");
+    private Image imgHardBtn1 = new Image("Final Assets/UI/PNG/UI-HardBtn1-312x80.png");
+    private Image imgHardBtn2 = new Image("Final Assets/UI/PNG/UI-HardBtn2-312x80.png");
+    private Image imgSubmitBtn1 = new Image("Final Assets/UI/PNG/UI-SubmitBtn1-312x80.png");
+    private Image imgSubmitBtn2 = new Image("Final Assets/UI/PNG/UI-SubmitBtn2-312x80.png");
     // *********************************************************************************
 
     // UI ImageViews **********************************************************************
@@ -75,6 +88,11 @@ public class MainWindow  {
     private ImageView imgviewBackAboutBtn = new ImageView(imgBackBtn1);
     private ImageView imgviewBackHsBtn = new ImageView(imgBackBtn1);
     private ImageView imgviewBackHelpBtn = new ImageView(imgBackBtn1);
+    private ImageView imgviewEasyBtn = new ImageView(imgEasyBtn1);
+    private ImageView imgviewMediumBtn = new ImageView(imgMediumBtn1);
+    private ImageView imgviewHardBtn = new ImageView(imgHardBtn1);
+    private ImageView imgviewSubmitBtn = new ImageView(imgSubmitBtn1);
+    private ImageView imgviewDifBackBtn = new ImageView(imgBackBtn1);
     // ************************************************************************************
 
     // UI VBoxes *********************
@@ -82,8 +100,11 @@ public class MainWindow  {
     private VBox aboutVbox = new VBox();
     private VBox hsVbox = new VBox();
     private VBox helpVbox = new VBox();
+    private VBox difVbox = new VBox();
     // *****************************
 
+    DifficultyLevel difficulty;
+        
     /**
      * Intializes the start screen with music in the background and the font style used for the application.
      * @param stage
@@ -109,6 +130,7 @@ public class MainWindow  {
         createAboutVbox();
         createHsVbox();
         createHelpVbox();
+        createDifficultyVbox();
 
         // Display startVbox
         spaneMain.getChildren().add(startVbox);
@@ -173,16 +195,15 @@ public class MainWindow  {
         // Button Functions
         // *************************************************************************************
         imgviewStart1.setOnMouseClicked(event -> {
-            try {
-                onStartClicked(event);
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
+            spaneMain.getChildren().remove(startVbox);
+            spaneMain.getChildren().add(imgviewBackgroundDim);
+            spaneMain.getChildren().add(difVbox);
         });
 
         imgviewAbout1.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
                 spaneMain.getChildren().remove(startVbox);
+                spaneMain.getChildren().add(imgviewBackgroundDim);
                 spaneMain.getChildren().add(aboutVbox);
             }
         });
@@ -190,6 +211,7 @@ public class MainWindow  {
         imgviewHighscore1.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
                 spaneMain.getChildren().remove(startVbox);
+                spaneMain.getChildren().add(imgviewBackgroundDim);
                 spaneMain.getChildren().add(hsVbox);
             }
         });
@@ -197,6 +219,7 @@ public class MainWindow  {
         imgviewHelpBtn1.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
                 spaneMain.getChildren().remove(startVbox);
+                spaneMain.getChildren().add(imgviewBackgroundDim);
                 spaneMain.getChildren().add(helpVbox);
             }
         });
@@ -248,6 +271,7 @@ public class MainWindow  {
             public void handle(MouseEvent e) {
                 spaneMain.getChildren().remove(aboutVbox);
                 spaneMain.getChildren().add(startVbox);
+                spaneMain.getChildren().remove(imgviewBackgroundDim);
             }
         });
 
@@ -281,6 +305,9 @@ public class MainWindow  {
 
         lbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
         lbl.setTextAlignment(TextAlignment.CENTER);
+        Label titleLbl = new Label("ABOUT");
+        titleLbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 48px; -fx-text-fill: #ffffff;");
+        aboutVbox.getChildren().add(titleLbl);
         aboutVbox.getChildren().add(lbl);
         aboutVbox.getChildren().add(imgviewBackAboutBtn);
     }
@@ -313,27 +340,40 @@ public class MainWindow  {
             public void handle(MouseEvent e) {
                 spaneMain.getChildren().remove(hsVbox);
                 spaneMain.getChildren().add(startVbox);
+                spaneMain.getChildren().remove(imgviewBackgroundDim);
             }
         });
 
         hsVbox.setAlignment(Pos.TOP_CENTER);
         hsVbox.setSpacing(10.0);
 
-        // TODO: Label will get a string of text from High Score or Leaderboard class
-        Label lbl = new Label("TestName   TestScore \nTestName   TestScore \nTestName   TestScore \nTestName   TestScore \nTestName   TestScore \n");
+        String highscoresStr = "";
+        ArrayList<HighScore> highscoresList;
+        try {
+            highscoresList = Serialization.loadScores("HIGHSCORES.txt");
+            for (int i = 0; i < highscoresList.size(); ++i) {
+                highscoresStr = highscoresStr +highscoresList.get(i).getPlayerName() + "   " + highscoresList.get(i).getScore() + " \n";
+            }
+        } catch (IOException e1) {
+            highscoresStr = "No HighScores";
+        }
+    
+        Label lbl = new Label(highscoresStr);
         lbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
 
+        Label titleLbl = new Label("HIGHSCORES");
+        titleLbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 48px; -fx-text-fill: #ffffff;");
+
+        hsVbox.getChildren().add(titleLbl);
         hsVbox.getChildren().add(lbl);
         hsVbox.getChildren().add(imgviewBackHsBtn);
+        hsVbox.setTranslateY(100);
     }
 
     /**
      * The build of the "Help" screen.
      */
     public void createHelpVbox() {
-        // vbox.setAlignment(Pos.CENTER);
-        // vbox.setSpacing(10.0);
-        // vbox.setTranslateY(350);
 
         //Mouse Pressed/Released------------------------------------------------------------------------------
         imgviewBackHelpBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
@@ -343,17 +383,18 @@ public class MainWindow  {
         });
         imgviewBackHelpBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewBackHelpBtn.setImage(imgBackBtn1);
+            imgviewBackHelpBtn.setImage(imgBackBtn1);
             }
         });
         //-------------------------------------------------------------------------------------------------
 
         imgviewBackHelpBtn.setFitHeight(80);
         imgviewBackHelpBtn.setFitWidth(312);
-        imgviewBackHelpBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewBackHelpBtn.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
                 spaneMain.getChildren().remove(helpVbox);
                 spaneMain.getChildren().add(startVbox);
+                spaneMain.getChildren().remove(imgviewBackgroundDim);
             }
         });
 
@@ -415,6 +456,10 @@ public class MainWindow  {
         travelHbox.setAlignment(Pos.CENTER);
         pauseHbox.setAlignment(Pos.CENTER);
 
+        Label titleLbl = new Label("CONTROLS");
+        titleLbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 48px; -fx-text-fill: #ffffff;");
+
+        helpVbox.getChildren().add(titleLbl);
         helpVbox.getChildren().add(moveHbox);
         helpVbox.getChildren().add(attackHbox);
         helpVbox.getChildren().add(interactHbox);
@@ -424,6 +469,103 @@ public class MainWindow  {
 
         helpVbox.setAlignment(Pos.CENTER);
         helpVbox.setSpacing(10.0);
+    }
+
+    /**
+     * The build of the "Set Difficulty" Screen
+     */
+    @FXML
+    public void createDifficultyVbox() {
+        Label titleLbl = new Label("SELECT DIFFICULTY");
+        titleLbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 48px; -fx-text-fill: #ffffff;");
+
+        //onMousePressed************************************************************************************* 
+        imgviewEasyBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                imgviewEasyBtn.setImage(imgEasyBtn2);
+                imgviewMediumBtn.setImage(imgMediumBtn1);
+                imgviewHardBtn.setImage(imgHardBtn1);
+
+                difficulty = DifficultyLevel.EASY;
+            }
+        });
+        imgviewMediumBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                imgviewEasyBtn.setImage(imgEasyBtn1);
+                imgviewMediumBtn.setImage(imgMediumBtn2);
+                imgviewHardBtn.setImage(imgHardBtn1);
+
+                difficulty = DifficultyLevel.MEDIUM;
+            }
+        });
+        imgviewHardBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                imgviewEasyBtn.setImage(imgEasyBtn1);
+                imgviewMediumBtn.setImage(imgMediumBtn1);
+                imgviewHardBtn.setImage(imgHardBtn2);
+
+                difficulty = DifficultyLevel.HARD;
+            }
+        });
+
+
+        imgviewSubmitBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                imgviewSubmitBtn.setImage(imgSubmitBtn2);
+            }
+        });
+        imgviewSubmitBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                imgviewSubmitBtn.setImage(imgSubmitBtn1);
+            }
+        });
+        imgviewDifBackBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                imgviewDifBackBtn.setImage(imgBackBtn2);
+            }
+        });
+        imgviewDifBackBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                imgviewDifBackBtn.setImage(imgBackBtn1);
+            }
+        });
+        //************************************************************************************************************ 
+
+        imgviewSubmitBtn.setOnMouseClicked(event -> {
+            try {
+                onStartClicked(event);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            spaneMain.getChildren().remove(imgviewBackgroundDim);
+            spaneMain.getChildren().remove(difVbox);
+            spaneMain.getChildren().add(startVbox);
+        });
+
+        imgviewDifBackBtn.setOnMouseClicked(event -> {
+            spaneMain.getChildren().remove(imgviewBackgroundDim);
+            spaneMain.getChildren().remove(difVbox);
+            spaneMain.getChildren().add(startVbox);
+        });
+       
+        
+        difVbox.getChildren().add(titleLbl);
+        difVbox.setAlignment(Pos.CENTER);
+        difVbox.getChildren().add(imgviewEasyBtn);
+        difVbox.getChildren().add(imgviewMediumBtn);
+        difVbox.getChildren().add(imgviewHardBtn);
+        difVbox.getChildren().add(new Label("\n"));
+        HBox hbox = new HBox();
+        hbox.setAlignment(Pos.CENTER);
+        hbox.setSpacing(10.0);
+        hbox.getChildren().add(imgviewSubmitBtn);
+        hbox.getChildren().add(imgviewDifBackBtn);
+        difVbox.getChildren().add(hbox);
+        difVbox.setSpacing(10.0);
+        difVbox.setLayoutY(100);
+
+        imgviewBackgroundDim.setFitHeight(900);
+        imgviewBackgroundDim.setFitWidth(1440);
     }
 
     /**
@@ -442,7 +584,7 @@ public class MainWindow  {
 
         stage.setScene(scene);
         stage.show();
-        controller.initialize(stage);
+        controller.initialize(stage, difficulty);
     }
 
 }
