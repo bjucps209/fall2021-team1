@@ -191,12 +191,17 @@ public class GameWindow {
     // Game clock
     Timeline timeline = new Timeline(new KeyFrame(Duration.millis(35), e -> updateWorld()));
 
+    // Player's Name
+    private String name;
+
     @FXML
-    void initialize(Stage stage, DifficultyLevel difficulty) {
+    void initialize(Stage stage, DifficultyLevel difficulty, String name) {
         imgViewList = new ArrayList<ImageView>();
         world = World.instance();
         world.setDifficulty(difficulty);
         world.setScore(0);
+
+        this.name = name;
 
         // Timer for the updateworld method
         timeline.setCycleCount(Timeline.INDEFINITE);
