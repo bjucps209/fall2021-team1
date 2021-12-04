@@ -37,11 +37,13 @@ public abstract class Entity {
             // Check vertical collision
             if (this.getY() + this.getHeight() > other.getY() && this.getY() < other.getY() + other.getHeight()) {
 
+                System.out.println("Intersection");
                 return true;
 
             }
 
         }
+        
         return false;
 
     }

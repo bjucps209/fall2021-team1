@@ -37,7 +37,6 @@ public class World {
         for (int i = 0; i < 10; ++i) {
             dummy.add(new HighScore("Bob", i + 1));
         }
-        
 
         try {
             this.leaderboard = new Leaderboard(Serialization.loadScores("HIGHSCORES.txt"));

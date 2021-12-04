@@ -13,7 +13,6 @@ public abstract class Enemy extends Living {
 
         super(width, height);
 
-        this.setCollidable(false);
         this.id = new SimpleIntegerProperty();
         this.detectionRadius = new SimpleIntegerProperty();
         

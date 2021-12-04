@@ -26,6 +26,7 @@ public abstract class Living extends Entity {
 
         super(width, height);
 
+        this.setCollidable(false);
         this.health = new SimpleIntegerProperty(3);
         this.maxHealth = new SimpleIntegerProperty(5);
         this.damage = new SimpleIntegerProperty(1);

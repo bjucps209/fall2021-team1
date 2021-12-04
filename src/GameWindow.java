@@ -867,33 +867,80 @@ public class GameWindow {
         @Override
         public void handle(long timestamp) {
 
-            double speed = world.getPlayer().getSpeed();
+            var player = world.getPlayer();
+            double speed = player.getSpeed();
 
-            if (uPressed.get()) { // Up
+            var obstacles = world.getEntityList().stream().filter(e -> (e.isCollidable())).toList();
 
-                world.getPlayer().setY(world.getPlayer().getY() - speed);
-                imgviewPlayer.setY(world.getPlayer().getY());
+            if (uPressed.get() && !dPressed.get()) { // Up
+
+                for (double i = 0; i < speed; i += 0.1) {
+
+                    player.setY(player.getY() - 0.1);
+
+                    for (Entity obstacle : obstacles) {
+
+                        if (player.intersects(obstacle)) player.setY(player.getY() + 0.1);
+
+                    }
+
+                }
+
+                imgviewPlayer.setY(player.getY());
 
             }
 
-            if (dPressed.get()) { // Down
+            if (dPressed.get() && !uPressed.get()) { // Down
 
-                world.getPlayer().setY(world.getPlayer().getY() + speed);
-                imgviewPlayer.setY(world.getPlayer().getY());
+                for (double i = 0; i < speed; i += 0.1) {
+
+                    player.setY(player.getY() + 0.1);
+
+                    for (Entity obstacle : obstacles) {
+
+                        if (player.intersects(obstacle)) player.setY(player.getY() - 0.1);
+
+                    }
+
+                }
+
+                imgviewPlayer.setY(player.getY());
 
             }
 
-            if (lPressed.get()) { // Left
+            if (lPressed.get() && !rPressed.get()) { // Left
 
-                world.getPlayer().setX(world.getPlayer().getX() - speed);
-                imgviewPlayer.setX(world.getPlayer().getX());
+                for (double i = 0; i < speed; i += 0.1) {
+
+                    player.setX(player.getX() - 0.1);
+
+                    for (Entity obstacle : obstacles) {
+
+                        if (player.intersects(obstacle)) player.setX(player.getX() + 0.1);
+
+                    }
+
+                }
+
+                imgviewPlayer.setX(player.getX());
 
             }
 
-            if (rPressed.get()) { // Right
+            if (rPressed.get() && !lPressed.get()) { // Right
 
-                world.getPlayer().setX(world.getPlayer().getX() + speed);
-                imgviewPlayer.setX(world.getPlayer().getX());
+                for (double i = 0; i < speed; i += 0.1) {
+
+                    player.setX(player.getX() + 0.1);
+
+                    for (Entity obstacle : obstacles) {
+
+                        if (player.intersects(obstacle)) player.setX(player.getX() - 0.1);
+
+                    }
+
+                }
+
+                imgviewPlayer.setX(player.getX());
 
             }
 
