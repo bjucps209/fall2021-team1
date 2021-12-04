@@ -437,8 +437,8 @@ public class GameWindow {
                     switch (landObjects.getDescription()) {
 
                         case "NPC":
-                            landObjects.setWidth(128);
-                            landObjects.setHeight(128);
+                            landObjects.setWidth(64);
+                            landObjects.setHeight(96);
                             ImageView imgviewNPC = new ImageView(imgNPC);
                             apaneMain.getChildren().add(imgviewNPC);
                             imgviewNPC.setLayoutX(landObjects.getX() - imgviewNPC.getLayoutBounds().getMinX());
@@ -446,7 +446,7 @@ public class GameWindow {
                             break;
 
                         case "tree":
-                            landObjects.setWidth(256);
+                            landObjects.setWidth(184);
                             landObjects.setHeight(256);
                             ImageView imgviewTree = new ImageView(imgTree);
                             apaneMain.getChildren().add(imgviewTree);
@@ -455,8 +455,8 @@ public class GameWindow {
                             break;
 
                         case "hFence":
-                            landObjects.setWidth(256);
-                            landObjects.setHeight(256);
+                            landObjects.setWidth(212);
+                            landObjects.setHeight(68);
                             ImageView imgviewHFence = new ImageView(imgHFence);
                             apaneMain.getChildren().add(imgviewHFence);
                             imgviewHFence.setLayoutX(landObjects.getX() - imgviewHFence.getLayoutBounds().getMinX());
@@ -464,8 +464,8 @@ public class GameWindow {
                             break;
 
                         case "vFence":
-                            landObjects.setWidth(256);
-                            landObjects.setHeight(256);
+                            landObjects.setWidth(28);
+                            landObjects.setHeight(212);
                             ImageView imgviewVFence = new ImageView(imgVFence);
                             apaneMain.getChildren().add(imgviewVFence);
                             imgviewVFence.setLayoutX(landObjects.getX() - imgviewVFence.getLayoutBounds().getMinX());
@@ -473,8 +473,8 @@ public class GameWindow {
                             break;
 
                         case "archPoles":
-                            landObjects.setWidth(256);
-                            landObjects.setHeight(256);
+                            landObjects.setWidth(0);
+                            landObjects.setHeight(0);
                             ImageView imgviewArchPoles = new ImageView(imgArchposts);
                             apaneMain.getChildren().add(imgviewArchPoles);
                             imgviewArchPoles
@@ -493,8 +493,8 @@ public class GameWindow {
                             break;
 
                         case "stump":
-                            landObjects.setWidth(256);
-                            landObjects.setHeight(256);
+                            landObjects.setWidth(96);
+                            landObjects.setHeight(68);
                             ImageView imgviewStump = new ImageView(imgStump);
                             apaneMain.getChildren().add(imgviewStump);
                             imgviewStump.setLayoutX(landObjects.getX() - imgviewStump.getLayoutBounds().getMinX());
@@ -502,8 +502,8 @@ public class GameWindow {
                             break;
 
                         case "well":
-                            landObjects.setWidth(256);
-                            landObjects.setHeight(256);
+                            landObjects.setWidth(132);
+                            landObjects.setHeight(204);
                             ImageView imgviewWell = new ImageView(imgWell);
                             apaneMain.getChildren().add(imgviewWell);
                             imgviewWell.setLayoutX(landObjects.getX() - imgviewWell.getLayoutBounds().getMinX());
@@ -511,8 +511,8 @@ public class GameWindow {
                             break;
 
                         case "tomb":
-                            landObjects.setWidth(64);
-                            landObjects.setHeight(64);
+                            landObjects.setWidth(52);
+                            landObjects.setHeight(60);
                             ImageView imgviewTomb = new ImageView(imgTomb);
                             apaneMain.getChildren().add(imgviewTomb);
                             imgviewTomb.setLayoutX(landObjects.getX() - imgviewTomb.getLayoutBounds().getMinX());
@@ -520,8 +520,8 @@ public class GameWindow {
                             break;
 
                         case "lSign":
-                            landObjects.setWidth(64);
-                            landObjects.setHeight(64);
+                            landObjects.setWidth(28);
+                            landObjects.setHeight(56);
                             ImageView imgviewlSign = new ImageView(imgDSignLeft);
                             apaneMain.getChildren().add(imgviewlSign);
                             imgviewlSign.setLayoutX(landObjects.getX() - imgviewlSign.getLayoutBounds().getMinX());
@@ -529,8 +529,8 @@ public class GameWindow {
                             break;
 
                         case "rSign":
-                            landObjects.setWidth(64);
-                            landObjects.setHeight(64);
+                            landObjects.setWidth(28);
+                            landObjects.setHeight(56);
                             ImageView imgviewrSign = new ImageView(imgDSignRight);
                             apaneMain.getChildren().add(imgviewrSign);
                             imgviewrSign.setLayoutX(landObjects.getX() - imgviewrSign.getLayoutBounds().getMinX());
@@ -538,7 +538,7 @@ public class GameWindow {
                             break;
 
                         case "sign":
-                            landObjects.setWidth(64);
+                            landObjects.setWidth(52);
                             landObjects.setHeight(64);
                             ImageView imgviewSign = new ImageView(imgSign);
                             apaneMain.getChildren().add(imgviewSign);
@@ -547,8 +547,8 @@ public class GameWindow {
                             break;
 
                         case "house":
-                            landObjects.setWidth(512);
-                            landObjects.setHeight(512);
+                            landObjects.setWidth(472);
+                            landObjects.setHeight(300);
                             ImageView imgviewHouse = new ImageView(imgHouse);
                             apaneMain.getChildren().add(imgviewHouse);
                             imgviewHouse.setLayoutX(landObjects.getX() - imgviewHouse.getLayoutBounds().getMinX());
@@ -564,16 +564,16 @@ public class GameWindow {
                                         Grunt grunt = new Grunt();
                                         grunt.setX(landObjects.getX());
                                         grunt.setY(landObjects.getY());
-                                        grunt.setWidth(128);
-                                        grunt.setHeight(128);
+                                        grunt.setWidth(64);
+                                        grunt.setHeight(96);
                                         spawnEnemies(grunt);
 
                                     } else if (spawnNum > 8) {
                                         Juggernaut jugg = new Juggernaut();
                                         jugg.setX(landObjects.getX());
                                         jugg.setY(landObjects.getY());
-                                        jugg.setWidth(128);
-                                        jugg.setHeight(128);
+                                        jugg.setWidth(144);
+                                        jugg.setHeight(156);
                                         spawnEnemies(jugg);
                                     }
                                     break;
@@ -583,16 +583,16 @@ public class GameWindow {
                                         Grunt grunt = new Grunt();
                                         grunt.setX(landObjects.getX());
                                         grunt.setY(landObjects.getY());
-                                        grunt.setWidth(128);
-                                        grunt.setHeight(128);
+                                        grunt.setWidth(64);
+                                        grunt.setHeight(96);
                                         spawnEnemies(grunt);
 
                                     } else if (spawnNum > 6) {
                                         Juggernaut jugg = new Juggernaut();
                                         jugg.setX(landObjects.getX());
                                         jugg.setY(landObjects.getY());
-                                        jugg.setWidth(128);
-                                        jugg.setHeight(128);
+                                        jugg.setWidth(144);
+                                        jugg.setHeight(156);
                                         spawnEnemies(jugg);
                                     }
                                     break;
@@ -602,16 +602,16 @@ public class GameWindow {
                                         Grunt grunt = new Grunt();
                                         grunt.setX(landObjects.getX());
                                         grunt.setY(landObjects.getY());
-                                        grunt.setWidth(128);
-                                        grunt.setHeight(128);
+                                        grunt.setWidth(64);
+                                        grunt.setHeight(96);
                                         spawnEnemies(grunt);
 
                                     } else if (spawnNum > 4) {
                                         Juggernaut jugg = new Juggernaut();
                                         jugg.setX(landObjects.getX());
                                         jugg.setY(landObjects.getY());
-                                        jugg.setWidth(128);
-                                        jugg.setHeight(128);
+                                        jugg.setWidth(144);
+                                        jugg.setHeight(156);
                                         spawnEnemies(jugg);
                                     }
                                     break;

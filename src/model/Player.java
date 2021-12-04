@@ -9,7 +9,7 @@ public class Player extends Living {
     public Player() {
 
         // TODO: use actual width, height of player
-        super(128, 128);
+        super(72, 116);
 
         // Load base stats
         this.setMaxHealth(5);
