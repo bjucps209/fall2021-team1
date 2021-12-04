@@ -24,6 +24,7 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
@@ -170,8 +171,7 @@ public class GameWindow {
     private ImageView imgviewHelpBtn2 = new ImageView(imgHelpBtn2);
     private ImageView imgviewQuitBtn1 = new ImageView(imgQuitBtn1);
     private ImageView imgviewQuitBtn2 = new ImageView(imgQuitBtn2);
-    private ImageView imgviewBackBtn1 = new ImageView(imgBackBtn1);
-    private ImageView imgviewBackBtn2 = new ImageView(imgBackBtn2);
+    private ImageView imgviewHelpBackBtn = new ImageView(imgBackBtn1);
     // **********************
 
     // UI VBoxes *********************
@@ -1277,33 +1277,95 @@ public class GameWindow {
 
     @FXML
     public void createHelpVbox() {
-        helpVbox.setAlignment(Pos.TOP_CENTER);
-        helpVbox.setSpacing(10.0);
-        helpVbox.getChildren().add(imgviewBackBtn1);
-
-        // Button Graphic Changing
-        // *****************************************************************************
-        imgviewBackBtn1.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        //Mouse Pressed/Released------------------------------------------------------------------------------
+        imgviewHelpBackBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewBackBtn1.setImage(imgBackBtn2);
+                imgviewHelpBackBtn.setImage(imgBackBtn2);
             }
         });
-        imgviewBackBtn1.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewHelpBackBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewBackBtn1.setImage(imgBackBtn1);
+                imgviewHelpBackBtn.setImage(imgBackBtn1);
             }
         });
-        // ******************************************************************************************************
+        //-------------------------------------------------------------------------------------------------
 
-        // Button Functions
-        // *************************************************************************************
-        imgviewBackBtn1.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewHelpBackBtn.setFitHeight(80);
+        imgviewHelpBackBtn.setFitWidth(312);
+        imgviewHelpBackBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
                 apaneMain.getChildren().remove(helpVbox);
                 apaneMain.getChildren().add(pauseVbox);
             }
         });
-        // ******************************************************************************************************
+
+        ImageView move = new ImageView(new Image("Final Assets/Help/PNG/Help-Move-156x88.png"));
+        ImageView attack = new ImageView(new Image("Final Assets/Help/PNG/Help-Attack-156x88.png"));
+        ImageView interact = new ImageView(new Image("Final Assets/Help/PNG/Help-Interact-156x88.png"));
+        ImageView travel = new ImageView(new Image("Final Assets/Help/PNG/Help-Travel-156x88.png"));
+        ImageView pause = new ImageView(new Image("Final Assets/Help/PNG/Help-Pause-156x88.png"));
+
+        move.setFitHeight(88);
+        move.setFitWidth(156);
+        attack.setFitHeight(88);
+        attack.setFitWidth(156);
+        interact.setFitHeight(88);
+        interact.setFitWidth(156);
+        travel.setFitHeight(88);
+        travel.setFitWidth(156);
+        pause.setFitHeight(88);
+        pause.setFitWidth(156);
+
+        Label movelbl = new Label();
+        Label attacklbl = new Label();
+        Label interactlbl = new Label();
+        Label travellbl = new Label();
+        Label pauselbl = new Label();
+
+        movelbl.setText("Move: ");
+        attacklbl.setText("Attack: ");
+        interactlbl.setText("Interact: ");
+        travellbl.setText("Travel: ");
+        pauselbl.setText("Pause: ");
+
+        movelbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
+        attacklbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
+        interactlbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
+        travellbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
+        pauselbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
+
+        HBox moveHbox = new HBox();
+        HBox attackHbox = new HBox();
+        HBox interactHbox = new HBox();
+        HBox travelHbox = new HBox();
+        HBox pauseHbox = new HBox();
+
+        moveHbox.getChildren().add(movelbl);
+        moveHbox.getChildren().add(move);
+        attackHbox.getChildren().add(attacklbl);
+        attackHbox.getChildren().add(attack);
+        interactHbox.getChildren().add(interactlbl);
+        interactHbox.getChildren().add(interact);
+        travelHbox.getChildren().add(travellbl);
+        travelHbox.getChildren().add(travel);
+        pauseHbox.getChildren().add(pauselbl);
+        pauseHbox.getChildren().add(pause);
+
+        moveHbox.setAlignment(Pos.CENTER);
+        attackHbox.setAlignment(Pos.CENTER);
+        interactHbox.setAlignment(Pos.CENTER);
+        travelHbox.setAlignment(Pos.CENTER);
+        pauseHbox.setAlignment(Pos.CENTER);
+
+        helpVbox.getChildren().add(moveHbox);
+        helpVbox.getChildren().add(attackHbox);
+        helpVbox.getChildren().add(interactHbox);
+        helpVbox.getChildren().add(travelHbox);
+        helpVbox.getChildren().add(pauseHbox);
+        helpVbox.getChildren().add(imgviewHelpBackBtn);
+
+        helpVbox.setAlignment(Pos.CENTER);
+        helpVbox.setSpacing(10.0);
 
         helpVbox.setLayoutX(550); // TODO: Needs Tweaking
         helpVbox.setLayoutY(250);
