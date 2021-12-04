@@ -16,3 +16,4 @@ build
 
 # Ignore save files
 SAVEGAME.txt
+HIGHSCORES.txt
