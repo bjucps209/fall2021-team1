@@ -247,7 +247,6 @@ public class GameWindow {
         // Populating UI VBoxes
         createPauseVbox();
         createHelpVbox();
-        createGameOverVbox();
 
     }
 
@@ -695,6 +694,7 @@ public class GameWindow {
             processAnimationDirection();
             
             apaneMain.getChildren().add(imgviewBackgroundDim);
+            createGameOverVbox(String.valueOf(world.getScore()));
             apaneMain.getChildren().add(gameOverVbox);
         }
 
@@ -1414,7 +1414,7 @@ public class GameWindow {
     }
 
     @FXML
-    public void createGameOverVbox() {
+    public void createGameOverVbox(String score) {
         Label titleLbl = new Label("GAME OVER!");
         titleLbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 48px; -fx-text-fill: #ffffff;");
          //Mouse Pressed/Released------------------------------------------------------------------------------
@@ -1441,7 +1441,7 @@ public class GameWindow {
             }
         });
 
-        Label scoreLbl = new Label("Score: " + world.scoreProperty());
+        Label scoreLbl = new Label("Score: " + score);
         scoreLbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
 
         gameOverVbox.getChildren().add(titleLbl);
