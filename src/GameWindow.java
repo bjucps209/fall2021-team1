@@ -171,13 +171,14 @@ public class GameWindow {
     private ImageView imgviewHelpBtn1 = new ImageView(imgHelpBtn1);
     private ImageView imgviewHelpBtn2 = new ImageView(imgHelpBtn2);
     private ImageView imgviewQuitBtn1 = new ImageView(imgQuitBtn1);
-    private ImageView imgviewQuitBtn2 = new ImageView(imgQuitBtn2);
+    private ImageView imgviewGOQuitBtn = new ImageView(imgQuitBtn1);
     private ImageView imgviewHelpBackBtn = new ImageView(imgBackBtn1);
     // **********************
 
     // UI VBoxes *********************
     private VBox pauseVbox = new VBox();
     private VBox helpVbox = new VBox();
+    private VBox gameOverVbox = new VBox();
     // *****************************
 
     // Model Attributes
@@ -190,12 +191,17 @@ public class GameWindow {
     // Game clock
     Timeline timeline = new Timeline(new KeyFrame(Duration.millis(35), e -> updateWorld()));
 
+    // Player's Name
+    private String name;
+
     @FXML
-    void initialize(Stage stage, DifficultyLevel difficulty) {
+    void initialize(Stage stage, DifficultyLevel difficulty, String name) {
         imgViewList = new ArrayList<ImageView>();
         world = World.instance();
         world.setDifficulty(difficulty);
         world.setScore(0);
+
+        this.name = name;
 
         // Timer for the updateworld method
         timeline.setCycleCount(Timeline.INDEFINITE);
@@ -684,6 +690,19 @@ public class GameWindow {
         var iterator = world.getEntityList().iterator();
         drawHealth();
 
+        if (world.isGameOver()) {
+            timeline.pause();
+            uPressed.set(false);
+            lPressed.set(false);
+            dPressed.set(false);
+            rPressed.set(false);
+            processAnimationDirection();
+            
+            apaneMain.getChildren().add(imgviewBackgroundDim);
+            createGameOverVbox(String.valueOf(world.getScore()));
+            apaneMain.getChildren().add(gameOverVbox);
+        }
+
         while (iterator.hasNext()) {
 
             Entity entity = iterator.next();
@@ -1139,6 +1158,8 @@ public class GameWindow {
                 if (isPaused()) {
                     setIsPaused(false);
                     unpause();
+                } else if (world.isGameOver()) {
+
                 } else {
                     setIsPaused(true);
                     pause();
@@ -1164,10 +1185,9 @@ public class GameWindow {
         dPressed.set(false);
         rPressed.set(false);
         processAnimationDirection();
-
+          
         apaneMain.getChildren().add(imgviewBackgroundDim);
         apaneMain.getChildren().add(pauseVbox);
-
     }
 
     /**
@@ -1396,6 +1416,46 @@ public class GameWindow {
 
         helpVbox.setLayoutX(550); // TODO: Needs Tweaking
         helpVbox.setLayoutY(250);
+    }
+
+    @FXML
+    public void createGameOverVbox(String score) {
+        Label titleLbl = new Label("GAME OVER!");
+        titleLbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 48px; -fx-text-fill: #ffffff;");
+         //Mouse Pressed/Released------------------------------------------------------------------------------
+         imgviewGOQuitBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                imgviewGOQuitBtn.setImage(imgQuitBtn2);
+            }
+        });
+        imgviewGOQuitBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                imgviewGOQuitBtn.setImage(imgQuitBtn1);
+            }
+        });
+        //-------------------------------------------------------------------------------------------------
+
+        imgviewGOQuitBtn.setFitHeight(80);
+        imgviewGOQuitBtn.setFitWidth(312);
+        imgviewGOQuitBtn.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                World.instance();
+                World.reset();
+                Stage stage = (Stage) imgviewGOQuitBtn.getScene().getWindow();
+                stage.close();
+            }
+        });
+
+        Label scoreLbl = new Label("Score: " + score);
+        scoreLbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
+
+        gameOverVbox.getChildren().add(titleLbl);
+        gameOverVbox.getChildren().add(scoreLbl);
+        gameOverVbox.getChildren().add(imgviewGOQuitBtn);
+        gameOverVbox.setAlignment(Pos.CENTER);
+        gameOverVbox.setSpacing(10.0);
+        gameOverVbox.setLayoutX(550);
+        gameOverVbox.setLayoutY(250);
     }
 
     /**

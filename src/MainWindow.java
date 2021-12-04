@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -93,6 +94,7 @@ public class MainWindow  {
     private ImageView imgviewHardBtn = new ImageView(imgHardBtn1);
     private ImageView imgviewSubmitBtn = new ImageView(imgSubmitBtn1);
     private ImageView imgviewDifBackBtn = new ImageView(imgBackBtn1);
+    private ImageView imgviewNameSubmitBtn = new ImageView(imgSubmitBtn1);
     // ************************************************************************************
 
     // UI VBoxes *********************
@@ -101,9 +103,11 @@ public class MainWindow  {
     private VBox hsVbox = new VBox();
     private VBox helpVbox = new VBox();
     private VBox difVbox = new VBox();
+    private VBox nameVbox = new VBox();
     // *****************************
 
     DifficultyLevel difficulty;
+    String name;
         
     /**
      * Intializes the start screen with music in the background and the font style used for the application.
@@ -131,6 +135,7 @@ public class MainWindow  {
         createHsVbox();
         createHelpVbox();
         createDifficultyVbox();
+        createNameVbox();
 
         // Display startVbox
         spaneMain.getChildren().add(startVbox);
@@ -197,7 +202,7 @@ public class MainWindow  {
         imgviewStart1.setOnMouseClicked(event -> {
             spaneMain.getChildren().remove(startVbox);
             spaneMain.getChildren().add(imgviewBackgroundDim);
-            spaneMain.getChildren().add(difVbox);
+            spaneMain.getChildren().add(nameVbox);
         });
 
         imgviewAbout1.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
@@ -547,13 +552,13 @@ public class MainWindow  {
             spaneMain.getChildren().remove(difVbox);
             spaneMain.getChildren().add(startVbox);
         });
-       
         
         difVbox.getChildren().add(titleLbl);
         difVbox.setAlignment(Pos.CENTER);
         difVbox.getChildren().add(imgviewEasyBtn);
         difVbox.getChildren().add(imgviewMediumBtn);
         difVbox.getChildren().add(imgviewHardBtn);
+        difVbox.getChildren().add(txtField);
         difVbox.getChildren().add(new Label("\n"));
         HBox hbox = new HBox();
         hbox.setAlignment(Pos.CENTER);
@@ -566,6 +571,48 @@ public class MainWindow  {
 
         imgviewBackgroundDim.setFitHeight(900);
         imgviewBackgroundDim.setFitWidth(1440);
+    }
+
+    @FXML
+    public void createNameVbox() {
+        Label titleLbl = new Label("Enter Gamertag: ");
+        titleLbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
+
+        TextField txtField = new TextField();
+        txtField.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #000000;");
+        txtField.setMaxWidth(250);
+
+        //onMousePressed*************************************************************************************
+        imgviewNameSubmitBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                imgviewNameSubmitBtn.setImage(imgSubmitBtn2);
+            }
+        });
+        imgviewNameSubmitBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                imgviewNameSubmitBtn.setImage(imgSubmitBtn1);
+            }
+        });
+        //************************************************************************************************************ 
+
+        imgviewNameSubmitBtn.setOnMouseClicked(event -> {
+            spaneMain.getChildren().remove(nameVbox);
+            spaneMain.getChildren().add(difVbox);
+            name = txtField.getText();
+        });
+
+        HBox hbox = new HBox();
+        hbox.setAlignment(Pos.CENTER);
+        hbox.setSpacing(10.0);
+        hbox.getChildren().add(titleLbl);
+        hbox.getChildren().add(txtField);
+
+        nameVbox.getChildren().add(hbox);
+        nameVbox.getChildren().add(imgviewNameSubmitBtn);
+        nameVbox.setLayoutY(400);
+        nameVbox.setAlignment(Pos.CENTER);
+        nameVbox.setSpacing(10.0);
+
     }
 
     /**
@@ -584,7 +631,7 @@ public class MainWindow  {
 
         stage.setScene(scene);
         stage.show();
-        controller.initialize(stage, difficulty);
+        controller.initialize(stage, difficulty, name);
     }
 
 }
