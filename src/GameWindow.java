@@ -460,7 +460,7 @@ public class GameWindow {
                             ImageView imgviewHFence = new ImageView(imgHFence);
                             apaneMain.getChildren().add(imgviewHFence);
                             imgviewHFence.setLayoutX(landObjects.getX() - imgviewHFence.getLayoutBounds().getMinX());
-                            imgviewHFence.setLayoutY(landObjects.getY() - imgviewHFence.getLayoutBounds().getMinY());
+                            imgviewHFence.setLayoutY(landObjects.getY() - imgviewHFence.getLayoutBounds().getMinY() - 84);
                             break;
 
                         case "vFence":
