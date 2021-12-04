@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.text.html.HTMLDocument.HTMLReader.SpecialAction;
 
@@ -26,6 +27,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import model.HighScore;
+import model.Leaderboard;
+import model.Serialization;
 
 public class MainWindow  {
     @FXML StackPane spaneMain;
@@ -281,6 +285,9 @@ public class MainWindow  {
 
         lbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
         lbl.setTextAlignment(TextAlignment.CENTER);
+        Label titleLbl = new Label("ABOUT");
+        titleLbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 48px; -fx-text-fill: #ffffff;");
+        aboutVbox.getChildren().add(titleLbl);
         aboutVbox.getChildren().add(lbl);
         aboutVbox.getChildren().add(imgviewBackAboutBtn);
     }
@@ -319,12 +326,27 @@ public class MainWindow  {
         hsVbox.setAlignment(Pos.TOP_CENTER);
         hsVbox.setSpacing(10.0);
 
-        // TODO: Label will get a string of text from High Score or Leaderboard class
-        Label lbl = new Label("TestName   TestScore \nTestName   TestScore \nTestName   TestScore \nTestName   TestScore \nTestName   TestScore \n");
+        String highscoresStr = "";
+        ArrayList<HighScore> highscoresList;
+        try {
+            highscoresList = Serialization.loadScores("HIGHSCORES.txt");
+            for (int i = 0; i < highscoresList.size(); ++i) {
+                highscoresStr = highscoresStr +highscoresList.get(i).getPlayerName() + "   " + highscoresList.get(i).getScore() + " \n";
+            }
+        } catch (IOException e1) {
+            highscoresStr = "No HighScores";
+        }
+    
+        Label lbl = new Label(highscoresStr);
         lbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
 
+        Label titleLbl = new Label("HIGHSCORES");
+        titleLbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 48px; -fx-text-fill: #ffffff;");
+
+        hsVbox.getChildren().add(titleLbl);
         hsVbox.getChildren().add(lbl);
         hsVbox.getChildren().add(imgviewBackHsBtn);
+        hsVbox.setTranslateY(100);
     }
 
     /**
@@ -415,6 +437,10 @@ public class MainWindow  {
         travelHbox.setAlignment(Pos.CENTER);
         pauseHbox.setAlignment(Pos.CENTER);
 
+        Label titleLbl = new Label("CONTROLS");
+        titleLbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 48px; -fx-text-fill: #ffffff;");
+
+        helpVbox.getChildren().add(titleLbl);
         helpVbox.getChildren().add(moveHbox);
         helpVbox.getChildren().add(attackHbox);
         helpVbox.getChildren().add(interactHbox);
