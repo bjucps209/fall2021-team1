@@ -13,8 +13,9 @@ public class Grunt extends Enemy {
 
     private GruntState state;
 
-    public Grunt() {
-        super(128, 128);
+    public Grunt(int id) {
+
+        super(128, 128, id);
         // Load base stats
         this.setMaxHealth(3);
         this.setHealth(3);

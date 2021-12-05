@@ -63,7 +63,7 @@ public class Player extends Living {
      * Checks if an enemy is within a semicircle of the player's direction, and if the enemy is within a certain distance of the player.
      * If the enemy meets these conditions, the player's damage is passed to the corresponding enemies.
      */
-    public void attack(mapDirection direction) {
+    public Enemy attack(mapDirection direction) {
 
         List<Entity> list = World.instance().getEntityList().stream().filter(e -> (e instanceof Enemy)).toList();
 
@@ -81,25 +81,25 @@ public class Player extends Living {
 
                         case UP:
                             
-                            if (target.getY() < this.getY() - this.getWidth() / 2) return;
+                            if (target.getY() < this.getY() - this.getWidth() / 2) return null;
                             hit = true;
                             break;
 
                         case DOWN:
                             
-                            if (target.getY() > this.getY() + this.getWidth() / 2) return;
+                            if (target.getY() > this.getY() + this.getWidth() / 2) return null;
                             hit = true;
                             break;
 
                         case LEFT:
                             
-                            if (target.getX() > this.getX() + this.getHeight() / 2) return;
+                            if (target.getX() > this.getX() + this.getHeight() / 2) return null;
                             hit = true;
                             break;
 
                         case RIGHT:
                             
-                            if (target.getX() < this.getX() - this.getHeight() / 2) return;
+                            if (target.getX() < this.getX() - this.getHeight() / 2) return null;
                             hit = true;
                             break;
                     
@@ -134,6 +134,8 @@ public class Player extends Living {
                                 break;
 
                         }
+
+                        return target;
                     }
 
                 }
@@ -141,6 +143,8 @@ public class Player extends Living {
             }
 
         }
+
+        return null;
 
     }
 
