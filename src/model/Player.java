@@ -112,29 +112,29 @@ public class Player extends Living {
                 }
 
                 if (hit == true) {
+
                     target.handleDamage(getDamage());
+                    
                     if (target instanceof Grunt) {
 
                         switch (direction) {
                             
                             case UP:
-                                target.setY(target.getY() - 200);
+                                target.move(100, 90);
                                 break;
 
                             case LEFT:
-                                target.setX(target.getX() - 200);
+                                target.move(100, 180);
                                 break;
                             
                             case DOWN:
-                                target.setY(target.getY() + 200);
+                                target.move(100, 270);
                                 break;
                             
                             case RIGHT:
-                                target.setX(target.getX() + 200);
+                                target.move(100, 0);
                                 break;
-                                
-                            default:
-                                break;
+
                         }
                     }
 
