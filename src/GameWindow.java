@@ -99,6 +99,7 @@ public class GameWindow {
     private Image imgPlayerLeftMove = new Image("Final Assets/Player/GIF/Player-Left-Walking-128x128.gif");
     private Image imgPlayerRightMove = new Image("Final Assets/Player/GIF/Player-Right-Walking-128x128.gif");
     private Image imgPlayerFrontMove = new Image("Final Assets/Player/GIF/Player-Front-Walking-128x128.gif");
+    private Image imgPlayerDeath = new Image("Final Assets/Player/GIF/Player-Death-128x128.gif");
     // **********************
 
     // NPC Images ***********
@@ -693,12 +694,18 @@ public class GameWindow {
         drawHealth();
 
         if (world.isGameOver()) {
+
+            imgviewPlayer.setImage(imgPlayerDeath);
+            PauseTransition playerDeathPause = new PauseTransition(Duration.seconds(0.5));
+            playerDeathPause.setOnFinished(e -> imgviewPlayer.setVisible(false));
+            playerDeathPause.play();
+
             timeline.pause();
             uPressed.set(false);
             lPressed.set(false);
             dPressed.set(false);
             rPressed.set(false);
-            processAnimationDirection();
+            setIsPaused(true);
             
             apaneMain.getChildren().add(imgviewBackgroundDim);
             createGameOverVbox(String.valueOf(world.getScore()));

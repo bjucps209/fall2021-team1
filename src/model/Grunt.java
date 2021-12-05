@@ -116,7 +116,7 @@ public class Grunt extends Enemy {
         if (super.foundPlayer()) {
 
             this.state = GruntState.ATTACK;
-            this.setSpeed(2.3);
+            this.setSpeed(4);
 
         } else {
 
