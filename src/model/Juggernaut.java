@@ -32,6 +32,13 @@ public class Juggernaut extends Enemy {
     @Override
     public void navigate() {
 
+        if (iFrames > 0) {
+            
+            -- iFrames;
+            return;
+
+        }
+
         if (foundPlayer() && state == JuggernautState.PATROL) state = JuggernautState.ATTACK;
 
         double x = this.getX();
@@ -85,7 +92,7 @@ public class Juggernaut extends Enemy {
         if (Math.hypot(this.getX() - World.instance().getPlayer().getX(), this.getY() - World.instance().getPlayer().getY()) <= 95) {
             
             // Deal damage
-            World.instance().getPlayer().handleDamage(this.getDamage());
+            World.instance().getPlayer().handleDamage(this.getDamage(), getDirection());
 
             // Apply knockback
             World.instance().getPlayer().move(100, getDirection());
@@ -113,10 +120,17 @@ public class Juggernaut extends Enemy {
     }
 
     @Override
-    public boolean handleDamage(int damage) {
+    public boolean handleDamage(int damage, int direction) {
 
-        this.setHealth(this.getHealth() - damage);
-        return true;
+        if (iFrames <= 0) {
+
+            this.iFrames = 1;
+            this.setHealth(this.getHealth() - damage);
+            return true;
+
+        }
+
+        return false;
 
     }
 

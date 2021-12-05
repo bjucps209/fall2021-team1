@@ -32,17 +32,25 @@ public class Grunt extends Enemy {
 
         if (Math.hypot(this.getX() - World.instance().getPlayer().getX(), this.getY() - World.instance().getPlayer().getY()) <= 95) {
 
-            World.instance().getPlayer().handleDamage(this.getDamage());
+            World.instance().getPlayer().handleDamage(this.getDamage(), getDirection());
 
         }
 
     }
 
     @Override
-    public boolean handleDamage(int damage) {
+    public boolean handleDamage(int damage, int direction) {
 
-        this.setHealth(this.getHealth() - damage);
-        return true;
+        if (iFrames <= 0) {
+
+            this.iFrames = 10;
+            this.move(100, direction);
+            this.setHealth(this.getHealth() - damage);
+            return true;
+
+        }
+
+        return false;
 
     }
 
@@ -62,6 +70,13 @@ public class Grunt extends Enemy {
      */
     @Override
     public void navigate() {
+
+        if (iFrames > 0) {
+            
+            -- iFrames;
+            return;
+
+        }
 
         if (state != GruntState.ATTACK) determineState();
 

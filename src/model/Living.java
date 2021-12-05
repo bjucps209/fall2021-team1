@@ -19,6 +19,8 @@ public abstract class Living extends Entity {
     private DoubleProperty speed;
     /** The direction the Entity is facing, in degrees. */
     private IntegerProperty direction;
+    /** Invincibility frames on hit. */
+    protected int iFrames;
     /** Is the Entity dead? */
     private boolean isDead = false;
 
@@ -79,7 +81,7 @@ public abstract class Living extends Entity {
 
     // Override these methods and any methods from Entity
     public abstract void attack();
-    public abstract boolean handleDamage(int damage);
+    public abstract boolean handleDamage(int damage, int direction);
     public abstract void handleDeath();
 
 
@@ -185,7 +187,5 @@ public abstract class Living extends Entity {
         this.isDead = isDead;
     
     }
-
-    
     
 }

@@ -112,27 +112,25 @@ public class Player extends Living {
                 }
 
                 if (hit == true) {
-
-                    target.handleDamage(getDamage());
                     
                     if (target instanceof Grunt) {
 
                         switch (direction) {
                             
                             case UP:
-                                target.move(100, 90);
+                                target.handleDamage(getDamage(), 90);
                                 break;
 
                             case LEFT:
-                                target.move(100, 180);
+                                target.handleDamage(getDamage(), 180);
                                 break;
                             
                             case DOWN:
-                                target.move(100, 270);
+                                target.handleDamage(getDamage(), 270);
                                 break;
                             
                             case RIGHT:
-                                target.move(100, 0);
+                                target.handleDamage(getDamage(), 0);
                                 break;
 
                         }
@@ -147,12 +145,15 @@ public class Player extends Living {
     }
 
     @Override
-    public boolean handleDamage(int damage) {
+    public boolean handleDamage(int damage, int direction) {
+
+        if (damage <= 0) return false;
+
+        this.move(100, direction);
         this.setHealth(this.getHealth() - damage);
-        if (damage > 0) {
-            return true;
-        }
-        return false;
+        
+        return true;
+
     }
 
     @Override
