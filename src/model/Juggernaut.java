@@ -16,9 +16,9 @@ public class Juggernaut extends Enemy {
 
     private JuggernautState state;
 
-    public Juggernaut() {
+    public Juggernaut(int id) {
         
-        super(192, 192);
+        super(192, 192, id);
 
         frenzyCooldown = 0;
         attackSpeed = 5;

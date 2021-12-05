@@ -94,7 +94,9 @@ public class World {
      * @param enemy - the enemy to be added to the entity list
      */
     public void spawnEnemies(Enemy enemy) {
+
         entityList.add(enemy);
+        
     }
     
 

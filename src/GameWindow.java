@@ -61,6 +61,9 @@ public class GameWindow {
 
     private BooleanBinding keyPressed = uPressed.or(lPressed).or(dPressed).or(rPressed);
 
+    // Id
+    int nextId = 0;
+
     // FXML Attributes
     @FXML
     private AnchorPane apaneMain;
@@ -323,6 +326,7 @@ public class GameWindow {
                 spawnedGrunt.setOriginalX(spawnedGrunt.getX());
                 spawnedGrunt.setOriginalY(spawnedGrunt.getY());
                 ImageView imgViewGrunt = new ImageView();
+                imgViewGrunt.setUserData(spawnedGrunt.getId());
                 imgViewGrunt.xProperty().bindBidirectional(spawnedGrunt.xProperty());
                 imgViewGrunt.yProperty().bindBidirectional(spawnedGrunt.yProperty());
                 apaneMain.getChildren().add(imgViewGrunt);
@@ -333,6 +337,7 @@ public class GameWindow {
                 spawnedJuggernaut.setOriginalX(spawnedJuggernaut.getX());
                 spawnedJuggernaut.setOriginalY(spawnedJuggernaut.getY());
                 ImageView imgViewJuggernaut = new ImageView();
+                imgViewJuggernaut.setUserData(spawnedJuggernaut.getId());
                 imgViewJuggernaut.xProperty().bindBidirectional(spawnedJuggernaut.xProperty());
                 imgViewJuggernaut.yProperty().bindBidirectional(spawnedJuggernaut.yProperty());
                 apaneMain.getChildren().add(imgViewJuggernaut);
@@ -420,6 +425,7 @@ public class GameWindow {
      */
     @FXML
     public void drawWorld() {
+        nextId = 0;
         world.getEntityList().clear();
         imgViewList.clear();
         for (Zone zone : ZoneList.instance().getLevels()) {
@@ -562,7 +568,7 @@ public class GameWindow {
 
                                 case EASY:
                                     if (spawnNum >= 0 && spawnNum <= 8) {
-                                        Grunt grunt = new Grunt();
+                                        Grunt grunt = new Grunt(nextId + 1);
                                         grunt.setX(landObjects.getX());
                                         grunt.setY(landObjects.getY());
                                         grunt.setWidth(64);
@@ -570,7 +576,7 @@ public class GameWindow {
                                         spawnEnemies(grunt);
 
                                     } else if (spawnNum > 8) {
-                                        Juggernaut jugg = new Juggernaut();
+                                        Juggernaut jugg = new Juggernaut(nextId + 1);
                                         jugg.setX(landObjects.getX());
                                         jugg.setY(landObjects.getY());
                                         jugg.setWidth(144);
@@ -581,7 +587,7 @@ public class GameWindow {
 
                                 case MEDIUM:
                                     if (spawnNum >= 0 && spawnNum <= 6) {
-                                        Grunt grunt = new Grunt();
+                                        Grunt grunt = new Grunt(nextId + 1);
                                         grunt.setX(landObjects.getX());
                                         grunt.setY(landObjects.getY());
                                         grunt.setWidth(64);
@@ -589,7 +595,7 @@ public class GameWindow {
                                         spawnEnemies(grunt);
 
                                     } else if (spawnNum > 6) {
-                                        Juggernaut jugg = new Juggernaut();
+                                        Juggernaut jugg = new Juggernaut(nextId + 1);
                                         jugg.setX(landObjects.getX());
                                         jugg.setY(landObjects.getY());
                                         jugg.setWidth(144);
@@ -600,7 +606,7 @@ public class GameWindow {
 
                                 case HARD:
                                     if (spawnNum >= 0 && spawnNum <= 4) {
-                                        Grunt grunt = new Grunt();
+                                        Grunt grunt = new Grunt(nextId + 1);
                                         grunt.setX(landObjects.getX());
                                         grunt.setY(landObjects.getY());
                                         grunt.setWidth(64);
@@ -608,7 +614,7 @@ public class GameWindow {
                                         spawnEnemies(grunt);
 
                                     } else if (spawnNum > 4) {
-                                        Juggernaut jugg = new Juggernaut();
+                                        Juggernaut jugg = new Juggernaut(nextId + 1);
                                         jugg.setX(landObjects.getX());
                                         jugg.setY(landObjects.getY());
                                         jugg.setWidth(144);

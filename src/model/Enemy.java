@@ -9,11 +9,11 @@ public abstract class Enemy extends Living {
     private IntegerProperty detectionRadius;
     private double originalX, originalY;
 
-    public Enemy(int width, int height) {
+    public Enemy(int width, int height, int id) {
 
         super(width, height);
 
-        this.id = new SimpleIntegerProperty();
+        this.id = new SimpleIntegerProperty(id);
         this.detectionRadius = new SimpleIntegerProperty();
         
     }
