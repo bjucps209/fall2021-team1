@@ -657,28 +657,28 @@ public class GameWindow {
             if (world.getCurrentlocation().getNorthZone() != null) {
                 world.setCurrentlocation(world.getCurrentlocation().getNorthZone());
                 apaneMain.getChildren().removeAll(apaneMain.getChildren());
-                drawScreen(world.getPlayer().getX(), 700, imgPlayerBack);
+                drawScreen(720, 800, imgPlayerBack);
             }
 
         } else if (world.getPlayer().getX() <= 15) {
             if (world.getCurrentlocation().getWestZone() != null) {
                 world.setCurrentlocation(world.getCurrentlocation().getWestZone());
                 apaneMain.getChildren().removeAll(apaneMain.getChildren());
-                drawScreen(1200, world.getPlayer().getY(), imgPlayerLeft);
+                drawScreen(1300, 450, imgPlayerLeft);
             }
 
         } else if (world.getPlayer().getY() >= 770) {
             if (world.getCurrentlocation().getSouthZone() != null) {
                 world.setCurrentlocation(world.getCurrentlocation().getSouthZone());
                 apaneMain.getChildren().removeAll(apaneMain.getChildren());
-                drawScreen(world.getPlayer().getX(), 40, imgPlayerFront);
+                drawScreen(720, 20, imgPlayerFront);
             }
 
         } else if (world.getPlayer().getX() >= 1330) {
             if (world.getCurrentlocation().getEastZone() != null) {
                 world.setCurrentlocation(world.getCurrentlocation().getEastZone());
                 apaneMain.getChildren().removeAll(apaneMain.getChildren());
-                drawScreen(50, world.getPlayer().getY(), imgPlayerRight);
+                drawScreen(20, 450, imgPlayerRight);
             }
         }
     }
