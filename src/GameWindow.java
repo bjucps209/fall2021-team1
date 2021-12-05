@@ -468,7 +468,7 @@ public class GameWindow {
                             landObjects.setHeight(212);
                             ImageView imgviewVFence = new ImageView(imgVFence);
                             apaneMain.getChildren().add(imgviewVFence);
-                            imgviewVFence.setLayoutX(landObjects.getX() - imgviewVFence.getLayoutBounds().getMinX());
+                            imgviewVFence.setLayoutX(landObjects.getX() - imgviewVFence.getLayoutBounds().getMinX() - 84);
                             imgviewVFence.setLayoutY(landObjects.getY() - imgviewVFence.getLayoutBounds().getMinY());
                             break;
 
@@ -506,8 +506,8 @@ public class GameWindow {
                             landObjects.setHeight(204);
                             ImageView imgviewWell = new ImageView(imgWell);
                             apaneMain.getChildren().add(imgviewWell);
-                            imgviewWell.setLayoutX(landObjects.getX() - imgviewWell.getLayoutBounds().getMinX());
-                            imgviewWell.setLayoutY(landObjects.getY() - imgviewWell.getLayoutBounds().getMinY());
+                            imgviewWell.setLayoutX(landObjects.getX() - imgviewWell.getLayoutBounds().getMinX() - 42);
+                            imgviewWell.setLayoutY(landObjects.getY() - imgviewWell.getLayoutBounds().getMinY() - 42);
                             break;
 
                         case "tomb":
@@ -1032,8 +1032,6 @@ public class GameWindow {
                 if (!isPaused()) {
                     uPressed.set(true);
 
-                    processAnimationDirection();
-
                     world.getPlayer().setDirection(90);
                 }
 
@@ -1042,8 +1040,6 @@ public class GameWindow {
             case LEFT:
                 if (!isPaused()) {
                     lPressed.set(true);
-
-                    processAnimationDirection();
 
                     world.getPlayer().setDirection(180);
                 }
@@ -1054,8 +1050,6 @@ public class GameWindow {
                 if (!isPaused()) {
                     dPressed.set(true);
 
-                    processAnimationDirection();
-
                     world.getPlayer().setDirection(270);
                 }
 
@@ -1065,17 +1059,10 @@ public class GameWindow {
                 if (!isPaused()) {
                     rPressed.set(true);
 
-                    processAnimationDirection();
-
                     world.getPlayer().setDirection(0);
                 }
 
                 break;
-
-            // processAnimationDirection();
-
-            // world.getPlayer().setDirection(0);
-            // break;
 
             case Q:
                 int i = 0; // for pinging the debugger to peek at variables, delete on final release.
@@ -1084,6 +1071,8 @@ public class GameWindow {
                 break;
 
         }
+
+        processAnimationDirection();
 
     }
 
@@ -1284,8 +1273,19 @@ public class GameWindow {
             public void handle(MouseEvent e) {
                 try {
 
+                    // TODO: Can't figure out how to draw the right stuff, please help!
+
+                    //apaneMain.getChildren().removeAll(apaneMain.getChildren());
+
                     Serialization.load("SAVEGAME.txt");
                     System.out.println("Game Loaded!");
+                    
+                    //drawWorld();
+                    //drawHealth();
+                    //drawLocationLabel();
+                    //drawScore();
+                    //processAnimationDirection();
+                    //drawPlayer(world.getPlayer().getX(), world.getPlayer().getY(), imgPlayerRight);
 
                 } catch (IOException ev) {
 

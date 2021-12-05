@@ -147,7 +147,7 @@ public class ZoneList {
         listPathways.get(2).setPosition(903, 170);
 
         listPathways.add(new Item("", "vFence", 0));
-        listPathways.get(3).setPosition(395, 575);
+        listPathways.get(3).setPosition(481, 575);
 
         listPathways.add(new Item("", "well", 0));
         listPathways.get(4).setPosition(903, 575);
@@ -228,16 +228,16 @@ public class ZoneList {
         listGraveyard.get(22).setPosition(364, 245);
 
         listGraveyard.add(new Item("", "vFence", 0));
-        listGraveyard.get(23).setPosition(272, 231);
+        listGraveyard.get(23).setPosition(358, 231);
 
         listGraveyard.add(new Item("", "vFence", 0));
-        listGraveyard.get(24).setPosition(272, 630);
+        listGraveyard.get(24).setPosition(358, 630);
 
         listGraveyard.add(new Item("", "vFence", 0));
-        listGraveyard.get(25).setPosition(1192, 231);
+        listGraveyard.get(25).setPosition(1278, 231);
 
         listGraveyard.add(new Item("", "vFence", 0));
-        listGraveyard.get(26).setPosition(1192, 630);
+        listGraveyard.get(26).setPosition(1278, 630);
 
         // listGraveyard.add(new NPC("Here lies the CpS 209 class of fall, 2021. Eleven started, three left.", "lSign"));   <- Feel free to change if you like Andrew
         // listGraveyard.get(27).setPosition(360, 358);
@@ -353,7 +353,7 @@ public class ZoneList {
         listMarket.get(10).setPosition(248, 507);
 
         listMarket.add(new Item("", "vFence", 0));
-        listMarket.get(11).setPosition(222, 440);
+        listMarket.get(11).setPosition(308, 440);
 
         listMarket.add(new Item("", "hFence", 0));
         listMarket.get(12).setPosition(-55, 601);
@@ -446,10 +446,10 @@ public class ZoneList {
         listWheatField.get(0).setPosition(532, -19);
 
         listWheatField.add(new Item("", "vFence", 0));
-        listWheatField.get(1).setPosition(440, 357);
+        listWheatField.get(1).setPosition(526, 357);
 
         listWheatField.add(new Item("", "vFence", 0));
-        listWheatField.get(2).setPosition(440, -33);
+        listWheatField.get(2).setPosition(526, -33);
 
         listWheatField.add(new Item("", "hFence", 0));
         listWheatField.get(3).setPosition(532, 516);
@@ -467,13 +467,13 @@ public class ZoneList {
         listWheatField.get(7).setPosition(1176, 516);
 
         listWheatField.add(new Item("", "vFence", 0));
-        listWheatField.get(8).setPosition(1268, 69);
+        listWheatField.get(8).setPosition(1354, 69);
 
         listWheatField.add(new Item("", "vFence", 0));
-        listWheatField.get(9).setPosition(1268, 213);
+        listWheatField.get(9).setPosition(1354, 213);
 
         listWheatField.add(new Item("", "vFence", 0));
-        listWheatField.get(10).setPosition(1268, 357);
+        listWheatField.get(10).setPosition(1354, 357);
 
         listWheatField.add(new Item("", "hFence", 0));
         listWheatField.get(11).setPosition(716, -19);
@@ -549,7 +549,7 @@ public class ZoneList {
 
         listForestEdge.add(new NPC("", "coord"));
         listForestEdge.get(12).setPosition(998, 500);
-        
+
         listForestEdge.add(new NPC("", "coord"));
         listForestEdge.get(13).setPosition(344, 243);
         // ****************************************

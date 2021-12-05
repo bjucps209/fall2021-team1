@@ -24,7 +24,7 @@ public class Juggernaut extends Enemy {
         this.setHealth(10);
         this.setDamage(3);
         this.setSpeed(1);
-        this.setDetectionRadius(125);
+        this.setDetectionRadius(200);
         this.state = JuggernautState.PATROL;
 
     }
@@ -32,48 +32,47 @@ public class Juggernaut extends Enemy {
     @Override
     public void navigate() {
 
-        if (state != JuggernautState.ATTACK) determineState();
+        if (foundPlayer() && state == JuggernautState.PATROL) state = JuggernautState.ATTACK;
 
         double x = this.getX();
         double y = this.getY();
 
-        boolean moved = false;
+        if (state == JuggernautState.PATROL) {
 
-        for (int i = 0; i < 10; ++ i) {
-
-            if (moved) break;
-
-            if (state == JuggernautState.PATROL) {
-
-                if (x > this.getOriginalX() + 60 || x < this.getOriginalX() - 60) {
+            if (x > this.getOriginalX() + 60 || x < this.getOriginalX() - 60) {
     
-                    this.setDirection(this.getDirection() + 180);
+                this.setDirection(this.getDirection() + 180);
                 
-                }
-    
-            } else if (state == JuggernautState.ATTACK) {
-    
-                double angle = Math.toDegrees(Math.atan2(World.instance().getPlayer().getY() - y, World.instance().getPlayer().getX() - x));
-                
-                if (angle < 0) angle += 360;
-                this.setDirection((int) angle);
-    
-                if (count < 1) {
-    
-                    count = state == JuggernautState.ATTACK ? 50 : 10;
-                    this.attack();
-                
-                }
-    
-                if (this.getDirection() >= 360) this.setDirection(this.getDirection() - 360);
-            
             }
     
-            moved = move(this.getDirection());
+        } else {
+    
+            // Calculate angle
+            double angle = Math.toDegrees(Math.atan2(World.instance().getPlayer().getY() - y, World.instance().getPlayer().getX() - x));
+            
+            // Correct angle to fit in correct range
+            if (angle < 0) angle += 360;
+            if (angle >= 360) angle -= 360;
 
+            // Set direction to angle
+            this.setDirection((int) angle);
+
+            // Attack if it should
+            if (count < 1) {
+    
+                // Attacks are more frequent when in FRENZY state
+                count = state == JuggernautState.ATTACK ? 50 : 10;
+                this.attack();
+                
+            }
+
+            // Decrement attack timer
+            -- count;
+        
         }
-
-        -- count;
+    
+        // Move as far as possible in the chosen direction
+        move(this.getSpeed(), this.getDirection());
 
     }
 
@@ -85,35 +84,22 @@ public class Juggernaut extends Enemy {
 
         if (Math.hypot(this.getX() - World.instance().getPlayer().getX(), this.getY() - World.instance().getPlayer().getY()) <= 95) {
             
+            // Deal damage
             World.instance().getPlayer().handleDamage(this.getDamage());
 
-            if ((getDirection() >= 0 && getDirection() < 90) || (getDirection() > 270 && getDirection() <= 360)) {
+            // Apply knockback
+            World.instance().getPlayer().move(100, getDirection());
 
-                World.instance().getPlayer().setX(World.instance().getPlayer().getX() + 400);
-            
-            } else if (getDirection() == 90) {
-            
-                World.instance().getPlayer().setY(World.instance().getPlayer().getY() - 400);
-            
-            } else if ((getDirection() > 90 && getDirection() <= 180) || (getDirection() > 180 && getDirection() < 270)) {
-            
-                World.instance().getPlayer().setX(World.instance().getPlayer().getX() + 400);
-            
-            } else if (getDirection() == 270) {
-            
-                World.instance().getPlayer().setY(World.instance().getPlayer().getY() + 400);
-            
-            }
-
+            // Check state
             if (state == JuggernautState.ATTACK && frenzyCooldown < 1) {
             
-                frenzyCooldown = 5;
+                frenzyCooldown = 20;
                 setState(JuggernautState.FRENZY);
                 setSpeed(frenzySpeed);
             
             } else if (frenzyCooldown < 1) {
             
-                frenzyCooldown = 10;
+                frenzyCooldown = 50;
                 setState(JuggernautState.ATTACK);
                 setSpeed(attackSpeed);
             
@@ -128,6 +114,7 @@ public class Juggernaut extends Enemy {
 
     @Override
     public boolean handleDamage(int damage) {
+
         this.setHealth(this.getHealth() - damage);
         return true;
 
@@ -135,18 +122,13 @@ public class Juggernaut extends Enemy {
 
     @Override
     public void handleDeath() {
+
         if (this.getHealth() <= 0) {
+
             this.setDead(true);
+
         }
 
-    }
-
-    public void determineState() {
-        if (super.foundPlayer()) {
-            this.state = JuggernautState.ATTACK;
-        } else {
-            this.state = JuggernautState.PATROL;
-        }
     }
 
     @Override
@@ -191,11 +173,15 @@ public class Juggernaut extends Enemy {
     }
 
     public boolean isHitPlayer() {
+
         return hitPlayer;
+
     }
 
     public void setHitPlayer(boolean hitPlayer) {
+
         this.hitPlayer = hitPlayer;
+
     }
 
     

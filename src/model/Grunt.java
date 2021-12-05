@@ -29,23 +29,32 @@ public class Grunt extends Enemy {
 
     @Override
     public void attack() {
-        if (Math.hypot(this.getX() - World.instance().getPlayer().getX(),
-                this.getY() - World.instance().getPlayer().getY()) <= 95) {
+
+        if (Math.hypot(this.getX() - World.instance().getPlayer().getX(), this.getY() - World.instance().getPlayer().getY()) <= 95) {
+
             World.instance().getPlayer().handleDamage(this.getDamage());
+
         }
+
     }
 
     @Override
     public boolean handleDamage(int damage) {
+
         this.setHealth(this.getHealth() - damage);
         return true;
+
     }
 
     @Override
     public void handleDeath() {
+        
         if (this.getHealth() <= 0) {
+
             this.setDead(true);
+
         }
+
     }
 
     /**
@@ -59,44 +68,31 @@ public class Grunt extends Enemy {
         double x = this.getX();
         double y = this.getY();
 
-        boolean moved = false;
+        if (state == GruntState.PATROL) {
 
-        for (int i = 0; i < 10; ++ i) {
-
-            if (moved) break;
-
-            if (state == GruntState.PATROL) {
-
-                if (x > this.getOriginalX() + 60 || x < this.getOriginalX() - 60) {
+            if (x > this.getOriginalX() + 60 || x < this.getOriginalX() - 60) this.setDirection(this.getDirection() + 180);
     
-                    this.setDirection(this.getDirection() + 180);
+        } else {
     
-                }
+            double angle = Math.toDegrees(Math.atan2(World.instance().getPlayer().getY() - y, World.instance().getPlayer().getX() - x));
     
-            } else if (state == GruntState.ATTACK) {
+            if (angle < 0) angle += 360;
+            if (angle >= 360) angle -= 360;
     
-                double angle = Math.toDegrees(Math.atan2(World.instance().getPlayer().getY() - y, World.instance().getPlayer().getX() - x));
+            this.setDirection((int) angle);
     
-                if (angle < 0) angle += 360;
-    
-                this.setDirection((int) angle);
-    
-                if (count < 1) {
+            if (count < 1) {
                     
-                    count = 50;
-                    this.attack();
+                count = 50;
+                this.attack();
 
-                }
-    
             }
-    
-            if (this.getDirection() >= 360) this.setDirection(this.getDirection() - 360);
-    
-            moved = move(this.getDirection());
+
+            -- count;
 
         }
 
-        -- count;
+        move(getSpeed(), getDirection());
 
     }
 

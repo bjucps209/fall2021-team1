@@ -37,16 +37,36 @@ public abstract class Living extends Entity {
 
     /**
      * Attempts to move the entity.
+     * @param speed the speed to move at
      * @param direction the direction to move in
      * @return true if the move was successful, false otherwise
      */
-    public boolean move(int direction) {
+    public void move(double speed, int direction) {
 
-        double oldX = getX();
-        double oldY = getY();
+        var obstacles = World.instance().getCurrentlocation().getObjectList().stream().filter(e -> (e.isCollidable())).toList();
 
-        double newX = getX() + getSpeed() * Math.cos(direction * Math.PI / 180);
-        double newY = getY() + getSpeed() * Math.sin(direction * Math.PI / 180);
+        for (double i = 0; i < getSpeed(); i += 0.1) {
+
+            double oldX = getX();
+            double oldY = getY();
+
+            double newX = oldX + 0.1 * Math.cos(direction * Math.PI / 180);
+            double newY = oldY + 0.1 * Math.sin(direction * Math.PI / 180);
+
+            setPosition(newX, newY);
+
+            for (Entity obstacle : obstacles) {
+
+                if (intersects(obstacle)) {
+
+                    setPosition(oldX, oldY);
+                    break;
+
+                }
+
+            }
+
+        }
 
         /* Bounds unimplemented
         int w = World.instance().getWidth();
@@ -54,24 +74,6 @@ public abstract class Living extends Entity {
         
         if (newX < 0 || newX > w || newY < 0 || newY > h) return false;
         */
-
-        setPosition(newX, newY);
-
-        var obstacles = World.instance().getCurrentlocation().getObjectList().stream().filter(e -> (e.isCollidable())).toList();
-        if (obstacles.size() < 1) return true;
-
-        for (Entity obstacle : obstacles) {
-
-            if (intersects(obstacle)) {
-                
-                setPosition(oldX, oldY);
-                return false;
-
-            }
-
-        }
-        
-        return true;
 
     }
 
