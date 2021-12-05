@@ -64,6 +64,9 @@ public class GameWindow {
     // Id
     int nextId = 0;
 
+    // Cheat Mode
+    private boolean cheatModeEnabled = false;
+
     // FXML Attributes
     @FXML
     private AnchorPane apaneMain;
@@ -396,8 +399,15 @@ public class GameWindow {
         lblScore = new Label();
         lblScore.setText(String.valueOf(world.getScore()));
         lblScore.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
-        lblScore.textProperty()
-                .bind(Bindings.createStringBinding(() -> String.valueOf(world.getScore()), world.scoreProperty()));
+        if (!cheatModeEnabled) {
+
+            lblScore.textProperty().bind(Bindings.createStringBinding(() -> String.valueOf(world.getScore()), world.scoreProperty()));
+
+        } else {
+
+            lblScore.setText("Cheat Mode Enabled");
+
+        }
         AnchorPane.setBottomAnchor(lblScore, 10.0);
         AnchorPane.setLeftAnchor(lblScore, 10.0);
         apaneMain.getChildren().add(lblScore);
@@ -505,7 +515,7 @@ public class GameWindow {
                             ImageView imgviewStump = new ImageView(imgStump);
                             apaneMain.getChildren().add(imgviewStump);
                             imgviewStump.setLayoutX(landObjects.getX() - imgviewStump.getLayoutBounds().getMinX());
-                            imgviewStump.setLayoutY(landObjects.getY() - imgviewStump.getLayoutBounds().getMinY());
+                            imgviewStump.setLayoutY(landObjects.getY() - imgviewStump.getLayoutBounds().getMinY() + 86);
                             break;
 
                         case "well":
@@ -559,7 +569,7 @@ public class GameWindow {
                             ImageView imgviewHouse = new ImageView(imgHouse);
                             apaneMain.getChildren().add(imgviewHouse);
                             imgviewHouse.setLayoutX(landObjects.getX() - imgviewHouse.getLayoutBounds().getMinX());
-                            imgviewHouse.setLayoutY(landObjects.getY() - imgviewHouse.getLayoutBounds().getMinY());
+                            imgviewHouse.setLayoutY(landObjects.getY() - imgviewHouse.getLayoutBounds().getMinY() - 98);
                             break;
 
                         case "coord":
@@ -1074,6 +1084,25 @@ public class GameWindow {
 
                     world.getPlayer().setDirection(0);
                 }
+
+                break;
+
+            case C:
+                if (cheatModeEnabled) {
+
+                    world.getPlayer().setDamage(1000);
+                    world.getPlayer().setMaxHealth(1000);
+                    world.getPlayer().setHealth(1000);
+
+                } else {
+
+                    world.getPlayer().setDamage(1);
+                    world.getPlayer().setMaxHealth(5);
+                    world.getPlayer().setHealth(5);
+
+                }
+
+                drawScore();
 
                 break;
 
