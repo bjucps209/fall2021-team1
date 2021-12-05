@@ -60,7 +60,8 @@ public abstract class Enemy extends Living {
 
     public int getId() {
 
-        return this.id.get();
+        return 0;
+        //return this.id.get();
 
     }
 

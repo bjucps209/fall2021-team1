@@ -81,7 +81,7 @@ public class Serialization {
     
                     case GRUNT_ENEMY:
     
-                        var grunt = new Grunt();
+                        var grunt = new Grunt(0);
     
                         grunt.setId(Integer.parseInt(data[1]));
                         grunt.setPosition(Double.parseDouble(data[2]), Double.parseDouble(data[3]));
@@ -92,7 +92,7 @@ public class Serialization {
 
                     case JUGGERNAUT_ENEMY:
 
-                        var jugg = new Juggernaut();
+                        var jugg = new Juggernaut(0);
 
                         jugg.setId(Integer.parseInt(data[1]));
                         jugg.setPosition(Double.parseDouble(data[2]), Double.parseDouble(data[3]));
