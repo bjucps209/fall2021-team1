@@ -20,6 +20,11 @@ public class Juggernaut extends Enemy {
         
         super(192, 192);
 
+        frenzyCooldown = 0;
+        attackSpeed = 5;
+        frenzySpeed = 12;
+        hitPlayer = false;
+
         this.setMaxHealth(10);
         this.setHealth(10);
         this.setDamage(3);
@@ -32,7 +37,10 @@ public class Juggernaut extends Enemy {
     @Override
     public void navigate() {
 
-        if (foundPlayer() && state == JuggernautState.PATROL) state = JuggernautState.ATTACK;
+        if (foundPlayer() && state == JuggernautState.PATROL) { 
+            state = JuggernautState.ATTACK;
+            setSpeed(5);
+        }
 
         double x = this.getX();
         double y = this.getY();
@@ -88,20 +96,20 @@ public class Juggernaut extends Enemy {
             World.instance().getPlayer().handleDamage(this.getDamage());
 
             // Apply knockback
-            World.instance().getPlayer().move(100, getDirection());
+            World.instance().getPlayer().move(10000, getDirection());
 
             // Check state
             if (state == JuggernautState.ATTACK && frenzyCooldown < 1) {
             
                 frenzyCooldown = 20;
                 setState(JuggernautState.FRENZY);
-                setSpeed(frenzySpeed);
+                setSpeed(12);
             
             } else if (frenzyCooldown < 1) {
             
                 frenzyCooldown = 50;
                 setState(JuggernautState.ATTACK);
-                setSpeed(attackSpeed);
+                setSpeed(5);
             
             }
             
