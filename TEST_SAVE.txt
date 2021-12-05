@@ -1,3 +1,3 @@
-WORLD::EASY::model.Zone@26ba2a48::0
+WORLD::null::Start Zone::0
 PLAYER::0.0::0.0::5::1::2.3
 GRUNT_ENEMY::0::50.0::50.0::PATROL

@@ -23,7 +23,7 @@ public class SerializationTest {
 
         var entities = new ArrayList<Entity>();
 
-        var grunt = new Grunt();
+        var grunt = new Grunt(0);
         grunt.setPosition(50, 50);
         entities.add(grunt);
 
