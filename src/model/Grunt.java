@@ -86,7 +86,12 @@ public class Grunt extends Enemy {
 
         if (state == GruntState.PATROL) {
 
-            if (x > this.getOriginalX() + 60 || x < this.getOriginalX() - 60) this.setDirection(this.getDirection() + 180);
+            if (x > this.getOriginalX() + 60 || x < this.getOriginalX() - 60) { 
+                this.setDirection(this.getDirection() + 180);
+                if (this.getDirection() > 180) {
+                    this.setDirection(0);
+                }
+            }
     
         } else {
     
