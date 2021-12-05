@@ -138,7 +138,7 @@ public class ZoneList {
         // Pathways ****************************
         listPathways = new ArrayList<NPC>();
         listPathways.add(new Item("", "stump", 0));
-        listPathways.get(0).setPosition(-46, -143);
+        listPathways.get(0).setPosition(34, 34);
 
         listPathways.add(new Item("", "tree", 0));
         listPathways.get(1).setPosition(994, -34);
@@ -407,30 +407,32 @@ public class ZoneList {
         listLumberYard.add(new Item("", "stump", 0));
         listLumberYard.get(11).setPosition(418, 66);
 
-        listLumberYard.add(new Item("", "tree", 0));
-        listLumberYard.get(12).setPosition(621, 66);
-
-        listLumberYard.add(new Item("", "tree", 0));
-        listLumberYard.get(13).setPosition(0, -35);
-
-        listLumberYard.add(new Item("", "tree", 0));
-        listLumberYard.get(14).setPosition(213, -35);
-
-        listLumberYard.add(new Item("", "tree", 0));
-        listLumberYard.get(15).setPosition(418, -35);
-
         listLumberYard.add(new NPC("Johnson Lumber Farm", "sign"));
-        listLumberYard.get(16).setPosition(450, 600);
-        listLumberYard.get(16).setInteractable(true);
+        listLumberYard.get(12).setPosition(450, 600);
+        listLumberYard.get(12).setInteractable(true);
 
         listLumberYard.add(new NPC("", "coord"));
-        listLumberYard.get(17).setPosition(592, 557);
+        listLumberYard.get(13).setPosition(592, 557);
 
         listLumberYard.add(new NPC("", "coord"));
-        listLumberYard.get(18).setPosition(925, 14);
+        listLumberYard.get(14).setPosition(925, 14);
 
         listLumberYard.add(new NPC("", "coord"));
-        listLumberYard.get(19).setPosition(1053, 290);
+        listLumberYard.get(15).setPosition(1053, 290);
+
+        /*
+        listLumberYard.add(new Item("", "tree", 0));
+        listLumberYard.get(16).setPosition(621, 66);
+
+        listLumberYard.add(new Item("", "tree", 0));
+        listLumberYard.get(17).setPosition(0, -35);
+
+        listLumberYard.add(new Item("", "tree", 0));
+        listLumberYard.get(18).setPosition(213, -35);
+
+        listLumberYard.add(new Item("", "tree", 0));
+        listLumberYard.get(19).setPosition(418, -35);
+        */
         // **************************************
 
         // Lake *********************************

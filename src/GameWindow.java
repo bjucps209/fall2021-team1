@@ -514,8 +514,8 @@ public class GameWindow {
                             landObjects.setHeight(68);
                             ImageView imgviewStump = new ImageView(imgStump);
                             apaneMain.getChildren().add(imgviewStump);
-                            imgviewStump.setLayoutX(landObjects.getX() - imgviewStump.getLayoutBounds().getMinX());
-                            imgviewStump.setLayoutY(landObjects.getY() - imgviewStump.getLayoutBounds().getMinY() + 86);
+                            imgviewStump.setLayoutX(landObjects.getX() - imgviewStump.getLayoutBounds().getMinX() - 48);
+                            imgviewStump.setLayoutY(landObjects.getY() - imgviewStump.getLayoutBounds().getMinY() - 172);
                             break;
 
                         case "well":
@@ -569,7 +569,7 @@ public class GameWindow {
                             ImageView imgviewHouse = new ImageView(imgHouse);
                             apaneMain.getChildren().add(imgviewHouse);
                             imgviewHouse.setLayoutX(landObjects.getX() - imgviewHouse.getLayoutBounds().getMinX());
-                            imgviewHouse.setLayoutY(landObjects.getY() - imgviewHouse.getLayoutBounds().getMinY() - 98);
+                            imgviewHouse.setLayoutY(landObjects.getY() - imgviewHouse.getLayoutBounds().getMinY() - 124);
                             break;
 
                         case "coord":
