@@ -560,7 +560,7 @@ public class GameWindow {
                             switch (world.getDifficulty()) {
 
                                 case EASY:
-                                    if (spawnNum > 0 && spawnNum <= 8) {
+                                    if (spawnNum >= 0 && spawnNum <= 8) {
                                         Grunt grunt = new Grunt();
                                         grunt.setX(landObjects.getX());
                                         grunt.setY(landObjects.getY());
@@ -579,7 +579,7 @@ public class GameWindow {
                                     break;
 
                                 case MEDIUM:
-                                    if (spawnNum > 0 && spawnNum <= 6) {
+                                    if (spawnNum >= 0 && spawnNum <= 6) {
                                         Grunt grunt = new Grunt();
                                         grunt.setX(landObjects.getX());
                                         grunt.setY(landObjects.getY());
@@ -598,7 +598,7 @@ public class GameWindow {
                                     break;
 
                                 case HARD:
-                                    if (spawnNum > 0 && spawnNum <= 4) {
+                                    if (spawnNum >= 0 && spawnNum <= 4) {
                                         Grunt grunt = new Grunt();
                                         grunt.setX(landObjects.getX());
                                         grunt.setY(landObjects.getY());
@@ -1273,19 +1273,13 @@ public class GameWindow {
             public void handle(MouseEvent e) {
                 try {
 
-                    // TODO: Can't figure out how to draw the right stuff, please help!
-
-                    //apaneMain.getChildren().removeAll(apaneMain.getChildren());
-
+                    apaneMain.getChildren().removeAll(apaneMain.getChildren());
                     Serialization.load("SAVEGAME.txt");
+                    drawScreen(world.getPlayer().getX(), world.getPlayer().getY(), imgPlayerRight);
+                    unpause();
+                    setIsPaused(false);
                     System.out.println("Game Loaded!");
                     
-                    //drawWorld();
-                    //drawHealth();
-                    //drawLocationLabel();
-                    //drawScore();
-                    //processAnimationDirection();
-                    //drawPlayer(world.getPlayer().getX(), world.getPlayer().getY(), imgPlayerRight);
 
                 } catch (IOException ev) {
 
