@@ -44,9 +44,11 @@ public class Juggernaut extends Enemy {
 
         }
 
-        if (foundPlayer() && state == JuggernautState.PATROL) { 
+        if (foundPlayer() && state == JuggernautState.PATROL) {
+
             state = JuggernautState.ATTACK;
             setSpeed(5);
+        
         }
 
         double x = this.getX();
