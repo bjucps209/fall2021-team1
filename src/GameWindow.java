@@ -1135,6 +1135,9 @@ public class GameWindow {
                 break;
 
             case C:
+
+                if (isPaused()) break;
+                
                 if (cheatModeEnabled) {
 
                     cheatModeEnabled = false;

@@ -55,52 +55,9 @@ public class Serialization {
 
         while (line != null) {
 
-            data = line.split("::");
-            EntityType type = stringToType(data[0]);
-
             try {
 
-                switch (type) {
-
-                    case NPC:
-                        
-                        // needs fix
-                        entities.add(new NPC(data[1], line));
-                        break;
-    
-                    case ITEM:
-    
-                        // needs fix
-                        entities.add(new Item(data[1], line, Integer.parseInt(data[2])));
-                        break;
-    
-                    case PROJECTILE:
-    
-                        // TODO: add projectiles
-                        break;
-    
-                    case GRUNT_ENEMY:
-    
-                        var grunt = new Grunt(0);
-    
-                        grunt.setId(Integer.parseInt(data[1]));
-                        grunt.setPosition(Double.parseDouble(data[2]), Double.parseDouble(data[3]));
-                        grunt.setState(data[4]);
-    
-                        entities.add(grunt);
-                        break;
-
-                    case JUGGERNAUT_ENEMY:
-
-                        var jugg = new Juggernaut(0);
-
-                        jugg.setId(Integer.parseInt(data[1]));
-                        jugg.setPosition(Double.parseDouble(data[2]), Double.parseDouble(data[3]));
-                        jugg.setState(data[4]);
-
-                        break;
-    
-                }
+                entities.add(Entity.deserialize(line));
 
             } catch (Exception e) {
 
@@ -229,43 +186,6 @@ public class Serialization {
 
                 throw new IOException("Invalid save");
         
-        }
-
-    }
-
-    /**
-     * Translate a string to the EntityType it represents.
-     * @param type the type string
-     * @return the string representing type
-     */
-    private static EntityType stringToType(String type) throws IOException {
-
-        switch (type) {
-
-            case "PLAYER":
-                
-                return EntityType.PLAYER;
-
-            case "NPC":
-                
-                return EntityType.NPC;
-
-            case "ITEM":
-                
-                return EntityType.ITEM;
-
-            case "GRUNT_ENEMY":
-                
-                return EntityType.GRUNT_ENEMY;
-        
-            case "PROJECTILE":
-
-                return EntityType.PROJECTILE;
-
-            default:
-
-                throw new IOException("Invalid save");
-
         }
 
     }

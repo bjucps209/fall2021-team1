@@ -27,7 +27,7 @@ public class NPC extends Entity {
     @Override
     public String serialize() {
 
-        return "" + getType() + "::" + getMessage().replaceAll("\n", "█") + "\n";
+        return "" + getType() + "::" + getMessage().replaceAll("\n", "█") + "\n" + "::" + getDescription();
 
     }
 

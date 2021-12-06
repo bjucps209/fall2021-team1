@@ -24,6 +24,59 @@ public abstract class Entity {
 
     }
 
+    public static Entity deserialize(String saveLine) {
+
+        String[] data = saveLine.split("::");
+
+        switch (stringToType(data[0])) {
+
+            case NPC:
+                
+                return new NPC(data[1], data[2]);
+
+            case ITEM:
+
+                return new Item(data[1], data[2], Integer.parseInt(data[3]));
+
+            case PROJECTILE:
+
+                // TODO: add projectiles
+                break;
+
+            case GRUNT_ENEMY:
+
+                var grunt = new Grunt(0);
+
+                grunt.setId(Integer.parseInt(data[1]));
+                grunt.setPosition(Double.parseDouble(data[2]), Double.parseDouble(data[3]));
+                grunt.setState(data[4]);
+
+                return grunt;
+
+            case JUGGERNAUT_ENEMY:
+
+                var jugg = new Juggernaut(0);
+
+                jugg.setId(Integer.parseInt(data[1]));
+                jugg.setPosition(Double.parseDouble(data[2]), Double.parseDouble(data[3]));
+                jugg.setState(data[4]);
+
+                return jugg;
+
+            case CLOUD_WIZARD:
+
+                return null;
+
+            default:
+
+                return null;
+
+        }
+
+        return null;
+
+    }
+
     /**
      * Checks to see if another entity overlaps with this entity.
      * @param other the other entity
@@ -44,6 +97,49 @@ public abstract class Entity {
         }
 
         return false;
+
+    }
+
+    /**
+     * Translate a string to the EntityType it represents.
+     * @param type the type string
+     * @return the string representing type
+     */
+    private static EntityType stringToType(String type) {
+
+        switch (type) {
+
+            case "PLAYER":
+                
+                return EntityType.PLAYER;
+
+            case "NPC":
+                
+                return EntityType.NPC;
+
+            case "ITEM":
+                
+                return EntityType.ITEM;
+
+            case "GRUNT_ENEMY":
+                
+                return EntityType.GRUNT_ENEMY;
+
+            case "JUGGERNAUT_ENEMY":
+
+                return EntityType.JUGGERNAUT_ENEMY;
+
+            case "CLOUD_WIZARD":
+
+                return EntityType.CLOUD_WIZARD;
+        
+            case "PROJECTILE":
+
+                return EntityType.PROJECTILE;
+
+        }
+
+        return null;
 
     }
 
