@@ -35,6 +35,7 @@ import model.Enemy;
 import model.Entity;
 import model.Grunt;
 import model.HighScore;
+import model.Item;
 import model.Juggernaut;
 import model.Leaderboard;
 import model.NPC;
@@ -138,6 +139,20 @@ public class GameWindow {
     private Image imgJuggLeftAttack = new Image("Final Assets/Jugg/GIF/Jugg-Left-Attack-192x192.gif");
     // **********************
 
+    // Wizard Images **********
+    private Image imgWizardFront = new Image("Final Assets/Wizard/PNG/Wizard-Front-Stationary-128x128.png");
+    private Image imgWizardFrontMove = new Image("Final Assets/Wizard/GIF/Wizard-Front-Walking-128x128.gif");
+    private Image imgWizardBackMove = new Image("Final Assets/Wizard/GIF/Wizard-Back-Walking-128x128.gif");
+    private Image imgWizardRighttMove = new Image("Final Assets/Wizard/GIF/Wizard-Right-Walking-128x128.gif");
+    private Image imgWizardLeftMove = new Image("Final Assets/Wizard/GIF/Wizard-Left-Walking-128x128.gif");
+    private Image imgWizardFrontAttack = new Image("Final Assets/Wizard/GIF/Wizard-Front-Attack-128x128.gif");
+    private Image imgWizardBackAttack = new Image("Final Assets/Wizard/GIF/Wizard-Back-Attack-128x128.gif");
+    private Image imgWizardRightAttack = new Image("Final Assets/Wizard/GIF/Wizard-Right-Attack-128x128.gif");
+    private Image imgWizardLeftAttack = new Image("Final Assets/Wizard/GIF/Wizard-Left-Attack-128x128.gif");
+    private Image imgWizardProjectile = new Image("Final Assets/Wizard/GIF/Wizard-Projectile-128x128.gif");
+    private Image imgWizardDeath = new Image("Final Assets/Wizard/GIF/Wizard-Death-128x128.gif");
+    // **********************
+
     // Object Images ********
     private Image imgDSignLeft = new Image("Final Assets/Objects/PNG/Objects-DSign-Left-64x64.png");
     private Image imgDSignRight = new Image("Final Assets/Objects/PNG/Objects-DSign-Right-64x64.png");
@@ -151,6 +166,7 @@ public class GameWindow {
     private Image imgTree = new Image("Final Assets/Objects/PNG/Objects-Tree-256x256.png");
     private Image imgWell = new Image("Final Assets/Objects/PNG/Objects-Well-256x256.png");
     private Image imgHouse = new Image("Final Assets/Objects/PNG/Objects-House-Front-512x512.png");
+    private Image imgCoin = new Image("Final Assets/Coin/GIF/Coin-68x68.gif");
     // **********************
 
     // UI Images ************
@@ -283,27 +299,35 @@ public class GameWindow {
 
             case NPC:
 
-                Label lblMessage = new Label();
-                lblMessage.setText(((NPC) interactedEntity).getMessage());
-                lblMessage.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
-                lblMessage.setLayoutX(interactedEntity.getX() - 53);
-                lblMessage.setLayoutY(interactedEntity.getY() - 30);
+                Label lblNPCMessage = new Label();
+                lblNPCMessage.setText(((NPC) interactedEntity).getMessage());
+                lblNPCMessage.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
+                lblNPCMessage.setLayoutX(interactedEntity.getX() - 53);
+                lblNPCMessage.setLayoutY(interactedEntity.getY() - 30);
 
-                apaneMain.getChildren().add(lblMessage);
+                apaneMain.getChildren().add(lblNPCMessage);
 
                 PauseTransition labelPause = new PauseTransition(Duration.seconds(3));
-                labelPause.setOnFinished(e -> lblMessage.setVisible(false));
+                labelPause.setOnFinished(e -> lblNPCMessage.setVisible(false));
                 labelPause.play();
 
                 return;
 
             case ITEM:
 
-                // var item = (Item) interactedEntity;
-                // displayText(interactedEntity.getX() - 53, interactedEntity.getY() - 30,
-                // item.getMessage());
+                // Label lblMessage = new Label();
+                // lblMessage.setText(((NPC) interactedEntity).getMessage());
+                // lblMessage.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
+                // lblMessage.setLayoutX(interactedEntity.getX() - 53);
+                // lblMessage.setLayoutY(interactedEntity.getY() - 30);
 
-                // World.instance().increaseScore(item.getScoreIncrease());
+                // apaneMain.getChildren().add(lblMessage);
+
+                // PauseTransition labelPause = new PauseTransition(Duration.seconds(3));
+                // labelPause.setOnFinished(e -> lblMessage.setVisible(false));
+                // labelPause.play();
+
+                // return;
 
             default:
 

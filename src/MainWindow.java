@@ -92,8 +92,9 @@ public class MainWindow  {
         // Music
         AudioClip music = new AudioClip(getClass().getResource("Audio/Retro_Forest_-_David_Fesliyan.mp3").toExternalForm());
         music.setVolume(0.5);
-        music.setCycleCount(100);
-        //music.play();
+        music.setCycleCount(AudioClip.INDEFINITE);
+        Thread thread = new Thread(() -> music.play());
+        thread.start();
 
         // Font
         Font.loadFont(getClass().getResourceAsStream("/Final Assets/UI/Minecraft.ttf"), 64);
@@ -269,7 +270,7 @@ public class MainWindow  {
         Music:
         'Retro Forest' by David Fesliyan
 
-        SFX by Zapsplatt.com
+        Coin SFX by Zapsplatt.com
 
         Art Design:
         David Goff
@@ -600,8 +601,6 @@ public class MainWindow  {
         var loader = new FXMLLoader(getClass().getResource("GameWindow.fxml"));
         var scene = new Scene(loader.load());
         var stage = new Stage();
-
-        // TODO add difficulty selection after start is pressed
 
         GameWindow controller = loader.getController();
 
