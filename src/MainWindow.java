@@ -92,8 +92,8 @@ public class MainWindow  {
         // Music
         AudioClip music = new AudioClip(getClass().getResource("Audio/Retro_Forest_-_David_Fesliyan.mp3").toExternalForm());
         music.setVolume(0.5);
-        music.setCycleCount(100);
-        //music.play();
+        music.setCycleCount(AudioClip.INDEFINITE);
+        music.play();
 
         // Font
         Font.loadFont(getClass().getResourceAsStream("/Final Assets/UI/Minecraft.ttf"), 64);
