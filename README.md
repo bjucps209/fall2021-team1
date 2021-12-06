@@ -30,7 +30,8 @@ https://bju-my.sharepoint.com/:v:/g/personal/afox797_students_bju_edu/EVV4Jrgpba
 |-------------|----------|----------------|-----------------|
 | Andrew Fox | afox797 | 44:30 | 5:30 |
 | Joshua Douglas | Josh-Douglas | 26:15 | 23:45 |
-| David Goff | dgoff448 | | | |
+| David Goff | dgoff448 | 39:35 | 10:25 |
   
 [Andrew Fox Journal](https://github.com/bjucps209/fall2021-team1/wiki/Andrew-Fox-Journal)  
 [Joshua Douglas Journal](https://github.com/bjucps209/fall2021-team1/wiki/Joshua-Douglas-Journal)  
+[David Goff Journal](https://github.com/bjucps209/fall2021-team1/wiki/David-Goff-Journal)
