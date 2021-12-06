@@ -72,15 +72,7 @@ public class Player extends Living {
             for (Entity enemy : list) {
 
                 Enemy target = (Enemy) enemy;
-                boolean hit = false;
-
                 double targetDistance = Math.hypot(this.getX() - target.getX(), this.getY() - target.getY());
-
-                if (target instanceof Juggernaut && targetDistance < 32) {
-
-                    hit = true;
-
-                }
 
                 // NOTE: Currently assumes that all creatures are the same size.
                 if (targetDistance < 128) {
@@ -90,25 +82,25 @@ public class Player extends Living {
                         case UP:
                             
                             if (target.getY() - 1 < this.getY() - this.getWidth() / 2) return null;
-                            hit = true;
+                            target.handleDamage(getDamage(), 90);
                             break;
 
                         case DOWN:
                             
                             if (target.getY() + 1 > this.getY() + this.getWidth() / 2) return null;
-                            hit = true;
+                            target.handleDamage(getDamage(), 270);
                             break;
 
                         case LEFT:
                             
                             if (target.getX() + 1 > this.getX() + this.getHeight() / 2) return null;
-                            hit = true;
+                            target.handleDamage(getDamage(), 180);
                             break;
 
                         case RIGHT:
                             
                             if (target.getX() - 1 < this.getX() - this.getHeight() / 2) return null;
-                            hit = true;
+                            target.handleDamage(getDamage(), 0);
                             break;
                     
                         default: // Default case so Code will be happy.
@@ -117,34 +109,7 @@ public class Player extends Living {
 
                     }
 
-                }
-
-                if (hit == true) {
-                    
-                    if (target instanceof Grunt) {
-
-                        switch (direction) {
-                            
-                            case UP:
-                                target.handleDamage(getDamage(), 90);
-                                break;
-
-                            case LEFT:
-                                target.handleDamage(getDamage(), 180);
-                                break;
-                            
-                            case DOWN:
-                                target.handleDamage(getDamage(), 270);
-                                break;
-                            
-                            case RIGHT:
-                                target.handleDamage(getDamage(), 0);
-                                break;
-
-                        }
-
-                        return target;
-                    }
+                    return target;
 
                 }
 
