@@ -35,6 +35,7 @@ import model.Enemy;
 import model.Entity;
 import model.Grunt;
 import model.HighScore;
+import model.Item;
 import model.Juggernaut;
 import model.Leaderboard;
 import model.NPC;
@@ -298,27 +299,35 @@ public class GameWindow {
 
             case NPC:
 
-                Label lblMessage = new Label();
-                lblMessage.setText(((NPC) interactedEntity).getMessage());
-                lblMessage.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
-                lblMessage.setLayoutX(interactedEntity.getX() - 53);
-                lblMessage.setLayoutY(interactedEntity.getY() - 30);
+                Label lblNPCMessage = new Label();
+                lblNPCMessage.setText(((NPC) interactedEntity).getMessage());
+                lblNPCMessage.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
+                lblNPCMessage.setLayoutX(interactedEntity.getX() - 53);
+                lblNPCMessage.setLayoutY(interactedEntity.getY() - 30);
 
-                apaneMain.getChildren().add(lblMessage);
+                apaneMain.getChildren().add(lblNPCMessage);
 
                 PauseTransition labelPause = new PauseTransition(Duration.seconds(3));
-                labelPause.setOnFinished(e -> lblMessage.setVisible(false));
+                labelPause.setOnFinished(e -> lblNPCMessage.setVisible(false));
                 labelPause.play();
 
                 return;
 
             case ITEM:
 
-                // var item = (Item) interactedEntity;
-                // displayText(interactedEntity.getX() - 53, interactedEntity.getY() - 30,
-                // item.getMessage());
+                // Label lblMessage = new Label();
+                // lblMessage.setText(((NPC) interactedEntity).getMessage());
+                // lblMessage.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
+                // lblMessage.setLayoutX(interactedEntity.getX() - 53);
+                // lblMessage.setLayoutY(interactedEntity.getY() - 30);
 
-                // World.instance().increaseScore(item.getScoreIncrease());
+                // apaneMain.getChildren().add(lblMessage);
+
+                // PauseTransition labelPause = new PauseTransition(Duration.seconds(3));
+                // labelPause.setOnFinished(e -> lblMessage.setVisible(false));
+                // labelPause.play();
+
+                // return;
 
             default:
 
