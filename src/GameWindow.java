@@ -167,6 +167,8 @@ public class GameWindow {
     private Image imgQuitBtn2 = new Image("Final Assets/UI/PNG/UI-QuitBtn2-312x80.png");
     private Image imgBackBtn1 = new Image("Final Assets/UI/PNG/UI-BackBtn1-312x80.png");
     private Image imgBackBtn2 = new Image("Final Assets/UI/PNG/UI-BackBtn2-312x80.png");
+    private Image imgResumeBtn1 = new Image("Final Assets/UI/PNG/UI-ResumeBtn1-312x80.png");
+    private Image imgResumeBtn2 = new Image("Final Assets/UI/PNG/UI-ResumeBtn2-312x80.png");
     // **********************
 
     // UI ImageViews ************
@@ -182,6 +184,7 @@ public class GameWindow {
     private ImageView imgviewQuitBtn1 = new ImageView(imgQuitBtn1);
     private ImageView imgviewGOQuitBtn = new ImageView(imgQuitBtn1);
     private ImageView imgviewHelpBackBtn = new ImageView(imgBackBtn1);
+    private ImageView imgviewResumeBtn = new ImageView(imgResumeBtn1);
     // **********************
 
     // UI VBoxes *********************
@@ -1191,12 +1194,12 @@ public class GameWindow {
 
             case ESCAPE:
                 if (isPaused()) {
-                    setIsPaused(false);
+                    // setIsPaused(false);
                     unpause();
                 } else if (world.isGameOver()) {
 
                 } else {
-                    setIsPaused(true);
+                    // setIsPaused(true);
                     pause();
                 }
 
@@ -1223,6 +1226,8 @@ public class GameWindow {
           
         apaneMain.getChildren().add(imgviewBackgroundDim);
         apaneMain.getChildren().add(pauseVbox);
+
+        setIsPaused(true);
     }
 
     /**
@@ -1233,6 +1238,7 @@ public class GameWindow {
         timeline.play();
         apaneMain.getChildren().remove(imgviewBackgroundDim);
         apaneMain.getChildren().remove(pauseVbox);
+        setIsPaused(false);
     }
 
     /**
@@ -1250,6 +1256,17 @@ public class GameWindow {
 
         // Button Graphic Changing
         // *****************************************************************************
+        imgviewResumeBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                imgviewResumeBtn.setImage(imgResumeBtn2);
+            }
+        });
+        imgviewResumeBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                imgviewResumeBtn.setImage(imgResumeBtn1);
+            }
+        });
+        // ------------------------------------------------------------------------------------------------------
         imgviewSaveBtn1.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
                 imgviewSaveBtn1.setImage(imgSaveBtn2);
@@ -1297,6 +1314,13 @@ public class GameWindow {
 
         // Button Functions
         // *************************************************************************************
+        imgviewResumeBtn.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                unpause();
+            }
+        });
+
+        // ------------------------------------------------------------------------------------------------------
         imgviewSaveBtn1.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
                 try {
@@ -1353,6 +1377,7 @@ public class GameWindow {
         // ******************************************************************************************************
 
         pauseVbox.getChildren().add(pauseLbl);
+        pauseVbox.getChildren().add(imgviewResumeBtn);
         pauseVbox.getChildren().add(imgviewSaveBtn1);
         pauseVbox.getChildren().add(imgviewLoadBtn1);
         pauseVbox.getChildren().add(imgviewHelpBtn1);
