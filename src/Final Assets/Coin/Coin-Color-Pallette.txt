@@ -1,0 +1,4 @@
+Coin Color Pallette:
+
+ dark gold	#DAA520
+ gold		#FFD700
