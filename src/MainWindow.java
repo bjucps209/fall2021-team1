@@ -256,11 +256,6 @@ public class MainWindow  {
             }
         });
 
-        
-        // aboutVbox.setAlignment(Pos.CENTER);
-        // aboutVbox.setSpacing(10.0);
-        // aboutVbox.getChildren().add(backBtn);
-        // aboutVbox.setTranslateY(350);
 
         aboutVbox.setAlignment(Pos.TOP_CENTER);
         aboutVbox.setSpacing(10.0);
@@ -286,7 +281,8 @@ public class MainWindow  {
         Andrew Fox
         """);
 
-        lbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
+
+        lbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 28px; -fx-text-fill: #ffffff;");
         lbl.setTextAlignment(TextAlignment.CENTER);
         Label titleLbl = new Label("ABOUT");
         titleLbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 48px; -fx-text-fill: #ffffff;");
@@ -299,9 +295,6 @@ public class MainWindow  {
      * The build of the "Highscore" screen.
      */
     public void createHsVbox() {
-        // hsVbox.setAlignment(Pos.CENTER);
-        // hsVbox.setSpacing(10.0);
-        // hsVbox.setTranslateY(350);
 
         //Mouse Pressed/Released------------------------------------------------------------------------------
         imgviewBackHsBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
