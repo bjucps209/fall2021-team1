@@ -165,6 +165,7 @@ public class GameWindow {
     private Image imgTree = new Image("Final Assets/Objects/PNG/Objects-Tree-256x256.png");
     private Image imgWell = new Image("Final Assets/Objects/PNG/Objects-Well-256x256.png");
     private Image imgHouse = new Image("Final Assets/Objects/PNG/Objects-House-Front-512x512.png");
+    private Image imgCoin = new Image("Final Assets/Coin/GIF/Coin-68x68.gif");
     // **********************
 
     // UI Images ************
