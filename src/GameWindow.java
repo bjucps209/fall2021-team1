@@ -669,34 +669,51 @@ public class GameWindow {
      */
     @FXML
     public void switchZones() {
+
         if (world.getPlayer().getY() <= 15) {
+
             if (world.getCurrentlocation().getNorthZone() != null) {
+
                 world.setCurrentlocation(world.getCurrentlocation().getNorthZone());
                 apaneMain.getChildren().removeAll(apaneMain.getChildren());
                 drawScreen(720, 800, imgPlayerBack);
+
             }
 
         } else if (world.getPlayer().getX() <= 15) {
+
             if (world.getCurrentlocation().getWestZone() != null) {
+
                 world.setCurrentlocation(world.getCurrentlocation().getWestZone());
                 apaneMain.getChildren().removeAll(apaneMain.getChildren());
                 drawScreen(1300, 450, imgPlayerLeft);
+
             }
 
         } else if (world.getPlayer().getY() >= 770) {
+
             if (world.getCurrentlocation().getSouthZone() != null) {
+
                 world.setCurrentlocation(world.getCurrentlocation().getSouthZone());
                 apaneMain.getChildren().removeAll(apaneMain.getChildren());
                 drawScreen(720, 20, imgPlayerFront);
+
             }
 
         } else if (world.getPlayer().getX() >= 1330) {
+
             if (world.getCurrentlocation().getEastZone() != null) {
+
                 world.setCurrentlocation(world.getCurrentlocation().getEastZone());
                 apaneMain.getChildren().removeAll(apaneMain.getChildren());
                 drawScreen(20, 450, imgPlayerRight);
+
             }
+
         }
+
+        processAnimationDirection();
+
     }
 
     /**
@@ -1173,10 +1190,8 @@ public class GameWindow {
                 break;
 
             case X:
-                if (!isPaused()) {
-                    switchZones();
-                }
 
+                if (!isPaused()) switchZones();
                 break;
 
             case SPACE:
