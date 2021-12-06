@@ -140,17 +140,17 @@ public class GameWindow {
     // **********************
 
     // Wizard Images **********
-    private Image imgWizardFront = new Image("Final Assets/Jugg/PNG/Wizard-Front-Stationary-128x128.png");
-    private Image imgWizardFrontMove = new Image("Final Assets/Jugg/GIF/Wizard-Front-Walking-128x128.gif");
-    private Image imgWizardBackMove = new Image("Final Assets/Jugg/GIF/Wizard-Back-Walking-128x128.gif");
-    private Image imgWizardRighttMove = new Image("Final Assets/Jugg/GIF/Wizard-Right-Walking-128x128.gif");
-    private Image imgWizardLeftMove = new Image("Final Assets/Jugg/GIF/Wizard-Left-Walking-128x128.gif");
-    private Image imgWizardFrontAttack = new Image("Final Assets/Jugg/GIF/Wizard-Front-Attack-128x128.gif");
-    private Image imgWizardBackAttack = new Image("Final Assets/Jugg/GIF/Wizard-Back-Attack-128x128.gif");
-    private Image imgWizardRightAttack = new Image("Final Assets/Jugg/GIF/Wizard-Right-Attack-128x128.gif");
-    private Image imgWizardLeftAttack = new Image("Final Assets/Jugg/GIF/Wizard-Left-Attack-128x128.gif");
-    private Image imgWizardProjectile = new Image("Final Assets/Jugg/GIF/Wizard-Projectile-128x128.gif");
-    private Image imgWizardDeath = new Image("Final Assets/Jugg/GIF/Wizard-Death-128x128.gif");
+    private Image imgWizardFront = new Image("Final Assets/Wizard/PNG/Wizard-Front-Stationary-128x128.png");
+    private Image imgWizardFrontMove = new Image("Final Assets/Wizard/GIF/Wizard-Front-Walking-128x128.gif");
+    private Image imgWizardBackMove = new Image("Final Assets/Wizard/GIF/Wizard-Back-Walking-128x128.gif");
+    private Image imgWizardRighttMove = new Image("Final Assets/Wizard/GIF/Wizard-Right-Walking-128x128.gif");
+    private Image imgWizardLeftMove = new Image("Final Assets/Wizard/GIF/Wizard-Left-Walking-128x128.gif");
+    private Image imgWizardFrontAttack = new Image("Final Assets/Wizard/GIF/Wizard-Front-Attack-128x128.gif");
+    private Image imgWizardBackAttack = new Image("Final Assets/Wizard/GIF/Wizard-Back-Attack-128x128.gif");
+    private Image imgWizardRightAttack = new Image("Final Assets/Wizard/GIF/Wizard-Right-Attack-128x128.gif");
+    private Image imgWizardLeftAttack = new Image("Final Assets/Wizard/GIF/Wizard-Left-Attack-128x128.gif");
+    private Image imgWizardProjectile = new Image("Final Assets/Wizard/GIF/Wizard-Projectile-128x128.gif");
+    private Image imgWizardDeath = new Image("Final Assets/Wizard/GIF/Wizard-Death-128x128.gif");
     // **********************
 
     // Object Images ********
