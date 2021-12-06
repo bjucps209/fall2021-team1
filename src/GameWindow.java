@@ -1090,15 +1090,17 @@ public class GameWindow {
             case C:
                 if (cheatModeEnabled) {
 
-                    world.getPlayer().setDamage(1000);
-                    world.getPlayer().setMaxHealth(1000);
-                    world.getPlayer().setHealth(1000);
-
-                } else {
-
+                    cheatModeEnabled = false;
                     world.getPlayer().setDamage(1);
                     world.getPlayer().setMaxHealth(5);
                     world.getPlayer().setHealth(5);
+
+                } else {
+
+                    cheatModeEnabled = true;
+                    world.getPlayer().setDamage(1000);
+                    world.getPlayer().setMaxHealth(1000);
+                    world.getPlayer().setHealth(1000);
 
                 }
 
@@ -1581,10 +1583,6 @@ public class GameWindow {
 
         switch (health) {
 
-            case 10:
-                imgviewHeart.setImage(imgHeart10);
-                break;
-
             case 9:
                 imgviewHeart.setImage(imgHeart9);
                 break;
@@ -1619,6 +1617,10 @@ public class GameWindow {
 
             case 1:
                 imgviewHeart.setImage(imgHeart1);
+                break;
+
+            default:
+                imgviewHeart.setImage(imgHeart10);
                 break;
 
         }

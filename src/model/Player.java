@@ -74,32 +74,40 @@ public class Player extends Living {
                 Enemy target = (Enemy) enemy;
                 boolean hit = false;
 
+                double targetDistance = Math.hypot(this.getX() - target.getX(), this.getY() - target.getY());
+
+                if (target instanceof Juggernaut && targetDistance < 32) {
+
+                    hit = true;
+
+                }
+
                 // NOTE: Currently assumes that all creatures are the same size.
-                if (Math.hypot(this.getX() - target.getX(), this.getY() - target.getY()) < 128) {
+                if (targetDistance < 128) {
 
                     switch (direction) {
 
                         case UP:
                             
-                            if (target.getY() < this.getY() - this.getWidth() / 2) return null;
+                            if (target.getY() - 1 < this.getY() - this.getWidth() / 2) return null;
                             hit = true;
                             break;
 
                         case DOWN:
                             
-                            if (target.getY() > this.getY() + this.getWidth() / 2) return null;
+                            if (target.getY() + 1 > this.getY() + this.getWidth() / 2) return null;
                             hit = true;
                             break;
 
                         case LEFT:
                             
-                            if (target.getX() > this.getX() + this.getHeight() / 2) return null;
+                            if (target.getX() + 1 > this.getX() + this.getHeight() / 2) return null;
                             hit = true;
                             break;
 
                         case RIGHT:
                             
-                            if (target.getX() < this.getX() - this.getHeight() / 2) return null;
+                            if (target.getX() - 1 < this.getX() - this.getHeight() / 2) return null;
                             hit = true;
                             break;
                     
