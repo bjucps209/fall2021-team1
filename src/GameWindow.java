@@ -173,8 +173,7 @@ public class GameWindow {
 
     // UI ImageViews ************
     private ImageView imgviewBackgroundDim = new ImageView(imgBackgroundDim);
-    private ImageView imgviewPauseBtn1 = new ImageView(imgPauseBtn1);
-    private ImageView imgviewPauseBtn2 = new ImageView(imgPauseBtn2);
+    private ImageView imgviewPauseBtn = new ImageView(imgPauseBtn1);
     private ImageView imgviewSaveBtn1 = new ImageView(imgSaveBtn1);
     private ImageView imgviewSaveBtn2 = new ImageView(imgSaveBtn2);
     private ImageView imgviewLoadBtn1 = new ImageView(imgLoadbtn1);
@@ -257,6 +256,9 @@ public class GameWindow {
 
         // Building the entire scene of a zone.
         drawWorld();
+
+        // Generate Pause Button
+        drawPauseButton();
 
         // Set Default Font
         Font.loadFont(getClass().getResourceAsStream("/Final Assets/UI/Minecraft.ttf"), 64);
@@ -431,6 +433,33 @@ public class GameWindow {
         AnchorPane.setTopAnchor(lblLocation, 10.0);
         AnchorPane.setLeftAnchor(lblLocation, 10.0);
         apaneMain.getChildren().add(lblLocation);
+    }
+
+    @FXML
+    public void drawPauseButton() {
+        imgviewPauseBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                imgviewPauseBtn.setImage(imgPauseBtn2);
+            }
+        });
+        imgviewPauseBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                imgviewPauseBtn.setImage(imgPauseBtn1);
+            }
+        });
+
+
+        imgviewPauseBtn.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                pause();
+            }
+        });
+
+        imgviewPauseBtn.setFitHeight(40);
+        imgviewPauseBtn.setFitWidth(40);
+        AnchorPane.setBottomAnchor(imgviewPauseBtn, 10.0);
+        AnchorPane.setRightAnchor(imgviewPauseBtn, 10.0);
+        apaneMain.getChildren().add(imgviewPauseBtn);
     }
 
     /**
@@ -664,6 +693,7 @@ public class GameWindow {
         drawHealth();
         drawLocationLabel();
         drawScore();
+        drawPauseButton();
     }
 
     /**
