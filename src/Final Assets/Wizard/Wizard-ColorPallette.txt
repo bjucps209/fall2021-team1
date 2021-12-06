@@ -1,7 +1,12 @@
 Wizard Color Pallette
 
-Skin:     	#
-Skin Outline:   #
-Teeth:		#
-Skirt: 		#
-Skirt Outline:  #
+Eyes: 		#000000
+Skin:     	#e8beac
+Beard:		#bababa
+Robe/Hat: 	#080052
+Robe Tassel:    #8f7500
+Staff: 		#96704b
+Jewel: 		#7c0085
+Jewel Center: 	#62006b
+Jewel Dark: 	#56005c
+Jewel Light: 	#9300a3

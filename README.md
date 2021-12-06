@@ -10,7 +10,7 @@ Gameplay: Basic gameplay is working, the player can move around the screen, inte
 
 
 
-Serialization: For Josh to fill out
+Serialization: The saving and loading feature is working for both the world and the high scores (although high scores are not displayed yet). On saving, the player's position, world location, health, and score are all saved to a text file. The values can be retrieved when loading to return the world to the state it was in.
 
 
 High Score Screen: For David to fill out
@@ -29,7 +29,7 @@ https://bju-my.sharepoint.com/:v:/g/personal/afox797_students_bju_edu/EVV4Jrgpba
 | Member Name | Username | Hours Invested | Hours Remaining |
 |-------------|----------|----------------|-----------------|
 | Andrew Fox | afox797 | 44:30 | 5:30 |
-| Joshua Douglas | Josh-Douglas | 12:45 | 37:15 |
+| Joshua Douglas | Josh-Douglas | 26:15 | 23:45 |
 | David Goff | dgoff448 | | | |
   
 [Andrew Fox Journal](https://github.com/bjucps209/fall2021-team1/wiki/Andrew-Fox-Journal)  
