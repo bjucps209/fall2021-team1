@@ -174,13 +174,10 @@ public class GameWindow {
     // UI ImageViews ************
     private ImageView imgviewBackgroundDim = new ImageView(imgBackgroundDim);
     private ImageView imgviewPauseBtn = new ImageView(imgPauseBtn1);
-    private ImageView imgviewSaveBtn1 = new ImageView(imgSaveBtn1);
-    private ImageView imgviewSaveBtn2 = new ImageView(imgSaveBtn2);
-    private ImageView imgviewLoadBtn1 = new ImageView(imgLoadbtn1);
-    private ImageView imgviewLoadBtn2 = new ImageView(imgLoadbtn2);
-    private ImageView imgviewHelpBtn1 = new ImageView(imgHelpBtn1);
-    private ImageView imgviewHelpBtn2 = new ImageView(imgHelpBtn2);
-    private ImageView imgviewQuitBtn1 = new ImageView(imgQuitBtn1);
+    private ImageView imgviewSaveBtn = new ImageView(imgSaveBtn1);
+    private ImageView imgviewLoadBtn = new ImageView(imgLoadbtn1);
+    private ImageView imgviewHelpBtn = new ImageView(imgHelpBtn1);
+    private ImageView imgviewQuitBtn = new ImageView(imgQuitBtn1);
     private ImageView imgviewGOQuitBtn = new ImageView(imgQuitBtn1);
     private ImageView imgviewHelpBackBtn = new ImageView(imgBackBtn1);
     private ImageView imgviewResumeBtn = new ImageView(imgResumeBtn1);
@@ -1312,47 +1309,47 @@ public class GameWindow {
             }
         });
         // ------------------------------------------------------------------------------------------------------
-        imgviewSaveBtn1.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewSaveBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewSaveBtn1.setImage(imgSaveBtn2);
+                imgviewSaveBtn.setImage(imgSaveBtn2);
             }
         });
-        imgviewSaveBtn1.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewSaveBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewSaveBtn1.setImage(imgSaveBtn1);
-            }
-        });
-        // ------------------------------------------------------------------------------------------------------
-        imgviewLoadBtn1.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent e) {
-                imgviewLoadBtn1.setImage(imgLoadbtn2);
-            }
-        });
-        imgviewLoadBtn1.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent e) {
-                imgviewLoadBtn1.setImage(imgLoadbtn1);
+                imgviewSaveBtn.setImage(imgSaveBtn1);
             }
         });
         // ------------------------------------------------------------------------------------------------------
-        imgviewHelpBtn1.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewLoadBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewHelpBtn1.setImage(imgHelpBtn2);
+                imgviewLoadBtn.setImage(imgLoadbtn2);
             }
         });
-        imgviewHelpBtn1.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewLoadBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewHelpBtn1.setImage(imgHelpBtn1);
+                imgviewLoadBtn.setImage(imgLoadbtn1);
             }
         });
         // ------------------------------------------------------------------------------------------------------
-        imgviewQuitBtn1.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewHelpBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewQuitBtn1.setImage(imgQuitBtn2);
+                imgviewHelpBtn.setImage(imgHelpBtn2);
             }
         });
-        imgviewQuitBtn1.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewHelpBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewQuitBtn1.setImage(imgQuitBtn1);
+                imgviewHelpBtn.setImage(imgHelpBtn1);
+            }
+        });
+        // ------------------------------------------------------------------------------------------------------
+        imgviewQuitBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                imgviewQuitBtn.setImage(imgQuitBtn2);
+            }
+        });
+        imgviewQuitBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                imgviewQuitBtn.setImage(imgQuitBtn1);
             }
         });
         // ******************************************************************************************************
@@ -1366,7 +1363,7 @@ public class GameWindow {
         });
 
         // ------------------------------------------------------------------------------------------------------
-        imgviewSaveBtn1.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewSaveBtn.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
                 try {
 
@@ -1382,7 +1379,7 @@ public class GameWindow {
         });
 
         // ------------------------------------------------------------------------------------------------------
-        imgviewLoadBtn1.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewLoadBtn.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
                 try {
 
@@ -1403,7 +1400,7 @@ public class GameWindow {
         });
 
         // ------------------------------------------------------------------------------------------------------
-        imgviewHelpBtn1.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewHelpBtn.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
                 apaneMain.getChildren().remove(pauseVbox);
                 apaneMain.getChildren().add(helpVbox);
@@ -1411,11 +1408,11 @@ public class GameWindow {
         });
 
         // ------------------------------------------------------------------------------------------------------
-        imgviewQuitBtn1.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewQuitBtn.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
                 World.instance();
                 World.reset();
-                Stage stage = (Stage) imgviewQuitBtn1.getScene().getWindow();
+                Stage stage = (Stage) imgviewQuitBtn.getScene().getWindow();
                 stage.close();
             }
         });
@@ -1423,10 +1420,10 @@ public class GameWindow {
 
         pauseVbox.getChildren().add(pauseLbl);
         pauseVbox.getChildren().add(imgviewResumeBtn);
-        pauseVbox.getChildren().add(imgviewSaveBtn1);
-        pauseVbox.getChildren().add(imgviewLoadBtn1);
-        pauseVbox.getChildren().add(imgviewHelpBtn1);
-        pauseVbox.getChildren().add(imgviewQuitBtn1);
+        pauseVbox.getChildren().add(imgviewSaveBtn);
+        pauseVbox.getChildren().add(imgviewLoadBtn);
+        pauseVbox.getChildren().add(imgviewHelpBtn);
+        pauseVbox.getChildren().add(imgviewQuitBtn);
 
         pauseVbox.setLayoutX(550);
         pauseVbox.setLayoutY(250);

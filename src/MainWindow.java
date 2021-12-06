@@ -69,23 +69,11 @@ public class MainWindow  {
     // *********************************************************************************
 
     // UI ImageViews **********************************************************************
-    private ImageView imgviewStart1 = new ImageView(imgStart1);
-    private ImageView imgviewStart2 = new ImageView(imgStart2);
-    private ImageView imgviewAbout1 = new ImageView(imgAbout1);
-    private ImageView imgviewAbout2 = new ImageView(imgAbout2);
-    private ImageView imgviewHighscore1 = new ImageView(imgHighscore1);
-    private ImageView imgviewHighscore2 = new ImageView(imgHighscore2);
+    private ImageView imgviewStart = new ImageView(imgStart1);
+    private ImageView imgviewAbout = new ImageView(imgAbout1);
+    private ImageView imgviewHighscore = new ImageView(imgHighscore1);
     private ImageView imgviewBackgroundDim = new ImageView(imgBackgroundDim);
-    private ImageView imgviewPauseBtn1 = new ImageView(imgPauseBtn1);
-    private ImageView imgviewPauseBtn2 = new ImageView(imgPauseBtn2);
-    private ImageView imgviewSaveBtn1 = new ImageView(imgSaveBtn1);
-    private ImageView imgviewSaveBtn2 = new ImageView(imgSaveBtn2);
-    private ImageView imgviewLoadBtn1 = new ImageView(imgLoadbtn1);
-    private ImageView imgviewLoadBtn2 = new ImageView(imgLoadbtn2);
-    private ImageView imgviewHelpBtn1 = new ImageView(imgHelpBtn1);
-    private ImageView imgviewHelpBtn2 = new ImageView(imgHelpBtn2);
-    private ImageView imgviewQuitBtn1 = new ImageView(imgQuitBtn1);
-    private ImageView imgviewQuitBtn2 = new ImageView(imgQuitBtn2);
+    private ImageView imgviewHelpBtn = new ImageView(imgHelpBtn1);
     private ImageView imgviewBackAboutBtn = new ImageView(imgBackBtn1);
     private ImageView imgviewBackHsBtn = new ImageView(imgBackBtn1);
     private ImageView imgviewBackHelpBtn = new ImageView(imgBackBtn1);
@@ -148,64 +136,64 @@ public class MainWindow  {
     public void createStartVbox() {
 
         //onMousePressed/Released-----------------------------------------------------------------------------
-        imgviewStart1.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewStart.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewStart1.setImage(imgStart2);
+                imgviewStart.setImage(imgStart2);
             }
         });
-        imgviewStart1.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewStart.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewStart1.setImage(imgStart1);
+                imgviewStart.setImage(imgStart1);
                 
             }
         });
 
-        imgviewAbout1.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewAbout.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewAbout1.setImage(imgAbout2);
+                imgviewAbout.setImage(imgAbout2);
                 // Thread thread = new Thread(() -> click.play());
                 // thread.start();
             }
         });
-        imgviewAbout1.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewAbout.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewAbout1.setImage(imgAbout1);
+                imgviewAbout.setImage(imgAbout1);
                 
             }
         });
 
-        imgviewHighscore1.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewHighscore.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewHighscore1.setImage(imgHighscore2);
+                imgviewHighscore.setImage(imgHighscore2);
             }
         });
-        imgviewHighscore1.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewHighscore.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewHighscore1.setImage(imgHighscore1);
+                imgviewHighscore.setImage(imgHighscore1);
             }
         });
 
-        imgviewHelpBtn1.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewHelpBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewHelpBtn1.setImage(imgHelpBtn2);
+                imgviewHelpBtn.setImage(imgHelpBtn2);
             }
         });
-        imgviewHelpBtn1.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewHelpBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewHelpBtn1.setImage(imgHelpBtn1);
+                imgviewHelpBtn.setImage(imgHelpBtn1);
             }
         });
         //-----------------------------------------------------------------------------------------------
 
         // Button Functions
         // *************************************************************************************
-        imgviewStart1.setOnMouseClicked(event -> {
+        imgviewStart.setOnMouseClicked(event -> {
             spaneMain.getChildren().remove(startVbox);
             spaneMain.getChildren().add(imgviewBackgroundDim);
             spaneMain.getChildren().add(nameVbox);
         });
 
-        imgviewAbout1.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewAbout.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
                 spaneMain.getChildren().remove(startVbox);
                 spaneMain.getChildren().add(imgviewBackgroundDim);
@@ -213,7 +201,7 @@ public class MainWindow  {
             }
         });
 
-        imgviewHighscore1.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewHighscore.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
                 spaneMain.getChildren().remove(startVbox);
                 spaneMain.getChildren().add(imgviewBackgroundDim);
@@ -221,7 +209,7 @@ public class MainWindow  {
             }
         });
         
-        imgviewHelpBtn1.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        imgviewHelpBtn.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
                 spaneMain.getChildren().remove(startVbox);
                 spaneMain.getChildren().add(imgviewBackgroundDim);
@@ -232,19 +220,19 @@ public class MainWindow  {
 
         imgviewLogo.setFitHeight(512);
         imgviewLogo.setFitWidth(1024);
-        imgviewStart1.setFitHeight(80);
-        imgviewStart1.setFitWidth(312);
-        imgviewAbout1.setFitHeight(80);
-        imgviewAbout1.setFitWidth(312);
-        imgviewHelpBtn1.setFitHeight(80);
-        imgviewHelpBtn1.setFitWidth(312);
+        imgviewStart.setFitHeight(80);
+        imgviewStart.setFitWidth(312);
+        imgviewAbout.setFitHeight(80);
+        imgviewAbout.setFitWidth(312);
+        imgviewHelpBtn.setFitHeight(80);
+        imgviewHelpBtn.setFitWidth(312);
 
 
         startVbox.getChildren().add(imgviewLogo);
-        startVbox.getChildren().add(imgviewStart1);
-        startVbox.getChildren().add(imgviewAbout1);
-        startVbox.getChildren().add(imgviewHighscore1);
-        startVbox.getChildren().add(imgviewHelpBtn1);
+        startVbox.getChildren().add(imgviewStart);
+        startVbox.getChildren().add(imgviewAbout);
+        startVbox.getChildren().add(imgviewHighscore);
+        startVbox.getChildren().add(imgviewHelpBtn);
 
         startVbox.setTranslateY(-75);
         startVbox.setAlignment(Pos.CENTER);
