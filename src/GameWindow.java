@@ -138,6 +138,20 @@ public class GameWindow {
     private Image imgJuggLeftAttack = new Image("Final Assets/Jugg/GIF/Jugg-Left-Attack-192x192.gif");
     // **********************
 
+    // Wizard Images **********
+    private Image imgWizardFront = new Image("Final Assets/Jugg/PNG/Wizard-Front-Stationary-128x128.png");
+    private Image imgWizardFrontMove = new Image("Final Assets/Jugg/GIF/Wizard-Front-Walking-128x128.gif");
+    private Image imgWizardBackMove = new Image("Final Assets/Jugg/GIF/Wizard-Back-Walking-128x128.gif");
+    private Image imgWizardRighttMove = new Image("Final Assets/Jugg/GIF/Wizard-Right-Walking-128x128.gif");
+    private Image imgWizardLeftMove = new Image("Final Assets/Jugg/GIF/Wizard-Left-Walking-128x128.gif");
+    private Image imgWizardFrontAttack = new Image("Final Assets/Jugg/GIF/Wizard-Front-Attack-128x128.gif");
+    private Image imgWizardBackAttack = new Image("Final Assets/Jugg/GIF/Wizard-Back-Attack-128x128.gif");
+    private Image imgWizardRightAttack = new Image("Final Assets/Jugg/GIF/Wizard-Right-Attack-128x128.gif");
+    private Image imgWizardLeftAttack = new Image("Final Assets/Jugg/GIF/Wizard-Left-Attack-128x128.gif");
+    private Image imgWizardProjectile = new Image("Final Assets/Jugg/GIF/Wizard-Projectile-128x128.gif");
+    private Image imgWizardDeath = new Image("Final Assets/Jugg/GIF/Wizard-Death-128x128.gif");
+    // **********************
+
     // Object Images ********
     private Image imgDSignLeft = new Image("Final Assets/Objects/PNG/Objects-DSign-Left-64x64.png");
     private Image imgDSignRight = new Image("Final Assets/Objects/PNG/Objects-DSign-Right-64x64.png");
