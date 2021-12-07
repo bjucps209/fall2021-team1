@@ -97,7 +97,7 @@ public class MainWindow  {
     void initialize(Stage stage) {
         // Music
         AudioClip music = new AudioClip(getClass().getResource("Audio/Retro_Forest_-_David_Fesliyan.mp3").toExternalForm());
-        music.setVolume(0.3);
+        music.setVolume(0.0);
         music.setCycleCount(AudioClip.INDEFINITE);
         Thread thread = new Thread(() -> music.play());
         thread.start();

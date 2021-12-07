@@ -208,8 +208,15 @@ public class GameWindow {
     private VBox gameOverVbox = new VBox();
     // *****************************
 
-    // Button Clicks
+    // Audio *******************************************************************************************************
     private AudioClip click = new AudioClip(getClass().getResource("Audio/UI/btnClick1.mp3").toExternalForm());
+    private AudioClip juggHit = new AudioClip(getClass().getResource("Audio/SFX/juggsound.mp3").toExternalForm());
+    private AudioClip juggDeath = new AudioClip(getClass().getResource("Audio/SFX/jugg1.mp3").toExternalForm());
+    private AudioClip gruntHit = new AudioClip(getClass().getResource("Audio/SFX/grunthit.mp3").toExternalForm());
+    private AudioClip gruntDeath = new AudioClip(getClass().getResource("Audio/SFX/grunt1.mp3").toExternalForm());
+    private AudioClip coinSound = new AudioClip(getClass().getResource("Audio/SFX/Retro realistic coins.wav").toExternalForm());
+    private AudioClip magicSound = new AudioClip(getClass().getResource("Audio/SFX/magic1.mp3").toExternalForm());
+    // *************************************************************************************************************
 
     // Model Attributes
     private World world;
@@ -826,6 +833,8 @@ public class GameWindow {
                 // Increase score if grunt is dead
                 if (((Grunt) entity).isDead()) {
                     // Increase score
+                    Thread gruntThread = new Thread(() -> {gruntHit.play();});
+                    gruntThread.start();
                     world.increaseScore(100);
 
                     // Remove grunt
@@ -841,6 +850,11 @@ public class GameWindow {
                 //for (ImageView imgview : imgViewList) {}
 
                 if (jugg.isDead()) {
+                    Thread juggThread = new Thread(() -> {
+                        juggHit.setVolume(10.0);
+                        juggHit.play();
+                    });
+                    juggThread.start();
                     world.increaseScore(300);
 
                     iterator.remove();
