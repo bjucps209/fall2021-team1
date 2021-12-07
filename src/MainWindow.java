@@ -53,6 +53,8 @@ public class MainWindow  {
     private Image imgHardBtn2 = new Image("Final Assets/UI/PNG/UI-HardBtn2-312x80.png");
     private Image imgSubmitBtn1 = new Image("Final Assets/UI/PNG/UI-SubmitBtn1-312x80.png");
     private Image imgSubmitBtn2 = new Image("Final Assets/UI/PNG/UI-SubmitBtn2-312x80.png");
+    private Image imgCreditsBtn1 = new Image("Final Assets/UI/PNG/UI-CreditsBtn1-312x80.png");
+    private Image imgCreditsBtn2 = new Image("Final Assets/UI/PNG/UI-CreditsBtn2-312x80.png");
     // *********************************************************************************
 
     // UI ImageViews **********************************************************************
@@ -70,11 +72,14 @@ public class MainWindow  {
     private ImageView imgviewSubmitBtn = new ImageView(imgSubmitBtn1);
     private ImageView imgviewDifBackBtn = new ImageView(imgBackBtn1);
     private ImageView imgviewNameSubmitBtn = new ImageView(imgSubmitBtn1);
+    private ImageView imgviewCreditsBackBtn = new ImageView(imgBackBtn1);
+    private ImageView imgviewCreditsBtn = new ImageView(imgCreditsBtn1);
     // ************************************************************************************
 
     // UI VBoxes *********************
     private VBox startVbox = new VBox();
     private VBox aboutVbox = new VBox();
+    private VBox creditsVbox = new VBox();
     private VBox hsVbox = new VBox();
     private VBox helpVbox = new VBox();
     private VBox difVbox = new VBox();
@@ -109,6 +114,7 @@ public class MainWindow  {
         // Build Vboxes
         createStartVbox();
         createAboutVbox();
+        createCreditsVbox();
         createHsVbox();
         createHelpVbox();
         createDifficultyVbox();
@@ -234,7 +240,7 @@ public class MainWindow  {
      */
     public void createAboutVbox() {
 
-        //Mouse Pressed/Released------------------------------------------------------------------------------
+        //Mouse Pressed/Released *************************************************************************************
         imgviewBackAboutBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
                 imgviewBackAboutBtn.setImage(imgBackBtn2);
@@ -246,6 +252,17 @@ public class MainWindow  {
             }
         });
         //-------------------------------------------------------------------------------------------------
+        imgviewCreditsBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                imgviewCreditsBtn.setImage(imgCreditsBtn2);
+            }
+        });
+        imgviewCreditsBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                imgviewCreditsBtn.setImage(imgCreditsBtn1);
+            }
+        });
+        // **********************************************************************************************************
 
         imgviewBackAboutBtn.setFitHeight(80);
         imgviewBackAboutBtn.setFitWidth(312);
@@ -254,6 +271,13 @@ public class MainWindow  {
                 spaneMain.getChildren().remove(aboutVbox);
                 spaneMain.getChildren().add(startVbox);
                 spaneMain.getChildren().remove(imgviewBackgroundDim);
+            }
+        });
+
+        imgviewCreditsBtn.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                spaneMain.getChildren().remove(aboutVbox);
+                spaneMain.getChildren().add(creditsVbox);
             }
         });
 
@@ -267,11 +291,6 @@ public class MainWindow  {
         Andrew Fox
         David Goff
 
-        Music:
-        'Retro Forest' by David Fesliyan
-
-        Coin SFX by Zapsplatt.com
-
         Art Design:
         David Goff
 
@@ -283,13 +302,68 @@ public class MainWindow  {
         """);
 
 
-        lbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 28px; -fx-text-fill: #ffffff;");
+        lbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
         lbl.setTextAlignment(TextAlignment.CENTER);
         Label titleLbl = new Label("ABOUT");
         titleLbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 48px; -fx-text-fill: #ffffff;");
         aboutVbox.getChildren().add(titleLbl);
         aboutVbox.getChildren().add(lbl);
+        aboutVbox.getChildren().add(imgviewCreditsBtn);
         aboutVbox.getChildren().add(imgviewBackAboutBtn);
+    }
+
+    /**
+     * The build of the "About" screen.
+     */
+    public void createCreditsVbox() {
+
+        //Mouse Pressed/Released------------------------------------------------------------------------------
+        imgviewCreditsBackBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                imgviewCreditsBackBtn.setImage(imgBackBtn2);
+            }
+        });
+        imgviewCreditsBackBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                imgviewCreditsBackBtn.setImage(imgBackBtn1);
+            }
+        });
+        //-------------------------------------------------------------------------------------------------
+
+        imgviewCreditsBackBtn.setFitHeight(80);
+        imgviewCreditsBackBtn.setFitWidth(312);
+        imgviewCreditsBackBtn.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                spaneMain.getChildren().remove(creditsVbox);
+                spaneMain.getChildren().add(aboutVbox);
+            }
+        });
+
+
+        creditsVbox.setAlignment(Pos.TOP_CENTER);
+        creditsVbox.setSpacing(10.0);
+
+        Label lbl = new Label("""
+        Audio:
+        'Retro Forest' . . . . . . . David Fesliyan
+        Coin SFX . . . . . . . . . . . Zapsplatt.com
+        Grunt SFX . . . . . . . . . . Zapsplatt.com
+        Jugg SFX . . . . . . . . . . . Zapsplatt.com
+        'Heat Weapon' SFX . . . . . . . . pohwelly
+        'Energy Weapon' SFX . . . . . WillFitch1
+
+        Visual:
+        Label Fonts . . . . . . . . Craftron Gaming
+        """);
+
+
+        lbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
+        lbl.setTextAlignment(TextAlignment.CENTER);
+        Label titleLbl = new Label("CREDITS");
+        titleLbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 48px; -fx-text-fill: #ffffff;");
+        creditsVbox.getChildren().add(titleLbl);
+        creditsVbox.getChildren().add(lbl);
+        creditsVbox.getChildren().add(imgviewCreditsBackBtn);
     }
 
     /**
@@ -380,6 +454,7 @@ public class MainWindow  {
         ImageView interact = new ImageView(new Image("Final Assets/Help/PNG/Help-Interact-156x88.png"));
         ImageView travel = new ImageView(new Image("Final Assets/Help/PNG/Help-Travel-156x88.png"));
         ImageView pause = new ImageView(new Image("Final Assets/Help/PNG/Help-Pause-156x88.png"));
+        ImageView cheat = new ImageView(new Image("Final Assets/Help/PNG/Help-Cheat-156x88.png"));
 
         move.setFitHeight(88);
         move.setFitWidth(156);
@@ -391,30 +466,29 @@ public class MainWindow  {
         travel.setFitWidth(156);
         pause.setFitHeight(88);
         pause.setFitWidth(156);
+        cheat.setFitHeight(88);
+        cheat.setFitWidth(156);
 
-        Label movelbl = new Label();
-        Label attacklbl = new Label();
-        Label interactlbl = new Label();
-        Label travellbl = new Label();
-        Label pauselbl = new Label();
-
-        movelbl.setText("Move: ");
-        attacklbl.setText("Attack: ");
-        interactlbl.setText("Interact: ");
-        travellbl.setText("Travel: ");
-        pauselbl.setText("Pause: ");
+        Label movelbl = new Label("Move: ");
+        Label attacklbl = new Label("Attack: ");
+        Label interactlbl = new Label("Interact: ");
+        Label travellbl = new Label("Travel: ");
+        Label pauselbl = new Label("Pause: ");
+        Label cheatlbl = new Label("Cheat Mode: ");
 
         movelbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
         attacklbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
         interactlbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
         travellbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
         pauselbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
+        cheatlbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
 
         HBox moveHbox = new HBox();
         HBox attackHbox = new HBox();
         HBox interactHbox = new HBox();
         HBox travelHbox = new HBox();
         HBox pauseHbox = new HBox();
+        HBox cheatHbox = new HBox();
 
         moveHbox.getChildren().add(movelbl);
         moveHbox.getChildren().add(move);
@@ -426,12 +500,15 @@ public class MainWindow  {
         travelHbox.getChildren().add(travel);
         pauseHbox.getChildren().add(pauselbl);
         pauseHbox.getChildren().add(pause);
+        cheatHbox.getChildren().add(cheatlbl);
+        cheatHbox.getChildren().add(cheat);
 
         moveHbox.setAlignment(Pos.CENTER);
         attackHbox.setAlignment(Pos.CENTER);
         interactHbox.setAlignment(Pos.CENTER);
         travelHbox.setAlignment(Pos.CENTER);
         pauseHbox.setAlignment(Pos.CENTER);
+        cheatHbox.setAlignment(Pos.CENTER);
 
         Label titleLbl = new Label("CONTROLS");
         titleLbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 48px; -fx-text-fill: #ffffff;");
@@ -442,7 +519,9 @@ public class MainWindow  {
         helpVbox.getChildren().add(interactHbox);
         helpVbox.getChildren().add(travelHbox);
         helpVbox.getChildren().add(pauseHbox);
+        helpVbox.getChildren().add(cheatHbox);
         helpVbox.getChildren().add(imgviewBackHelpBtn);
+        
 
         helpVbox.setAlignment(Pos.CENTER);
         helpVbox.setSpacing(10.0);

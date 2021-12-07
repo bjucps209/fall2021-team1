@@ -1485,6 +1485,7 @@ public class GameWindow {
         ImageView interact = new ImageView(new Image("Final Assets/Help/PNG/Help-Interact-156x88.png"));
         ImageView travel = new ImageView(new Image("Final Assets/Help/PNG/Help-Travel-156x88.png"));
         ImageView pause = new ImageView(new Image("Final Assets/Help/PNG/Help-Pause-156x88.png"));
+        ImageView cheat = new ImageView(new Image("Final Assets/Help/PNg/Help-Cheat-156x88.png"));
 
         move.setFitHeight(88);
         move.setFitWidth(156);
@@ -1496,30 +1497,29 @@ public class GameWindow {
         travel.setFitWidth(156);
         pause.setFitHeight(88);
         pause.setFitWidth(156);
+        cheat.setFitHeight(88);
+        cheat.setFitWidth(156);
 
-        Label movelbl = new Label();
-        Label attacklbl = new Label();
-        Label interactlbl = new Label();
-        Label travellbl = new Label();
-        Label pauselbl = new Label();
-
-        movelbl.setText("Move: ");
-        attacklbl.setText("Attack: ");
-        interactlbl.setText("Interact: ");
-        travellbl.setText("Travel: ");
-        pauselbl.setText("Pause: ");
+        Label movelbl = new Label("Move: ");
+        Label attacklbl = new Label("Attack: ");
+        Label interactlbl = new Label("Interact: ");
+        Label travellbl = new Label("Travel: ");
+        Label pauselbl = new Label("Pause: ");
+        Label cheatlbl = new Label("Cheat: ");
 
         movelbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
         attacklbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
         interactlbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
         travellbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
         pauselbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
+        cheatlbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
 
         HBox moveHbox = new HBox();
         HBox attackHbox = new HBox();
         HBox interactHbox = new HBox();
         HBox travelHbox = new HBox();
         HBox pauseHbox = new HBox();
+        HBox cheatHbox = new HBox();
 
         moveHbox.getChildren().add(movelbl);
         moveHbox.getChildren().add(move);
@@ -1531,25 +1531,33 @@ public class GameWindow {
         travelHbox.getChildren().add(travel);
         pauseHbox.getChildren().add(pauselbl);
         pauseHbox.getChildren().add(pause);
+        cheatHbox.getChildren().add(cheatlbl);
+        cheatHbox.getChildren().add(cheat);
 
         moveHbox.setAlignment(Pos.CENTER);
         attackHbox.setAlignment(Pos.CENTER);
         interactHbox.setAlignment(Pos.CENTER);
         travelHbox.setAlignment(Pos.CENTER);
         pauseHbox.setAlignment(Pos.CENTER);
+        cheatHbox.setAlignment(Pos.CENTER);
 
+        Label titleLbl = new Label("CONTROLS");
+        titleLbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 48px; -fx-text-fill: #ffffff;");
+
+        helpVbox.getChildren().add(titleLbl);
         helpVbox.getChildren().add(moveHbox);
         helpVbox.getChildren().add(attackHbox);
         helpVbox.getChildren().add(interactHbox);
         helpVbox.getChildren().add(travelHbox);
         helpVbox.getChildren().add(pauseHbox);
+        helpVbox.getChildren().add(cheatHbox);
         helpVbox.getChildren().add(imgviewHelpBackBtn);
 
         helpVbox.setAlignment(Pos.CENTER);
         helpVbox.setSpacing(10.0);
 
-        helpVbox.setLayoutX(550); // TODO: Needs Tweaking
-        helpVbox.setLayoutY(250);
+        helpVbox.setLayoutX(550);
+        helpVbox.setLayoutY(82);
     }
 
     @FXML
