@@ -1637,10 +1637,10 @@ public class GameWindow {
 
         Leaderboard leaderboard;
         try {
-            leaderboard = new Leaderboard(Serialization.loadScores("src/HIGHSCORES.txt"));
+            leaderboard = new Leaderboard(Serialization.loadScores("HIGHSCORES.txt"));
             ArrayList<HighScore> newLeaderboard = leaderboard.process(name, Integer.parseInt(score));
             if (leaderboard.isHighScore()) {
-                Serialization.saveScores("src/HIGHSCORES.txt", newLeaderboard);
+                Serialization.saveScores("HIGHSCORES.txt", newLeaderboard);
                 Label newHs = new Label("New Highscore!");
                 newHs.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
                 gameOverVbox.getChildren().add(newHs);
@@ -1656,7 +1656,7 @@ public class GameWindow {
         String hsPlace = "";
         ArrayList<HighScore> highscoresList;
         try {
-            highscoresList = Serialization.loadScores("src/HIGHSCORES.txt");
+            highscoresList = Serialization.loadScores("HIGHSCORES.txt");
             for (int i = 0; i < highscoresList.size(); ++i) {
                 hsPlace = hsPlace + (i + 1) + ".\n";
                 hsNames = hsNames + highscoresList.get(i).getPlayerName() + "\n";

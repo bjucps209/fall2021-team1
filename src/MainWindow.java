@@ -436,7 +436,7 @@ public class MainWindow  {
         String hsPlace = "";
         ArrayList<HighScore> highscoresList;
         try {
-            highscoresList = Serialization.loadScores("src/HIGHSCORES.txt");
+            highscoresList = Serialization.loadScores("HIGHSCORES.txt");
             for (int i = 0; i < highscoresList.size(); ++i) {
                 hsPlace = hsPlace + (i + 1) + ".\n";
                 hsNames = hsNames + highscoresList.get(i).getPlayerName() + "\n";

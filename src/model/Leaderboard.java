@@ -50,6 +50,7 @@ public class Leaderboard {
                 for (int position = 8; position > -1; --position) {
                     if (score == highscores.get(position).getScore()) { // Equal to #i -> remove last score and put new score in #i place
                         highscores.remove(9);
+                        highscores.add(position, new HighScore(name, score));
                         setHighScore(true);
                         return highscores;
                     } else if (score < highscores.get(position).getScore()) { // Smaller than #i -> remove last score and put new score in #(i + 1)'s place 
