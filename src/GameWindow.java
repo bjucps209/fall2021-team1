@@ -1635,21 +1635,15 @@ public class GameWindow {
         hsNameslbl.setTextAlignment(TextAlignment.CENTER);
         hsScoreslbl.setTextAlignment(TextAlignment.CENTER);
 
-        // Label highscoresLbl = new Label(highscoresStr);
-        // highscoresLbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
-        // highscoresLbl.setTextAlignment(TextAlignment.CENTER);
-
         Label title2Lbl = new Label("HIGHSCORES");
         title2Lbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 48px; -fx-text-fill: #ffffff;");
         
         gameOverVbox.getChildren().add(title2Lbl);
-        // gameOverVbox.getChildren().add(highscoresLbl);
         HBox h = new HBox();
         h.setSpacing(20.0);
         h.getChildren().add(hsNameslbl);
         h.getChildren().add(hsScoreslbl);
         gameOverVbox.getChildren().add(h);
-        gameOverVbox.setAlignment(Pos.CENTER);
         
         gameOverVbox.getChildren().add(imgviewGOQuitBtn);
         gameOverVbox.setAlignment(Pos.CENTER);

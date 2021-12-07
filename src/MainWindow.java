@@ -657,9 +657,11 @@ public class MainWindow  {
         //************************************************************************************************************ 
 
         imgviewNameSubmitBtn.setOnMouseClicked(event -> {
-            spaneMain.getChildren().remove(nameVbox);
-            spaneMain.getChildren().add(difVbox);
-            name = txtField.getText();
+            if (txtField.getText() != "") {
+                spaneMain.getChildren().remove(nameVbox);
+                spaneMain.getChildren().add(difVbox);
+                this.name = txtField.getText();    
+            }
         });
 
         HBox hbox = new HBox();
