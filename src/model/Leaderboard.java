@@ -30,39 +30,15 @@ public class Leaderboard {
         // highscores = new ArrayList<>(highscores.subList(0, 9));
 
         // Tame Solution
-        if (score >= highscores.get(9).getScore()) {
-            if (score > highscores.get(0).getScore()) { // Bigger than #1 -> add to top
+        setHighScore(false);
+        for (int position = 0; position < 10; ++position) {
+            if (score >= highscores.get(position).getScore()) {
                 highscores.remove(9);
-                highscores.add(0, new HighScore(name, score));
+                highscores.add(position, new HighScore(name, score));
                 setHighScore(true);
                 return highscores;
-            } else if (score < highscores.get(8).getScore() && score > highscores.get(9).getScore()) { // Bigger than #10 and smaller than #9 -> remove last score and add new score to list
-                highscores.remove(9);
-                highscores.add(new HighScore(name, score));
-                setHighScore(true);
-                return highscores;
-            } else if (score == highscores.get(9).getScore()) { // Equal to #10 score -> remove #10 score and add new score to list
-                highscores.remove(9);
-                highscores.add(new HighScore(name, score));
-                setHighScore(true);
-                return highscores;
-            } else {
-                for (int position = 8; position > -1; --position) {
-                    if (score == highscores.get(position).getScore()) { // Equal to #i -> remove last score and put new score in #i place
-                        highscores.remove(9);
-                        highscores.add(position, new HighScore(name, score));
-                        setHighScore(true);
-                        return highscores;
-                    } else if (score < highscores.get(position).getScore()) { // Smaller than #i -> remove last score and put new score in #(i + 1)'s place 
-                        highscores.remove(9);
-                        highscores.add(position + 1, new HighScore(name, score));
-                        setHighScore(true);
-                        return highscores;
-                    }
-                }
             }
         }
-        setHighScore(false);
         return highscores;
     }
 
