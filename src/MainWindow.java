@@ -433,22 +433,28 @@ public class MainWindow  {
 
         String hsNames = "";
         String hsScores = "";
+        String hsPlace = "";
         ArrayList<HighScore> highscoresList;
         try {
-            highscoresList = Serialization.loadScores("HIGHSCORES.txt");
+            highscoresList = Serialization.loadScores("src/HIGHSCORES.txt");
             for (int i = 0; i < highscoresList.size(); ++i) {
+                hsPlace = hsPlace + (i + 1) + ".\n";
                 hsNames = hsNames + highscoresList.get(i).getPlayerName() + "\n";
                 hsScores = hsScores + highscoresList.get(i).getScore() + "\n";
             }
         } catch (IOException e1) {
+            hsPlace = "HIGHSCORES FILE NOT FOUND :(";
             hsNames = "HIGHSCORES FILE NOT FOUND :(";
             hsScores = "HIGHSCORES FILE NOT FOUND :(";
         }
     
+        Label hsPlacelbl = new Label(hsPlace);
         Label hsNameslbl = new Label(hsNames);
         Label hsScoreslbl = new Label(hsScores);
+        hsPlacelbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
         hsNameslbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
         hsScoreslbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
+        hsPlacelbl.setTextAlignment(TextAlignment.LEFT);
         hsNameslbl.setTextAlignment(TextAlignment.LEFT);
         hsScoreslbl.setTextAlignment(TextAlignment.RIGHT);
 
@@ -458,6 +464,7 @@ public class MainWindow  {
         hsVbox.getChildren().add(titleLbl);
         HBox h = new HBox();
         h.setSpacing(20.0);
+        h.getChildren().add(hsPlacelbl);
         h.getChildren().add(hsNameslbl);
         h.getChildren().add(hsScoreslbl);
         h.setAlignment(Pos.CENTER);
