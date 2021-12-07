@@ -89,17 +89,21 @@ public class MainWindow  {
 
     DifficultyLevel difficulty;
     String name;
+    Stage stage;
+    private AudioClip music = new AudioClip(getClass().getResource("Audio/Retro_Forest_-_David_Fesliyan.mp3").toExternalForm());
         
     /**
      * Intializes the start screen with music in the background and the font style used for the application.
      * @param stage
      */
     void initialize(Stage stage) {
+        this.stage = stage;
         // Music
-        AudioClip music = new AudioClip(getClass().getResource("Audio/Retro_Forest_-_David_Fesliyan.mp3").toExternalForm());
         music.setVolume(0.45);
         music.setCycleCount(AudioClip.INDEFINITE);
-        Thread thread = new Thread(() -> music.play());
+        Thread thread = new Thread(() -> {
+            music.play();
+        });
         thread.start();
 
         // Font
@@ -776,7 +780,14 @@ public class MainWindow  {
 
         stage.setScene(scene);
         stage.show();
-        controller.initialize(stage, difficulty, name);
+        controller.initialize(stage, difficulty, name, music);
+
+        this.stage.close();
+
+
     }
+
+
+    
 
 }
