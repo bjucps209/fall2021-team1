@@ -7,13 +7,16 @@ import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -211,11 +214,10 @@ public class GameWindow {
     // Audio *******************************************************************************************************
     private AudioClip click = new AudioClip(getClass().getResource("Audio/UI/btnClick1.mp3").toExternalForm());
     private AudioClip juggHit = new AudioClip(getClass().getResource("Audio/SFX/juggsound.mp3").toExternalForm());
-    private AudioClip juggDeath = new AudioClip(getClass().getResource("Audio/SFX/jugg1.mp3").toExternalForm());
     private AudioClip gruntHit = new AudioClip(getClass().getResource("Audio/SFX/grunthit.mp3").toExternalForm());
-    private AudioClip gruntDeath = new AudioClip(getClass().getResource("Audio/SFX/grunt1.mp3").toExternalForm());
     private AudioClip coinSound = new AudioClip(getClass().getResource("Audio/SFX/Retro realistic coins.wav").toExternalForm());
     private AudioClip magicSound = new AudioClip(getClass().getResource("Audio/SFX/magic1.mp3").toExternalForm());
+    private AudioClip deathSound = new AudioClip(getClass().getResource("Audio/SFX/deathsound.mp3").toExternalForm());
     // *************************************************************************************************************
 
     // Model Attributes
@@ -233,7 +235,8 @@ public class GameWindow {
 
 
     @FXML
-    void initialize(Stage stage, DifficultyLevel difficulty, String name) {
+    void initialize(Stage stage, DifficultyLevel difficulty, String name, AudioClip music) {
+        music.stop();
         imgViewList = new ArrayList<ImageView>();
         world = World.instance();
         world.setDifficulty(difficulty);
@@ -833,7 +836,9 @@ public class GameWindow {
                 // Increase score if grunt is dead
                 if (((Grunt) entity).isDead()) {
                     // Increase score
-                    Thread gruntThread = new Thread(() -> {gruntHit.play();});
+                    Thread gruntThread = new Thread(() -> {
+                        deathSound.play();
+                    });
                     gruntThread.start();
                     world.increaseScore(100);
 
@@ -851,8 +856,7 @@ public class GameWindow {
 
                 if (jugg.isDead()) {
                     Thread juggThread = new Thread(() -> {
-                        juggHit.setVolume(10.0);
-                        juggHit.play();
+                        deathSound.play();
                     });
                     juggThread.start();
                     world.increaseScore(300);
@@ -1417,6 +1421,7 @@ public class GameWindow {
                     imgviewQuitBtn.setImage(imgQuitBtn2);
                 });
                 thread.start();
+                Platform.runLater(thread);
             }
         });
         imgviewQuitBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
@@ -1486,6 +1491,12 @@ public class GameWindow {
                 World.reset();
                 Stage stage = (Stage) imgviewQuitBtn.getScene().getWindow();
                 stage.close();
+
+                try {
+                    openMainWin();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
             }
         });
         // ******************************************************************************************************
@@ -1801,6 +1812,18 @@ public class GameWindow {
 
         }
 
+    }
+
+    public void openMainWin() throws IOException {
+        var loader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
+        var scene = new Scene(loader.load());
+        var stage0 = new Stage();
+
+        MainWindow controller = loader.getController();
+
+        stage0.setScene(scene);
+        stage0.show();
+        controller.initialize(stage0);
     }
 
     public void setIsPaused(boolean bool) {
