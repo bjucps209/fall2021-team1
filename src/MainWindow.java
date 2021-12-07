@@ -94,14 +94,9 @@ public class MainWindow  {
      * @param stage
      */
     void initialize(Stage stage) {
-        // try {
-        //     Serialization.saveScores("HIGHSCORES.txt", Serialization.loadScores("TEST_SCORES.txt"));
-        // } catch (IOException e) {
-        //     System.out.println("Bruh");
-        // }
         // Music
         AudioClip music = new AudioClip(getClass().getResource("Audio/Retro_Forest_-_David_Fesliyan.mp3").toExternalForm());
-        music.setVolume(0.5);
+        music.setVolume(0.3);
         music.setCycleCount(AudioClip.INDEFINITE);
         Thread thread = new Thread(() -> music.play());
         thread.start();
@@ -138,7 +133,11 @@ public class MainWindow  {
         //onMousePressed/Released-----------------------------------------------------------------------------
         imgviewStart.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewStart.setImage(imgStart2);
+                Thread thread = new Thread(() -> {
+                    click.play();
+                    imgviewStart.setImage(imgStart2);
+                });
+                thread.start();
             }
         });
         imgviewStart.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
@@ -150,9 +149,11 @@ public class MainWindow  {
 
         imgviewAbout.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewAbout.setImage(imgAbout2);
-                // Thread thread = new Thread(() -> click.play());
-                // thread.start();
+                Thread thread = new Thread(() -> {
+                    click.play();
+                    imgviewAbout.setImage(imgAbout2);
+                });
+                thread.start();
             }
         });
         imgviewAbout.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
@@ -164,7 +165,11 @@ public class MainWindow  {
 
         imgviewHighscore.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewHighscore.setImage(imgHighscores2);
+                Thread thread = new Thread(() -> {
+                    click.play();
+                    imgviewHighscore.setImage(imgHighscores2);
+                });
+                thread.start();
             }
         });
         imgviewHighscore.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
@@ -175,7 +180,11 @@ public class MainWindow  {
 
         imgviewHelpBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewHelpBtn.setImage(imgHelpBtn2);
+                Thread thread = new Thread(() -> {
+                    click.play();
+                    imgviewHelpBtn.setImage(imgHelpBtn2);
+                });
+                thread.start();
             }
         });
         imgviewHelpBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
@@ -248,7 +257,11 @@ public class MainWindow  {
         //Mouse Pressed/Released *************************************************************************************
         imgviewBackAboutBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewBackAboutBtn.setImage(imgBackBtn2);
+                Thread thread = new Thread(() -> {
+                    click.play();
+                    imgviewBackAboutBtn.setImage(imgBackBtn2);
+                });
+                thread.start();
             }
         });
         imgviewBackAboutBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
@@ -259,7 +272,11 @@ public class MainWindow  {
         //-------------------------------------------------------------------------------------------------
         imgviewCreditsBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewCreditsBtn.setImage(imgCreditsBtn2);
+                Thread thread = new Thread(() -> {
+                    click.play();
+                    imgviewCreditsBtn.setImage(imgCreditsBtn2);
+                });
+                thread.start();
             }
         });
         imgviewCreditsBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
@@ -325,7 +342,11 @@ public class MainWindow  {
         //Mouse Pressed/Released------------------------------------------------------------------------------
         imgviewCreditsBackBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewCreditsBackBtn.setImage(imgBackBtn2);
+                Thread thread = new Thread(() -> {
+                    click.play();
+                    imgviewCreditsBackBtn.setImage(imgBackBtn2);
+                });
+                thread.start();
             }
         });
         imgviewCreditsBackBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
@@ -379,7 +400,11 @@ public class MainWindow  {
         //Mouse Pressed/Released------------------------------------------------------------------------------
         imgviewBackHsBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewBackHsBtn.setImage(imgBackBtn2);
+                Thread thread = new Thread(() -> {
+                    click.play();
+                    imgviewBackHsBtn.setImage(imgBackBtn2);
+                });
+                thread.start();
             }
         });
         imgviewBackHsBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
@@ -403,25 +428,37 @@ public class MainWindow  {
         hsVbox.setAlignment(Pos.TOP_CENTER);
         hsVbox.setSpacing(10.0);
 
-        String highscoresStr = "";
+        String hsNames = "";
+        String hsScores = "";
         ArrayList<HighScore> highscoresList;
         try {
             highscoresList = Serialization.loadScores("HIGHSCORES.txt");
             for (int i = 0; i < highscoresList.size(); ++i) {
-                highscoresStr = highscoresStr +highscoresList.get(i).getPlayerName() + "   " + highscoresList.get(i).getScore() + " \n";
+                hsNames = hsNames + highscoresList.get(i).getPlayerName() + "\n";
+                hsScores = hsScores + highscoresList.get(i).getScore() + "\n";
             }
         } catch (IOException e1) {
-            highscoresStr = "HIGHSCORES FILE NOT FOUND :(";
+            hsNames = "HIGHSCORES FILE NOT FOUND :(";
+            hsScores = "HIGHSCORES FILE NOT FOUND :(";
         }
     
-        Label lbl = new Label(highscoresStr);
-        lbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
+        Label hsNameslbl = new Label(hsNames);
+        Label hsScoreslbl = new Label(hsScores);
+        hsNameslbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
+        hsScoreslbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
+        hsNameslbl.setTextAlignment(TextAlignment.LEFT);
+        hsScoreslbl.setTextAlignment(TextAlignment.RIGHT);
 
         Label titleLbl = new Label("HIGHSCORES");
         titleLbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 48px; -fx-text-fill: #ffffff;");
 
         hsVbox.getChildren().add(titleLbl);
-        hsVbox.getChildren().add(lbl);
+        HBox h = new HBox();
+        h.setSpacing(20.0);
+        h.getChildren().add(hsNameslbl);
+        h.getChildren().add(hsScoreslbl);
+        h.setAlignment(Pos.CENTER);
+        hsVbox.getChildren().add(h);
         hsVbox.getChildren().add(imgviewBackHsBtn);
         hsVbox.setTranslateY(100);
     }
@@ -434,7 +471,11 @@ public class MainWindow  {
         //Mouse Pressed/Released------------------------------------------------------------------------------
         imgviewBackHelpBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewBackHelpBtn.setImage(imgBackBtn2);
+                Thread thread = new Thread(() -> {
+                    click.play();
+                    imgviewBackHelpBtn.setImage(imgBackBtn2);
+                });
+                thread.start();
             }
         });
         imgviewBackHelpBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
@@ -543,29 +584,42 @@ public class MainWindow  {
         //onMousePressed************************************************************************************* 
         imgviewEasyBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewEasyBtn.setImage(imgEasyBtn2);
-                imgviewMediumBtn.setImage(imgMediumBtn1);
-                imgviewHardBtn.setImage(imgHardBtn1);
+                
+                Thread thread = new Thread(() -> {
+                    click.play();
+                    imgviewEasyBtn.setImage(imgEasyBtn2);
+                    imgviewMediumBtn.setImage(imgMediumBtn1);
+                    imgviewHardBtn.setImage(imgHardBtn1);
 
-                difficulty = DifficultyLevel.EASY;
+                    difficulty = DifficultyLevel.EASY;
+                });
+                thread.start();
             }
         });
         imgviewMediumBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewEasyBtn.setImage(imgEasyBtn1);
-                imgviewMediumBtn.setImage(imgMediumBtn2);
-                imgviewHardBtn.setImage(imgHardBtn1);
+                Thread thread = new Thread(() -> {
+                    click.play();
+                    imgviewEasyBtn.setImage(imgEasyBtn1);
+                    imgviewMediumBtn.setImage(imgMediumBtn2);
+                    imgviewHardBtn.setImage(imgHardBtn1);
 
-                difficulty = DifficultyLevel.MEDIUM;
+                    difficulty = DifficultyLevel.MEDIUM;
+                });
+                thread.start();
             }
         });
         imgviewHardBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewEasyBtn.setImage(imgEasyBtn1);
-                imgviewMediumBtn.setImage(imgMediumBtn1);
-                imgviewHardBtn.setImage(imgHardBtn2);
+                Thread thread = new Thread(() -> {
+                    click.play();
+                    imgviewEasyBtn.setImage(imgEasyBtn1);
+                    imgviewMediumBtn.setImage(imgMediumBtn1);
+                    imgviewHardBtn.setImage(imgHardBtn2);
 
-                difficulty = DifficultyLevel.HARD;
+                    difficulty = DifficultyLevel.HARD;
+                });
+                thread.start();
             }
         });
 
@@ -573,7 +627,11 @@ public class MainWindow  {
         imgviewSubmitBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
                 if (difficulty != null) {
-                    imgviewSubmitBtn.setImage(imgSubmitBtn2);    
+                    Thread thread = new Thread(() -> {
+                        click.play();
+                        imgviewSubmitBtn.setImage(imgSubmitBtn2);
+                    });
+                    thread.start();  
                 }
             }
         });
@@ -586,7 +644,11 @@ public class MainWindow  {
         });
         imgviewDifBackBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewDifBackBtn.setImage(imgBackBtn2);
+                Thread thread = new Thread(() -> {
+                    click.play();
+                    imgviewDifBackBtn.setImage(imgBackBtn2);
+                });
+                thread.start();
             }
         });
         imgviewDifBackBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
@@ -646,7 +708,11 @@ public class MainWindow  {
         //onMousePressed*************************************************************************************
         imgviewNameSubmitBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewNameSubmitBtn.setImage(imgSubmitBtn2);
+                Thread thread = new Thread(() -> {
+                    click.play();
+                    imgviewNameSubmitBtn.setImage(imgSubmitBtn2);
+                });
+                thread.start();
             }
         });
         imgviewNameSubmitBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {

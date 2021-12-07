@@ -25,6 +25,7 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -1632,8 +1633,8 @@ public class GameWindow {
         Label hsScoreslbl = new Label(hsScores);
         hsNameslbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
         hsScoreslbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
-        hsNameslbl.setTextAlignment(TextAlignment.CENTER);
-        hsScoreslbl.setTextAlignment(TextAlignment.CENTER);
+        hsNameslbl.setTextAlignment(TextAlignment.LEFT);
+        hsScoreslbl.setTextAlignment(TextAlignment.RIGHT);
 
         Label title2Lbl = new Label("HIGHSCORES");
         title2Lbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 48px; -fx-text-fill: #ffffff;");
@@ -1643,6 +1644,7 @@ public class GameWindow {
         h.setSpacing(20.0);
         h.getChildren().add(hsNameslbl);
         h.getChildren().add(hsScoreslbl);
+        h.setAlignment(Pos.CENTER);
         gameOverVbox.getChildren().add(h);
         
         gameOverVbox.getChildren().add(imgviewGOQuitBtn);
