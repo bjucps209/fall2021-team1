@@ -13,7 +13,7 @@ Gameplay: Basic gameplay is working, the player can move around the screen, inte
 Serialization: The saving and loading feature is working for both the world and the high scores (although high scores are not displayed yet). On saving, the player's position, world location, health, and score are all saved to a text file. The values can be retrieved when loading to return the world to the state it was in.
 
 
-High Score Screen: For David to fill out
+High Score Screen: The HighScore screen is fully functioning. It will pull information from the file HIGHSCORES.txt and display themf in their appropriate order. When a game is completed and the player goes back to the Start screen and clicks the Highscore button, the Highscore screen updates itself to show the most recent addition. Also, when the game is run, the program will check to see if a HIGHSCORE.txt already exists so that it can pull its info. If it does not exist, than it creates a Highscore list of 0 points for each name called '-', and then writes it to the newly created file HIGHSCORE.txt and saves it for use later as new highscores are recorded.
 
 
 
