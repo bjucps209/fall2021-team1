@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.plaf.basic.BasicScrollPaneUI.HSBChangeListener;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -213,6 +214,8 @@ public class MainWindow  {
         imgviewHighscore.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
                 spaneMain.getChildren().remove(startVbox);
+                hsVbox.getChildren().clear();
+                createHsVbox();
                 spaneMain.getChildren().add(imgviewBackgroundDim);
                 spaneMain.getChildren().add(hsVbox);
             }
