@@ -28,6 +28,7 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.AudioClip;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
@@ -207,6 +208,9 @@ public class GameWindow {
     private VBox gameOverVbox = new VBox();
     // *****************************
 
+    // Button Clicks
+    private AudioClip click = new AudioClip(getClass().getResource("Audio/UI/btnClick1.mp3").toExternalForm());
+
     // Model Attributes
     private World world;
 
@@ -219,6 +223,7 @@ public class GameWindow {
 
     // Player's Name
     private String name;
+
 
     @FXML
     void initialize(Stage stage, DifficultyLevel difficulty, String name) {
@@ -462,7 +467,11 @@ public class GameWindow {
     public void drawPauseButton() {
         imgviewPauseBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewPauseBtn.setImage(imgPauseBtn2);
+                Thread thread = new Thread(() -> {
+                    click.play();
+                    imgviewPauseBtn.setImage(imgPauseBtn2);
+                });
+                thread.start();
             }
         });
         imgviewPauseBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
@@ -1329,7 +1338,11 @@ public class GameWindow {
         // *****************************************************************************
         imgviewResumeBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewResumeBtn.setImage(imgResumeBtn2);
+                Thread thread = new Thread(() -> {
+                    click.play();
+                    imgviewResumeBtn.setImage(imgResumeBtn2);
+                });
+                thread.start();
             }
         });
         imgviewResumeBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
@@ -1340,7 +1353,11 @@ public class GameWindow {
         // ------------------------------------------------------------------------------------------------------
         imgviewSaveBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewSaveBtn.setImage(imgSaveBtn2);
+                Thread thread = new Thread(() -> {
+                    click.play();
+                    imgviewSaveBtn.setImage(imgSaveBtn2);
+                });
+                thread.start();
             }
         });
         imgviewSaveBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
@@ -1351,7 +1368,11 @@ public class GameWindow {
         // ------------------------------------------------------------------------------------------------------
         imgviewLoadBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewLoadBtn.setImage(imgLoadbtn2);
+                Thread thread = new Thread(() -> {
+                    click.play();
+                    imgviewLoadBtn.setImage(imgLoadbtn2);
+                });
+                thread.start();
             }
         });
         imgviewLoadBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
@@ -1362,7 +1383,11 @@ public class GameWindow {
         // ------------------------------------------------------------------------------------------------------
         imgviewHelpBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewHelpBtn.setImage(imgHelpBtn2);
+                Thread thread = new Thread(() -> {
+                    click.play();
+                    imgviewHelpBtn.setImage(imgHelpBtn2);
+                });
+                thread.start();
             }
         });
         imgviewHelpBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
@@ -1373,7 +1398,11 @@ public class GameWindow {
         // ------------------------------------------------------------------------------------------------------
         imgviewQuitBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewQuitBtn.setImage(imgQuitBtn2);
+                Thread thread = new Thread(() -> {
+                    click.play();
+                    imgviewQuitBtn.setImage(imgQuitBtn2);
+                });
+                thread.start();
             }
         });
         imgviewQuitBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
@@ -1463,7 +1492,11 @@ public class GameWindow {
         //Mouse Pressed/Released------------------------------------------------------------------------------
         imgviewHelpBackBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewHelpBackBtn.setImage(imgBackBtn2);
+                Thread thread = new Thread(() -> {
+                    click.play();
+                    imgviewHelpBackBtn.setImage(imgBackBtn2);
+                });
+                thread.start();
             }
         });
         imgviewHelpBackBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
@@ -1569,7 +1602,11 @@ public class GameWindow {
          //Mouse Pressed/Released------------------------------------------------------------------------------
          imgviewGOQuitBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewGOQuitBtn.setImage(imgQuitBtn2);
+                Thread thread = new Thread(() -> {
+                    click.play();
+                    imgviewGOQuitBtn.setImage(imgQuitBtn2);
+                });
+                thread.start();
             }
         });
         imgviewGOQuitBtn.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
