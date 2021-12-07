@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -1599,7 +1600,9 @@ public class GameWindow {
         Leaderboard leaderboard;
         try {
             leaderboard = new Leaderboard(Serialization.loadScores("HIGHSCORES.txt"));
-            if (leaderboard.process(name, Integer.parseInt(score))) {
+            ArrayList<HighScore> newLeaderboard = leaderboard.process(name, Integer.parseInt(score));
+            if (leaderboard.isHighScore()) {
+                Serialization.saveScores("HIGHSCORES.txt", newLeaderboard);
                 Label newHs = new Label("New Highscore!");
                 newHs.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
                 gameOverVbox.getChildren().add(newHs);
@@ -1610,25 +1613,43 @@ public class GameWindow {
             gameOverVbox.getChildren().add(newHs);
         }
 
-        String highscoresStr = "";
+        String hsNames = "";
+        String hsScores = "";
         ArrayList<HighScore> highscoresList;
         try {
             highscoresList = Serialization.loadScores("HIGHSCORES.txt");
             for (int i = 0; i < highscoresList.size(); ++i) {
-                highscoresStr = highscoresStr +highscoresList.get(i).getPlayerName() + "   " + highscoresList.get(i).getScore() + " \n";
+                hsNames = hsNames + highscoresList.get(i).getPlayerName() + "\n";
+
+                hsScores = hsScores + highscoresList.get(i).getScore() + "\n";
             }
         } catch (IOException e1) {
-            highscoresStr = "HIGHSCORES FILE NOT FOUND :(";
+            hsNames = "HIGHSCORES FILE NOT FOUND :(";
+            hsScores = "HIGHSCORES FILE NOT FOUND :(";
         }
     
-        Label highscoresLbl = new Label(highscoresStr);
-        highscoresLbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
+        Label hsNameslbl = new Label(hsNames);
+        Label hsScoreslbl = new Label(hsScores);
+        hsNameslbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
+        hsScoreslbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
+        hsNameslbl.setTextAlignment(TextAlignment.CENTER);
+        hsScoreslbl.setTextAlignment(TextAlignment.CENTER);
+
+        // Label highscoresLbl = new Label(highscoresStr);
+        // highscoresLbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 32px; -fx-text-fill: #ffffff;");
+        // highscoresLbl.setTextAlignment(TextAlignment.CENTER);
 
         Label title2Lbl = new Label("HIGHSCORES");
         title2Lbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 48px; -fx-text-fill: #ffffff;");
         
         gameOverVbox.getChildren().add(title2Lbl);
-        gameOverVbox.getChildren().add(highscoresLbl);
+        // gameOverVbox.getChildren().add(highscoresLbl);
+        HBox h = new HBox();
+        h.setSpacing(20.0);
+        h.getChildren().add(hsNameslbl);
+        h.getChildren().add(hsScoreslbl);
+        gameOverVbox.getChildren().add(h);
+        gameOverVbox.setAlignment(Pos.CENTER);
         
         gameOverVbox.getChildren().add(imgviewGOQuitBtn);
         gameOverVbox.setAlignment(Pos.CENTER);
