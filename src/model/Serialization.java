@@ -6,6 +6,21 @@ import java.util.ArrayList;
 public class Serialization {
 
     /**
+     * Creates a HIGHSCORES.txt file 
+     */
+    public static void createHSfile() throws IOException {
+        var file = new File("HIGHSCORES.txt");
+        if (!file.exists()) {
+            var writer = new PrintWriter(new FileWriter(file));
+
+            for (int i = 0; i < 10; ++i) {
+                writer.print("  -  ::0\n");
+            } 
+            writer.close();   
+        }
+    }
+
+    /**
      * Loads the game from a text file.
      */
     public static void load(String filename) throws IOException {
@@ -101,6 +116,7 @@ public class Serialization {
         }
 
         writer.close();
+
 
     }
 

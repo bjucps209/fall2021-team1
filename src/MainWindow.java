@@ -112,6 +112,14 @@ public class MainWindow  {
         Background bGround = new Background(bImg);
         spaneMain.setBackground(bGround);
 
+        //Create HighScore File
+        try{
+            Serialization.createHSfile(); 
+        } catch (IOException e) {
+            System.out.println("ERROR: Could Not Create HIGHSCORES.txt!");
+        }
+        
+
         // Build Vboxes
         createStartVbox();
         createAboutVbox();
