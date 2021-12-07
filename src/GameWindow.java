@@ -1618,7 +1618,7 @@ public class GameWindow {
                 highscoresStr = highscoresStr +highscoresList.get(i).getPlayerName() + "   " + highscoresList.get(i).getScore() + " \n";
             }
         } catch (IOException e1) {
-            highscoresStr = "Highscore File Not Found 8(";
+            highscoresStr = "HIGHSCORES FILE NOT FOUND :(";
         }
     
         Label highscoresLbl = new Label(highscoresStr);

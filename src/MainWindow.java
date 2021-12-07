@@ -38,8 +38,8 @@ public class MainWindow  {
     private Image imgStart2 = new Image("Final Assets/UI/PNG/UI-StartBtn2-312x80.png");
     private Image imgAbout1 = new Image("Final Assets/UI/PNG/UI-AboutBtn1-312x80.png");
     private Image imgAbout2 = new Image("Final Assets/UI/PNG/UI-AboutBtn2-312x80.png");
-    private Image imgHighscore1 = new Image("Final Assets/UI/PNG/UI-HighscoreBtn1-312x80.png");
-    private Image imgHighscore2 = new Image("Final Assets/UI/PNG/UI-HighscoreBtn2-312x80.png");
+    private Image imgHighscores1 = new Image("Final Assets/UI/PNG/UI-HighscoresBtn1-312x80.png");
+    private Image imgHighscores2 = new Image("Final Assets/UI/PNG/UI-HighscoresBtn2-312x80.png");
     private Image imgBackgroundDim = new Image("Final Assets/UI/PNG/UI-BackgroundDim-1440x900.png");
     private Image imgHelpBtn1 = new Image("Final Assets/UI/PNG/UI-HelpBtn1-312x80.png");
     private Image imgHelpBtn2 = new Image("Final Assets/UI/PNG/UI-HelpBtn2-312x80.png");
@@ -60,7 +60,7 @@ public class MainWindow  {
     // UI ImageViews **********************************************************************
     private ImageView imgviewStart = new ImageView(imgStart1);
     private ImageView imgviewAbout = new ImageView(imgAbout1);
-    private ImageView imgviewHighscore = new ImageView(imgHighscore1);
+    private ImageView imgviewHighscore = new ImageView(imgHighscores1);
     private ImageView imgviewBackgroundDim = new ImageView(imgBackgroundDim);
     private ImageView imgviewHelpBtn = new ImageView(imgHelpBtn1);
     private ImageView imgviewBackAboutBtn = new ImageView(imgBackBtn1);
@@ -94,6 +94,11 @@ public class MainWindow  {
      * @param stage
      */
     void initialize(Stage stage) {
+        // try {
+        //     Serialization.saveScores("HIGHSCORES.txt", Serialization.loadScores("TEST_SCORES.txt"));
+        // } catch (IOException e) {
+        //     System.out.println("Bruh");
+        // }
         // Music
         AudioClip music = new AudioClip(getClass().getResource("Audio/Retro_Forest_-_David_Fesliyan.mp3").toExternalForm());
         music.setVolume(0.5);
@@ -159,12 +164,12 @@ public class MainWindow  {
 
         imgviewHighscore.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewHighscore.setImage(imgHighscore2);
+                imgviewHighscore.setImage(imgHighscores2);
             }
         });
         imgviewHighscore.setOnMouseReleased((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                imgviewHighscore.setImage(imgHighscore1);
+                imgviewHighscore.setImage(imgHighscores1);
             }
         });
 
@@ -406,7 +411,7 @@ public class MainWindow  {
                 highscoresStr = highscoresStr +highscoresList.get(i).getPlayerName() + "   " + highscoresList.get(i).getScore() + " \n";
             }
         } catch (IOException e1) {
-            highscoresStr = "No HighScores";
+            highscoresStr = "HIGHSCORES FILE NOT FOUND :(";
         }
     
         Label lbl = new Label(highscoresStr);
