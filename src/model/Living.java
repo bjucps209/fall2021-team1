@@ -1,7 +1,5 @@
 package model;
 
-import java.util.List;
-
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -41,9 +39,9 @@ public abstract class Living extends Entity {
      * Attempts to move the entity.
      * @param speed the speed to move at
      * @param direction the direction to move in
-     * @return true if the move was successful, false otherwise
+     * @return true if there is a collision, false otherwise
      */
-    public void move(double speed, int direction) {
+    public boolean move(double speed, int direction) {
 
         var obstacles = World.instance().getCurrentlocation().getObjectList().stream().filter(e -> (e.isCollidable())).toList();
 
@@ -62,7 +60,7 @@ public abstract class Living extends Entity {
                 if (intersects(obstacle)) {
 
                     setPosition(oldX, oldY);
-                    break;
+                    return true;
 
                 }
 
@@ -70,20 +68,26 @@ public abstract class Living extends Entity {
 
         }
 
-        /* Bounds unimplemented
-        int w = World.instance().getWidth();
-        int h = World.instance().getHeight();
-        
-        if (newX < 0 || newX > w || newY < 0 || newY > h) return false;
-        */
+        return false;
+
+    }
+
+    /** Make dead if applicable. */
+    public void handleDeath() {
+
+        if (this.getHealth() <= 0) {
+
+            this.setDead(true);
+
+        }
 
     }
 
     // Override these methods and any methods from Entity
+    /** Attempt to do harm. */
     public abstract void attack();
-    public abstract boolean handleDamage(int damage, int direction);
-    public abstract void handleDeath();
-
+    /** Take damage and make temporarily immune. */
+    public abstract void handleDamage(int damage, int direction);
 
     /// Getters and Setters ///
     public IntegerProperty healthProperty() {

@@ -122,14 +122,10 @@ public class Player extends Living {
     }
 
     @Override
-    public boolean handleDamage(int damage, int direction) {
-
-        if (damage <= 0) return false;
+    public void handleDamage(int damage, int direction) {
 
         this.move(100, direction);
         this.setHealth(this.getHealth() - damage);
-        
-        return true;
 
     }
 

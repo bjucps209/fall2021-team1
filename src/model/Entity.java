@@ -40,8 +40,13 @@ public abstract class Entity {
 
             case PROJECTILE:
 
-                // TODO: add projectiles
-                break;
+                var project = new Projectile(Integer.parseInt(data[5]), Integer.parseInt(data[6]));
+
+                project.setId(Integer.parseInt(data[1]));
+                project.setDirection(Integer.parseInt(data[4]));
+                project.setPosition(Double.parseDouble(data[2]), Double.parseDouble(data[3]));
+
+                return project;
 
             case GRUNT_ENEMY:
 
@@ -72,8 +77,6 @@ public abstract class Entity {
                 return null;
 
         }
-
-        return null;
 
     }
 

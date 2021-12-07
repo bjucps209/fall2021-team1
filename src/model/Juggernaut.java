@@ -133,26 +133,12 @@ public class Juggernaut extends Enemy {
     }
 
     @Override
-    public boolean handleDamage(int damage, int direction) {
+    public void handleDamage(int damage, int direction) {
 
         if (damage > 0) {
 
             System.out.println("Was hit");
             this.setHealth(this.getHealth() - damage);
-            return true;
-
-        }
-
-        return false;
-
-    }
-
-    @Override
-    public void handleDeath() {
-
-        if (this.getHealth() <= 0) {
-
-            this.setDead(true);
 
         }
 

@@ -3,7 +3,7 @@ package model;
 public class Grunt extends Enemy {
 
     /** Controls the frequency of attacks. */
-    private int count = 50;
+    private int count = 25;
 
     public enum GruntState {
 
@@ -40,27 +40,13 @@ public class Grunt extends Enemy {
     }
 
     @Override
-    public boolean handleDamage(int damage, int direction) {
+    public void handleDamage(int damage, int direction) {
 
         if (iFrames <= 0) {
 
             this.iFrames = 10;
             this.move(100, direction);
             this.setHealth(this.getHealth() - damage);
-            return true;
-
-        }
-
-        return false;
-
-    }
-
-    @Override
-    public void handleDeath() {
-        
-        if (this.getHealth() <= 0) {
-
-            this.setDead(true);
 
         }
 

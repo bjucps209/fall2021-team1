@@ -1207,9 +1207,6 @@ public class GameWindow {
 
                 break;
 
-            case Q:
-                int i = 0; // for pinging the debugger to peek at variables, delete on final release.
-
             default:
                 break;
 
