@@ -24,6 +24,9 @@ https://bju-my.sharepoint.com/:v:/g/personal/afox797_students_bju_edu/EfU9zCAlrF
 ### Beta Video Recording
 https://bju-my.sharepoint.com/:v:/g/personal/afox797_students_bju_edu/EVV4JrgpbaNKt3lk10dEJwcBouJK_jJpLKv2cZjjRHPgcQ?e=Mwq9EU
 
+### Release Candidate Recording
+https://bju-my.sharepoint.com/:v:/g/personal/afox797_students_bju_edu/EW5LU36yg8tLv6eXaK6iDUcBfWYJuCYvMwinuB-EdfsLxQ?e=nNp14X
+
 
 ### Expenses
 | Member Name | Username | Hours Invested | Hours Remaining |
