@@ -136,8 +136,6 @@ public class Juggernaut extends Enemy {
     public void handleDamage(int damage, int direction) {
 
         if (damage > 0) {
-
-            System.out.println("Was hit");
             this.setHealth(this.getHealth() - damage);
 
         }
