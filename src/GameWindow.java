@@ -1896,6 +1896,7 @@ public class GameWindow {
     }
 
     public void openMainWin() throws IOException {
+        music.stop();
         var loader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
         var scene = new Scene(loader.load());
         var stage0 = new Stage();
