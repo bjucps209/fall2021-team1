@@ -216,8 +216,7 @@ public class GameWindow {
     private AudioClip click = new AudioClip(getClass().getResource("Audio/UI/btnClick1.mp3").toExternalForm());
     private AudioClip juggHit = new AudioClip(getClass().getResource("Audio/SFX/juggsound.wav").toExternalForm());
     private AudioClip gruntHit = new AudioClip(getClass().getResource("Audio/SFX/grunthit.wav").toExternalForm());
-    private AudioClip coinSound = new AudioClip(
-            getClass().getResource("Audio/SFX/Retro realistic coins.wav").toExternalForm());
+    private AudioClip coinSound = new AudioClip(getClass().getResource("Audio/SFX/Retro realistic coins.wav").toExternalForm());
     private AudioClip magicSound = new AudioClip(getClass().getResource("Audio/SFX/magic1.mp3").toExternalForm());
     private AudioClip deathSound = new AudioClip(getClass().getResource("Audio/SFX/deathsound.mp3").toExternalForm());
     private AudioClip gameOverMusic = new AudioClip(getClass().getResource("Audio/gameover.wav").toExternalForm());
@@ -243,8 +242,9 @@ public class GameWindow {
     @FXML
     void initialize(Stage stage, DifficultyLevel difficulty, String name, AudioClip music) {
         this.music = music;
-        music.volumeProperty().set(.7);
         click.volumeProperty().set(.2);
+        swordSlash.volumeProperty().set(.4);
+        coinSound.volumeProperty().set(.4);
 
         imgViewList = new ArrayList<ImageView>();
         world = World.instance();
