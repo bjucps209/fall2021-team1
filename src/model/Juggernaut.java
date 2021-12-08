@@ -7,7 +7,6 @@ public class Juggernaut extends Enemy {
     int attackSpeed = 5;
     int frenzySpeed = 12;
     boolean hitPlayer = false; // check if the player was successfully hit
-    boolean inFrenzy;
 
     public enum JuggernautState {
 
@@ -22,10 +21,28 @@ public class Juggernaut extends Enemy {
         super(192, 192, id);
 
         frenzyCooldown = 0;
-        attackSpeed = 5;
+
+        switch (World.instance().getDifficulty()) {
+
+            case EASY:
+                attackSpeed = 5;
+                break;
+
+            case MEDIUM:
+                attackSpeed = 7;
+                break;
+
+            case HARD:
+                attackSpeed = 9; 
+                break;
+
+            default:
+                break;
+
+        }
+
         frenzySpeed = 12;
         hitPlayer = false;
-        inFrenzy = false;
 
         this.setMaxHealth(10);
         this.setHealth(10);

@@ -173,6 +173,7 @@ public class GameWindow {
     private Image imgWell = new Image("Final Assets/Objects/PNG/Objects-Well-256x256.png");
     private Image imgHouse = new Image("Final Assets/Objects/PNG/Objects-House-Front-512x512.png");
     private Image imgCoin = new Image("Final Assets/Coin/GIF/Coin-68x68.gif");
+    private Image imgSnail = new Image("Final Assets/EasterEggs/PNG/Snail-64x64.png");
     // **********************
 
     // UI Images ************
@@ -239,7 +240,6 @@ public class GameWindow {
 
     private AudioClip music;
 
-
     @FXML
     void initialize(Stage stage, DifficultyLevel difficulty, String name, AudioClip music) {
         this.music = music;
@@ -249,8 +249,28 @@ public class GameWindow {
 
         imgViewList = new ArrayList<ImageView>();
         world = World.instance();
+
         world.setDifficulty(difficulty);
         world.setScore(0);
+
+        switch (world.getDifficulty()) {
+
+            case EASY:
+                world.getPlayer().setHealth(10);
+                break;
+
+            case MEDIUM:
+                world.getPlayer().setHealth(8);
+                break;
+
+            case HARD:
+                world.getPlayer().setHealth(5);
+                break;
+
+            default:
+                break;
+
+        }
 
         this.name = name;
 
@@ -310,7 +330,9 @@ public class GameWindow {
     }
 
     /**
-     * Displays the score increase upon killing an enemy or collecting a coin above the player's score count.
+     * Displays the score increase upon killing an enemy or collecting a coin above
+     * the player's score count.
+     * 
      * @param scoreBonues - the score to display
      */
     @FXML
@@ -348,42 +370,68 @@ public class GameWindow {
 
             case NPC:
 
-                Label lblNPCMessage = new Label();
-                lblNPCMessage.setText(((NPC) interactedEntity).getMessage());
-                lblNPCMessage.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
-                lblNPCMessage.setLayoutX(interactedEntity.getX() - 60);
-                lblNPCMessage.setLayoutY(interactedEntity.getY() - 20);
-                lblNPCMessage.setAlignment(Pos.CENTER);
+                NPC interactedNPC = (NPC) interactedEntity;
 
-                apaneMain.getChildren().add(lblNPCMessage);
+                if (interactedNPC.getDescription().equals("snail")) {
 
-                PauseTransition labelPause = new PauseTransition(Duration.seconds(3));
-                labelPause.setOnFinished(e -> lblNPCMessage.setVisible(false));
-                labelPause.play();
+                    Label lblNPCMessage = new Label();
+                    lblNPCMessage.setText(((NPC) interactedEntity).getMessage());
+                    lblNPCMessage.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
+                    lblNPCMessage.setLayoutX(interactedEntity.getX() - 200);
+                    lblNPCMessage.setLayoutY(interactedEntity.getY() - 45);
+                    lblNPCMessage.setAlignment(Pos.CENTER);
 
-                return;
+                    apaneMain.getChildren().add(lblNPCMessage);
 
-            case ITEM:
-                Item interactedItem = (Item) interactedEntity;
+                    PauseTransition labelPause = new PauseTransition(Duration.seconds(5));
 
-                if (interactedItem.getDescription().equals("coin")) {
+                    labelPause.setOnFinished(e -> {
+                        lblNPCMessage.setVisible(false);
+                        world.getPlayer().handleDamage(world.getPlayer().getHealth(), world.getPlayer().getDirection());
+                    });
+                    labelPause.play();
 
-                    for (ImageView imgview : imgViewList) {
-                        if (interactedItem.getX() == imgview.getLayoutX()
-                                && interactedItem.getY() == imgview.getLayoutY()) {
-                            apaneMain.getChildren().remove(imgview);
-                            world.getCurrentlocation().getObjectList().remove(interactedItem);
-                        }
-                    }
+                } else {
 
-                    coinSound.play();
+                    Label lblNPCMessage = new Label();
+                    lblNPCMessage.setText(((NPC) interactedEntity).getMessage());
+                    lblNPCMessage.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
+                    lblNPCMessage.setLayoutX(interactedEntity.getX() - 60);
+                    lblNPCMessage.setLayoutY(interactedEntity.getY() - 20);
+                    lblNPCMessage.setAlignment(Pos.CENTER);
 
-                    world.setScore(world.getScore() + ((Item) interactedItem).getScoreIncrease());
-                    drawScore();
-                    displayScoreIncrease(interactedItem.getScoreIncrease());
+                    apaneMain.getChildren().add(lblNPCMessage);
+
+                    PauseTransition labelPause = new PauseTransition(Duration.seconds(3));
+                    labelPause.setOnFinished(e -> lblNPCMessage.setVisible(false));
+                    labelPause.play();
+
+                    return;
                 }
 
-                return;
+            case ITEM:
+                if (interactedEntity instanceof Item) {
+                    Item interactedItem = (Item) interactedEntity;
+
+                    if (interactedItem.getDescription().equals("coin")) {
+
+                        for (ImageView imgview : imgViewList) {
+                            if (interactedItem.getX() == imgview.getLayoutX()
+                                    && interactedItem.getY() == imgview.getLayoutY()) {
+                                apaneMain.getChildren().remove(imgview);
+                                world.getCurrentlocation().getObjectList().remove(interactedItem);
+                            }
+                        }
+
+                        coinSound.play();
+
+                        world.setScore(world.getScore() + ((Item) interactedItem).getScoreIncrease());
+                        drawScore();
+                        displayScoreIncrease(interactedItem.getScoreIncrease());
+                    }
+
+                    return;
+                }
 
             default:
 
@@ -408,6 +456,26 @@ public class GameWindow {
             if (entity instanceof Grunt) {
 
                 Grunt spawnedGrunt = (Grunt) entity;
+
+                switch (world.getDifficulty()) {
+
+                    case EASY:
+                        spawnedGrunt.setHealth(2);
+                        break;
+
+                    case MEDIUM:
+                        spawnedGrunt.setHealth(3);
+                        break;
+
+                    case HARD:
+                        spawnedGrunt.setHealth(4);
+                        break;
+
+                    default:
+                        break;
+
+                }
+
                 spawnedGrunt.setOriginalX(spawnedGrunt.getX());
                 spawnedGrunt.setOriginalY(spawnedGrunt.getY());
                 ImageView imgViewGrunt = new ImageView();
@@ -418,7 +486,28 @@ public class GameWindow {
                 imgViewList.add(imgViewGrunt);
 
             } else if (entity instanceof Juggernaut) {
+
                 Juggernaut spawnedJuggernaut = (Juggernaut) entity;
+
+                switch (world.getDifficulty()) {
+
+                    case EASY:
+                        spawnedJuggernaut.setHealth(5);
+                        break;
+
+                    case MEDIUM:
+                        spawnedJuggernaut.setHealth(7);
+                        break;
+
+                    case HARD:
+                        spawnedJuggernaut.setHealth(10);
+                        break;
+
+                    default:
+                        break;
+
+                }
+
                 spawnedJuggernaut.setOriginalX(spawnedJuggernaut.getX());
                 spawnedJuggernaut.setOriginalY(spawnedJuggernaut.getY());
                 ImageView imgViewJuggernaut = new ImageView();
@@ -567,6 +656,7 @@ public class GameWindow {
                     switch (landObjects.getDescription()) {
 
                         case "NPC":
+                            landObjects.setCollidable(true);
                             landObjects.setWidth(64);
                             landObjects.setHeight(96);
                             ImageView imgviewNPC = new ImageView(imgNPC);
@@ -697,6 +787,16 @@ public class GameWindow {
                             imgviewCoin.setLayoutX(landObjects.getX() - imgviewCoin.getLayoutBounds().getMinX());
                             imgviewCoin.setLayoutY(landObjects.getY() - imgviewCoin.getLayoutBounds().getMinY());
                             imgViewList.add(imgviewCoin);
+                            break;
+
+                        case "snail":
+                            landObjects.setWidth(64);
+                            landObjects.setHeight(64);
+                            ImageView imgviewSnail = new ImageView(imgSnail);
+                            apaneMain.getChildren().add(imgviewSnail);
+                            imgviewSnail.setLayoutX(landObjects.getX() - imgviewSnail.getLayoutBounds().getMinX());
+                            imgviewSnail.setLayoutY(landObjects.getY() - imgviewSnail.getLayoutBounds().getMinY());
+                            imgViewList.add(imgviewSnail);
                             break;
 
                         case "coord":
@@ -873,7 +973,7 @@ public class GameWindow {
             apaneMain.getChildren().add(gameOverVbox);
 
             music.stop();
-            
+
             gameOverMusic.volumeProperty().set(.07);
             gameOverMusic.play();
         }
@@ -911,15 +1011,13 @@ public class GameWindow {
                 jugg.navigate();
                 updateJuggGraphic(jugg);
 
-                // for (ImageView imgview : imgViewList) {}
-
                 if (jugg.isDead()) {
                     Thread juggThread = new Thread(() -> {
                         deathSound.play();
                     });
                     juggThread.start();
-                    world.increaseScore(300);
-                    displayScoreIncrease(300);
+                    world.increaseScore(1000);
+                    displayScoreIncrease(1000);
 
                     iterator.remove();
                 }
@@ -1849,47 +1947,55 @@ public class GameWindow {
      */
     public void displayHealth(int health) {
 
-        switch (health) {
+        if (cheatModeEnabled) {
+            imgviewHeart.setImage(imgHeart10);
+        } else {
+            switch (health) {
 
-            case 9:
-                imgviewHeart.setImage(imgHeart9);
-                break;
+                case 10:
+                    imgviewHeart.setImage(imgHeart10);
+                    break;
 
-            case 8:
-                imgviewHeart.setImage(imgHeart8);
-                break;
+                case 9:
+                    imgviewHeart.setImage(imgHeart9);
+                    break;
 
-            case 7:
-                imgviewHeart.setImage(imgHeart7);
-                break;
+                case 8:
+                    imgviewHeart.setImage(imgHeart8);
+                    break;
 
-            case 6:
-                imgviewHeart.setImage(imgHeart6);
-                break;
+                case 7:
+                    imgviewHeart.setImage(imgHeart7);
+                    break;
 
-            case 5:
-                imgviewHeart.setImage(imgHeart5);
-                break;
+                case 6:
+                    imgviewHeart.setImage(imgHeart6);
+                    break;
 
-            case 4:
-                imgviewHeart.setImage(imgHeart4);
-                break;
+                case 5:
+                    imgviewHeart.setImage(imgHeart5);
+                    break;
 
-            case 3:
-                imgviewHeart.setImage(imgHeart3);
-                break;
+                case 4:
+                    imgviewHeart.setImage(imgHeart4);
+                    break;
 
-            case 2:
-                imgviewHeart.setImage(imgHeart2);
-                break;
+                case 3:
+                    imgviewHeart.setImage(imgHeart3);
+                    break;
 
-            case 1:
-                imgviewHeart.setImage(imgHeart1);
-                break;
+                case 2:
+                    imgviewHeart.setImage(imgHeart2);
+                    break;
 
-            default:
-                apaneMain.getChildren().remove(imgviewHeart);
-                break;
+                case 1:
+                    imgviewHeart.setImage(imgHeart1);
+                    break;
+
+                default:
+                    apaneMain.getChildren().remove(imgviewHeart);
+                    break;
+            }
 
         }
 
