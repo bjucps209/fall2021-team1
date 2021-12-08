@@ -17,3 +17,6 @@ build
 # Ignore save files
 SAVEGAME.txt
 HIGHSCORES.txt
+.gradle/buildOutputCleanup/buildOutputCleanup.lock
+.gradle/7.2/executionHistory/executionHistory.lock
+.gradle/7.2/fileHashes/fileHashes.lock

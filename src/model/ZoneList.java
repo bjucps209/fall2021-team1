@@ -538,10 +538,6 @@ public class ZoneList {
 
         listForestEdge.add(new NPC("", "coord"));
         listForestEdge.get(13).setPosition(344, 243);
-
-        listForestEdge.add(new Item("", "coin", 100));
-        listForestEdge.get(14).setPosition(665, 416);
-        listForestEdge.get(14).setInteractable(true);
         // ****************************************
     }
 

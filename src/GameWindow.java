@@ -214,13 +214,14 @@ public class GameWindow {
     // Audio
     // *******************************************************************************************************
     private AudioClip click = new AudioClip(getClass().getResource("Audio/UI/btnClick1.mp3").toExternalForm());
-    private AudioClip juggHit = new AudioClip(getClass().getResource("Audio/SFX/juggsound.mp3").toExternalForm());
-    private AudioClip gruntHit = new AudioClip(getClass().getResource("Audio/SFX/grunthit.mp3").toExternalForm());
+    private AudioClip juggHit = new AudioClip(getClass().getResource("Audio/SFX/juggsound.wav").toExternalForm());
+    private AudioClip gruntHit = new AudioClip(getClass().getResource("Audio/SFX/grunthit.wav").toExternalForm());
     private AudioClip coinSound = new AudioClip(
             getClass().getResource("Audio/SFX/Retro realistic coins.wav").toExternalForm());
     private AudioClip magicSound = new AudioClip(getClass().getResource("Audio/SFX/magic1.mp3").toExternalForm());
     private AudioClip deathSound = new AudioClip(getClass().getResource("Audio/SFX/deathsound.mp3").toExternalForm());
     private AudioClip gameOverMusic = new AudioClip(getClass().getResource("Audio/gameover.wav").toExternalForm());
+    private AudioClip swordSlash = new AudioClip(getClass().getResource("Audio/SFX/swordslash.wav").toExternalForm());
     // *************************************************************************************************************
 
     // Model Attributes
@@ -305,6 +306,28 @@ public class GameWindow {
     }
 
     /**
+     * Displays the score increase upon killing an enemy or collecting a coin above the player's score count.
+     * @param scoreBonues - the score to display
+     */
+    @FXML
+    public void displayScoreIncrease(int scoreBonus) {
+
+        Label lblMessage = new Label();
+        lblMessage.setText("+ " + scoreBonus + "!");
+        lblMessage.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
+        AnchorPane.setBottomAnchor(lblMessage, 40.0);
+        AnchorPane.setLeftAnchor(lblMessage, 8.0);
+        lblMessage.setAlignment(Pos.CENTER);
+
+        apaneMain.getChildren().add(lblMessage);
+
+        PauseTransition labelItemPause = new PauseTransition(Duration.seconds(1));
+        labelItemPause.setOnFinished(e -> lblMessage.setVisible(false));
+        labelItemPause.play();
+
+    }
+
+    /**
      * Calls the Player's interact method, if an entity is within range of the
      * player displays the entities message as a Label.
      */
@@ -349,20 +372,11 @@ public class GameWindow {
                         }
                     }
 
+                    coinSound.play();
+
                     world.setScore(world.getScore() + ((Item) interactedItem).getScoreIncrease());
                     drawScore();
-                    Label lblMessage = new Label();
-                    lblMessage.setText("+ " + String.valueOf((((Item) interactedItem).getScoreIncrease())) + "!");
-                    lblMessage.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
-                    AnchorPane.setBottomAnchor(lblMessage, 40.0);
-                    AnchorPane.setLeftAnchor(lblMessage, 10.0);
-                    lblMessage.setAlignment(Pos.CENTER);
-
-                    apaneMain.getChildren().add(lblMessage);
-
-                    PauseTransition labelItemPause = new PauseTransition(Duration.seconds(3));
-                    labelItemPause.setOnFinished(e -> lblMessage.setVisible(false));
-                    labelItemPause.play();
+                    displayScoreIncrease(interactedItem.getScoreIncrease());
                 }
 
                 return;
@@ -879,6 +893,7 @@ public class GameWindow {
                     });
                     gruntThread.start();
                     world.increaseScore(100);
+                    displayScoreIncrease(100);
 
                     // Remove grunt
                     iterator.remove();
@@ -898,6 +913,7 @@ public class GameWindow {
                     });
                     juggThread.start();
                     world.increaseScore(300);
+                    displayScoreIncrease(300);
 
                     iterator.remove();
                 }
@@ -1806,6 +1822,8 @@ public class GameWindow {
                 break;
 
         }
+        
+        swordSlash.play();
 
     }
 
