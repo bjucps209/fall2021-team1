@@ -787,7 +787,7 @@ public class GameWindow {
                                         grunt.setHeight(96);
                                         spawnEnemies(grunt);
 
-                                    } else if (spawnNum > 4 && spawnNum <= 8) {
+                                    } else if (spawnNum > 4 && spawnNum <= 10) {
 
                                         Juggernaut jugg = new Juggernaut(nextId + 1);
                                         jugg.setX(landObjects.getX());
