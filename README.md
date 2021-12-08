@@ -3,10 +3,10 @@
 Welcome to the Fall 2021 Team 1 Github Repository
 
 ### Instructions
-Use the arrow keys to move the player character around the screen. The Z key interacts with the world, such as talking to NPC's or picking up items.  The spacebar allows the player to attack. Press X to change zones when the player one of the edges of the screen. Press C to enter cheat mode.
+Use the arrow keys to move the player character around the screen. The Z key interacts with the world, such as talking to NPC's or picking up items.  The spacebar allows the player to attack. Press X to change zones when the player one of the edges of the screen. Press C to enter cheat mode. Press ESC to pause the game and open the pause menu.
 
 ### Work Completed
-Gameplay: Basic gameplay is working, the player can move around the screen, interact with NPC's or items, and attack and kill enemies. The game screen is finished as well, it displays the appropriate amount of hearts for the player's health as well as the current score and current location. The two enemies implemented in the game have fully working AI. All 10 zones are complete and can be explored by the player. Collision is fully implemented. Some easter eggs are added. The player can be killed by enemies upon which a death animation plays and a game over screen is displayed. 
+Gameplay: Basic gameplay is working, the player can move around the screen, interact with NPC's or items, and attack and kill enemies. The game screen is finished as well, it displays the appropriate amount of hearts for the player's health as well as the current score and current location. The two enemies implemented in the game have fully working AI. All 10 zones are complete and can be explored by the player. Collision is fully implemented. Some easter eggs are added. The player can be killed by enemies upon which a death animation plays and a game over screen is displayed. Coins are added to the game that the player can interact with to increase their score. Full difficulty is implemented.
 
 
 
