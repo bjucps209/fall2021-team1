@@ -13,6 +13,7 @@ public class Item extends NPC {
 
         this.setCollidable(true);
         this.scoreIncrease = new SimpleIntegerProperty(score);
+        this.setInteractable(false);
 
     }
 

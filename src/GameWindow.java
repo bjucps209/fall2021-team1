@@ -211,11 +211,13 @@ public class GameWindow {
     private VBox gameOverVbox = new VBox();
     // *****************************
 
-    // Audio *******************************************************************************************************
+    // Audio
+    // *******************************************************************************************************
     private AudioClip click = new AudioClip(getClass().getResource("Audio/UI/btnClick1.mp3").toExternalForm());
     private AudioClip juggHit = new AudioClip(getClass().getResource("Audio/SFX/juggsound.mp3").toExternalForm());
     private AudioClip gruntHit = new AudioClip(getClass().getResource("Audio/SFX/grunthit.mp3").toExternalForm());
-    private AudioClip coinSound = new AudioClip(getClass().getResource("Audio/SFX/Retro realistic coins.wav").toExternalForm());
+    private AudioClip coinSound = new AudioClip(
+            getClass().getResource("Audio/SFX/Retro realistic coins.wav").toExternalForm());
     private AudioClip magicSound = new AudioClip(getClass().getResource("Audio/SFX/magic1.mp3").toExternalForm());
     private AudioClip deathSound = new AudioClip(getClass().getResource("Audio/SFX/deathsound.mp3").toExternalForm());
     // *************************************************************************************************************
@@ -232,7 +234,6 @@ public class GameWindow {
 
     // Player's Name
     private String name;
-
 
     @FXML
     void initialize(Stage stage, DifficultyLevel difficulty, String name, AudioClip music) {
@@ -319,8 +320,9 @@ public class GameWindow {
                 Label lblNPCMessage = new Label();
                 lblNPCMessage.setText(((NPC) interactedEntity).getMessage());
                 lblNPCMessage.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
-                lblNPCMessage.setLayoutX(interactedEntity.getX() - 53);
-                lblNPCMessage.setLayoutY(interactedEntity.getY() - 30);
+                lblNPCMessage.setLayoutX(interactedEntity.getX() - 60);
+                lblNPCMessage.setLayoutY(interactedEntity.getY() - 20);
+                lblNPCMessage.setAlignment(Pos.CENTER);
 
                 apaneMain.getChildren().add(lblNPCMessage);
 
@@ -331,20 +333,35 @@ public class GameWindow {
                 return;
 
             case ITEM:
+                Item interactedItem = (Item) interactedEntity;
 
-                // Label lblMessage = new Label();
-                // lblMessage.setText(((NPC) interactedEntity).getMessage());
-                // lblMessage.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
-                // lblMessage.setLayoutX(interactedEntity.getX() - 53);
-                // lblMessage.setLayoutY(interactedEntity.getY() - 30);
+                if (interactedItem.getDescription().equals("coin")) {
 
-                // apaneMain.getChildren().add(lblMessage);
+                    for (ImageView imgview : imgViewList) {
+                        if (interactedItem.getX() == imgview.getLayoutX()
+                                && interactedItem.getY() == imgview.getLayoutY()) {
+                            apaneMain.getChildren().remove(imgview);
+                            world.getCurrentlocation().getObjectList().remove(interactedItem);
+                        }
+                    }
 
-                // PauseTransition labelPause = new PauseTransition(Duration.seconds(3));
-                // labelPause.setOnFinished(e -> lblMessage.setVisible(false));
-                // labelPause.play();
+                    world.setScore(world.getScore() + ((Item) interactedItem).getScoreIncrease());
+                    drawScore();
+                    Label lblMessage = new Label();
+                    lblMessage.setText("+ " + String.valueOf((((Item) interactedItem).getScoreIncrease())) + "!");
+                    lblMessage.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
+                    AnchorPane.setBottomAnchor(lblMessage, 40.0);
+                    AnchorPane.setLeftAnchor(lblMessage, 10.0);
+                    lblMessage.setAlignment(Pos.CENTER);
 
-                // return;
+                    apaneMain.getChildren().add(lblMessage);
+
+                    PauseTransition labelItemPause = new PauseTransition(Duration.seconds(3));
+                    labelItemPause.setOnFinished(e -> lblMessage.setVisible(false));
+                    labelItemPause.play();
+                }
+
+                return;
 
             default:
 
@@ -444,7 +461,8 @@ public class GameWindow {
         lblScore.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
         if (!cheatModeEnabled) {
 
-            lblScore.textProperty().bind(Bindings.createStringBinding(() -> String.valueOf(world.getScore()), world.scoreProperty()));
+            lblScore.textProperty()
+                    .bind(Bindings.createStringBinding(() -> String.valueOf(world.getScore()), world.scoreProperty()));
 
         } else {
 
@@ -489,7 +507,6 @@ public class GameWindow {
                 imgviewPauseBtn.setImage(imgPauseBtn1);
             }
         });
-
 
         imgviewPauseBtn.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
@@ -551,7 +568,8 @@ public class GameWindow {
                             ImageView imgviewHFence = new ImageView(imgHFence);
                             apaneMain.getChildren().add(imgviewHFence);
                             imgviewHFence.setLayoutX(landObjects.getX() - imgviewHFence.getLayoutBounds().getMinX());
-                            imgviewHFence.setLayoutY(landObjects.getY() - imgviewHFence.getLayoutBounds().getMinY() - 84);
+                            imgviewHFence
+                                    .setLayoutY(landObjects.getY() - imgviewHFence.getLayoutBounds().getMinY() - 84);
                             break;
 
                         case "vFence":
@@ -559,7 +577,8 @@ public class GameWindow {
                             landObjects.setHeight(212);
                             ImageView imgviewVFence = new ImageView(imgVFence);
                             apaneMain.getChildren().add(imgviewVFence);
-                            imgviewVFence.setLayoutX(landObjects.getX() - imgviewVFence.getLayoutBounds().getMinX() - 84);
+                            imgviewVFence
+                                    .setLayoutX(landObjects.getX() - imgviewVFence.getLayoutBounds().getMinX() - 84);
                             imgviewVFence.setLayoutY(landObjects.getY() - imgviewVFence.getLayoutBounds().getMinY());
                             break;
 
@@ -589,7 +608,8 @@ public class GameWindow {
                             ImageView imgviewStump = new ImageView(imgStump);
                             apaneMain.getChildren().add(imgviewStump);
                             imgviewStump.setLayoutX(landObjects.getX() - imgviewStump.getLayoutBounds().getMinX() - 48);
-                            imgviewStump.setLayoutY(landObjects.getY() - imgviewStump.getLayoutBounds().getMinY() - 172);
+                            imgviewStump
+                                    .setLayoutY(landObjects.getY() - imgviewStump.getLayoutBounds().getMinY() - 172);
                             break;
 
                         case "well":
@@ -643,7 +663,18 @@ public class GameWindow {
                             ImageView imgviewHouse = new ImageView(imgHouse);
                             apaneMain.getChildren().add(imgviewHouse);
                             imgviewHouse.setLayoutX(landObjects.getX() - imgviewHouse.getLayoutBounds().getMinX());
-                            imgviewHouse.setLayoutY(landObjects.getY() - imgviewHouse.getLayoutBounds().getMinY() - 124);
+                            imgviewHouse
+                                    .setLayoutY(landObjects.getY() - imgviewHouse.getLayoutBounds().getMinY() - 124);
+                            break;
+
+                        case "coin":
+                            landObjects.setWidth(0);
+                            landObjects.setHeight(0);
+                            ImageView imgviewCoin = new ImageView(imgCoin);
+                            apaneMain.getChildren().add(imgviewCoin);
+                            imgviewCoin.setLayoutX(landObjects.getX() - imgviewCoin.getLayoutBounds().getMinX());
+                            imgviewCoin.setLayoutY(landObjects.getY() - imgviewCoin.getLayoutBounds().getMinY());
+                            imgViewList.add(imgviewCoin);
                             break;
 
                         case "coord":
@@ -814,7 +845,7 @@ public class GameWindow {
             dPressed.set(false);
             rPressed.set(false);
             setIsPaused(true);
-            
+
             apaneMain.getChildren().add(imgviewBackgroundDim);
             createGameOverVbox(String.valueOf(world.getScore()));
             apaneMain.getChildren().add(gameOverVbox);
@@ -831,7 +862,7 @@ public class GameWindow {
                 grunt.navigate();
                 updateGruntGraphic(grunt);
 
-                //for (ImageView imgview : imgViewList) {}
+                // for (ImageView imgview : imgViewList) {}
 
                 // Increase score if grunt is dead
                 if (((Grunt) entity).isDead()) {
@@ -852,7 +883,7 @@ public class GameWindow {
                 jugg.navigate();
                 updateJuggGraphic(jugg);
 
-                //for (ImageView imgview : imgViewList) {}
+                // for (ImageView imgview : imgViewList) {}
 
                 if (jugg.isDead()) {
                     Thread juggThread = new Thread(() -> {
@@ -1016,7 +1047,8 @@ public class GameWindow {
             var player = world.getPlayer();
             double speed = player.getSpeed();
 
-            var obstacles = world.getCurrentlocation().getObjectList().stream().filter(e -> (e.isCollidable())).toList();
+            var obstacles = world.getCurrentlocation().getObjectList().stream().filter(e -> (e.isCollidable()))
+                    .toList();
 
             if (uPressed.get() && !dPressed.get()) { // Up
 
@@ -1026,7 +1058,8 @@ public class GameWindow {
 
                     for (Entity obstacle : obstacles) {
 
-                        if (player.intersects(obstacle)) player.setY(player.getY() + 0.1);
+                        if (player.intersects(obstacle))
+                            player.setY(player.getY() + 0.1);
 
                     }
 
@@ -1044,7 +1077,8 @@ public class GameWindow {
 
                     for (Entity obstacle : obstacles) {
 
-                        if (player.intersects(obstacle)) player.setY(player.getY() - 0.1);
+                        if (player.intersects(obstacle))
+                            player.setY(player.getY() - 0.1);
 
                     }
 
@@ -1062,7 +1096,8 @@ public class GameWindow {
 
                     for (Entity obstacle : obstacles) {
 
-                        if (player.intersects(obstacle)) player.setX(player.getX() + 0.1);
+                        if (player.intersects(obstacle))
+                            player.setX(player.getX() + 0.1);
 
                     }
 
@@ -1080,7 +1115,8 @@ public class GameWindow {
 
                     for (Entity obstacle : obstacles) {
 
-                        if (player.intersects(obstacle)) player.setX(player.getX() - 0.1);
+                        if (player.intersects(obstacle))
+                            player.setX(player.getX() - 0.1);
 
                     }
 
@@ -1189,8 +1225,9 @@ public class GameWindow {
 
             case C:
 
-                if (isPaused()) break;
-                
+                if (isPaused())
+                    break;
+
                 if (cheatModeEnabled) {
 
                     cheatModeEnabled = false;
@@ -1274,15 +1311,16 @@ public class GameWindow {
 
             case X:
 
-                if (!isPaused()) switchZones();
+                if (!isPaused())
+                    switchZones();
                 break;
 
             case SPACE:
                 if (!isPaused()) {
-                    
+
                     world.getPlayer().attack(lastAnimationDirection);
                     handleAttackGraphic(lastAnimationDirection);
-                
+
                 }
 
                 break;
@@ -1318,7 +1356,7 @@ public class GameWindow {
         dPressed.set(false);
         rPressed.set(false);
         processAnimationDirection();
-          
+
         apaneMain.getChildren().add(imgviewBackgroundDim);
         apaneMain.getChildren().add(pauseVbox);
 
@@ -1463,7 +1501,6 @@ public class GameWindow {
                     unpause();
                     setIsPaused(false);
                     System.out.println("Game Loaded!");
-                    
 
                 } catch (IOException ev) {
 
@@ -1511,7 +1548,8 @@ public class GameWindow {
 
     @FXML
     public void createHelpVbox() {
-        //Mouse Pressed/Released------------------------------------------------------------------------------
+        // Mouse
+        // Pressed/Released------------------------------------------------------------------------------
         imgviewHelpBackBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
                 Thread thread = new Thread(() -> {
@@ -1526,7 +1564,7 @@ public class GameWindow {
                 imgviewHelpBackBtn.setImage(imgBackBtn1);
             }
         });
-        //-------------------------------------------------------------------------------------------------
+        // -------------------------------------------------------------------------------------------------
 
         imgviewHelpBackBtn.setFitHeight(80);
         imgviewHelpBackBtn.setFitWidth(312);
@@ -1621,8 +1659,9 @@ public class GameWindow {
     public void createGameOverVbox(String score) {
         Label titleLbl = new Label("GAME OVER!");
         titleLbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 48px; -fx-text-fill: #ffffff;");
-         //Mouse Pressed/Released------------------------------------------------------------------------------
-         imgviewGOQuitBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+        // Mouse
+        // Pressed/Released------------------------------------------------------------------------------
+        imgviewGOQuitBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
                 Thread thread = new Thread(() -> {
                     click.play();
@@ -1636,7 +1675,7 @@ public class GameWindow {
                 imgviewGOQuitBtn.setImage(imgQuitBtn1);
             }
         });
-        //-------------------------------------------------------------------------------------------------
+        // -------------------------------------------------------------------------------------------------
 
         imgviewGOQuitBtn.setFitHeight(80);
         imgviewGOQuitBtn.setFitWidth(312);
@@ -1654,8 +1693,6 @@ public class GameWindow {
 
         gameOverVbox.getChildren().add(titleLbl);
         gameOverVbox.getChildren().add(scoreLbl);
-
-
 
         Leaderboard leaderboard;
         try {
@@ -1689,7 +1726,7 @@ public class GameWindow {
             hsNames = "HIGHSCORES FILE NOT FOUND :(";
             hsScores = "HIGHSCORES FILE NOT FOUND :(";
         }
-    
+
         Label hsPlacelbl = new Label(hsPlace);
         Label hsNameslbl = new Label(hsNames);
         Label hsScoreslbl = new Label(hsScores);
@@ -1702,7 +1739,7 @@ public class GameWindow {
 
         Label title2Lbl = new Label("HIGHSCORES");
         title2Lbl.setStyle("-fx-font-family: Minecraft; -fx-font-size: 48px; -fx-text-fill: #ffffff;");
-        
+
         gameOverVbox.getChildren().add(title2Lbl);
         HBox h = new HBox();
         h.setSpacing(20.0);
@@ -1711,7 +1748,7 @@ public class GameWindow {
         h.getChildren().add(hsScoreslbl);
         h.setAlignment(Pos.CENTER);
         gameOverVbox.getChildren().add(h);
-        
+
         gameOverVbox.getChildren().add(imgviewGOQuitBtn);
         gameOverVbox.setAlignment(Pos.CENTER);
         gameOverVbox.setSpacing(10.0);
@@ -1724,7 +1761,7 @@ public class GameWindow {
      */
     @FXML
     public void handleAttackGraphic(mapDirection direction) {
-        
+
         PauseTransition attackPause = new PauseTransition(Duration.seconds(0.32));
         attackPause.setOnFinished(e -> processAnimationDirection());
 
@@ -1847,5 +1884,4 @@ public class GameWindow {
         this.name = name;
     }
 
-    
 }
