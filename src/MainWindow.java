@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 import javax.swing.plaf.basic.BasicScrollPaneUI.HSBChangeListener;
 
+import javafx.beans.property.DoubleProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -99,7 +100,8 @@ public class MainWindow  {
     void initialize(Stage stage) {
         this.stage = stage;
         // Music
-        music.setVolume(0.45);
+        music.volumeProperty().set(.07);
+        click.volumeProperty().set(.2);
         music.setCycleCount(AudioClip.INDEFINITE);
         Thread thread = new Thread(() -> {
             music.play();
