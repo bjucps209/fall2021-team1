@@ -122,6 +122,9 @@ public class GameWindow {
     // Grunt Images *********
     private Image imgGruntDeath = new Image("Final Assets/Grunt/GIF/Grunt-Death-128x128.gif");
     private Image imgGrunt = new Image("Final Assets/Grunt/PNG/Grunt-Front-Stationary-128x128.png");
+    private Image imgGruntRight = new Image("Final Assets/Grunt/PNG/Grunt-Right-Stationary-128x128.png");
+    private Image imgGruntLeft = new Image("Final Assets/Grunt/PNG/Grunt-Left-Stationary-128x128.png");
+    private Image imgGruntBack = new Image("Final Assets/Grunt/PNG/Grunt-Back-Stationary-128x128.png");
     private Image imgGruntRightMove = new Image("Final Assets/Grunt/GIF/Grunt-Right-Walking-128x128.gif");
     private Image imgGruntBackMove = new Image("Final Assets/Grunt/GIF/Grunt-Back-Walking-128x128.gif");
     private Image imgGruntFrontMove = new Image("Final Assets/Grunt/GIF/Grunt-Front-Walking-128x128.gif");
@@ -130,6 +133,9 @@ public class GameWindow {
 
     // Jugg Images **********
     private Image imgJugg = new Image("Final Assets/Jugg/PNG/Jugg-Front-Stationary-192x192.png");
+    private Image imgJuggRight = new Image("Final Assets/Jugg/PNG/Jugg-Right-Stationary-192x192.png");
+    private Image imgJuggLeft = new Image("Final Assets/Jugg/PNG/Jugg-Left-Stationary-192x192.png");
+    private Image imgJuggBack = new Image("Final Assets/Jugg/PNG/Jugg-Back-Stationary-192x192.png");
     private Image imgJuggDeath = new Image("Final Assets/Jugg/GIF/Jugg-Death-192x192.gif");
     private Image imgJuggRightMoveSlow = new Image("Final Assets/Jugg/GIF/Jugg-Right-Walking-192x192-150ms.gif");
     private Image imgJuggRightMoveFast = new Image("Final Assets/Jugg/GIF/Jugg-Right-Walking-192x192-50ms.gif");
@@ -944,19 +950,38 @@ public class GameWindow {
                 imgview = foundImageView;
         }
 
+
         if (grunt.getDirection() >= 0 && grunt.getDirection() < 90
                 || grunt.getDirection() > 270 && grunt.getDirection() <= 360) {
-            imgview.setImage(imgGruntRightMove);
+                if (isPaused || world.isGameOver()) {
+                    imgview.setImage(imgGruntRight);
+                } else {
+                    imgview.setImage(imgGruntRightMove);
+                }
 
         } else if (grunt.getDirection() == 90) {
-            imgview.setImage(imgGruntBackMove);
+            if (isPaused || world.isGameOver()) {
+                imgview.setImage(imgGruntBack);
+            } else {
+                imgview.setImage(imgGruntBackMove);
+            }
 
         } else if (grunt.getDirection() > 90 && grunt.getDirection() <= 180
                 || grunt.getDirection() > 180 && grunt.getDirection() < 270) {
-            imgview.setImage(imgGruntLefttMove);
+            if (isPaused || world.isGameOver()) {
+                imgview.setImage(imgGruntLeft);
+            } else {
+                imgview.setImage(imgGruntLefttMove);
+            }
+            
 
         } else if (grunt.getDirection() == 270) {
-            imgview.setImage(imgGruntFrontMove);
+            if (isPaused || world.isGameOver()) {
+                imgview.setImage(imgGrunt);
+            } else {
+                imgview.setImage(imgGruntFrontMove);
+            }
+            
         }
 
         if (grunt.isDead()) {
@@ -987,34 +1012,60 @@ public class GameWindow {
 
             if (jugg.getDirection() >= 0 && jugg.getDirection() < 90
                     || jugg.getDirection() > 270 && jugg.getDirection() <= 360) {
-                imgview.setImage(imgJuggRightMoveSlow);
-
+                if (isPaused || world.isGameOver()) {
+                    imgview.setImage(imgJuggRight);
+                } else {
+                    imgview.setImage(imgJuggRightMoveSlow);    
+                }
             } else if (jugg.getDirection() == 90) {
-                imgview.setImage(imgJuggBackMoveSlow);
-
+                if (isPaused || world.isGameOver()) {
+                    imgview.setImage(imgJuggBack);
+                } else {
+                    imgview.setImage(imgJuggBackMoveSlow);
+                }
             } else if (jugg.getDirection() > 90 && jugg.getDirection() <= 180
                     || jugg.getDirection() > 180 && jugg.getDirection() < 270) {
-                imgview.setImage(imgJuggLeftMoveSlow);
-
+                if (isPaused || world.isGameOver()) {
+                    imgview.setImage(imgJuggLeft);
+                } else {
+                    imgview.setImage(imgJuggLeftMoveSlow);
+                }
             } else if (jugg.getDirection() == 270) {
-                imgview.setImage(imgJuggFrontMoveSlow);
+                if (isPaused || world.isGameOver()) {
+                    imgview.setImage(imgJugg);
+                } else {
+                    imgview.setImage(imgJuggFrontMoveSlow);
+                }
             }
 
         } else if (jugg.getState() == JuggernautState.FRENZY) {
 
             if (jugg.getDirection() >= 0 && jugg.getDirection() < 90
                     || jugg.getDirection() > 270 && jugg.getDirection() <= 360) {
-                imgview.setImage(imgJuggRightMoveFast);
-
+                if (isPaused || world.isGameOver()) {
+                    imgview.setImage(imgJuggRight);
+                } else {
+                    imgview.setImage(imgJuggRightMoveFast);
+                }
             } else if (jugg.getDirection() == 90) {
-                imgview.setImage(imgJuggBackMoveFast);
-
+                if (isPaused || world.isGameOver()) {
+                    imgview.setImage(imgJuggBack);
+                } else {
+                    imgview.setImage(imgJuggBackMoveFast);
+                }
             } else if (jugg.getDirection() > 90 && jugg.getDirection() <= 180
                     || jugg.getDirection() > 180 && jugg.getDirection() < 270) {
-                imgview.setImage(imgJuggLefttMoveFast);
-
+                if (isPaused || world.isGameOver()) {
+                    imgview.setImage(imgJuggLeft);
+                } else {
+                    imgview.setImage(imgJuggLefttMoveFast);
+                }
             } else if (jugg.getDirection() == 270) {
-                imgview.setImage(imgJuggFrontMoveFast);
+                if (isPaused || world.isGameOver()) {
+                    imgview.setImage(imgJugg);
+                } else {
+                    imgview.setImage(imgJuggFrontMoveFast);
+                }
             }
 
         }
@@ -1386,11 +1437,25 @@ public class GameWindow {
         dPressed.set(false);
         rPressed.set(false);
         processAnimationDirection();
+        setIsPaused(true);
+        var iterator = world.getEntityList().iterator();
+        while (iterator.hasNext()) {
+            Entity entity = iterator.next();
+
+            if (entity instanceof Grunt) {
+                Grunt grunt = (Grunt) entity;
+                updateGruntGraphic(grunt);
+            } else if (entity instanceof Juggernaut) {
+                Juggernaut juggernaut = (Juggernaut) entity;
+                updateJuggGraphic(juggernaut);
+             } // else if (entity instance of Wizard) {
+            //     Wizard wizard = (Wizard) entity;
+            //     updateWizardGraphic(wizard);
+            // }
+        }
 
         apaneMain.getChildren().add(imgviewBackgroundDim);
         apaneMain.getChildren().add(pauseVbox);
-
-        setIsPaused(true);
     }
 
     /**
