@@ -122,6 +122,9 @@ public class GameWindow {
     // Grunt Images *********
     private Image imgGruntDeath = new Image("Final Assets/Grunt/GIF/Grunt-Death-128x128.gif");
     private Image imgGrunt = new Image("Final Assets/Grunt/PNG/Grunt-Front-Stationary-128x128.png");
+    private Image imgGruntRight = new Image("Final Assets/Grunt/PNG/Grunt-Right-Stationary-128x128.png");
+    private Image imgGruntLeft = new Image("Final Assets/Grunt/PNG/Grunt-Left-Stationary-128x128.png");
+    private Image imgGruntBack = new Image("Final Assets/Grunt/PNG/Grunt-Back-Stationary-128x128.png");
     private Image imgGruntRightMove = new Image("Final Assets/Grunt/GIF/Grunt-Right-Walking-128x128.gif");
     private Image imgGruntBackMove = new Image("Final Assets/Grunt/GIF/Grunt-Back-Walking-128x128.gif");
     private Image imgGruntFrontMove = new Image("Final Assets/Grunt/GIF/Grunt-Front-Walking-128x128.gif");
@@ -130,6 +133,9 @@ public class GameWindow {
 
     // Jugg Images **********
     private Image imgJugg = new Image("Final Assets/Jugg/PNG/Jugg-Front-Stationary-192x192.png");
+    private Image imgJuggRight = new Image("Final Assets/Jugg/PNG/Jugg-Right-Stationary-192x192.png");
+    private Image imgJuggLeft = new Image("Final Assets/Jugg/PNG/Jugg-Left-Stationary-192x192.png");
+    private Image imgJuggBack = new Image("Final Assets/Jugg/PNG/Jugg-Back-Stationary-192x192.png");
     private Image imgJuggDeath = new Image("Final Assets/Jugg/GIF/Jugg-Death-192x192.gif");
     private Image imgJuggRightMoveSlow = new Image("Final Assets/Jugg/GIF/Jugg-Right-Walking-192x192-150ms.gif");
     private Image imgJuggRightMoveFast = new Image("Final Assets/Jugg/GIF/Jugg-Right-Walking-192x192-50ms.gif");
@@ -173,6 +179,7 @@ public class GameWindow {
     private Image imgWell = new Image("Final Assets/Objects/PNG/Objects-Well-256x256.png");
     private Image imgHouse = new Image("Final Assets/Objects/PNG/Objects-House-Front-512x512.png");
     private Image imgCoin = new Image("Final Assets/Coin/GIF/Coin-68x68.gif");
+    private Image imgSnail = new Image("Final Assets/EasterEggs/PNG/Snail-64x64.png");
     // **********************
 
     // UI Images ************
@@ -238,7 +245,7 @@ public class GameWindow {
     private String name;
 
     private AudioClip music;
-
+    private boolean isGameOver;
 
     @FXML
     void initialize(Stage stage, DifficultyLevel difficulty, String name, AudioClip music) {
@@ -249,8 +256,28 @@ public class GameWindow {
 
         imgViewList = new ArrayList<ImageView>();
         world = World.instance();
+
         world.setDifficulty(difficulty);
         world.setScore(0);
+
+        switch (world.getDifficulty()) {
+
+            case EASY:
+                world.getPlayer().setHealth(10);
+                break;
+
+            case MEDIUM:
+                world.getPlayer().setHealth(8);
+                break;
+
+            case HARD:
+                world.getPlayer().setHealth(5);
+                break;
+
+            default:
+                break;
+
+        }
 
         this.name = name;
 
@@ -310,7 +337,9 @@ public class GameWindow {
     }
 
     /**
-     * Displays the score increase upon killing an enemy or collecting a coin above the player's score count.
+     * Displays the score increase upon killing an enemy or collecting a coin above
+     * the player's score count.
+     * 
      * @param scoreBonues - the score to display
      */
     @FXML
@@ -348,42 +377,68 @@ public class GameWindow {
 
             case NPC:
 
-                Label lblNPCMessage = new Label();
-                lblNPCMessage.setText(((NPC) interactedEntity).getMessage());
-                lblNPCMessage.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
-                lblNPCMessage.setLayoutX(interactedEntity.getX() - 60);
-                lblNPCMessage.setLayoutY(interactedEntity.getY() - 20);
-                lblNPCMessage.setAlignment(Pos.CENTER);
+                NPC interactedNPC = (NPC) interactedEntity;
 
-                apaneMain.getChildren().add(lblNPCMessage);
+                if (interactedNPC.getDescription().equals("snail")) {
 
-                PauseTransition labelPause = new PauseTransition(Duration.seconds(3));
-                labelPause.setOnFinished(e -> lblNPCMessage.setVisible(false));
-                labelPause.play();
+                    Label lblNPCMessage = new Label();
+                    lblNPCMessage.setText(((NPC) interactedEntity).getMessage());
+                    lblNPCMessage.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
+                    lblNPCMessage.setLayoutX(interactedEntity.getX() - 200);
+                    lblNPCMessage.setLayoutY(interactedEntity.getY() - 45);
+                    lblNPCMessage.setAlignment(Pos.CENTER);
 
-                return;
+                    apaneMain.getChildren().add(lblNPCMessage);
 
-            case ITEM:
-                Item interactedItem = (Item) interactedEntity;
+                    PauseTransition labelPause = new PauseTransition(Duration.seconds(5));
 
-                if (interactedItem.getDescription().equals("coin")) {
+                    labelPause.setOnFinished(e -> {
+                        lblNPCMessage.setVisible(false);
+                        world.getPlayer().handleDamage(world.getPlayer().getHealth(), world.getPlayer().getDirection());
+                    });
+                    labelPause.play();
 
-                    for (ImageView imgview : imgViewList) {
-                        if (interactedItem.getX() == imgview.getLayoutX()
-                                && interactedItem.getY() == imgview.getLayoutY()) {
-                            apaneMain.getChildren().remove(imgview);
-                            world.getCurrentlocation().getObjectList().remove(interactedItem);
-                        }
-                    }
+                } else {
 
-                    coinSound.play();
+                    Label lblNPCMessage = new Label();
+                    lblNPCMessage.setText(((NPC) interactedEntity).getMessage());
+                    lblNPCMessage.setStyle("-fx-font-family: Minecraft; -fx-font-size: 24px; -fx-text-fill: #ffffff;");
+                    lblNPCMessage.setLayoutX(interactedEntity.getX() - 60);
+                    lblNPCMessage.setLayoutY(interactedEntity.getY() - 20);
+                    lblNPCMessage.setAlignment(Pos.CENTER);
 
-                    world.setScore(world.getScore() + ((Item) interactedItem).getScoreIncrease());
-                    drawScore();
-                    displayScoreIncrease(interactedItem.getScoreIncrease());
+                    apaneMain.getChildren().add(lblNPCMessage);
+
+                    PauseTransition labelPause = new PauseTransition(Duration.seconds(3));
+                    labelPause.setOnFinished(e -> lblNPCMessage.setVisible(false));
+                    labelPause.play();
+
+                    return;
                 }
 
-                return;
+            case ITEM:
+                if (interactedEntity instanceof Item) {
+                    Item interactedItem = (Item) interactedEntity;
+
+                    if (interactedItem.getDescription().equals("coin")) {
+
+                        for (ImageView imgview : imgViewList) {
+                            if (interactedItem.getX() == imgview.getLayoutX()
+                                    && interactedItem.getY() == imgview.getLayoutY()) {
+                                apaneMain.getChildren().remove(imgview);
+                                world.getCurrentlocation().getObjectList().remove(interactedItem);
+                            }
+                        }
+
+                        coinSound.play();
+
+                        world.setScore(world.getScore() + ((Item) interactedItem).getScoreIncrease());
+                        drawScore();
+                        displayScoreIncrease(interactedItem.getScoreIncrease());
+                    }
+
+                    return;
+                }
 
             default:
 
@@ -408,6 +463,26 @@ public class GameWindow {
             if (entity instanceof Grunt) {
 
                 Grunt spawnedGrunt = (Grunt) entity;
+
+                switch (world.getDifficulty()) {
+
+                    case EASY:
+                        spawnedGrunt.setHealth(2);
+                        break;
+
+                    case MEDIUM:
+                        spawnedGrunt.setHealth(3);
+                        break;
+
+                    case HARD:
+                        spawnedGrunt.setHealth(4);
+                        break;
+
+                    default:
+                        break;
+
+                }
+
                 spawnedGrunt.setOriginalX(spawnedGrunt.getX());
                 spawnedGrunt.setOriginalY(spawnedGrunt.getY());
                 ImageView imgViewGrunt = new ImageView();
@@ -420,6 +495,26 @@ public class GameWindow {
             } else if (entity instanceof Juggernaut) {
 
                 Juggernaut spawnedJuggernaut = (Juggernaut) entity;
+
+                switch (world.getDifficulty()) {
+
+                    case EASY:
+                        spawnedJuggernaut.setHealth(5);
+                        break;
+
+                    case MEDIUM:
+                        spawnedJuggernaut.setHealth(7);
+                        break;
+
+                    case HARD:
+                        spawnedJuggernaut.setHealth(10);
+                        break;
+
+                    default:
+                        break;
+
+                }
+
                 spawnedJuggernaut.setOriginalX(spawnedJuggernaut.getX());
                 spawnedJuggernaut.setOriginalY(spawnedJuggernaut.getY());
                 ImageView imgViewJuggernaut = new ImageView();
@@ -603,6 +698,7 @@ public class GameWindow {
                     switch (landObjects.getDescription()) {
 
                         case "NPC":
+                            landObjects.setCollidable(true);
                             landObjects.setWidth(64);
                             landObjects.setHeight(96);
                             ImageView imgviewNPC = new ImageView(imgNPC);
@@ -733,6 +829,16 @@ public class GameWindow {
                             imgviewCoin.setLayoutX(landObjects.getX() - imgviewCoin.getLayoutBounds().getMinX());
                             imgviewCoin.setLayoutY(landObjects.getY() - imgviewCoin.getLayoutBounds().getMinY());
                             imgViewList.add(imgviewCoin);
+                            break;
+
+                        case "snail":
+                            landObjects.setWidth(64);
+                            landObjects.setHeight(64);
+                            ImageView imgviewSnail = new ImageView(imgSnail);
+                            apaneMain.getChildren().add(imgviewSnail);
+                            imgviewSnail.setLayoutX(landObjects.getX() - imgviewSnail.getLayoutBounds().getMinX());
+                            imgviewSnail.setLayoutY(landObjects.getY() - imgviewSnail.getLayoutBounds().getMinY());
+                            imgViewList.add(imgviewSnail);
                             break;
 
                         case "coord":
@@ -903,8 +1009,9 @@ public class GameWindow {
         world.updateWorld();
         drawHealth();
 
-        if (world.isGameOver()) {
+        if (world.isGameOver() && !isGameOver) {
 
+            setGameOver(true);
             imgviewPlayer.setImage(imgPlayerDeath);
             PauseTransition playerDeathPause = new PauseTransition(Duration.seconds(0.5));
             playerDeathPause.setOnFinished(e -> imgviewPlayer.setVisible(false));
@@ -922,7 +1029,7 @@ public class GameWindow {
             apaneMain.getChildren().add(gameOverVbox);
 
             music.stop();
-            
+
             gameOverMusic.volumeProperty().set(.07);
             gameOverMusic.play();
         }
@@ -973,8 +1080,8 @@ public class GameWindow {
                     juggThread.start();
 
                     // Increase score
-                    world.increaseScore(300);
-                    displayScoreIncrease(300);
+                    world.increaseScore(1000);
+                    displayScoreIncrease(1000);
 
                     iterator.remove();
 
@@ -1043,19 +1150,38 @@ public class GameWindow {
                 imgview = foundImageView;
         }
 
+
         if (grunt.getDirection() >= 0 && grunt.getDirection() < 90
                 || grunt.getDirection() > 270 && grunt.getDirection() <= 360) {
-            imgview.setImage(imgGruntRightMove);
+                if (isPaused || world.isGameOver()) {
+                    imgview.setImage(imgGruntRight);
+                } else {
+                    imgview.setImage(imgGruntRightMove);
+                }
 
         } else if (grunt.getDirection() == 90) {
-            imgview.setImage(imgGruntBackMove);
+            if (isPaused || world.isGameOver()) {
+                imgview.setImage(imgGruntBack);
+            } else {
+                imgview.setImage(imgGruntBackMove);
+            }
 
         } else if (grunt.getDirection() > 90 && grunt.getDirection() <= 180
                 || grunt.getDirection() > 180 && grunt.getDirection() < 270) {
-            imgview.setImage(imgGruntLefttMove);
+            if (isPaused || world.isGameOver()) {
+                imgview.setImage(imgGruntLeft);
+            } else {
+                imgview.setImage(imgGruntLefttMove);
+            }
+            
 
         } else if (grunt.getDirection() == 270) {
-            imgview.setImage(imgGruntFrontMove);
+            if (isPaused || world.isGameOver()) {
+                imgview.setImage(imgGrunt);
+            } else {
+                imgview.setImage(imgGruntFrontMove);
+            }
+            
         }
 
         if (grunt.isDead()) {
@@ -1086,34 +1212,60 @@ public class GameWindow {
 
             if (jugg.getDirection() >= 0 && jugg.getDirection() < 90
                     || jugg.getDirection() > 270 && jugg.getDirection() <= 360) {
-                imgview.setImage(imgJuggRightMoveSlow);
-
+                if (isPaused || world.isGameOver()) {
+                    imgview.setImage(imgJuggRight);
+                } else {
+                    imgview.setImage(imgJuggRightMoveSlow);    
+                }
             } else if (jugg.getDirection() == 90) {
-                imgview.setImage(imgJuggBackMoveSlow);
-
+                if (isPaused || world.isGameOver()) {
+                    imgview.setImage(imgJuggBack);
+                } else {
+                    imgview.setImage(imgJuggBackMoveSlow);
+                }
             } else if (jugg.getDirection() > 90 && jugg.getDirection() <= 180
                     || jugg.getDirection() > 180 && jugg.getDirection() < 270) {
-                imgview.setImage(imgJuggLeftMoveSlow);
-
+                if (isPaused || world.isGameOver()) {
+                    imgview.setImage(imgJuggLeft);
+                } else {
+                    imgview.setImage(imgJuggLeftMoveSlow);
+                }
             } else if (jugg.getDirection() == 270) {
-                imgview.setImage(imgJuggFrontMoveSlow);
+                if (isPaused || world.isGameOver()) {
+                    imgview.setImage(imgJugg);
+                } else {
+                    imgview.setImage(imgJuggFrontMoveSlow);
+                }
             }
 
         } else if (jugg.getState() == JuggernautState.FRENZY) {
 
             if (jugg.getDirection() >= 0 && jugg.getDirection() < 90
                     || jugg.getDirection() > 270 && jugg.getDirection() <= 360) {
-                imgview.setImage(imgJuggRightMoveFast);
-
+                if (isPaused || world.isGameOver()) {
+                    imgview.setImage(imgJuggRight);
+                } else {
+                    imgview.setImage(imgJuggRightMoveFast);
+                }
             } else if (jugg.getDirection() == 90) {
-                imgview.setImage(imgJuggBackMoveFast);
-
+                if (isPaused || world.isGameOver()) {
+                    imgview.setImage(imgJuggBack);
+                } else {
+                    imgview.setImage(imgJuggBackMoveFast);
+                }
             } else if (jugg.getDirection() > 90 && jugg.getDirection() <= 180
                     || jugg.getDirection() > 180 && jugg.getDirection() < 270) {
-                imgview.setImage(imgJuggLefttMoveFast);
-
+                if (isPaused || world.isGameOver()) {
+                    imgview.setImage(imgJuggLeft);
+                } else {
+                    imgview.setImage(imgJuggLefttMoveFast);
+                }
             } else if (jugg.getDirection() == 270) {
-                imgview.setImage(imgJuggFrontMoveFast);
+                if (isPaused || world.isGameOver()) {
+                    imgview.setImage(imgJugg);
+                } else {
+                    imgview.setImage(imgJuggFrontMoveFast);
+                }
             }
 
         }
@@ -1533,12 +1685,10 @@ public class GameWindow {
 
             case ESCAPE:
                 if (isPaused()) {
-                    // setIsPaused(false);
                     unpause();
-                } else if (world.isGameOver()) {
-
+                } else if (isGameOver) {
+                    setGameOver(true); // need it to not do anything useful
                 } else {
-                    // setIsPaused(true);
                     pause();
                 }
 
@@ -1562,11 +1712,25 @@ public class GameWindow {
         dPressed.set(false);
         rPressed.set(false);
         processAnimationDirection();
+        setIsPaused(true);
+        var iterator = world.getEntityList().iterator();
+        while (iterator.hasNext()) {
+            Entity entity = iterator.next();
+
+            if (entity instanceof Grunt) {
+                Grunt grunt = (Grunt) entity;
+                updateGruntGraphic(grunt);
+            } else if (entity instanceof Juggernaut) {
+                Juggernaut juggernaut = (Juggernaut) entity;
+                updateJuggGraphic(juggernaut);
+             } // else if (entity instance of Wizard) {
+            //     Wizard wizard = (Wizard) entity;
+            //     updateWizardGraphic(wizard);
+            // }
+        }
 
         apaneMain.getChildren().add(imgviewBackgroundDim);
         apaneMain.getChildren().add(pauseVbox);
-
-        setIsPaused(true);
     }
 
     /**
@@ -2025,53 +2189,62 @@ public class GameWindow {
      */
     public void displayHealth(int health) {
 
-        switch (health) {
+        if (cheatModeEnabled) {
+            imgviewHeart.setImage(imgHeart10);
+        } else {
+            switch (health) {
 
-            case 9:
-                imgviewHeart.setImage(imgHeart9);
-                break;
+                case 10:
+                    imgviewHeart.setImage(imgHeart10);
+                    break;
 
-            case 8:
-                imgviewHeart.setImage(imgHeart8);
-                break;
+                case 9:
+                    imgviewHeart.setImage(imgHeart9);
+                    break;
 
-            case 7:
-                imgviewHeart.setImage(imgHeart7);
-                break;
+                case 8:
+                    imgviewHeart.setImage(imgHeart8);
+                    break;
 
-            case 6:
-                imgviewHeart.setImage(imgHeart6);
-                break;
+                case 7:
+                    imgviewHeart.setImage(imgHeart7);
+                    break;
 
-            case 5:
-                imgviewHeart.setImage(imgHeart5);
-                break;
+                case 6:
+                    imgviewHeart.setImage(imgHeart6);
+                    break;
 
-            case 4:
-                imgviewHeart.setImage(imgHeart4);
-                break;
+                case 5:
+                    imgviewHeart.setImage(imgHeart5);
+                    break;
 
-            case 3:
-                imgviewHeart.setImage(imgHeart3);
-                break;
+                case 4:
+                    imgviewHeart.setImage(imgHeart4);
+                    break;
 
-            case 2:
-                imgviewHeart.setImage(imgHeart2);
-                break;
+                case 3:
+                    imgviewHeart.setImage(imgHeart3);
+                    break;
 
-            case 1:
-                imgviewHeart.setImage(imgHeart1);
-                break;
+                case 2:
+                    imgviewHeart.setImage(imgHeart2);
+                    break;
 
-            default:
-                apaneMain.getChildren().remove(imgviewHeart);
-                break;
+                case 1:
+                    imgviewHeart.setImage(imgHeart1);
+                    break;
+
+                default:
+                    apaneMain.getChildren().remove(imgviewHeart);
+                    break;
+            }
 
         }
 
     }
 
     public void openMainWin() throws IOException {
+        music.stop();
         var loader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
         var scene = new Scene(loader.load());
         var stage0 = new Stage();
@@ -2105,6 +2278,14 @@ public class GameWindow {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setGameOver(boolean bool) {
+        this.isGameOver = bool;
+    }
+
+    public boolean isGameOver() {
+        return this.isGameOver;
     }
 
 }
