@@ -245,6 +245,7 @@ public class GameWindow {
     private String name;
 
     private AudioClip music;
+    private boolean isGameOver;
 
     @FXML
     void initialize(Stage stage, DifficultyLevel difficulty, String name, AudioClip music) {
@@ -960,8 +961,9 @@ public class GameWindow {
         var iterator = world.getEntityList().iterator();
         drawHealth();
 
-        if (world.isGameOver()) {
+        if (world.isGameOver() && !isGameOver) {
 
+            setGameOver(true);
             imgviewPlayer.setImage(imgPlayerDeath);
             PauseTransition playerDeathPause = new PauseTransition(Duration.seconds(0.5));
             playerDeathPause.setOnFinished(e -> imgviewPlayer.setVisible(false));
@@ -1506,12 +1508,10 @@ public class GameWindow {
 
             case ESCAPE:
                 if (isPaused()) {
-                    // setIsPaused(false);
                     unpause();
-                } else if (world.isGameOver()) {
-
+                } else if (isGameOver) {
+                    setGameOver(true); // need it to not do anything useful
                 } else {
-                    // setIsPaused(true);
                     pause();
                 }
 
@@ -2101,6 +2101,14 @@ public class GameWindow {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setGameOver(boolean bool) {
+        this.isGameOver = bool;
+    }
+
+    public boolean isGameOver() {
+        return this.isGameOver;
     }
 
 }
