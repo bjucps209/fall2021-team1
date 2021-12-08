@@ -51,7 +51,6 @@ public class ZoneList {
         levels.add(lake);
         levels.add(wheatFields);
         levels.add(forestEdge);
-        levels.add(lumberYard);
 
     }
 
@@ -242,7 +241,7 @@ public class ZoneList {
         // listGraveyard.add(new NPC("Here lies the CpS 209 class of fall, 2021. Eleven started, three left.", "lSign"));   <- Feel free to change if you like Andrew
         // listGraveyard.get(27).setPosition(360, 358);
 
-        listGraveyard.add(new NPC("Here lies the CpS 209 class of fall, 2021. Eleven started, three left.", "sign"));
+        listGraveyard.add(new NPC("Here lies the CpS 209 class of fall, 2021. Ten started, three left.", "sign"));
         listGraveyard.get(27).setPosition(368, 358);
         listGraveyard.get(27).setInteractable(true);
 
@@ -250,7 +249,11 @@ public class ZoneList {
         listGraveyard.get(28).setPosition(909, 84);
 
         listGraveyard.add(new NPC("", "coord"));
-        listGraveyard.get(28).setPosition(768, 450);
+        listGraveyard.get(29).setPosition(768, 450);
+
+        listGraveyard.add(new Item("", "coin", 300));
+        listGraveyard.get(30).setPosition(1274, 531);
+        listGraveyard.get(30).setInteractable(true);
         // **************************************
 
         // Grassy Plains ********************
@@ -273,29 +276,24 @@ public class ZoneList {
         listGrassyplains.add(new Item("", "tree", 0));
         listGrassyplains.get(5).setPosition(975, 568);
 
-        listGrassyplains.add(new Item("", "stump", 0));
-        listGrassyplains.get(6).setPosition(148, 0);
-
-        listGrassyplains.add(new Item("", "stump", 0));
-        listGrassyplains.get(7).setPosition(14, 153);
-
-        listGrassyplains.add(new Item("", "stump", 0));
-        listGrassyplains.get(8).setPosition(-50, 644);
+        listGrassyplains.add(new NPC("", "coord"));
+        listGrassyplains.get(6).setPosition(467, 386);
 
         listGrassyplains.add(new NPC("", "coord"));
-        listGrassyplains.get(9).setPosition(467, 386);
+        listGrassyplains.get(7).setPosition(403, 20);
 
         listGrassyplains.add(new NPC("", "coord"));
-        listGrassyplains.get(10).setPosition(403, 20);
+        listGrassyplains.get(8).setPosition(1113, 20);
 
-        listGrassyplains.add(new NPC("", "coord"));
-        listGrassyplains.get(11).setPosition(1113, 20);
+        listGrassyplains.add(new Item("", "coin", 500));
+        listGrassyplains.get(9).setPosition(390, 710);
+        listGrassyplains.get(9).setInteractable(true);
         // **************************************
 
         // Village Square ***********************
         listVillageSquare = new ArrayList<NPC>();
         listVillageSquare.add(new Item("", "well", 0));
-        listVillageSquare.get(0).setPosition(592, 322);
+        listVillageSquare.get(0).setPosition(633, 322);
 
         listVillageSquare.add(new Item("", "house", 0));
         listVillageSquare.get(1).setPosition(88, -98);
@@ -408,7 +406,7 @@ public class ZoneList {
         listLumberYard.get(11).setPosition(418, 66);
 
         listLumberYard.add(new NPC("Johnson Lumber Farm", "sign"));
-        listLumberYard.get(12).setPosition(450, 600);
+        listLumberYard.get(12).setPosition(450, 500);
         listLumberYard.get(12).setInteractable(true);
 
         listLumberYard.add(new NPC("", "coord"));
@@ -419,20 +417,6 @@ public class ZoneList {
 
         listLumberYard.add(new NPC("", "coord"));
         listLumberYard.get(15).setPosition(1053, 290);
-
-        /*
-        listLumberYard.add(new Item("", "tree", 0));
-        listLumberYard.get(16).setPosition(621, 66);
-
-        listLumberYard.add(new Item("", "tree", 0));
-        listLumberYard.get(17).setPosition(0, -35);
-
-        listLumberYard.add(new Item("", "tree", 0));
-        listLumberYard.get(18).setPosition(213, -35);
-
-        listLumberYard.add(new Item("", "tree", 0));
-        listLumberYard.get(19).setPosition(418, -35);
-        */
         // **************************************
 
         // Lake *********************************
@@ -554,6 +538,10 @@ public class ZoneList {
 
         listForestEdge.add(new NPC("", "coord"));
         listForestEdge.get(13).setPosition(344, 243);
+
+        listForestEdge.add(new Item("", "coin", 100));
+        listForestEdge.get(14).setPosition(665, 416);
+        listForestEdge.get(14).setInteractable(true);
         // ****************************************
     }
 
