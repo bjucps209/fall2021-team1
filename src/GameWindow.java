@@ -214,8 +214,8 @@ public class GameWindow {
     // Audio
     // *******************************************************************************************************
     private AudioClip click = new AudioClip(getClass().getResource("Audio/UI/btnClick1.mp3").toExternalForm());
-    private AudioClip juggHit = new AudioClip(getClass().getResource("Audio/SFX/juggsound.wav").toExternalForm());
-    private AudioClip gruntHit = new AudioClip(getClass().getResource("Audio/SFX/grunthit.wav").toExternalForm());
+    private AudioClip juggHit = new AudioClip(getClass().getResource("Audio/SFX/juggsound.mp3").toExternalForm());
+    private AudioClip gruntHit = new AudioClip(getClass().getResource("Audio/SFX/grunthit.mp3").toExternalForm());
     private AudioClip coinSound = new AudioClip(
             getClass().getResource("Audio/SFX/Retro realistic coins.wav").toExternalForm());
     private AudioClip magicSound = new AudioClip(getClass().getResource("Audio/SFX/magic1.mp3").toExternalForm());
