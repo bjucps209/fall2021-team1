@@ -1,5 +1,4 @@
 import java.io.IOException;
-import java.io.Serial;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -28,7 +27,6 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
@@ -45,7 +43,9 @@ import model.Item;
 import model.Juggernaut;
 import model.Leaderboard;
 import model.NPC;
+import model.Projectile;
 import model.Serialization;
+import model.Wizard;
 import model.World;
 import model.Zone;
 import model.ZoneList;
@@ -155,7 +155,7 @@ public class GameWindow {
     private Image imgWizardFront = new Image("Final Assets/Wizard/PNG/Wizard-Front-Stationary-128x128.png");
     private Image imgWizardFrontMove = new Image("Final Assets/Wizard/GIF/Wizard-Front-Walking-128x128.gif");
     private Image imgWizardBackMove = new Image("Final Assets/Wizard/GIF/Wizard-Back-Walking-128x128.gif");
-    private Image imgWizardRighttMove = new Image("Final Assets/Wizard/GIF/Wizard-Right-Walking-128x128.gif");
+    private Image imgWizardRightMove = new Image("Final Assets/Wizard/GIF/Wizard-Right-Walking-128x128.gif");
     private Image imgWizardLeftMove = new Image("Final Assets/Wizard/GIF/Wizard-Left-Walking-128x128.gif");
     private Image imgWizardFrontAttack = new Image("Final Assets/Wizard/GIF/Wizard-Front-Attack-128x128.gif");
     private Image imgWizardBackAttack = new Image("Final Assets/Wizard/GIF/Wizard-Back-Attack-128x128.gif");
@@ -523,6 +523,41 @@ public class GameWindow {
                 imgViewJuggernaut.yProperty().bindBidirectional(spawnedJuggernaut.yProperty());
                 apaneMain.getChildren().add(imgViewJuggernaut);
                 imgViewList.add(imgViewJuggernaut);
+
+            } else if (entity instanceof Wizard) {
+
+                Wizard spawnedWizard = (Wizard) entity;
+                spawnedWizard.setOriginalX(spawnedWizard.getX());
+                spawnedWizard.setOriginalY(spawnedWizard.getY());
+
+                // Setup Image View
+                ImageView imgViewWizard = new ImageView();
+                imgViewWizard.setUserData(spawnedWizard.getId());
+                imgViewWizard.xProperty().bindBidirectional(spawnedWizard.xProperty());
+                imgViewWizard.yProperty().bindBidirectional(spawnedWizard.yProperty());
+
+                // Add to apane
+                apaneMain.getChildren().add(imgViewWizard);
+                imgViewList.add(imgViewWizard);
+
+
+            } else if (entity instanceof Projectile) {
+
+                Projectile spawnedProjectile = (Projectile) entity;
+                spawnedProjectile.setOriginalX(spawnedProjectile.getX());
+                spawnedProjectile.setOriginalY(spawnedProjectile.getY());
+
+                // Setup image view
+                ImageView imgViewProjectile = new ImageView();
+                imgViewProjectile.setImage(imgWizardProjectile);
+                imgViewProjectile.setUserData(spawnedProjectile.getId());
+                imgViewProjectile.xProperty().bindBidirectional(spawnedProjectile.xProperty());
+                imgViewProjectile.yProperty().bindBidirectional(spawnedProjectile.yProperty());
+
+                // Add to apane
+                apaneMain.getChildren().add(imgViewProjectile);
+                imgViewList.add(imgViewProjectile);
+
             }
 
         }
@@ -850,6 +885,7 @@ public class GameWindow {
 
                                 case HARD:
                                     if (spawnNum >= 0 && spawnNum <= 4) {
+
                                         Grunt grunt = new Grunt(nextId + 1);
                                         grunt.setX(landObjects.getX());
                                         grunt.setY(landObjects.getY());
@@ -857,13 +893,24 @@ public class GameWindow {
                                         grunt.setHeight(96);
                                         spawnEnemies(grunt);
 
-                                    } else if (spawnNum > 4) {
+                                    } else if (spawnNum > 4 && spawnNum <= 10) {
+
                                         Juggernaut jugg = new Juggernaut(nextId + 1);
                                         jugg.setX(landObjects.getX());
                                         jugg.setY(landObjects.getY());
                                         jugg.setWidth(144);
                                         jugg.setHeight(156);
                                         spawnEnemies(jugg);
+
+                                    } else {
+
+                                        Wizard wizard = new Wizard(nextId + 1);
+                                        wizard.setX(landObjects.getX());
+                                        wizard.setY(landObjects.getY());
+                                        wizard.setWidth(64);
+                                        wizard.setHeight(96);
+                                        spawnEnemies(wizard);
+
                                     }
                                     break;
 
@@ -890,12 +937,14 @@ public class GameWindow {
      */
     @FXML
     public void drawScreen(double x, double y, Image playerImage) {
+
         drawPlayer(x, y, playerImage);
         drawWorld();
         drawHealth();
         drawLocationLabel();
         drawScore();
         drawPauseButton();
+
     }
 
     /**
@@ -958,7 +1007,6 @@ public class GameWindow {
     public void updateWorld() {
 
         world.updateWorld();
-        var iterator = world.getEntityList().iterator();
         drawHealth();
 
         if (world.isGameOver() && !isGameOver) {
@@ -985,6 +1033,8 @@ public class GameWindow {
             gameOverMusic.volumeProperty().set(.07);
             gameOverMusic.play();
         }
+
+        var iterator = world.getEntityList().iterator();
 
         while (iterator.hasNext()) {
 
@@ -1015,20 +1065,70 @@ public class GameWindow {
                 }
 
             } else if (entity instanceof Juggernaut) {
+
                 Juggernaut jugg = (Juggernaut) entity;
+
+                // Update position and graphic
                 jugg.navigate();
                 updateJuggGraphic(jugg);
 
+                // Deal with dead juggernauts
                 if (jugg.isDead()) {
-                    Thread juggThread = new Thread(() -> {
-                        deathSound.play();
-                    });
+
+                    // Play death sound
+                    Thread juggThread = new Thread(() -> deathSound.play());
                     juggThread.start();
+
+                    // Increase score
                     world.increaseScore(1000);
                     displayScoreIncrease(1000);
 
                     iterator.remove();
+
                 }
+
+            } else if (entity instanceof Wizard) {
+
+                Wizard wizard = (Wizard) entity;
+
+                // Update position and graphic
+                wizard.navigate();
+                updateWizardGraphic(wizard);
+
+                // Deal with dead juggernauts
+                if (wizard.isDead()) {
+
+                    // Play death sound
+                    Thread wizardThread = new Thread(() -> deathSound.play());
+                    wizardThread.start();
+
+                    // Increase score
+                    world.increaseScore(200);
+                    displayScoreIncrease(200);
+
+                    iterator.remove();
+
+                }
+
+            } else if (entity instanceof Projectile) {
+
+                var project = (Projectile) entity;
+
+                // Update position
+                project.navigate();
+                updateProjectileGraphic(project);
+
+                // Deal with dead juggernauts
+                if (project.isDead()) {
+
+                    // TODO: Play projectile hit sound
+                    //Thread juggThread = new Thread(() -> deathSound.play());
+                    //juggThread.start();
+
+                    iterator.remove();
+
+                }
+
             }
 
         }
@@ -1215,6 +1315,83 @@ public class GameWindow {
             juggPause.setOnFinished(e -> juggdeathImageView.setVisible(false));
             juggPause.play();
         }
+    }
+
+    /**
+     * Changes the wizard's ImageView to the appropriate animation based on its
+     * direction and movement.
+     * @param wizard - the wizard to be updated
+     */
+    @FXML
+    public void updateWizardGraphic(Wizard wizard) {
+        // New image view
+        ImageView imgview = new ImageView();
+
+        // If there is already an image view, use it.
+        try {
+            
+            imgview = imgViewList.stream().filter(img -> (img.getX() == wizard.getX() && img.getY() == wizard.getY())).findFirst().get();
+
+        } catch (Exception ex) {}
+
+        // Deal with dead wizards
+        if (wizard.isDead()) {
+
+            // Set death animation
+            imgview.setImage(imgWizardDeath);
+            ImageView finalView = imgview; // Prevents errors in lambda
+
+            // Wait for animation to finish before getting rid of the wizard
+            PauseTransition deathPause = new PauseTransition(Duration.seconds(0.5));
+            deathPause.setOnFinished(e -> finalView.setVisible(false));
+            deathPause.play();
+
+        }
+
+        // Update graphic
+        if (wizard.getDirection() >= 0 && wizard.getDirection() < 90 || wizard.getDirection() > 270 && wizard.getDirection() <= 360) {
+
+            imgview.setImage(imgWizardRightMove);
+
+        } else if (wizard.getDirection() == 90) {
+
+            imgview.setImage(imgWizardBackMove);
+
+        } else if (wizard.getDirection() > 90 && wizard.getDirection() <= 180 || wizard.getDirection() > 180 && wizard.getDirection() < 270) {
+
+            imgview.setImage(imgWizardLeftMove);
+
+        } else if (wizard.getDirection() == 270) {
+
+            imgview.setImage(imgWizardFrontMove);
+
+        }
+
+    }
+
+    /**
+     * Changes the wizard's ImageView to the appropriate animation based on its
+     * direction and movement.
+     * @param wizard - the wizard to be updated
+     */
+    @FXML
+    public void updateProjectileGraphic(Projectile project) {
+        // New image view
+        ImageView imgview = new ImageView();
+
+        // If there is already an image view, use it.
+        try {
+            
+            imgview = imgViewList.stream().filter(img -> (img.getX() == project.getX() && img.getY() == project.getY())).findFirst().get();
+
+        } catch (Exception ex) {}
+
+        // Deal with dead projectiles
+        if (project.isDead()) imgview.setVisible(false);
+
+        // Update graphic
+        imgview.setImage(imgWizardProjectile);
+
     }
 
     // Animation timer specifically for the player, does not effect the other

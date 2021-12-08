@@ -9,6 +9,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class World {
 
     private ArrayList<Entity> entityList;
+    private ArrayList<Entity> toAdd;
     private Zone currentlocation;
     private IntegerProperty score;
     private DifficultyLevel difficulty;
@@ -28,6 +29,7 @@ public class World {
     private World() {
 
         entityList = new ArrayList<Entity>();
+        toAdd = new ArrayList<Entity>();
         player = new Player();
         score = new SimpleIntegerProperty();
         currentlocation = ZoneList.instance().getLevels().get(0);
@@ -65,27 +67,37 @@ public class World {
      * various methods to update the game.
      */
     public void updateWorld() {
-        if (entityList.size() > 0) {
-            for (Entity entity : entityList) {
-                if (entity instanceof Grunt) {
-                    Grunt grunt = (Grunt) entity;
-                    grunt.handleDeath();
-                } else if (entity instanceof Juggernaut) {
-                    Juggernaut jugg = (Juggernaut) entity;
-                    jugg.handleDeath();
-                }
-                player.handleDeath();
-            }
-        }
-        if (isGameOver()) {
-            leaderboard.process("Fred", getScore());
-        }
-    }
 
-    /**
-     * Places items such as buildings and trees in their appropriate locations.
-     */
-    public void placeItems() {
+        // Add new projectiles
+        if (toAdd.size() > 0) {
+
+            entityList.addAll(toAdd);
+            toAdd = new ArrayList<Entity>();
+
+        }
+
+        if (entityList.size() > 0) {
+
+            for (Entity entity : entityList) {
+
+                if (entity instanceof Living) {
+
+                    var living = (Living) entity;
+                    living.handleDeath();
+
+                }
+
+                player.handleDeath();
+
+            }
+
+        }
+
+        if (isGameOver()) {
+
+            leaderboard.process("Fred", getScore());
+
+        }
 
     }
 
@@ -175,6 +187,16 @@ public class World {
     public void setEntityList(ArrayList<Entity> entityList) {
 
         this.entityList = entityList;
+
+    }
+
+    /**
+     * Use this method to safely add projectiles to the world's entity list.
+     * @param entity the entity to add
+     */
+    public void addToEntityList(Entity entity) {
+
+        entityList.add(entity);
 
     }
 

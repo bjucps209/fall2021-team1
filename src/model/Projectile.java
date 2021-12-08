@@ -4,7 +4,7 @@ public class Projectile extends Enemy {
 
     public Projectile(int damage, double speed) {
         
-        super(128, 128, 0);
+        super(64, 64, 0);
         this.setDamage(damage);
         this.setSpeed(speed);
 
@@ -16,18 +16,18 @@ public class Projectile extends Enemy {
     @Override
     public void navigate() {
         
+        // Die on first impact
         if (move(getSpeed(), getDirection())) setDead(true);
 
+        // Check hit player
+        var player = World.instance().getPlayer();
+        if (intersects(player)) player.handleDamage(getDamage(), getDirection());
+
     }
 
+    /** Unused inherited method. */
     @Override
-    public void attack() {
-
-        double distanceToPlayer = Math.hypot(this.getX() - World.instance().getPlayer().getX(), this.getY() - World.instance().getPlayer().getY());
-
-        if (distanceToPlayer < 30) World.instance().getPlayer().handleDamage(this.getDamage(), this.getDirection());
-
-    }
+    public void attack() {}
 
     @Override
     public void handleDamage(int damage, int direction) {

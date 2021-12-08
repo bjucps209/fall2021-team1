@@ -31,7 +31,10 @@ public class Wizard extends Enemy {
     @Override
     public void attack() {
 
-        // TODO: Throw Lightning
+        var lightning = new Projectile(getDamage(), getSpeed());
+        lightning.setPosition(getX(), getY());
+
+        World.instance().addToEntityList(lightning);
 
     }
 
