@@ -7,11 +7,11 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public abstract class Entity {
 
-    private DoubleProperty x, y;
-    private IntegerProperty width, height;
+    private DoubleProperty x, y; // location variables
+    private IntegerProperty width, height; // size variables
 
-    private boolean isCollidable = true;
-    private boolean isInteractable = false;
+    private boolean isCollidable = true; // determines if an entity collides with the player or enemies in the game
+    private boolean isInteractable = false; // determines if the player can interact with the entity
 
     public Entity(int width, int height) {
 
@@ -150,8 +150,8 @@ public abstract class Entity {
     public abstract String serialize();
     public abstract EntityType getType();
 
+    
     /// Getters and Setters ///
-
     public void setPosition(double x, double y) {
 
         this.x.set(x);
