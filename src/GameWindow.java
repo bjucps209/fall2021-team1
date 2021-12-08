@@ -243,6 +243,10 @@ public class GameWindow {
     @FXML
     void initialize(Stage stage, DifficultyLevel difficulty, String name, AudioClip music) {
         this.music = music;
+        music.volumeProperty().set(.7);
+        gameOverMusic.volumeProperty().set(.7);
+        click.volumeProperty().set(.2);
+
         imgViewList = new ArrayList<ImageView>();
         world = World.instance();
         world.setDifficulty(difficulty);
@@ -1822,7 +1826,7 @@ public class GameWindow {
                 break;
 
         }
-        
+
         swordSlash.play();
 
     }
