@@ -4,6 +4,7 @@ public class Grunt extends Enemy {
 
     /** Controls the frequency of attacks. */
     private int count = 25;
+    private int attackSpeed;
 
     public enum GruntState {
 
@@ -17,6 +18,27 @@ public class Grunt extends Enemy {
 
         super(128, 128, id);
         // Load base stats
+
+        
+        switch (World.instance().getDifficulty()) {
+
+            case EASY:
+                attackSpeed = 4;
+                break;
+
+            case MEDIUM:
+                attackSpeed = 6;
+                break;
+
+            case HARD:
+                attackSpeed = 8; 
+                break;
+
+            default:
+                break;
+
+        }
+
         this.setMaxHealth(3);
         this.setHealth(3);
         this.setDamage(1);
@@ -108,7 +130,7 @@ public class Grunt extends Enemy {
         if (super.foundPlayer()) {
 
             this.state = GruntState.ATTACK;
-            this.setSpeed(4);
+            this.setSpeed(attackSpeed);
 
         } else {
 

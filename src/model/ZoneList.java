@@ -277,7 +277,7 @@ public class ZoneList {
         listGrassyplains.get(5).setPosition(975, 568);
 
         listGrassyplains.add(new NPC("", "coord"));
-        listGrassyplains.get(6).setPosition(467, 386);
+        listGrassyplains.get(6).setPosition(467, 330);
 
         listGrassyplains.add(new NPC("", "coord"));
         listGrassyplains.get(7).setPosition(403, 20);
@@ -422,8 +422,11 @@ public class ZoneList {
         // Lake *********************************
         listLake = new ArrayList<NPC>();
         listLake.add(new NPC("Lake Goo-La-Goon", "lSign"));
-        listLake.get(0).setPosition(1016, 106);
+        listLake.get(0).setPosition(1116, 106);
         listLake.get(0).setInteractable(true);
+        listLake.add(new NPC("You finally make peace with the snail,\nlooking at the horizon of Lake Goo-La-Goon", "snail"));
+        listLake.get(1).setPosition(1126, 587);
+        listLake.get(1).setCollidable(true);
         // **************************************
 
         // Wheatfield ***************************
