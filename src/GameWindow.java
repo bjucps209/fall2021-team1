@@ -218,7 +218,7 @@ public class GameWindow {
     private AudioClip gruntHit = new AudioClip(getClass().getResource("Audio/SFX/grunthit.wav").toExternalForm());
     private AudioClip coinSound = new AudioClip(getClass().getResource("Audio/SFX/Retro realistic coins.wav").toExternalForm());
     private AudioClip magicSound = new AudioClip(getClass().getResource("Audio/SFX/magic1.mp3").toExternalForm());
-    private AudioClip deathSound = new AudioClip(getClass().getResource("Audio/SFX/deathsound.mp3").toExternalForm());
+    private AudioClip deathSound = new AudioClip(getClass().getResource("Audio/SFX/deathsound.wav").toExternalForm());
     private AudioClip gameOverMusic = new AudioClip(getClass().getResource("Audio/gameover.wav").toExternalForm());
     private AudioClip swordSlash = new AudioClip(getClass().getResource("Audio/SFX/swordslash.wav").toExternalForm());
     // *************************************************************************************************************
@@ -1346,8 +1346,9 @@ public class GameWindow {
             case SPACE:
                 if (!isPaused()) {
 
-                    world.getPlayer().attack(lastAnimationDirection);
-                    handleAttackGraphic(lastAnimationDirection);
+                    Enemy enemy = world.getPlayer().attack(lastAnimationDirection);
+
+                    handleAttackGraphic(lastAnimationDirection, enemy);
 
                 }
 
@@ -1795,7 +1796,7 @@ public class GameWindow {
      * Displays the attack animation depending on the player's direction.
      */
     @FXML
-    public void handleAttackGraphic(mapDirection direction) {
+    public void handleAttackGraphic(mapDirection direction, Enemy enemy) {
 
         PauseTransition attackPause = new PauseTransition(Duration.seconds(0.32));
         attackPause.setOnFinished(e -> processAnimationDirection());
@@ -1829,6 +1830,14 @@ public class GameWindow {
         }
 
         swordSlash.play();
+
+        if (enemy != null) {
+            if (enemy instanceof Grunt) {
+                gruntHit.play();
+            } else if (enemy instanceof Juggernaut) {
+                juggHit.play();
+            }
+        }
 
     }
 
@@ -1878,7 +1887,7 @@ public class GameWindow {
                 break;
 
             default:
-                imgviewHeart.setImage(imgHeart10);
+                apaneMain.getChildren().remove(imgviewHeart);
                 break;
 
         }

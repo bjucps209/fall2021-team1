@@ -7,6 +7,7 @@ public class Juggernaut extends Enemy {
     int attackSpeed = 5;
     int frenzySpeed = 12;
     boolean hitPlayer = false; // check if the player was successfully hit
+    boolean inFrenzy;
 
     public enum JuggernautState {
 
@@ -24,6 +25,7 @@ public class Juggernaut extends Enemy {
         attackSpeed = 5;
         frenzySpeed = 12;
         hitPlayer = false;
+        inFrenzy = false;
 
         this.setMaxHealth(10);
         this.setHealth(10);
@@ -102,8 +104,15 @@ public class Juggernaut extends Enemy {
     @Override
     public void attack() {
 
-        if (Math.hypot(this.getX() - World.instance().getPlayer().getX(), this.getY() - World.instance().getPlayer().getY()) <= 95) {
+        if (Math.hypot(this.getX() - World.instance().getPlayer().getX(), this.getY() - World.instance().getPlayer().getY()) <= 120) {
             
+            if (state == JuggernautState.FRENZY) {
+                hitPlayer = true;
+            } else {
+                hitPlayer = false;
+            }
+
+
             // Deal damage
             World.instance().getPlayer().handleDamage(this.getDamage(), getDirection());
 
@@ -111,13 +120,13 @@ public class Juggernaut extends Enemy {
             World.instance().getPlayer().move(10000, getDirection());
 
             // Check state
-            if (state == JuggernautState.ATTACK && frenzyCooldown < 1) {
+            if (state == JuggernautState.ATTACK && frenzyCooldown < 1 ) {
             
-                frenzyCooldown = 20;
+                frenzyCooldown = 10;
                 setState(JuggernautState.FRENZY);
                 setSpeed(12);
             
-            } else if (frenzyCooldown < 1) {
+            } else if (frenzyCooldown < 1 || hitPlayer) {
             
                 frenzyCooldown = 50;
                 setState(JuggernautState.ATTACK);
@@ -126,7 +135,7 @@ public class Juggernaut extends Enemy {
             }
             
             -- frenzyCooldown;
-            hitPlayer = true;
+
         
         }
 
@@ -136,8 +145,6 @@ public class Juggernaut extends Enemy {
     public void handleDamage(int damage, int direction) {
 
         if (damage > 0) {
-
-            System.out.println("Was hit");
             this.setHealth(this.getHealth() - damage);
 
         }
