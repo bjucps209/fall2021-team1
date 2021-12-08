@@ -243,8 +243,9 @@ public class GameWindow {
     @FXML
     void initialize(Stage stage, DifficultyLevel difficulty, String name, AudioClip music) {
         this.music = music;
-        music.volumeProperty().set(.7);
         click.volumeProperty().set(.2);
+        swordSlash.volumeProperty().set(.4);
+        coinSound.volumeProperty().set(.4);
 
         imgViewList = new ArrayList<ImageView>();
         world = World.instance();
