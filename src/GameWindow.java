@@ -220,6 +220,7 @@ public class GameWindow {
             getClass().getResource("Audio/SFX/Retro realistic coins.wav").toExternalForm());
     private AudioClip magicSound = new AudioClip(getClass().getResource("Audio/SFX/magic1.mp3").toExternalForm());
     private AudioClip deathSound = new AudioClip(getClass().getResource("Audio/SFX/deathsound.mp3").toExternalForm());
+    private AudioClip gameOverMusic = new AudioClip(getClass().getResource("Audio/gameover.wav").toExternalForm());
     // *************************************************************************************************************
 
     // Model Attributes
@@ -235,9 +236,12 @@ public class GameWindow {
     // Player's Name
     private String name;
 
+    private AudioClip music;
+
+
     @FXML
     void initialize(Stage stage, DifficultyLevel difficulty, String name, AudioClip music) {
-        music.stop();
+        this.music = music;
         imgViewList = new ArrayList<ImageView>();
         world = World.instance();
         world.setDifficulty(difficulty);
@@ -849,6 +853,9 @@ public class GameWindow {
             apaneMain.getChildren().add(imgviewBackgroundDim);
             createGameOverVbox(String.valueOf(world.getScore()));
             apaneMain.getChildren().add(gameOverVbox);
+
+            music.stop();
+            gameOverMusic.play();
         }
 
         while (iterator.hasNext()) {
@@ -1685,6 +1692,13 @@ public class GameWindow {
                 World.reset();
                 Stage stage = (Stage) imgviewGOQuitBtn.getScene().getWindow();
                 stage.close();
+                gameOverMusic.stop();
+
+                try {
+                    openMainWin();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
             }
         });
 
