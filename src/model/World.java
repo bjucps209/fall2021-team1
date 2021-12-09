@@ -8,24 +8,29 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public class World {
 
+    /** The entities currently in the world. */
     private ArrayList<Entity> entityList;
+    /** The entities that need to be initialized and added to the world. */
     private ArrayList<Entity> toAdd;
+    /** The zone the player is currently in. */
     private Zone currentlocation;
+    /** The player's current score. */
     private IntegerProperty score;
+    /** The world difficulty. Difficulty level affects enemy speed and spawn rates as well as the player's starting health. */
     private DifficultyLevel difficulty;
+    /** The player entity. */
     private Player player;
+    /** The leaderboard, used to hold, sort, and save all highscores. */
     private Leaderboard leaderboard;
 
-    // Directional Enum
+    /** Indicates a 'cardinal' direction in the world. */
     public enum mapDirection {
 
         UP, DOWN, LEFT, RIGHT
 
     }
 
-    // We want the world class to be a singleton so that other classes in the view
-    // can
-    // access the same world object.
+    /** Singleton class representing the game 'world'. Also contains the player and leaderboard. */
     private World() {
 
         entityList = new ArrayList<Entity>();
@@ -44,7 +49,6 @@ public class World {
         } catch (IOException e) {
             this.leaderboard = new Leaderboard(dummy);
         }
-            
 
     }
 
@@ -67,14 +71,6 @@ public class World {
      * various methods to update the game.
      */
     public void updateWorld() {
-
-        // Add new projectiles
-        if (toAdd.size() > 0) {
-
-            entityList.addAll(toAdd);
-            toAdd = new ArrayList<Entity>();
-
-        }
 
         if (entityList.size() > 0) {
 
@@ -110,8 +106,6 @@ public class World {
         entityList.add(enemy);
         
     }
-    
-
     
     /// Serialization ///
 
@@ -194,18 +188,36 @@ public class World {
      * Use this method to safely add projectiles to the world's entity list.
      * @param entity the entity to add
      */
-    public void addToEntityList(Entity entity) {
+    public void addToPendingList(Entity entity) {
 
-        entityList.add(entity);
+        toAdd.add(entity);
 
     }
 
+    /**
+     * Gets the list of entities that need to be added to the game.
+     * @return an entity list containing uninitialized entities
+     */
+    public ArrayList<Entity> getPending() {
+
+        return this.toAdd;
+
+    }
+
+    /**
+     * Get the difficulty level of the world. Difficulty level affects enemy speed and spawn rates as well as the player's starting health.
+     * @return the world difficulty enum value
+     */
     public DifficultyLevel getDifficulty() {
 
         return this.difficulty;
 
     }
 
+    /**
+     * Sets the world's difficulty level. Difficulty level affects enemy speed and spawn rates as well as the player's starting health.
+     * @param level the desired enum difficulty value
+     */
     public void setDifficulty(DifficultyLevel level) {
 
         this.difficulty = level;

@@ -13,9 +13,9 @@ public class Wizard extends Enemy {
 
     private WizardState state;
 
-    public Wizard(int id) {
+    public Wizard() {
 
-        super(128, 128, id);
+        super(128, 128);
         // Load base stats
         this.setMaxHealth(2);
         this.setHealth(2);
@@ -31,10 +31,16 @@ public class Wizard extends Enemy {
     @Override
     public void attack() {
 
-        var lightning = new Projectile(getDamage(), getSpeed());
+        // Get direction to player
+        int angleToPlayer = (int) Math.toDegrees(Math.atan2(World.instance().getPlayer().getY() - getY(), World.instance().getPlayer().getX() - getX()));
+        if (angleToPlayer < 0) angleToPlayer += 360;
+        if (angleToPlayer >= 360) angleToPlayer -= 360;
+
+        // Throw lightning
+        var lightning = new Projectile(1.5, angleToPlayer, getDamage());
         lightning.setPosition(getX(), getY());
 
-        World.instance().addToEntityList(lightning);
+        World.instance().addToPendingList(lightning);
 
     }
 
@@ -103,7 +109,7 @@ public class Wizard extends Enemy {
     @Override
     public String serialize() {
 
-        return "" + getType() + "::" + getId() + "::" + getX() + "::" + getY() + "::" + state + "\n";
+        return "" + getType() + "::" + getX() + "::" + getY() + "::" + state + "\n";
 
     }
 

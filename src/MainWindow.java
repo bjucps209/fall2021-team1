@@ -30,9 +30,21 @@ import model.DifficultyLevel;
 import model.HighScore;
 import model.Serialization;
 
+// *****************************************
+// MainWindow.java
+// This is the window for the "Start" Screen
+// where the user can navigate to the game, 
+// highscore, about section, or help section.
+// ******************************************
+
 public class MainWindow  {
+    // The stack pane that everything is added to
     @FXML StackPane spaneMain;
+
+    // Audio for button clicks
     private AudioClip click = new AudioClip(getClass().getResource("Audio/UI/btnClick1.mp3").toExternalForm());
+
+    // Game Logo
     private ImageView imgviewLogo = new ImageView ( new Image("Final Assets/Logo/Final Logo.png"));
 
     // UI Images **********************************************************************
@@ -88,9 +100,16 @@ public class MainWindow  {
     private VBox nameVbox = new VBox();
     // *****************************
 
+    // Difficulty level
     DifficultyLevel difficulty;
+
+    // Player's name
     String name;
+    
+    // Stage to use later when closing the window
     Stage stage;
+
+    // Background music
     private AudioClip music = new AudioClip(getClass().getResource("Audio/Retro_Forest_-_David_Fesliyan.mp3").toExternalForm());
         
     /**
@@ -721,6 +740,9 @@ public class MainWindow  {
         imgviewBackgroundDim.setFitWidth(1440);
     }
 
+    /**
+     * The build of the "Enter Gamertag" Screen
+     */
     @FXML
     public void createNameVbox() {
         Label titleLbl = new Label("Enter Gamertag: ");

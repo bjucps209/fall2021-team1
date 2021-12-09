@@ -40,37 +40,39 @@ public abstract class Entity {
 
             case PROJECTILE:
 
-                var project = new Projectile(Integer.parseInt(data[5]), Integer.parseInt(data[6]));
+                var project = new Projectile(Integer.parseInt(data[4]), Integer.parseInt(data[5]));
 
-                project.setId(Integer.parseInt(data[1]));
-                project.setDirection(Integer.parseInt(data[4]));
-                project.setPosition(Double.parseDouble(data[2]), Double.parseDouble(data[3]));
+                project.setDirection(Integer.parseInt(data[3]));
+                project.setPosition(Double.parseDouble(data[1]), Double.parseDouble(data[2]));
 
                 return project;
 
             case GRUNT_ENEMY:
 
-                var grunt = new Grunt(0);
+                var grunt = new Grunt();
 
-                grunt.setId(Integer.parseInt(data[1]));
-                grunt.setPosition(Double.parseDouble(data[2]), Double.parseDouble(data[3]));
-                grunt.setState(data[4]);
+                grunt.setPosition(Double.parseDouble(data[1]), Double.parseDouble(data[2]));
+                grunt.setState(data[3]);
 
                 return grunt;
 
             case JUGGERNAUT_ENEMY:
 
-                var jugg = new Juggernaut(0);
+                var jugg = new Juggernaut();
 
-                jugg.setId(Integer.parseInt(data[1]));
-                jugg.setPosition(Double.parseDouble(data[2]), Double.parseDouble(data[3]));
-                jugg.setState(data[4]);
+                jugg.setPosition(Double.parseDouble(data[1]), Double.parseDouble(data[2]));
+                jugg.setState(data[3]);
 
                 return jugg;
 
             case CLOUD_WIZARD:
 
-                return null;
+                var wizard = new Wizard();
+
+                wizard.setPosition(Double.parseDouble(data[1]), Double.parseDouble(data[2]));
+                wizard.setState(data[3]);
+
+                return wizard;
 
             default:
 

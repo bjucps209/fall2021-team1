@@ -4,19 +4,22 @@ public class Grunt extends Enemy {
 
     /** Controls the frequency of attacks. */
     private int count = 25;
+    /** The regular speed of the grunt. */
     private int attackSpeed;
 
+    /** The possible navigation states of the grunt. */
     public enum GruntState {
 
         PATROL, ATTACK
 
     }
 
+    /** The navigation state of the grunt. */
     private GruntState state;
 
-    public Grunt(int id) {
+    public Grunt() {
 
-        super(128, 128, id);
+        super(128, 128);
         // Load base stats
 
         
@@ -42,7 +45,7 @@ public class Grunt extends Enemy {
         this.setMaxHealth(3);
         this.setHealth(3);
         this.setDamage(1);
-        this.setSpeed(1.3);
+        this.setSpeed(attackSpeed);
         this.setDetectionRadius(300);
         state = GruntState.PATROL;
 
@@ -148,7 +151,7 @@ public class Grunt extends Enemy {
     @Override
     public String serialize() {
 
-        return "" + getType() + "::" + getId() + "::" + getX() + "::" + getY() + "::" + state + "\n";
+        return "" + getType() + "::" + getX() + "::" + getY() + "::" + state + "\n";
 
     }
 
