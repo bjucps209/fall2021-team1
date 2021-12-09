@@ -4,8 +4,8 @@ public class Juggernaut extends Enemy {
 
     int count = 50; // cooldown for the basic attack
     int frenzyCooldown = 5; // cooldown before the Juggernaut can enter the frenzy state again
-    int attackSpeed = 5;
-    int frenzySpeed = 12;
+    int attackSpeed = 5; // how fast the Juggernaut moves in its attack state
+    int frenzySpeed = 12; // how fast the Juggernaut moves in its frenzy state
     boolean hitPlayer = false; // check if the player was successfully hit
 
     public enum JuggernautState {

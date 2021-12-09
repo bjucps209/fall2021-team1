@@ -125,6 +125,9 @@ public class Grunt extends Enemy {
 
     }
 
+    /**
+     * Determines the state of the Grunt based on if the player has been detected.
+     */
     public void determineState() {
 
         if (super.foundPlayer()) {

@@ -151,7 +151,7 @@ public class ZoneList {
         listPathways.add(new Item("", "well", 0));
         listPathways.get(4).setPosition(903, 575);
 
-        listPathways.add(new NPC("","coord"));
+        listPathways.add(new NPC("", "coord"));
         listPathways.get(5).setPosition(301, 81);
         // *************************************
 
@@ -238,9 +238,6 @@ public class ZoneList {
         listGraveyard.add(new Item("", "vFence", 0));
         listGraveyard.get(26).setPosition(1278, 630);
 
-        // listGraveyard.add(new NPC("Here lies the CpS 209 class of fall, 2021. Eleven started, three left.", "lSign"));   <- Feel free to change if you like Andrew
-        // listGraveyard.get(27).setPosition(360, 358);
-
         listGraveyard.add(new NPC("Here lies the CpS 209 class of fall, 2021. Ten started, three left.", "sign"));
         listGraveyard.get(27).setPosition(368, 358);
         listGraveyard.get(27).setInteractable(true);
@@ -322,7 +319,8 @@ public class ZoneList {
 
         listMarket.add(new Item("", "tree", 0));
         listMarket.get(1).setPosition(-8, -57);
-        listMarket.add(new NPC("Sorry traveler, my shop's been closed for quite awhile\nI've just come to visit my family.", "NPC"));
+        listMarket.add(new NPC(
+                "Sorry traveler, my shop's been closed for quite awhile\nI've just come to visit my family.", "NPC"));
         listMarket.get(2).setPosition(386, 495);
         listMarket.get(2).setInteractable(true);
 
@@ -361,7 +359,7 @@ public class ZoneList {
 
         listMarket.add(new NPC("", "coord"));
         listMarket.get(14).setPosition(656, 14);
-        
+
         listMarket.add(new NPC("", "coord"));
         listMarket.get(15).setPosition(1020, 726);
         // **************************************
@@ -424,7 +422,8 @@ public class ZoneList {
         listLake.add(new NPC("Lake Goo-La-Goon", "lSign"));
         listLake.get(0).setPosition(1116, 106);
         listLake.get(0).setInteractable(true);
-        listLake.add(new NPC("You finally make peace with the snail,\nlooking at the horizon of Lake Goo-La-Goon", "snail"));
+        listLake.add(
+                new NPC("You finally make peace with the snail,\nlooking at the horizon of Lake Goo-La-Goon", "snail"));
         listLake.get(1).setPosition(1126, 587);
         listLake.get(1).setCollidable(true);
         // **************************************
