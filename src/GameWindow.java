@@ -1143,8 +1143,8 @@ public class GameWindow {
                     wizardThread.start();
 
                     // Increase score
-                    world.increaseScore(200);
-                    displayScoreIncrease(200);
+                    world.increaseScore(500);
+                    displayScoreIncrease(500);
 
                     iterator.remove();
 
