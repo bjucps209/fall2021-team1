@@ -189,6 +189,8 @@ public abstract class Living extends Entity {
     public void setDead(boolean isDead) {
 
         this.isDead = isDead;
+        this.setSpeed(0);
+        this.setPosition(-500, -500);
     
     }
     

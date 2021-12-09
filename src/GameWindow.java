@@ -1390,7 +1390,7 @@ public class GameWindow {
      */
     @FXML
     public void updateProjectileGraphic(Projectile project) {
-        
+
         // New image view
         ImageView imgview = new ImageView();
 
@@ -1594,21 +1594,19 @@ public class GameWindow {
 
             case C:
 
-                if (isPaused())
-                    break;
+                if (isPaused()) break;
 
                 if (cheatModeEnabled) {
 
                     cheatModeEnabled = false;
                     world.getPlayer().setDamage(1);
-                    world.getPlayer().setMaxHealth(5);
-                    world.getPlayer().setHealth(5);
+                    world.getPlayer().setHealth(world.getPlayer().getMaxHealth());
 
                 } else {
 
                     cheatModeEnabled = true;
+                    world.getPlayer().setMaxHealth(world.getPlayer().getHealth());
                     world.getPlayer().setDamage(1000);
-                    world.getPlayer().setMaxHealth(1000);
                     world.getPlayer().setHealth(1000);
 
                 }

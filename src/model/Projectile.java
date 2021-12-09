@@ -2,11 +2,12 @@ package model;
 
 public class Projectile extends Enemy {
 
-    public Projectile(int damage, double speed) {
+    public Projectile(double speed, int direction, int damage) {
         
         super(64, 64);
         this.setDamage(damage);
         this.setSpeed(speed);
+        this.setDirection(direction);
 
     }
 
@@ -28,7 +29,6 @@ public class Projectile extends Enemy {
             
             player.handleDamage(getDamage(), getDirection());
             setDead(true);
-            setPosition(-100, -100);
         
         }
 
@@ -42,7 +42,6 @@ public class Projectile extends Enemy {
     public void handleDamage(int damage, int direction) {
 
         setDead(true);
-        setPosition(-100, -100);
     
     }
 

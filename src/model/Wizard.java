@@ -31,7 +31,13 @@ public class Wizard extends Enemy {
     @Override
     public void attack() {
 
-        var lightning = new Projectile(getDamage(), 1.1);
+        // Get direction to player
+        int angleToPlayer = (int) Math.toDegrees(Math.atan2(World.instance().getPlayer().getY() - getY(), World.instance().getPlayer().getX() - getX()));
+        if (angleToPlayer < 0) angleToPlayer += 360;
+        if (angleToPlayer >= 360) angleToPlayer -= 360;
+
+        // Throw lightning
+        var lightning = new Projectile(1.1, angleToPlayer, getDamage());
         lightning.setPosition(getX(), getY());
 
         World.instance().addToPendingList(lightning);
