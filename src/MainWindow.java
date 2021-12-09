@@ -405,6 +405,7 @@ public class MainWindow  {
         Jugg SFX . . . . . . . . . . . Zapsplatt.com
         'Heat Weapon' SFX . . . . . . . . pohwelly
         'Energy Weapon' SFX . . . . . WillFitch1
+        'magic1' SFX . . . . . . .  . Alan McKinney
 
         Visual:
         Label Fonts . . . . . . . . Craftron Gaming

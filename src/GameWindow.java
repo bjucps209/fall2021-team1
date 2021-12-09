@@ -227,10 +227,11 @@ public class GameWindow {
     private AudioClip gruntHit = new AudioClip(getClass().getResource("Audio/SFX/grunthit.mp3").toExternalForm());
     private AudioClip coinSound = new AudioClip(
             getClass().getResource("Audio/SFX/Retro realistic coins.wav").toExternalForm());
-    private AudioClip magicSound = new AudioClip(getClass().getResource("Audio/SFX/magic1.mp3").toExternalForm());
+    private AudioClip magicSound = new AudioClip(getClass().getResource("Audio/SFX/magic1.wav").toExternalForm());
     private AudioClip deathSound = new AudioClip(getClass().getResource("Audio/SFX/deathsound.wav").toExternalForm());
     private AudioClip gameOverMusic = new AudioClip(getClass().getResource("Audio/gameover.wav").toExternalForm());
     private AudioClip swordSlash = new AudioClip(getClass().getResource("Audio/SFX/swordslash.wav").toExternalForm());
+    private AudioClip wizardHit = new AudioClip(getClass().getResource("Audio/SFX/wizardhit.wav").toExternalForm());
     // *************************************************************************************************************
 
     // Model Attributes
@@ -557,6 +558,7 @@ public class GameWindow {
                 // Add to apane
                 apaneMain.getChildren().add(imgViewProjectile);
                 imgViewList.add(imgViewProjectile);
+                magicSound.play();
 
             }
 
@@ -2221,6 +2223,8 @@ public class GameWindow {
                 gruntHit.play();
             } else if (enemy instanceof Juggernaut) {
                 juggHit.play();
+            } else if (enemy instanceof Wizard) {
+                wizardHit.play();
             }
         }
 
