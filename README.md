@@ -31,7 +31,7 @@ https://bju-my.sharepoint.com/:v:/g/personal/afox797_students_bju_edu/EW5LU36yg8
 ### Expenses
 | Member Name | Username | Hours Invested | Hours Remaining |
 |-------------|----------|----------------|-----------------|
-| Andrew Fox | afox797 | 48:30 | 1:30 |
+| Andrew Fox | afox797 | 50:00 | 0:00 |
 | Joshua Douglas | Josh-Douglas | 33:15 | 16:45 |
 | David Goff | dgoff448 | 50:00 | 00:00 |
   
