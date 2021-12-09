@@ -50,6 +50,7 @@ import model.World;
 import model.Zone;
 import model.ZoneList;
 import model.Juggernaut.JuggernautState;
+import model.Wizard.WizardState;
 import model.World.mapDirection;
 
 public class GameWindow {
@@ -848,7 +849,7 @@ public class GameWindow {
                             switch (world.getDifficulty()) {
 
                                 case EASY:
-                                    if (spawnNum >= 0 && spawnNum <= 8) {
+                                    if (spawnNum >= 0 && spawnNum <= 6) {
                                         Grunt grunt = new Grunt();
                                         grunt.setX(landObjects.getX());
                                         grunt.setY(landObjects.getY());
@@ -863,11 +864,21 @@ public class GameWindow {
                                         jugg.setWidth(144);
                                         jugg.setHeight(156);
                                         spawnEnemies(jugg);
+
+                                    } else if (spawnNum > 6 && spawnNum <= 8) {
+                                        
+                                        Wizard wizard = new Wizard();
+                                        wizard.setX(landObjects.getX());
+                                        wizard.setY(landObjects.getY());
+                                        wizard.setWidth(64);
+                                        wizard.setHeight(96);
+                                        spawnEnemies(wizard);
+
                                     }
                                     break;
 
                                 case MEDIUM:
-                                    if (spawnNum >= 0 && spawnNum <= 6) {
+                                    if (spawnNum >= 0 && spawnNum <= 4) {
                                         Grunt grunt = new Grunt();
                                         grunt.setX(landObjects.getX());
                                         grunt.setY(landObjects.getY());
@@ -875,18 +886,28 @@ public class GameWindow {
                                         grunt.setHeight(96);
                                         spawnEnemies(grunt);
 
-                                    } else if (spawnNum > 6) {
+                                    } else if (spawnNum > 7) {
                                         Juggernaut jugg = new Juggernaut();
                                         jugg.setX(landObjects.getX());
                                         jugg.setY(landObjects.getY());
                                         jugg.setWidth(144);
                                         jugg.setHeight(156);
                                         spawnEnemies(jugg);
+
+                                    }  else if (spawnNum > 4 && spawnNum <= 7) {
+                                        
+                                        Wizard wizard = new Wizard();
+                                        wizard.setX(landObjects.getX());
+                                        wizard.setY(landObjects.getY());
+                                        wizard.setWidth(64);
+                                        wizard.setHeight(96);
+                                        spawnEnemies(wizard);
+
                                     }
                                     break;
 
                                 case HARD:
-                                    if (spawnNum >= 0 && spawnNum <= 4) {
+                                    if (spawnNum >= 0 && spawnNum <= 2) {
 
                                         Grunt grunt = new Grunt();
                                         grunt.setX(landObjects.getX());
@@ -895,7 +916,7 @@ public class GameWindow {
                                         grunt.setHeight(96);
                                         spawnEnemies(grunt);
 
-                                    } else if (spawnNum > 4 && spawnNum <= 8) {
+                                    } else if (spawnNum > 5) {
 
                                         Juggernaut jugg = new Juggernaut();
                                         jugg.setX(landObjects.getX());
@@ -904,7 +925,7 @@ public class GameWindow {
                                         jugg.setHeight(156);
                                         spawnEnemies(jugg);
 
-                                    } else {
+                                    } else if (spawnNum > 2 && spawnNum <= 5){
 
                                         Wizard wizard = new Wizard();
                                         wizard.setX(landObjects.getX());
@@ -1382,6 +1403,10 @@ public class GameWindow {
 
             imgview.setImage(imgWizardFrontMove);
 
+        }
+
+        if (wizard.getState() == WizardState.MEDITATE) {
+            imgview.setImage(imgWizardFront);
         }
 
     }

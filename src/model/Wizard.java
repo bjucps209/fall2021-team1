@@ -7,6 +7,8 @@ public class Wizard extends Enemy {
     /** Controls the frequency of attacks. */
     private int count = 40;
 
+    
+
     /** Possible navigation states of wizard enemies. */
     public enum WizardState {
 
@@ -22,10 +24,30 @@ public class Wizard extends Enemy {
 
         super(128, 128);
         // Load base stats
+
+        switch (World.instance().getDifficulty()) {
+
+            case EASY:
+                this.setSpeed(1.3);
+                break;
+
+            case MEDIUM:
+                this.setSpeed(2.3);
+                break;
+
+            case HARD:
+                this.setSpeed(3.3);
+                break;
+
+            default:
+                break;
+
+        }
+
         this.setMaxHealth(2);
         this.setHealth(2);
         this.setDamage(2);
-        this.setSpeed(1);
+        
         this.setDetectionRadius(300);
         state = WizardState.MEDITATE;
 
@@ -42,7 +64,29 @@ public class Wizard extends Enemy {
         if (angleToPlayer >= 360) angleToPlayer -= 360;
 
         // Throw lightning
-        var lightning = new Projectile(1.8, angleToPlayer, getDamage());
+
+        double lightningSpeed = 0;
+
+        switch (World.instance().getDifficulty()) {
+
+            case EASY:
+                lightningSpeed = 1.8;
+                break;
+
+            case MEDIUM:
+                lightningSpeed = 5.8;
+                break;
+
+            case HARD:
+                lightningSpeed = 9.8; 
+                break;
+
+            default:
+                break;
+
+        }
+        
+        var lightning = new Projectile(lightningSpeed, angleToPlayer, getDamage());
         lightning.setPosition(getX(), getY());
 
         World.instance().addToPendingList(lightning);
