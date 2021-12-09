@@ -640,6 +640,9 @@ public class GameWindow {
         apaneMain.getChildren().add(lblLocation);
     }
 
+    /**
+     * Draws the pause button on the top right of the screen.
+     */
     @FXML
     public void drawPauseButton() {
         imgviewPauseBtn.setOnMousePressed((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
@@ -1924,6 +1927,9 @@ public class GameWindow {
         pauseVbox.setLayoutY(250);
     }
 
+    /**
+     * Builds the Help Vbox
+     */
     @FXML
     public void createHelpVbox() {
         // Mouse
@@ -2033,6 +2039,9 @@ public class GameWindow {
         helpVbox.setLayoutY(82);
     }
 
+    /**
+     * Builds the GameOver Vbox for the "Game Over" screen
+     */
     @FXML
     public void createGameOverVbox(String score) {
         Label titleLbl = new Label("GAME OVER!");
@@ -2251,6 +2260,10 @@ public class GameWindow {
 
     }
 
+    /**
+     * Opens the MainWindow and closes the GameWindow
+     * @throws IOException
+     */
     public void openMainWin() throws IOException {
         music.stop();
         var loader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
