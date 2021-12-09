@@ -40,9 +40,8 @@ public abstract class Entity {
 
             case PROJECTILE:
 
-                var project = new Projectile(Integer.parseInt(data[4]), Integer.parseInt(data[5]));
+                var project = new Projectile(Double.parseDouble(data[5]), Integer.parseInt(data[3]), Integer.parseInt(data[4]));
 
-                project.setDirection(Integer.parseInt(data[3]));
                 project.setPosition(Double.parseDouble(data[1]), Double.parseDouble(data[2]));
 
                 return project;
