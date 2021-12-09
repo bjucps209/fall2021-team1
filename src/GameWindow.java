@@ -542,7 +542,6 @@ public class GameWindow {
                 apaneMain.getChildren().add(imgViewWizard);
                 imgViewList.add(imgViewWizard);
 
-
             } else if (entity instanceof Projectile) {
 
                 Projectile spawnedProjectile = (Projectile) entity;
@@ -868,7 +867,7 @@ public class GameWindow {
                                         spawnEnemies(jugg);
 
                                     } else if (spawnNum > 6 && spawnNum <= 8) {
-                                        
+
                                         Wizard wizard = new Wizard();
                                         wizard.setX(landObjects.getX());
                                         wizard.setY(landObjects.getY());
@@ -896,8 +895,8 @@ public class GameWindow {
                                         jugg.setHeight(156);
                                         spawnEnemies(jugg);
 
-                                    }  else if (spawnNum > 4 && spawnNum <= 7) {
-                                        
+                                    } else if (spawnNum > 4 && spawnNum <= 7) {
+
                                         Wizard wizard = new Wizard();
                                         wizard.setX(landObjects.getX());
                                         wizard.setY(landObjects.getY());
@@ -927,7 +926,7 @@ public class GameWindow {
                                         jugg.setHeight(156);
                                         spawnEnemies(jugg);
 
-                                    } else if (spawnNum > 2 && spawnNum <= 5){
+                                    } else if (spawnNum > 2 && spawnNum <= 5) {
 
                                         Wizard wizard = new Wizard();
                                         wizard.setX(landObjects.getX());
@@ -1037,7 +1036,8 @@ public class GameWindow {
 
             for (Entity queued : pending) {
 
-                if (queued instanceof Enemy) spawnEnemies((Enemy) queued);
+                if (queued instanceof Enemy)
+                    spawnEnemies((Enemy) queued);
 
             }
 
@@ -1071,7 +1071,7 @@ public class GameWindow {
 
             gameOverMusic.volumeProperty().set(.07);
             gameOverMusic.play();
-            
+
         }
 
         var iterator = world.getEntityList().iterator();
@@ -1160,11 +1160,6 @@ public class GameWindow {
 
                 // Deal with dead juggernauts
                 if (project.isDead()) {
-
-                    // TODO: Play projectile hit sound
-                    //Thread juggThread = new Thread(() -> deathSound.play());
-                    //juggThread.start();
-
                     iterator.remove();
 
                 }
@@ -1190,14 +1185,13 @@ public class GameWindow {
                 imgview = foundImageView;
         }
 
-
         if (grunt.getDirection() >= 0 && grunt.getDirection() < 90
                 || grunt.getDirection() > 270 && grunt.getDirection() <= 360) {
-                if (isPaused || world.isGameOver()) {
-                    imgview.setImage(imgGruntRight);
-                } else {
-                    imgview.setImage(imgGruntRightMove);
-                }
+            if (isPaused || world.isGameOver()) {
+                imgview.setImage(imgGruntRight);
+            } else {
+                imgview.setImage(imgGruntRightMove);
+            }
 
         } else if (grunt.getDirection() == 90) {
             if (isPaused || world.isGameOver()) {
@@ -1213,7 +1207,6 @@ public class GameWindow {
             } else {
                 imgview.setImage(imgGruntLefttMove);
             }
-            
 
         } else if (grunt.getDirection() == 270) {
             if (isPaused || world.isGameOver()) {
@@ -1221,7 +1214,7 @@ public class GameWindow {
             } else {
                 imgview.setImage(imgGruntFrontMove);
             }
-            
+
         }
 
         if (grunt.isDead()) {
@@ -1255,7 +1248,7 @@ public class GameWindow {
                 if (isPaused || world.isGameOver()) {
                     imgview.setImage(imgJuggRight);
                 } else {
-                    imgview.setImage(imgJuggRightMoveSlow);    
+                    imgview.setImage(imgJuggRightMoveSlow);
                 }
             } else if (jugg.getDirection() == 90) {
                 if (isPaused || world.isGameOver()) {
@@ -1360,6 +1353,7 @@ public class GameWindow {
     /**
      * Changes the wizard's ImageView to the appropriate animation based on its
      * direction and movement.
+     * 
      * @param wizard - the wizard to be updated
      */
     @FXML
@@ -1369,10 +1363,12 @@ public class GameWindow {
 
         // If there is already an image view, use it.
         try {
-            
-            imgview = imgViewList.stream().filter(img -> (img.getX() == wizard.getX() && img.getY() == wizard.getY())).findFirst().get();
 
-        } catch (Exception ex) {}
+            imgview = imgViewList.stream().filter(img -> (img.getX() == wizard.getX() && img.getY() == wizard.getY()))
+                    .findFirst().get();
+
+        } catch (Exception ex) {
+        }
 
         // Deal with dead wizards
         if (wizard.isDead()) {
@@ -1389,7 +1385,8 @@ public class GameWindow {
         }
 
         // Update graphic
-        if (wizard.getDirection() >= 0 && wizard.getDirection() < 90 || wizard.getDirection() > 270 && wizard.getDirection() <= 360) {
+        if (wizard.getDirection() >= 0 && wizard.getDirection() < 90
+                || wizard.getDirection() > 270 && wizard.getDirection() <= 360) {
 
             imgview.setImage(imgWizardRightMove);
 
@@ -1397,7 +1394,8 @@ public class GameWindow {
 
             imgview.setImage(imgWizardBackMove);
 
-        } else if (wizard.getDirection() > 90 && wizard.getDirection() <= 180 || wizard.getDirection() > 180 && wizard.getDirection() < 270) {
+        } else if (wizard.getDirection() > 90 && wizard.getDirection() <= 180
+                || wizard.getDirection() > 180 && wizard.getDirection() < 270) {
 
             imgview.setImage(imgWizardLeftMove);
 
@@ -1416,6 +1414,7 @@ public class GameWindow {
     /**
      * Changes the wizard's ImageView to the appropriate animation based on its
      * direction and movement.
+     * 
      * @param wizard - the wizard to be updated
      */
     @FXML
@@ -1426,13 +1425,16 @@ public class GameWindow {
 
         // If there is already an image view, use it.
         try {
-            
-            imgview = imgViewList.stream().filter(img -> (img.getX() == project.getX() && img.getY() == project.getY())).findFirst().get();
 
-        } catch (Exception ex) {}
+            imgview = imgViewList.stream().filter(img -> (img.getX() == project.getX() && img.getY() == project.getY()))
+                    .findFirst().get();
+
+        } catch (Exception ex) {
+        }
 
         // Deal with dead projectiles
-        if (project.isDead()) imgview.setVisible(false);
+        if (project.isDead())
+            imgview.setVisible(false);
 
     }
 
@@ -1624,7 +1626,8 @@ public class GameWindow {
 
             case C:
 
-                if (isPaused()) break;
+                if (isPaused())
+                    break;
 
                 if (cheatModeEnabled) {
 
@@ -1763,10 +1766,10 @@ public class GameWindow {
             } else if (entity instanceof Juggernaut) {
                 Juggernaut juggernaut = (Juggernaut) entity;
                 updateJuggGraphic(juggernaut);
-             } // else if (entity instance of Wizard) {
-            //     Wizard wizard = (Wizard) entity;
-            //     updateWizardGraphic(wizard);
-            // }
+            } // else if (entity instance of Wizard) {
+              // Wizard wizard = (Wizard) entity;
+              // updateWizardGraphic(wizard);
+              // }
         }
 
         apaneMain.getChildren().add(imgviewBackgroundDim);
@@ -2293,6 +2296,7 @@ public class GameWindow {
 
     /**
      * Opens the MainWindow and closes the GameWindow
+     * 
      * @throws IOException
      */
     public void openMainWin() throws IOException {
