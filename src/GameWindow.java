@@ -1390,6 +1390,7 @@ public class GameWindow {
      */
     @FXML
     public void updateProjectileGraphic(Projectile project) {
+        
         // New image view
         ImageView imgview = new ImageView();
 
