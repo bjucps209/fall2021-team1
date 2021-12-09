@@ -3,9 +3,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-
 public class GUIApplication extends Application{
-
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -22,7 +20,6 @@ public class GUIApplication extends Application{
         stage.setTitle("Terrene"); // Title of main window
         stage.show();
         controller.initialize(stage);
-        
 
     }
 

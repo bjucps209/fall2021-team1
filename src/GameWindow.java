@@ -61,17 +61,18 @@ public class GameWindow {
     // Control Attributes
 
     // https://gist.github.com/Da9el00/5f698b3839f00ab3e0f28118edd6c947
+    /** If the up key is down. */
     private BooleanProperty uPressed = new SimpleBooleanProperty();
+    /** If the left key is down. */
     private BooleanProperty lPressed = new SimpleBooleanProperty();
+    /** If the down key is down. */
     private BooleanProperty dPressed = new SimpleBooleanProperty();
+    /** If the right key is down. */
     private BooleanProperty rPressed = new SimpleBooleanProperty();
-
+    /** Whether any key is down. */
     private BooleanBinding keyPressed = uPressed.or(lPressed).or(dPressed).or(rPressed);
 
-    // Id
-    int nextId = 0;
-
-    // Cheat Mode
+    /** Whether cheat mode has been enabled. */
     private boolean cheatModeEnabled = false;
 
     // FXML Attributes
@@ -244,7 +245,9 @@ public class GameWindow {
     // Player's Name
     private String name;
 
+    // The game music.
     private AudioClip music;
+    /** Whether the game is over. */
     private boolean isGameOver;
 
     @FXML
@@ -678,7 +681,7 @@ public class GameWindow {
      */
     @FXML
     public void drawWorld() {
-        nextId = 0;
+
         world.getEntityList().clear();
         imgViewList.clear();
         for (Zone zone : ZoneList.instance().getLevels()) {

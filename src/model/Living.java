@@ -5,6 +5,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
+/** Basic class for all entities with health or movement properties. */
 public abstract class Living extends Entity {
 
     /** The health of the Entity. */
@@ -22,6 +23,11 @@ public abstract class Living extends Entity {
     /** Is the Entity dead? */
     private boolean isDead = false;
 
+    /**
+     * Basic class for all entities with health or movement properties.
+     * @param width the width of the entity
+     * @param height the height of the entity
+     */
     public Living(int width, int height) {
 
         super(width, height);
@@ -91,102 +97,170 @@ public abstract class Living extends Entity {
     public abstract void handleDamage(int damage, int direction);
 
     /// Getters and Setters ///
+    /**
+     * Gets the property for the entity's health.
+     * @return the health property
+     */
     public IntegerProperty healthProperty() {
 
         return this.health;
 
     }
 
+    /**
+     * Gets the entity's health value.
+     * @return the health value
+     */
     public int getHealth() {
 
         return this.health.get();
 
     }
 
+    /**
+     * Sets the entity's health value.
+     * @param health the new health value
+     */
     public void setHealth(int health) {
 
         this.health.set(health);
 
     }
 
+    /**
+     * Gets the property of the entity's maximum health.
+     * @return the max health property
+     */
     public IntegerProperty maxHealthProperty() {
 
         return this.maxHealth;
 
     }
 
+    /**
+     * Gets the value of the entity's maximum health.
+     * @return the max health value
+     */
     public int getMaxHealth() {
 
         return this.maxHealth.get();
 
     }
 
+    /**
+     * Sets the value of the entity's maximum health.
+     * @param health the new max health value
+     */
     public void setMaxHealth(int health) {
 
         this.maxHealth.set(health);
 
     }
 
+    /**
+     * Gets the property for the damage the entity does.
+     * @return the damage property
+     */
     public IntegerProperty damageProperty() {
 
         return this.damage;
 
     }
 
+    /**
+     * Gets the value of the damage the entity does.
+     * @return the damage value
+     */
     public int getDamage() {
 
         return this.damage.get();
 
     }
 
+    /**
+     * Sets the value of the damage the entity does.
+     * @param damage the new damage value
+     */
     public void setDamage(int damage) {
 
         this.damage.set(damage);
 
     }
 
+    /**
+     * Gets the property for the entity's speed.
+     * @return the speed property
+     */
     public DoubleProperty speedProperty() {
 
         return this.speed;
 
     }
 
+    /**
+     * Gets the speed value of the entity.
+     * @return the speed value
+     */
     public double getSpeed() {
 
         return this.speed.get();
 
     }
 
+    /**
+     * Sets the speed value of the entity.
+     * @param speed the speed value
+     */
     public void setSpeed(double speed) {
 
         this.speed.set(speed);
 
     }
 
+    /**
+     * Gets the property of the entity's direction.
+     * @return the direction property
+     */
     public IntegerProperty directionProperty() {
 
         return this.direction;
 
     }
 
+    /**
+     * Gets the direction value of the entity.
+     * @return the direction value
+     */
     public int getDirection() {
 
         return this.direction.get();
 
     }
 
+    /**
+     * Sets the direction value of the entity.
+     * @param direction the new direction value
+     */
     public void setDirection(int direction) {
 
         this.direction.set(direction);
 
     }
 
+    /**
+     * Whether the entity has died.
+     * @return true if dead, false otherwise
+     */
     public boolean isDead() {
     
         return isDead;
     
     }
 
+    /**
+     * Sets whether the entity is dead. Also removes the entity from the screen and prevents it from moving.
+     * @param isDead true for dead, false otherwise
+     */
     public void setDead(boolean isDead) {
 
         this.isDead = isDead;

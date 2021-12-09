@@ -52,17 +52,20 @@ public class World {
 
     }
 
-    private static World instance = new World(); // create instance to be referenced
+    /** The single instance of the world. */
+    private static World instance = new World();
 
+    /**
+     * Gets the single world instance.
+     * @return the world
+     */
     public static World instance() {
 
         return instance;
 
     }
 
-    /**
-     * Resets the world instance.
-     */
+    /** Replaces the world instance with a new world. */
     public static void reset() {
 
         instance = new World();
@@ -111,7 +114,10 @@ public class World {
     }
     
     /// Serialization ///
-
+    /**
+     * Saves the world and player score data as a string for use in the game save file.
+     * @return the world save string
+     */
     public String serialize() {
 
         return "WORLD::" + getDifficulty() + "::" + getCurrentlocation().getZoneName() + "::" + getScore() + "\n";

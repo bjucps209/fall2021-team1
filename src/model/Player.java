@@ -4,11 +4,12 @@ import java.util.List;
 
 import model.World.mapDirection;
 
+/** The player entity. */
 public class Player extends Living {
 
+    /** The player entity. */
     public Player() {
 
-        // TODO: use actual width, height of player
         super(72, 116);
 
         // Load base stats

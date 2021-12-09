@@ -2,16 +2,24 @@ package model;
 
 import java.util.ArrayList;
 
-// Holds information for each individual zone. Does not contain enemies, only Items and NPCS. 
+/** Holds information for each individual zone. Does not contain enemies, only Items and NPCS. */
 public class Zone {
     
-    private String zoneName, backgroundPath; // The current zone name, the URL to the background image of the current zone.
-    private Zone northZone, westZone, southZone, eastZone; // The zones located on each of the 4 directions of the current zone.
-    private ArrayList<NPC> objectList; // The list of every npc or item in the current zone.
-    
+    /** The name of the zone. */
+    private String zoneName;
+    /** Represents the background image for the zone. */
+    private String backgroundPath;
+    /** The zone next to this zone, or null if none exists. */
+    private Zone northZone, westZone, southZone, eastZone;
+    /** The list of objects in this zone. */
+    private ArrayList<NPC> objectList;
 
-    public Zone(String zoneName, String backgroundPath,
-            ArrayList<NPC> objectList) {
+    /** Holds information for each individual zone. Does not contain enemies, only Items and NPCS.
+     * @param zoneName the name of the zone
+     * @param backgroundPath string representing the background
+     * @param objectList the objects in the zone
+     */
+    public Zone(String zoneName, String backgroundPath, ArrayList<NPC> objectList) {
         this.zoneName = zoneName;
         this.backgroundPath = backgroundPath;
         this.objectList = objectList;

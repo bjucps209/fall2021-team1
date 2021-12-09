@@ -1,18 +1,23 @@
 package model;
 
+// Great and powerful Oz
+/** Enemy that spawns only on hard difficulty. Throws projectiles at the player and runs away when they get too close. */
 public class Wizard extends Enemy {
 
     /** Controls the frequency of attacks. */
     private int count = 40;
 
+    /** Possible navigation states of wizard enemies. */
     public enum WizardState {
 
         MEDITATE, ATTACK
 
     }
 
+    /** The navigation state of the wizard. */
     private WizardState state;
 
+    /** Enemy that spawns only on hard difficulty. Throws projectiles at the player and runs away when they get too close. */
     public Wizard() {
 
         super(128, 128);
@@ -57,9 +62,6 @@ public class Wizard extends Enemy {
 
     }
 
-    /**
-     * Moves the wizard in a certain direction depending on its state.
-     */
     @Override
     public void navigate() {
 
@@ -84,7 +86,7 @@ public class Wizard extends Enemy {
         double distanceToPlayer = Math.hypot(this.getX() - World.instance().getPlayer().getX(), this.getY() - World.instance().getPlayer().getY());
 
         // Run away if too close
-        if (distanceToPlayer < 200) angle -= 180;
+        if (distanceToPlayer < 200 && distanceToPlayer < 210) angle -= 180;
     
         if (angle < 0) angle += 360;
         if (angle >= 360) angle -= 360;
@@ -109,7 +111,7 @@ public class Wizard extends Enemy {
     @Override
     public String serialize() {
 
-        return "" + getType() + "::" + getX() + "::" + getY() + "::" + state + "\n";
+        return "" + getType() + "::" + getX() + "::" + getY() + "::" + state + "::" + getHealth() + "\n";
 
     }
 
@@ -121,19 +123,30 @@ public class Wizard extends Enemy {
     }
 
     /// Getters and Setters ///
-
+    /**
+     * Gets the navigation state of the wizard.
+     * @return the navigation state
+     */
     public WizardState getState() {
 
         return this.state;
 
     }
 
+    /**
+     * Sets the navigation state of the wizard.
+     * @param state the new state
+     */
     public void setState(WizardState state) {
 
         this.state = state;
 
     }
 
+    /**
+     * Sets the navigation state of the wizard from a string representation.
+     * @param state the new state
+     */
     public void setState(String state) {
 
         switch (state) {

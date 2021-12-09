@@ -3,10 +3,18 @@ package model;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
+/** Specialized npc that also increases the player's score when interacted with. */
 public class Item extends NPC {
 
-    private IntegerProperty scoreIncrease; // The score bonus upon picking up the item.
+    /** The ammount the player's score should increase by on interaction. */
+    private IntegerProperty scoreIncrease;
 
+    /**
+     * Specialized npc that also increases the player's score when interacted with.
+     * @param message the message to display on interaction
+     * @param description a description of the npc
+     * @param score the score to increase by
+     */
     public Item(String message, String description, int score) {
 
         super(message, description);
@@ -20,7 +28,7 @@ public class Item extends NPC {
     @Override
     public String serialize() {
 
-        return "" + getType() + "::" + getMessage().replaceAll("\n", "█") + "::" + getDescription() + "::" + scoreIncrease.get() + "\n";
+        return "" + getType() + "::" + getX() + "::" + getY() + "::" + getMessage().replaceAll("\n", "█") + "::" + getDescription() + "::" + scoreIncrease.get() + "\n";
 
     }
 
@@ -32,19 +40,30 @@ public class Item extends NPC {
     }
 
     /// Getters and Setters ///
-
+    /**
+     * Gets the property of the item's score increase.
+     * @return the score increase property
+     */
     public IntegerProperty scoreIncreaseProperty() {
 
         return this.scoreIncrease;
 
     }
 
+    /**
+     * Gets the value of the item's score increase.
+     * @return the score increase value
+     */
     public int getScoreIncrease() {
 
         return this.scoreIncrease.get();
 
     }
 
+    /**
+     * Sets the value of the item's score increase.
+     * @param value the new score increase value
+     */
     public void setScoreIncrease(int value) {
 
         this.scoreIncrease.set(value);
