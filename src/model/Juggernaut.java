@@ -2,11 +2,16 @@ package model;
 
 public class Juggernaut extends Enemy {
 
-    int count = 50; // cooldown for the basic attack
-    int frenzyCooldown = 5; // cooldown before the Juggernaut can enter the frenzy state again
-    int attackSpeed = 5;
-    int frenzySpeed = 12;
-    boolean hitPlayer = false; // check if the player was successfully hit
+    /** The cooldown for attacks. Becomes smaller when in the frenzy state. */
+    private int count = 50;
+    /** The cooldown before the frenzy state can be entered again. */
+    private int frenzyCooldown = 5;
+    /** The normal movement speed of the juggernaut. */
+    private double attackSpeed;
+    /** The movement speed of the juggernaut during frenzy. */
+    private double frenzySpeed;
+    /** Wether the juggernaut has hit the player. */
+    private boolean hitPlayer = false;
 
     public enum JuggernautState {
 
@@ -16,9 +21,9 @@ public class Juggernaut extends Enemy {
 
     private JuggernautState state;
 
-    public Juggernaut(int id) {
+    public Juggernaut() {
         
-        super(192, 192, id);
+        super(192, 192);
 
         frenzyCooldown = 0;
 
@@ -47,7 +52,7 @@ public class Juggernaut extends Enemy {
         this.setMaxHealth(10);
         this.setHealth(10);
         this.setDamage(3);
-        this.setSpeed(1);
+        this.setSpeed(attackSpeed);
         this.setDetectionRadius(200);
         this.state = JuggernautState.PATROL;
 
@@ -66,7 +71,7 @@ public class Juggernaut extends Enemy {
         if (foundPlayer() && state == JuggernautState.PATROL) {
 
             state = JuggernautState.ATTACK;
-            setSpeed(5);
+            setSpeed(attackSpeed);
         
         }
 
@@ -141,13 +146,13 @@ public class Juggernaut extends Enemy {
             
                 frenzyCooldown = 10;
                 setState(JuggernautState.FRENZY);
-                setSpeed(12);
+                setSpeed(frenzySpeed);
             
             } else if (frenzyCooldown < 1 || hitPlayer) {
             
                 frenzyCooldown = 50;
                 setState(JuggernautState.ATTACK);
-                setSpeed(5);
+                setSpeed(attackSpeed);
             
             }
             
@@ -170,7 +175,9 @@ public class Juggernaut extends Enemy {
 
     @Override
     public String serialize() {
-        return null;
+
+        return "" + getType() + "::" + getX() + "::" + getY() + "::" + state + "\n";
+    
     }
 
     @Override

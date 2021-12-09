@@ -486,7 +486,6 @@ public class GameWindow {
                 spawnedGrunt.setOriginalX(spawnedGrunt.getX());
                 spawnedGrunt.setOriginalY(spawnedGrunt.getY());
                 ImageView imgViewGrunt = new ImageView();
-                imgViewGrunt.setUserData(spawnedGrunt.getId());
                 imgViewGrunt.xProperty().bindBidirectional(spawnedGrunt.xProperty());
                 imgViewGrunt.yProperty().bindBidirectional(spawnedGrunt.yProperty());
                 apaneMain.getChildren().add(imgViewGrunt);
@@ -518,7 +517,6 @@ public class GameWindow {
                 spawnedJuggernaut.setOriginalX(spawnedJuggernaut.getX());
                 spawnedJuggernaut.setOriginalY(spawnedJuggernaut.getY());
                 ImageView imgViewJuggernaut = new ImageView();
-                imgViewJuggernaut.setUserData(spawnedJuggernaut.getId());
                 imgViewJuggernaut.xProperty().bindBidirectional(spawnedJuggernaut.xProperty());
                 imgViewJuggernaut.yProperty().bindBidirectional(spawnedJuggernaut.yProperty());
                 apaneMain.getChildren().add(imgViewJuggernaut);
@@ -532,7 +530,6 @@ public class GameWindow {
 
                 // Setup Image View
                 ImageView imgViewWizard = new ImageView();
-                imgViewWizard.setUserData(spawnedWizard.getId());
                 imgViewWizard.xProperty().bindBidirectional(spawnedWizard.xProperty());
                 imgViewWizard.yProperty().bindBidirectional(spawnedWizard.yProperty());
 
@@ -550,7 +547,6 @@ public class GameWindow {
                 // Setup image view
                 ImageView imgViewProjectile = new ImageView();
                 imgViewProjectile.setImage(imgWizardProjectile);
-                imgViewProjectile.setUserData(spawnedProjectile.getId());
                 imgViewProjectile.xProperty().bindBidirectional(spawnedProjectile.xProperty());
                 imgViewProjectile.yProperty().bindBidirectional(spawnedProjectile.yProperty());
 
@@ -847,7 +843,7 @@ public class GameWindow {
 
                                 case EASY:
                                     if (spawnNum >= 0 && spawnNum <= 8) {
-                                        Grunt grunt = new Grunt(nextId + 1);
+                                        Grunt grunt = new Grunt();
                                         grunt.setX(landObjects.getX());
                                         grunt.setY(landObjects.getY());
                                         grunt.setWidth(64);
@@ -855,7 +851,7 @@ public class GameWindow {
                                         spawnEnemies(grunt);
 
                                     } else if (spawnNum > 8) {
-                                        Juggernaut jugg = new Juggernaut(nextId + 1);
+                                        Juggernaut jugg = new Juggernaut();
                                         jugg.setX(landObjects.getX());
                                         jugg.setY(landObjects.getY());
                                         jugg.setWidth(144);
@@ -866,7 +862,7 @@ public class GameWindow {
 
                                 case MEDIUM:
                                     if (spawnNum >= 0 && spawnNum <= 6) {
-                                        Grunt grunt = new Grunt(nextId + 1);
+                                        Grunt grunt = new Grunt();
                                         grunt.setX(landObjects.getX());
                                         grunt.setY(landObjects.getY());
                                         grunt.setWidth(64);
@@ -874,7 +870,7 @@ public class GameWindow {
                                         spawnEnemies(grunt);
 
                                     } else if (spawnNum > 6) {
-                                        Juggernaut jugg = new Juggernaut(nextId + 1);
+                                        Juggernaut jugg = new Juggernaut();
                                         jugg.setX(landObjects.getX());
                                         jugg.setY(landObjects.getY());
                                         jugg.setWidth(144);
@@ -886,16 +882,16 @@ public class GameWindow {
                                 case HARD:
                                     if (spawnNum >= 0 && spawnNum <= 4) {
 
-                                        Grunt grunt = new Grunt(nextId + 1);
+                                        Grunt grunt = new Grunt();
                                         grunt.setX(landObjects.getX());
                                         grunt.setY(landObjects.getY());
                                         grunt.setWidth(64);
                                         grunt.setHeight(96);
                                         spawnEnemies(grunt);
 
-                                    } else if (spawnNum > 4 && spawnNum <= 10) {
+                                    } else if (spawnNum > 4 && spawnNum <= 8) {
 
-                                        Juggernaut jugg = new Juggernaut(nextId + 1);
+                                        Juggernaut jugg = new Juggernaut();
                                         jugg.setX(landObjects.getX());
                                         jugg.setY(landObjects.getY());
                                         jugg.setWidth(144);
@@ -904,7 +900,7 @@ public class GameWindow {
 
                                     } else {
 
-                                        Wizard wizard = new Wizard(nextId + 1);
+                                        Wizard wizard = new Wizard();
                                         wizard.setX(landObjects.getX());
                                         wizard.setY(landObjects.getY());
                                         wizard.setWidth(64);
@@ -1006,6 +1002,20 @@ public class GameWindow {
     @FXML
     public void updateWorld() {
 
+        var pending = world.getPending();
+
+        if (pending.size() > 0) {
+
+            for (Entity queued : pending) {
+
+                if (queued instanceof Enemy) spawnEnemies((Enemy) queued);
+
+            }
+
+            pending.clear();
+
+        }
+
         world.updateWorld();
         drawHealth();
 
@@ -1032,6 +1042,7 @@ public class GameWindow {
 
             gameOverMusic.volumeProperty().set(.07);
             gameOverMusic.play();
+            
         }
 
         var iterator = world.getEntityList().iterator();
@@ -1388,9 +1399,6 @@ public class GameWindow {
 
         // Deal with dead projectiles
         if (project.isDead()) imgview.setVisible(false);
-
-        // Update graphic
-        imgview.setImage(imgWizardProjectile);
 
     }
 

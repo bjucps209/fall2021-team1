@@ -4,7 +4,7 @@ public class Projectile extends Enemy {
 
     public Projectile(int damage, double speed) {
         
-        super(64, 64, 0);
+        super(64, 64);
         this.setDamage(damage);
         this.setSpeed(speed);
 
@@ -16,12 +16,20 @@ public class Projectile extends Enemy {
     @Override
     public void navigate() {
         
+        // Dead projectiles do nothing.
+        if (isDead()) return;
+
         // Die on first impact
         if (move(getSpeed(), getDirection())) setDead(true);
 
         // Check hit player
         var player = World.instance().getPlayer();
-        if (intersects(player)) player.handleDamage(getDamage(), getDirection());
+        if (intersects(player)) {
+            
+            player.handleDamage(getDamage(), getDirection());
+            setDead(true);
+        
+        }
 
     }
 
@@ -39,7 +47,7 @@ public class Projectile extends Enemy {
     @Override
     public String serialize() {
 
-        return "" + getType() + "::" + getId() + "::" + getX() + "::" + getY() + "::" + getDirection() + "::" + getDamage() + "::" + getSpeed() + "\n";
+        return "" + getType() + "::" + getX() + "::" + getY() + "::" + getDirection() + "::" + getDamage() + "::" + getSpeed() + "\n";
 
     }
 
