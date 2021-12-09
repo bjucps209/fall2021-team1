@@ -93,7 +93,7 @@ public class Wizard extends Enemy {
     
         if (count < 1) {
                     
-            count = 60;
+            count = 150;
             attack();
 
         }
