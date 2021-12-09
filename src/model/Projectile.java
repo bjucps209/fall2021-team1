@@ -28,6 +28,7 @@ public class Projectile extends Enemy {
             
             player.handleDamage(getDamage(), getDirection());
             setDead(true);
+            setPosition(-100, -100);
         
         }
 
@@ -41,6 +42,7 @@ public class Projectile extends Enemy {
     public void handleDamage(int damage, int direction) {
 
         setDead(true);
+        setPosition(-100, -100);
     
     }
 
