@@ -37,7 +37,7 @@ public class Wizard extends Enemy {
         if (angleToPlayer >= 360) angleToPlayer -= 360;
 
         // Throw lightning
-        var lightning = new Projectile(1.1, angleToPlayer, getDamage());
+        var lightning = new Projectile(1.5, angleToPlayer, getDamage());
         lightning.setPosition(getX(), getY());
 
         World.instance().addToPendingList(lightning);
