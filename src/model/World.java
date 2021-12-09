@@ -60,6 +60,9 @@ public class World {
 
     }
 
+    /**
+     * Resets the world instance.
+     */
     public static void reset() {
 
         instance = new World();

@@ -6,11 +6,11 @@ public class Juggernaut extends Enemy {
     private int count = 50;
     /** The cooldown before the frenzy state can be entered again. */
     private int frenzyCooldown = 5;
-    /** The normal movement speed of the juggernaut. */
+    /** The speed of the juggernaut in its attack state. */
     private double attackSpeed;
     /** The movement speed of the juggernaut during frenzy. */
     private double frenzySpeed;
-    /** Wether the juggernaut has hit the player. */
+    /** Whether the juggernaut has hit the player. */
     private boolean hitPlayer = false;
 
     public enum JuggernautState {
@@ -52,11 +52,12 @@ public class Juggernaut extends Enemy {
         this.setMaxHealth(10);
         this.setHealth(10);
         this.setDamage(3);
-        this.setSpeed(attackSpeed);
+        this.setSpeed(1.0);
         this.setDetectionRadius(200);
         this.state = JuggernautState.PATROL;
 
     }
+
 
     @Override
     public void navigate() {

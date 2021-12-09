@@ -4,7 +4,7 @@ public class Grunt extends Enemy {
 
     /** Controls the frequency of attacks. */
     private int count = 25;
-    /** The regular speed of the grunt. */
+    /* The speed of the grunt in its attack state */
     private int attackSpeed;
 
     /** The possible navigation states of the grunt. */
@@ -45,7 +45,7 @@ public class Grunt extends Enemy {
         this.setMaxHealth(3);
         this.setHealth(3);
         this.setDamage(1);
-        this.setSpeed(attackSpeed);
+        this.setSpeed(1.3);
         this.setDetectionRadius(300);
         state = GruntState.PATROL;
 

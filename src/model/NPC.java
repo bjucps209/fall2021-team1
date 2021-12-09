@@ -6,8 +6,8 @@ import javafx.beans.property.StringProperty;
 
 public class NPC extends Entity {
 
-    private StringProperty message;
-    private String description;
+    private StringProperty message; // The message the NPC says when interacted with
+    private String description; // The description of the NPC
     
 
     public NPC(String message, String description) {

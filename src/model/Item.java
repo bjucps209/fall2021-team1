@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public class Item extends NPC {
 
-    private IntegerProperty scoreIncrease;
+    private IntegerProperty scoreIncrease; // The score bonus upon picking up the item.
 
     public Item(String message, String description, int score) {
 

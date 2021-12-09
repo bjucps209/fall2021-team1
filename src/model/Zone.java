@@ -5,9 +5,9 @@ import java.util.ArrayList;
 // Holds information for each individual zone. Does not contain enemies, only Items and NPCS. 
 public class Zone {
     
-    private String zoneName, backgroundPath;
-    private Zone northZone, westZone, southZone, eastZone;
-    private ArrayList<NPC> objectList;
+    private String zoneName, backgroundPath; // The current zone name, the URL to the background image of the current zone.
+    private Zone northZone, westZone, southZone, eastZone; // The zones located on each of the 4 directions of the current zone.
+    private ArrayList<NPC> objectList; // The list of every npc or item in the current zone.
     
 
     public Zone(String zoneName, String backgroundPath,

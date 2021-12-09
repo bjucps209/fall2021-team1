@@ -24,6 +24,11 @@ public abstract class Entity {
 
     }
 
+    /**
+     * Loads a saved entity.
+     * @param saveLine - line that was saved to the txt file
+     * @return
+     */
     public static Entity deserialize(String saveLine) {
 
         String[] data = saveLine.split("::");

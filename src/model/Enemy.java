@@ -7,7 +7,7 @@ public abstract class Enemy extends Living {
 
     /** The maximum distance from which the enemy will 'detect' the player. */
     private IntegerProperty detectionRadius;
-    /** The position of the entity on creation. Used for patroling. */
+    /** The position of the entity on creation. Used for patrolling. */
     private double originalX, originalY;
 
     public Enemy(int width, int height) {
