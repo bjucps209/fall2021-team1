@@ -1,5 +1,6 @@
 package model;
 
+/** The weakest enemy, which spawns most often. */
 public class Grunt extends Enemy {
 
     /** Controls the frequency of attacks. */
@@ -17,6 +18,9 @@ public class Grunt extends Enemy {
     /** The navigation state of the grunt. */
     private GruntState state;
 
+    /**
+     * The weakest enemy, which spawns most often.
+     */
     public Grunt() {
 
         super(128, 128);
@@ -76,9 +80,6 @@ public class Grunt extends Enemy {
 
     }
 
-    /**
-     * Moves the grunt in a certain direction depending on its state.
-     */
     @Override
     public void navigate() {
 
@@ -162,19 +163,30 @@ public class Grunt extends Enemy {
     }
 
     /// Getters and Setters ///
-
+    /**
+     * Gets the navigation state the grunt is in.
+     * @return the grunt state
+     */
     public GruntState getState() {
 
         return this.state;
 
     }
 
+    /**
+     * Sets the navigation state of the grunt.
+     * @param state the new state
+     */
     public void setState(GruntState state) {
 
         this.state = state;
 
     }
 
+    /**
+     * Sets the navigation state of the grunt from a string representation of the state.
+     * @param state the new state
+     */
     public void setState(String state) {
 
         switch (state) {

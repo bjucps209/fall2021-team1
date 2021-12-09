@@ -4,10 +4,15 @@ import java.util.ArrayList;
 
 public class ZoneList {
 
+    /** The objects in a zone. */
     private ArrayList<NPC> listStarterArea, listPathways, listGraveyard, listGrassyplains, listVillageSquare,
             listMarket, listLumberYard, listLake, listForestEdge, listWheatField;
+    /** The list of all zones in the game. */
     private ArrayList<Zone> levels;
-    private Zone start, pathway, villageSquare, grassyPlains, graveyard,
+    /** The start zone. Dissappears when exited. */
+    private Zone start;
+    /** A zone. */
+    private Zone pathway, villageSquare, grassyPlains, graveyard,
             market, lake, wheatFields, forestEdge, lumberYard;
 
     private ZoneList() {

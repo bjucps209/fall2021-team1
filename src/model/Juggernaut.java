@@ -1,5 +1,6 @@
 package model;
 
+/** A strong enemy with high health and damage. Occasionally enters a frenzied state during which attacks are faster. */
 public class Juggernaut extends Enemy {
 
     /** The cooldown for attacks. Becomes smaller when in the frenzy state. */
@@ -13,14 +14,17 @@ public class Juggernaut extends Enemy {
     /** Wether the juggernaut has hit the player. */
     private boolean hitPlayer = false;
 
+    /** The possible navigation states of Juggernauts. */
     public enum JuggernautState {
 
         PATROL, ATTACK, FRENZY
 
     }
 
+    /** The navigation state of the juggernaut. */
     private JuggernautState state;
 
+    /** A strong enemy with high health and damage. Occasionally enters a frenzied state during which attacks are faster. */
     public Juggernaut() {
         
         super(192, 192);
@@ -120,9 +124,6 @@ public class Juggernaut extends Enemy {
 
     }
 
-    /**
-     * Juggernauts specific attack method
-     */
     @Override
     public void attack() {
 
@@ -185,14 +186,26 @@ public class Juggernaut extends Enemy {
         return EntityType.JUGGERNAUT_ENEMY;
     }
 
+    /**
+     * Gets the navigation state of the juggernaut.
+     * @return the navigation state
+     */
     public JuggernautState getState() {
         return state;
     }
 
+    /**
+     * Sets the navigation state of the juggernaut.
+     * @param state the new navigation state
+     */
     public void setState(JuggernautState state) {
         this.state = state;
     }
 
+    /**
+     * Sets the navigation state of the juggernaut from a string representation.
+     * @param state the new navigation state
+     */
     public void setState(String state) {
 
         switch (state) {
@@ -216,18 +229,24 @@ public class Juggernaut extends Enemy {
 
     }
 
+    /**
+     * Whether the enemy has hit the player.
+     * @return true on hit, false otherwise
+     */
     public boolean isHitPlayer() {
 
         return hitPlayer;
 
     }
 
+    /**
+     * Sets whether the enemy has hit the player.
+     * @param hitPlayer the new value
+     */
     public void setHitPlayer(boolean hitPlayer) {
 
         this.hitPlayer = hitPlayer;
 
     }
-
-    
 
 }

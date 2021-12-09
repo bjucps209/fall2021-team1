@@ -1,7 +1,14 @@
 package model;
 
+/** The projectile fired by wizard enemies. Moves in a straight line and is killed on collision or when hit. Only damages the player. */
 public class Projectile extends Enemy {
 
+    /**
+     * The projectile fired by wizard enemies. Moves in a straight line and is killed on collision or when hit. Only damages the player.
+     * @param speed the speed of the projectile
+     * @param direction the direction of the projectile
+     * @param damage the damage the projectile does
+     */
     public Projectile(double speed, int direction, int damage) {
         
         super(64, 64);
@@ -13,7 +20,6 @@ public class Projectile extends Enemy {
 
     /// Methods from Enemy ///
 
-    /** Moves the projectile. */
     @Override
     public void navigate() {
         

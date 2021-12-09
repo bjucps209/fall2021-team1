@@ -1,18 +1,22 @@
 package model;
 
+/** Enemy that spawns only on hard difficulty. Throws projectiles at the player and runs away when they get too close. */
 public class Wizard extends Enemy {
 
     /** Controls the frequency of attacks. */
     private int count = 40;
 
+    /** Possible navigation states of wizard enemies. */
     public enum WizardState {
 
         MEDITATE, ATTACK
 
     }
 
+    /** The navigation state of the wizard. */
     private WizardState state;
 
+    /** Enemy that spawns only on hard difficulty. Throws projectiles at the player and runs away when they get too close. */
     public Wizard() {
 
         super(128, 128);
@@ -57,9 +61,6 @@ public class Wizard extends Enemy {
 
     }
 
-    /**
-     * Moves the wizard in a certain direction depending on its state.
-     */
     @Override
     public void navigate() {
 
@@ -121,19 +122,30 @@ public class Wizard extends Enemy {
     }
 
     /// Getters and Setters ///
-
+    /**
+     * Gets the navigation state of the wizard.
+     * @return the navigation state
+     */
     public WizardState getState() {
 
         return this.state;
 
     }
 
+    /**
+     * Sets the navigation state of the wizard.
+     * @param state the new state
+     */
     public void setState(WizardState state) {
 
         this.state = state;
 
     }
 
+    /**
+     * Sets the navigation state of the wizard from a string representation.
+     * @param state the new state
+     */
     public void setState(String state) {
 
         switch (state) {

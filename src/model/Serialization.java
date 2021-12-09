@@ -181,7 +181,12 @@ public class Serialization {
 
 
     /// Utility ///
-
+    /**
+     * Gets the world dificulty as represented by a string.
+     * @param difficulty the string difficulty
+     * @return the difficulty
+     * @throws IOException if the difficulty is not recognized
+     */
     private static DifficultyLevel stringToDifficulty(String difficulty) throws IOException {
 
         switch (difficulty) {

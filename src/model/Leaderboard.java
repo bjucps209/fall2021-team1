@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
+/** Loads and saves high score data. */
 public class Leaderboard {
 
     // List of Highscores in order from greatest to least
@@ -38,27 +39,42 @@ public class Leaderboard {
         return highscores;
     }
 
-
+    /**
+     * Gets the leaderboard's list of high scores.
+     * @return the list of highscores
+     */
     public ArrayList<HighScore> getHighscores() {
 
         return highscores;
 
     }
 
+    /**
+     * Sets the leaderboard's list of high scores.
+     * @param highscores the new list
+     */
     public void setHighscores(ArrayList<HighScore> highscores) {
 
         this.highscores = highscores;
     
     }
 
+    /**
+     * Whether the last added score was the highest or tied with the highest.
+     * @return true if highest or tie, false otherwise
+     */
     public boolean isHighScore() {
+
         return isHighScore;
+
     }
 
+    /**
+     * Sets whether the last added score was the highest or tied with the highest.
+     * @param isHighScore the new value
+     */
     public void setHighScore(boolean isHighScore) {
         this.isHighScore = isHighScore;
     }
-
-    
 
 }

@@ -1,9 +1,6 @@
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.swing.plaf.basic.BasicScrollPaneUI.HSBChangeListener;
-
-import javafx.beans.property.DoubleProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,13 +27,7 @@ import model.DifficultyLevel;
 import model.HighScore;
 import model.Serialization;
 
-// *****************************************
-// MainWindow.java
-// This is the window for the "Start" Screen
-// where the user can navigate to the game, 
-// highscore, about section, or help section.
-// ******************************************
-
+/** The start screen window from which the player can start the game or access the highscore, about, or help sections. */
 public class MainWindow  {
     // The stack pane that everything is added to
     @FXML StackPane spaneMain;
