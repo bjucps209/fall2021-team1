@@ -27,6 +27,9 @@ https://bju-my.sharepoint.com/:v:/g/personal/afox797_students_bju_edu/EVV4Jrgpba
 ### Release Candidate Recording
 https://bju-my.sharepoint.com/:v:/g/personal/afox797_students_bju_edu/EW5LU36yg8tLv6eXaK6iDUcBfWYJuCYvMwinuB-EdfsLxQ?e=nNp14X
 
+### Final Release Recording
+https://bju-my.sharepoint.com/:v:/g/personal/afox797_students_bju_edu/EY3G15s_clFKsRZV8vPGmZYBNCoOE2galyvDNF_WRkZNyA?e=mJ9hF6
+
 
 ### Expenses
 | Member Name | Username | Hours Invested | Hours Remaining |
