@@ -13,9 +13,9 @@ public class Wizard extends Enemy {
 
     private WizardState state;
 
-    public Wizard(int id) {
+    public Wizard() {
 
-        super(128, 128, id);
+        super(128, 128);
         // Load base stats
         this.setMaxHealth(2);
         this.setHealth(2);
@@ -31,10 +31,10 @@ public class Wizard extends Enemy {
     @Override
     public void attack() {
 
-        var lightning = new Projectile(getDamage(), getSpeed());
+        var lightning = new Projectile(getDamage(), 0);
         lightning.setPosition(getX(), getY());
 
-        World.instance().addToEntityList(lightning);
+        World.instance().addToPendingList(lightning);
 
     }
 
@@ -103,7 +103,7 @@ public class Wizard extends Enemy {
     @Override
     public String serialize() {
 
-        return "" + getType() + "::" + getId() + "::" + getX() + "::" + getY() + "::" + state + "\n";
+        return "" + getType() + "::" + getX() + "::" + getY() + "::" + state + "\n";
 
     }
 

@@ -5,27 +5,27 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public abstract class Enemy extends Living {
 
-    private IntegerProperty id;
+    /** The maximum distance from which the enemy will 'detect' the player. */
     private IntegerProperty detectionRadius;
+    /** The position of the entity on creation. Used for patroling. */
     private double originalX, originalY;
 
-    public Enemy(int width, int height, int id) {
+    public Enemy(int width, int height) {
 
         super(width, height);
 
-        this.id = new SimpleIntegerProperty(id);
         this.detectionRadius = new SimpleIntegerProperty();
         
     }
 
     // Abstract methods
+    /** Choose the direction for the entity to move in, and when to attack. Pretty much the ai. */
     public abstract void navigate();
 
     /**
      * Whether or not the player is within detection range.
      * @return true if player is in detection range
      */
-
     public boolean foundPlayer() {
 
         return Math.hypot(this.getX() - World.instance().getPlayer().getX(), this.getY() - World.instance().getPlayer().getY()) <= this.getDetectionRadius();
@@ -49,26 +49,6 @@ public abstract class Enemy extends Living {
     public void setDetectionRadius(int radius) {
 
         this.detectionRadius.set(radius);
-
-    }
-
-    public IntegerProperty idProperty() {
-
-        return this.id;
-
-    }
-
-    public int getId() {
-
-        return 0;
-        //return this.id.get();
-
-    }
-
-
-    public void setId(int id) {
-
-        this.id.set(id);
 
     }
 
