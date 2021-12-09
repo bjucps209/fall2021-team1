@@ -4,7 +4,10 @@ import java.util.ArrayList;
 
 public class Leaderboard {
 
+    // List of Highscores in order from greatest to least
     private ArrayList<HighScore> highscores;
+
+    // Booelan to tell whether the last score processed was a high score or not
     private boolean isHighScore;
 
     /**
@@ -23,13 +26,6 @@ public class Leaderboard {
      * @param score the score
      */
     public ArrayList<HighScore> process(String name, int score) {
-
-        // Crazy solution
-        // highscores.add(new HighScore(name, score));
-        // highscores.stream().sorted((s1, s2) -> s1.getScore());
-        // highscores = new ArrayList<>(highscores.subList(0, 9));
-
-        // Tame Solution
         setHighScore(false);
         for (int position = 0; position < 10; ++position) {
             if (score >= highscores.get(position).getScore()) {

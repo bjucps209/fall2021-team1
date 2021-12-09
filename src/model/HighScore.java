@@ -2,7 +2,10 @@ package model;
 
 public class HighScore {
 
+    // Player's Name
     private String playerName;
+
+    // Player's Score
     private int score;
 
     public HighScore(String playerName, int score) {
