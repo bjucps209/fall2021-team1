@@ -1,5 +1,6 @@
 package model;
 
+// Great and powerful Oz
 /** Enemy that spawns only on hard difficulty. Throws projectiles at the player and runs away when they get too close. */
 public class Wizard extends Enemy {
 
