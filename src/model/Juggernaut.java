@@ -176,7 +176,7 @@ public class Juggernaut extends Enemy {
     @Override
     public String serialize() {
 
-        return "" + getType() + "::" + getX() + "::" + getY() + "::" + state + "\n";
+        return "" + getType() + "::" + getOriginalX() + "::" + getOriginalY() + "::" + getX() + "::" + getY() + "::" + state + "::" + getHealth() + "\n";
     
     }
 

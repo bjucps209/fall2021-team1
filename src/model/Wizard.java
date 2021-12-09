@@ -84,7 +84,7 @@ public class Wizard extends Enemy {
         double distanceToPlayer = Math.hypot(this.getX() - World.instance().getPlayer().getX(), this.getY() - World.instance().getPlayer().getY());
 
         // Run away if too close
-        if (distanceToPlayer < 200) angle -= 180;
+        if (distanceToPlayer < 200 && distanceToPlayer < 210) angle -= 180;
     
         if (angle < 0) angle += 360;
         if (angle >= 360) angle -= 360;
@@ -109,7 +109,7 @@ public class Wizard extends Enemy {
     @Override
     public String serialize() {
 
-        return "" + getType() + "::" + getX() + "::" + getY() + "::" + state + "\n";
+        return "" + getType() + "::" + getX() + "::" + getY() + "::" + state + "::" + getHealth() + "\n";
 
     }
 
